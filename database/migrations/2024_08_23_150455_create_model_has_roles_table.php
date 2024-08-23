@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('model_has_roles', function (Blueprint $table) {
-            $table->integer('role_id');
+            $table->unsignedBigInteger('role_id');
             $table->timestamps('model_type');
             $table->timestamps('model_id');
         });
