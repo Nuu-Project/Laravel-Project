@@ -5,7 +5,8 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Mercy - Tailwind Template</title>
+        <link rel="icon" type="image/png" href="images/icon.png">
+        <title>聯大二手書交易平台</title>
         <link rel="stylesheet" href="css/tailwind.css">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -41,7 +42,7 @@
                             <a href="/add">刊登</a>
                         </li>
                         <li class="font-semibold text-gray-900 hover:text-gray-400 transition ease-in-out duration-300 mb-5 lg:mb-0 text-2xl">
-                            <a href="#">查看已刊登商品</a>
+                            <a href="/check">我的商品</a>
                         </li>
                     </ul>
 

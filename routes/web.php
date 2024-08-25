@@ -22,3 +22,7 @@ Route::get('/regist', function () {
     return view('Regist');
 });
 
+Route::get('/check', function () {
+    return view('Check');
+});
+
