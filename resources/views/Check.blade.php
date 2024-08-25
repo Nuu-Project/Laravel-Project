@@ -61,99 +61,74 @@
 </style>
 <style>body { font-family: 'Inter', sans-serif; --font-sans-serif: 'Inter'; }
 </style>
-
-<div class="flex flex-col w-full min-h-screen">
-  <main class="flex min-h-[calc(100vh_-_theme(spacing.16))] flex-1 flex-col gap-4 p-4 md:gap-8 md:p-10">
-    <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-      <div class="rounded-lg border bg-card text-card-foreground shadow-sm" data-v0-t="card">
-        <div class="space-y-1.5 p-6 flex flex-row items-center justify-between pb-2">
-          <h1>商品名稱:會計學</h1>
-          <span class="relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full">
-            <img class="aspect-square h-full w-full" alt="上架者" src="images/user.png" />
-          </span>
-        </div>
-        <div class="p-6">
-          <div class="text-2xl font-bold">$500</div>
-          <h1>上架時間: 2023/8/25</h1>
-          <p class="text-sm mt-2">這是大一必修的會計學課本</p>
-          <div class="mt-4">
-            <img
-              src="images/book-2.jpg"
-              alt="這是圖片"
-              width="1200"
-              height="900"
-              style="aspect-ratio: 900 / 1200; object-fit: cover;"
-              class="w-full rounded-md object-cover"
-            />
-            <p>這是會計學</p>
-          </div>
-        </div>
-        <div class="flex items-center p-6">
-          <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 ml-auto">
-            購買
-          </button>
-        </div>
+<div class="container mx-auto px-4 md:px-6 py-8">
+  <h1 class="text-2xl font-bold mb-6">我的商品</h1>
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+    <div class="bg-background rounded-lg shadow-md overflow-hidden">
+      <img
+        src="/placeholder.svg"
+        alt="經典皮革沙發"
+        width="400"
+        height="300"
+        class="w-full h-48 object-cover"
+        style="aspect-ratio: 400 / 300; object-fit: cover;"
+      />
+      <div class="p-4">
+        <h3 class="text-lg font-semibold mb-2">經典皮革沙發</h3>
+        <p class="text-primary font-bold mb-2">NT$2999.00</p>
+        <p class="text-muted-foreground text-sm mb-4">上架時間: 06/01/2023</p>
+        <p class="text-muted-foreground text-sm line-clamp-3">高級皮革材質,舒適耐用,適合各種家居風格</p>
       </div>
-      <div class="rounded-lg border bg-card text-card-foreground shadow-sm" data-v0-t="card">
-        <div class="space-y-1.5 p-6 flex flex-row items-center justify-between pb-2">
-        <h1>商品名稱:統計學</h1>
-          <span class="relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full">
-            <img class="aspect-square h-full w-full" alt="上架者" src="images/user.png" />
-          </span>
-        </div>
-        <div class="p-6">
-          <div class="text-2xl font-bold">$600</div>
-          <h1>上架時間: 2023/8/24</h1>
-          <p class="text-sm mt-2">這是大二必修的統計學課本</p>
-          <div class="mt-4">
-            <img
-              src="images/book-1.jpg"
-              alt=""
-              width="1200"
-              height="900"
-              class="w-full rounded-md object-cover"
-              style="aspect-ratio: 900 / 1200; object-fit: cover;"
-            />
-            <p class="text-sm text-muted-foreground mt-1">這是統計學</p>
-          </div>
-        </div>
-        <div class="flex items-center p-6">
-          <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 ml-auto">
-            購買
-          </button>
-        </div>
+    </div>
+    <div class="bg-background rounded-lg shadow-md overflow-hidden">
+      <img
+        src="/placeholder.svg"
+        alt="北歐風格餐桌椅組"
+        width="400"
+        height="300"
+        class="w-full h-48 object-cover"
+        style="aspect-ratio: 400 / 300; object-fit: cover;"
+      />
+      <div class="p-4">
+        <h3 class="text-lg font-semibold mb-2">北歐風格餐桌椅組</h3>
+        <p class="text-primary font-bold mb-2">NT$1799.00</p>
+        <p class="text-muted-foreground text-sm mb-4">上架時間: 05/15/2023</p>
+        <p class="text-muted-foreground text-sm line-clamp-3">簡約設計,堅固耐用,適合小型家庭使用</p>
       </div>
-      <div class="rounded-lg border bg-card text-card-foreground shadow-sm" data-v0-t="card">
-        <div class="space-y-1.5 p-6 flex flex-row items-center justify-between pb-2">
-        <h1>商品名稱:範例</h1>
-          <span class="relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full">
-            <img class="aspect-square h-full w-full" alt="上架者" src="images/user.png" />
-          </span>
-        </div>
-        <div class="p-6">
-          <div class="text-2xl font-bold">$1800</div>
-          <h1>上架時間: 2023/8/21</h1>
-          <p class="text-sm mt-2">介紹範例</p>
-          <div class="mt-4">
-            <img
-              src="images/book-3.jpg"
-              alt=""
-              width="1200"
-              height="900"
-              class="w-full rounded-md object-cover"
-              style="aspect-ratio: 900 / 1200; object-fit: cover;"
-            />
-            <p class="text-sm text-muted-foreground mt-1">圖片範例</p>
-          </div>
-        </div>
-        <div class="flex items-center p-6">
-          <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 ml-auto">
-            購買
-          </button>
-        </div>
+    </div>
+    <div class="bg-background rounded-lg shadow-md overflow-hidden">
+      <img
+        src="/placeholder.svg"
+        alt="高清顯示器"
+        width="400"
+        height="300"
+        class="w-full h-48 object-cover"
+        style="aspect-ratio: 400 / 300; object-fit: cover;"
+      />
+      <div class="p-4">
+        <h3 class="text-lg font-semibold mb-2">高清顯示器</h3>
+        <p class="text-primary font-bold mb-2">NT$1499.00</p>
+        <p class="text-muted-foreground text-sm mb-4">上架時間: 04/20/2023</p>
+        <p class="text-muted-foreground text-sm line-clamp-3">4K解析度,色彩還原度高,適合影音娛樂和辦公使用</p>
       </div>
-      
-  </main>
+    </div>
+    <div class="bg-background rounded-lg shadow-md overflow-hidden">
+      <img
+        src="/placeholder.svg"
+        alt="智能掃地機器人"
+        width="400"
+        height="300"
+        class="w-full h-48 object-cover"
+        style="aspect-ratio: 400 / 300; object-fit: cover;"
+      />
+      <div class="p-4">
+        <h3 class="text-lg font-semibold mb-2">智能掃地機器人</h3>
+        <p class="text-primary font-bold mb-2">NT$899.00</p>
+        <p class="text-muted-foreground text-sm mb-4">上架時間: 03/01/2023</p>
+        <p class="text-muted-foreground text-sm line-clamp-3">自動規劃路徑,吸塵效果佳,大幅減輕家務負擔</p>
+      </div>
+    </div>
+  </div>
 </div>
 
     </body>

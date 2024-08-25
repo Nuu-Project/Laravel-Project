@@ -5,7 +5,8 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Mercy - Tailwind Template</title>
+        <link rel="icon" type="image/png" href="images/icon.png">
+        <title>聯大二手書交易平台</title>
         <link rel="stylesheet" href="css/tailwind.css">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -41,7 +42,7 @@
                             <a href="/add">刊登</a>
                         </li>
                         <li class="font-semibold text-gray-900 hover:text-gray-400 transition ease-in-out duration-300 mb-5 lg:mb-0 text-2xl">
-                            <a href="#">查看已刊登商品</a>
+                            <a href="/check">我的商品</a>
                         </li>
                     </ul>
 
@@ -61,8 +62,8 @@
                         <button class="px-6 py-4 bg-info font-semibold text-white text-lg rounded-xl hover:bg-blue-700 transition ease-in-out duration-500">Get started</button>
                     </div>
 
-                    <div class="mt-30">
-                        <img src="images/logofix.png" alt="Image">
+                    <div class="mt-15">
+                        <img class="" src="images/logofix.png" alt="Image">
                     </div>
                 </div>
 
@@ -72,11 +73,11 @@
         <!-- home section //end -->
 
         <!-- feature section -->
-        <section class="bg-white py-16 md:mt-10">
+        <section class="bg-white py-1 md:mt-10">
 
             <div class="container max-w-screen-xl mx-auto px-4">
 
-                <p class="font-light text-gray-500 text-lg md:text-xl text-center uppercase mb-6">平台理念</p>
+                <p class="font-black text-gray-500 text-lg md:text-xl text-center uppercase mb-6">平台理念</p>
 
                 <h1 class="font-semibold text-gray-900 text-xl md:text-4xl text-center leading-normal mb-10">讓社恐和I人<br> 都能有個安靜的空間買書</h1>
 
@@ -88,14 +89,14 @@
                             </div>
                         </div>
 
-                        <h4 class="font-semibold text-lg md:text-2xl text-gray-900 mb-6">Transparent</h4>
+                        <h4 class="font-semibold text-lg md:text-2xl text-gray-900 mb-6">簡單的操作介面</h4>
 
-                        <p class="font-light text-gray-500 text-md md:text-xl mb-6">Donations and distributions can be seen transparently</p>
+                        <p class="font-black text-gray-500 text-md md:text-xl mb-6">沒有繁瑣的流程，一切步驟都經過精簡</p>
 
                         <div class="flex justify-center">
-                            <a href="#" class="flex items-center gap-5 px-6 py-4 font-semibold text-info text-lg rounded-xl hover:bg-info hover:text-white transition ease-linear duration-500">
+                            <!-- <a href="#" class="flex items-center gap-5 px-6 py-4 font-semibold text-info text-lg rounded-xl hover:bg-info hover:text-white transition ease-linear duration-500">
                                 Learn more 
-                                <i data-feather="chevron-right"></i>
+                                <i data-feather="chevron-right"></i> -->
                             </a>
                         </div>
                     </div>
@@ -107,15 +108,15 @@
                             </div>
                         </div>
 
-                        <h4 class="font-semibold text-lg md:text-2xl text-gray-900 mb-6">Quick Fundraise</h4>
+                        <h4 class="font-semibold text-lg md:text-2xl text-gray-900 mb-6">專為資管系服務的平台</h4>
 
-                        <p class="font-light text-gray-500 text-md md:text-xl mb-6">The simple and quickest way to make a donation</p>
+                        <p class="font-black text-gray-500 text-md md:text-xl mb-6">在這裡刊登二手書的商品，都是資管系可能或必須用到的書</p>
 
                         <div class="flex justify-center">
-                            <a href="#" class="flex items-center gap-5 px-6 py-4 font-semibold text-info text-lg rounded-xl hover:bg-info hover:text-white transition ease-linear duration-500">
+                            <!-- <a href="#" class="flex items-center gap-5 px-6 py-4 font-semibold text-info text-lg rounded-xl hover:bg-info hover:text-white transition ease-linear duration-500">
                                 Learn more 
                                 <i data-feather="chevron-right"></i>
-                            </a>
+                            </a> -->
                         </div>
                     </div>
 
@@ -126,15 +127,15 @@
                             </div>
                         </div>
 
-                        <h4 class="font-semibold text-lg md:text-2xl text-gray-900 mb-6">Real Time</h4>
+                        <h4 class="font-semibold text-lg md:text-2xl text-gray-900 mb-6">方便省時</h4>
 
-                        <p class="font-light text-gray-500 text-md md:text-xl mb-6">Reports related to donations and distribution are updated directly</p>
+                        <p class="font-black text-gray-500 text-md md:text-xl mb-6">每個的人時間都很寶貴，我們想讓大家用最快的速度買到自己需要的教科書</p>
 
                         <div class="flex justify-center">
-                            <a href="#" class="flex items-center gap-5 px-6 py-4 font-semibold text-info text-lg rounded-xl hover:bg-info hover:text-white transition ease-linear duration-500">
+                            <!-- <a href="#" class="flex items-center gap-5 px-6 py-4 font-semibold text-info text-lg rounded-xl hover:bg-info hover:text-white transition ease-linear duration-500">
                                 Learn more 
                                 <i data-feather="chevron-right"></i>
-                            </a>
+                            </a> -->
                         </div>
                     </div>
                 </div>
@@ -309,9 +310,9 @@
                     </div>
                 </div>
 
-                <div class="flex items-center justify-center">
+                <!-- <div class="flex items-center justify-center">
                     <button class="px-7 py-5 font-semibold bg-gray-100 text-gray-900 rounded-2xl hover:bg-gray-300 hover:text-gray-600 transition ease-in-out duration-500">More to donate</button>
-                </div>
+                </div> -->
 
             </div> <!-- container.// -->
 
@@ -319,7 +320,7 @@
         <!-- donation section //end -->
 
         <!-- feature section -->
-        <section class="bg-white py-16">
+        <!-- <section class="bg-white py-16">
 
             <div class="container max-w-screen-xl mx-auto px-4">
 
@@ -377,13 +378,13 @@
                     </div>
                 </div>
 
-            </div> <!-- container.// -->
+            </div> container.//
 
         </section>
-        <!-- feature section //end -->
+        feature section //end -->
 
         <!-- join volunters section -->
-        <section class="bg-white py-16">
+        <!-- <section class="bg-white py-16">
 
             <div class="container max-w-screen-xl mx-auto px-4">
 
@@ -407,10 +408,10 @@
                     </div>
                 </div>
 
-            </div> <!-- container.// -->
+            </div> container.//
 
         </section>
-        <!-- join volunters section //end -->
+        join volunters section //end -->
 
         <footer class="bg-white py-16">
 
