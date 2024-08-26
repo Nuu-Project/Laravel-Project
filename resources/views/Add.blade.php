@@ -97,7 +97,7 @@
           type="number"
         />
       </div>
-      <div class="grid gap-2">
+      <!-- <div class="grid gap-2">
         <label
           class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
           for="date"
@@ -109,7 +109,7 @@
           id="date"
           type="date"
         />
-      </div>
+      </div> -->
       <div class="grid gap-2">
         <label
           class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
