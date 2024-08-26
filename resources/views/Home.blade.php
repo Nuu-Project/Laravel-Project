@@ -166,7 +166,7 @@
                             <h6 class="font-black text-gray-600 text-sm md:text-lg">課程 : <span class="font-semibold text-gray-900 text-md md:text-lg">必修</span></h6>
                         </div>
         
-                        <div class="hidden md:block lg:flex items-center justify-between mb-8">
+                        <!-- <div class="hidden md:block lg:flex items-center justify-between mb-8">
                             <div>
                                 <div class="w-72 h-2 bg-info opacity-10 rounded-lg absolute"></div>
         
@@ -174,7 +174,7 @@
                             </div>
         
                             <p class="font-light text-gray-900 text-md">50%</p>
-                        </div>
+                        </div> -->
 
                         <a href="https://eshop.tsanghai.com.tw/products/ps0471pc" class="px-6 py-4 bg-info font-semibold text-white text-lg rounded-xl hover:bg-blue-700 transition ease-in-out duration-500">前往了解</a>                    </div>
 
@@ -191,7 +191,7 @@
                             <h6 class="font-black text-gray-600 text-sm md:text-lg">課程 : <span class="font-semibold text-gray-900 text-md md:text-lg">必修</span></h6>
                         </div>
         
-                        <div class="hidden md:block lg:flex items-center justify-between mb-8">
+                        <!-- <div class="hidden md:block lg:flex items-center justify-between mb-8">
                             <div>
                                 <div class="w-72 h-2 bg-info opacity-10 rounded-lg absolute"></div>
         
@@ -199,7 +199,7 @@
                             </div>
         
                             <p class="font-light text-gray-900 text-md">80%</p>
-                        </div>
+                        </div> -->
 
                         <a href="https://www.tenlong.com.tw/products/9781119824237?list_name=srh" class="px-6 py-4 bg-info font-semibold text-white text-lg rounded-xl hover:bg-blue-700 transition ease-in-out duration-500">前往了解</a>
                     </div>
@@ -217,7 +217,7 @@
                             <h6 class="font-black text-gray-600 text-sm md:text-lg">課程 : <span class="font-semibold text-gray-900 text-md md:text-lg">必修</span></h6>
                         </div>
         
-                        <div class="hidden md:block lg:flex items-center justify-between mb-8">
+                        <!-- <div class="hidden md:block lg:flex items-center justify-between mb-8">
                             <div>
                                 <div class="w-72 h-2 bg-info opacity-10 rounded-lg absolute"></div>
         
@@ -225,7 +225,7 @@
                             </div>
         
                             <p class="font-light text-gray-900 text-md">100%</p>
-                        </div>
+                        </div> -->
 
                         <a href="https://www.tenlong.com.tw/products/9789579282543?list_name=srh" class="px-6 py-4 bg-info font-semibold text-white text-lg rounded-xl hover:bg-blue-700 transition ease-in-out duration-500">前往了解</a>
                     </div>
