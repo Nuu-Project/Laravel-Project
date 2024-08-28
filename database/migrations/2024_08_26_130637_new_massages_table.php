@@ -13,7 +13,9 @@ return new class extends Migration
     {
         Schema::create('massages', function (Blueprint $table) {
             $table->id();
-            $table->text('description');
+            $table->foreignId('product_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+            $table->text('content');
             $table->timestamps();
         });
     }
