@@ -67,65 +67,65 @@
     <div class="bg-background rounded-lg shadow-md overflow-hidden">
       <img
         src="/placeholder.svg"
-        alt="經典皮革沙發"
+        alt=""
         width="400"
         height="300"
         class="w-full h-48 object-cover"
         style="aspect-ratio: 400 / 300; object-fit: cover;"
       />
       <div class="p-4">
-        <h3 class="text-lg font-semibold mb-2">經典皮革沙發</h3>
-        <p class="text-primary font-bold mb-2">NT$2999.00</p>
-        <p class="text-muted-foreground text-sm mb-4">上架時間: 06/01/2023</p>
-        <p class="text-muted-foreground text-sm line-clamp-3">高級皮革材質,舒適耐用,適合各種家居風格</p>
+        <h3 class="text-lg font-semibold mb-2">商品名稱</h3>
+        <p class="text-primary font-bold mb-2">價格</p>
+        <p class="text-muted-foreground text-sm mb-4">上架時間</p>
+        <p class="text-muted-foreground text-sm line-clamp-3">介紹</p>
       </div>
     </div>
     <div class="bg-background rounded-lg shadow-md overflow-hidden">
       <img
         src="/placeholder.svg"
-        alt="北歐風格餐桌椅組"
+        alt=""
         width="400"
         height="300"
         class="w-full h-48 object-cover"
         style="aspect-ratio: 400 / 300; object-fit: cover;"
       />
       <div class="p-4">
-        <h3 class="text-lg font-semibold mb-2">北歐風格餐桌椅組</h3>
-        <p class="text-primary font-bold mb-2">NT$1799.00</p>
-        <p class="text-muted-foreground text-sm mb-4">上架時間: 05/15/2023</p>
-        <p class="text-muted-foreground text-sm line-clamp-3">簡約設計,堅固耐用,適合小型家庭使用</p>
+        <h3 class="text-lg font-semibold mb-2">商品名稱</h3>
+        <p class="text-primary font-bold mb-2">價格</p>
+        <p class="text-muted-foreground text-sm mb-4">上架時間</p>
+        <p class="text-muted-foreground text-sm line-clamp-3">介紹</p>
       </div>
     </div>
     <div class="bg-background rounded-lg shadow-md overflow-hidden">
       <img
         src="/placeholder.svg"
-        alt="高清顯示器"
+        alt=""
         width="400"
         height="300"
         class="w-full h-48 object-cover"
         style="aspect-ratio: 400 / 300; object-fit: cover;"
       />
       <div class="p-4">
-        <h3 class="text-lg font-semibold mb-2">高清顯示器</h3>
-        <p class="text-primary font-bold mb-2">NT$1499.00</p>
-        <p class="text-muted-foreground text-sm mb-4">上架時間: 04/20/2023</p>
-        <p class="text-muted-foreground text-sm line-clamp-3">4K解析度,色彩還原度高,適合影音娛樂和辦公使用</p>
+        <h3 class="text-lg font-semibold mb-2">商品名稱</h3>
+        <p class="text-primary font-bold mb-2">價格</p>
+        <p class="text-muted-foreground text-sm mb-4">上架時間</p>
+        <p class="text-muted-foreground text-sm line-clamp-3">介紹</p>
       </div>
     </div>
     <div class="bg-background rounded-lg shadow-md overflow-hidden">
       <img
         src="/placeholder.svg"
-        alt="智能掃地機器人"
+        alt=""
         width="400"
         height="300"
         class="w-full h-48 object-cover"
         style="aspect-ratio: 400 / 300; object-fit: cover;"
       />
       <div class="p-4">
-        <h3 class="text-lg font-semibold mb-2">智能掃地機器人</h3>
-        <p class="text-primary font-bold mb-2">NT$899.00</p>
-        <p class="text-muted-foreground text-sm mb-4">上架時間: 03/01/2023</p>
-        <p class="text-muted-foreground text-sm line-clamp-3">自動規劃路徑,吸塵效果佳,大幅減輕家務負擔</p>
+        <h3 class="text-lg font-semibold mb-2">商品名稱</h3>
+        <p class="text-primary font-bold mb-2">價格</p>
+        <p class="text-muted-foreground text-sm mb-4">上架時間</p>
+        <p class="text-muted-foreground text-sm line-clamp-3">介紹</p>
       </div>
     </div>
   </div>

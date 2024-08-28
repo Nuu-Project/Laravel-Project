@@ -59,10 +59,10 @@
 
                         <p class="font-dark text-gray-400 text-md md:text-lg leading-normal mb-12">我們致力打造出一個能系上同學更方便買書的平台</p>
 
-                        <button class="px-6 py-4 bg-info font-semibold text-white text-lg rounded-xl hover:bg-blue-700 transition ease-in-out duration-500">Get started</button>
+                        <a href="/login" class="px-6 py-4 bg-info font-semibold text-white text-lg rounded-xl hover:bg-blue-700 transition ease-in-out duration-500">Get started</a>
                     </div>
 
-                    <div class="mt-15">
+                    <div class="mt-15 ">
                         <img class="" src="images/logofix.png" alt="Image">
                     </div>
                 </div>
@@ -150,88 +150,87 @@
 
             <div class="container max-w-screen-xl mx-auto px-4">
 
-                <h1 class="font-semibold text-gray-900 text-xl md:text-4xl text-center mb-16">功能介紹</h1>
+                <h1 class="font-semibold text-gray-900 text-xl md:text-4xl text-center mb-16">推薦書籍</h1>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
                     <div class="px-6 py-6 w-full border-2 border-gray-200 rounded-3xl">
-                        <img src="images/donation-1.png" alt="Image" class="mb-6 hover:opacity-75 transition ease-in-out duration-500">
+                        <img src="images/book-5.jpg" alt="Image" class="mb-6 hover:opacity-75 transition ease-in-out duration-500">
         
-                        <h4 class="font-semibold text-gray-900 text-lg md:text-2xl mb-6">Help flood victims in <br> Indonesia</h4>
+                        <h4 class="font-semibold text-gray-900 text-lg md:text-2xl mb-6">統計學 <br></h4>
         
-                        <p class="font-light text-gray-400 text-sm md:text-md lg:text-lg mb-10">Help flood victims in Indonesia by <br> donating sincerely, regardless of the...</p>
+                        <!-- <p class="font-light text-gray-400 text-sm md:text-md lg:text-lg mb-10">Help flood victims in Indonesia by <br> donating sincerely, regardless of the...</p> -->
         
                         <div class="flex items-center justify-between mb-8">
-                            <h6 class="font-light text-gray-400 text-sm md:text-lg">Goals : <span class="font-semibold text-gray-900 text-md md:text-lg">$25000</span></h6>
+                            <h6 class="font-black text-gray-600 text-sm md:text-lg">年級 : <span class="font-semibold text-gray-900 text-md md:text-lg">大二【上下】</span></h6>
         
-                            <h6 class="font-light text-gray-400 text-sm md:text-lg">Raised : <span class="font-semibold text-gray-900 text-md md:text-lg">$21000</span></h6>
+                            <h6 class="font-black text-gray-600 text-sm md:text-lg">課程 : <span class="font-semibold text-gray-900 text-md md:text-lg">必修</span></h6>
                         </div>
         
-                        <div class="hidden md:block lg:flex items-center justify-between mb-8">
+                        <!-- <div class="hidden md:block lg:flex items-center justify-between mb-8">
+                            <div>
+                                <div class="w-72 h-2 bg-info opacity-10 rounded-lg absolute"></div>
+        
+                                <div class="w-40 h-2 bg-info rounded-lg relative"></div>
+                            </div>
+        
+                            <p class="font-light text-gray-900 text-md">50%</p>
+                        </div> -->
+
+                        <a href="https://eshop.tsanghai.com.tw/products/ps0471pc" class="px-6 py-4 bg-info font-semibold text-white text-lg rounded-xl hover:bg-blue-700 transition ease-in-out duration-500">前往了解</a>                    </div>
+
+                    <div class="px-6 py-6 w-full border-2 border-gray-200 rounded-3xl">
+                        <img src="images/book-6.jpg" alt="Image" class="mb-6 hover:opacity-75 transition ease-in-out duration-500">
+        
+                        <h4 class="font-semibold text-gray-900 text-lg md:text-2xl mb-6">會計學<br></h4>
+        
+                        <!-- <p class="font-light text-gray-400 text-sm md:text-md lg:text-lg mb-10">Donation for COVID-19 in Indonesia by <br> donating sincerely, regardless of the...</p> -->
+        
+                        <div class="flex items-center justify-between mb-8">
+                            <h6 class="font-black text-gray-600 text-sm md:text-lg">年級 : <span class="font-semibold text-gray-900 text-md md:text-lg">大一【上】</span></h6>
+        
+                            <h6 class="font-black text-gray-600 text-sm md:text-lg">課程 : <span class="font-semibold text-gray-900 text-md md:text-lg">必修</span></h6>
+                        </div>
+        
+                        <!-- <div class="hidden md:block lg:flex items-center justify-between mb-8">
                             <div>
                                 <div class="w-72 h-2 bg-info opacity-10 rounded-lg absolute"></div>
         
                                 <div class="w-56 h-2 bg-info rounded-lg relative"></div>
                             </div>
         
-                            <p class="font-light text-gray-900 text-md">84%</p>
-                        </div>
-
-                        <button class="w-full py-4 bg-info font-semibold text-white text-lg rounded-xl hover:bg-blue-800 transition ease-in-out duration-500">Donate</button>
-                    </div>
-
-                    <div class="px-6 py-6 w-full border-2 border-gray-200 rounded-3xl">
-                        <img src="images/donation-2.png" alt="Image" class="mb-6 hover:opacity-75 transition ease-in-out duration-500">
-        
-                        <h4 class="font-semibold text-gray-900 text-lg md:text-2xl mb-6">Donation for COVID-19 in <br> Indonesia</h4>
-        
-                        <p class="font-light text-gray-400 text-sm md:text-md lg:text-lg mb-10">Donation for COVID-19 in Indonesia by <br> donating sincerely, regardless of the...</p>
-        
-                        <div class="flex items-center justify-between mb-8">
-                            <h6 class="font-light text-gray-400 text-sm md:text-lg">Goals : <span class="font-semibold text-gray-900 text-md md:text-lg">$24000</span></h6>
-        
-                            <h6 class="font-light text-gray-400 text-sm md:text-lg">Raised : <span class="font-semibold text-gray-900 text-md md:text-lg">$19000</span></h6>
-                        </div>
-        
-                        <div class="hidden md:block lg:flex items-center justify-between mb-8">
-                            <div>
-                                <div class="w-72 h-2 bg-info opacity-10 rounded-lg absolute"></div>
-        
-                                <div class="w-52 h-2 bg-info rounded-lg relative"></div>
-                            </div>
-        
                             <p class="font-light text-gray-900 text-md">80%</p>
-                        </div>
+                        </div> -->
 
-                        <button class="w-full py-4 bg-info font-semibold text-white text-lg rounded-xl hover:bg-blue-800 transition ease-in-out duration-500">Donate</button>
+                        <a href="https://www.tenlong.com.tw/products/9781119824237?list_name=srh" class="px-6 py-4 bg-info font-semibold text-white text-lg rounded-xl hover:bg-blue-700 transition ease-in-out duration-500">前往了解</a>
                     </div>
 
                     <div class="px-6 py-6 w-full border-2 border-gray-200 rounded-3xl">
-                        <img src="images/donation-3.png" alt="Image" class="mb-6 hover:opacity-75 transition ease-in-out duration-500">
+                        <img src="images/book-7.jpg" alt="Image" class="mb-6 hover:opacity-75 transition ease-in-out duration-500">
         
-                        <h4 class="font-semibold text-gray-900 text-lg md:text-2xl mb-6">Help homeless cat to find <br> home</h4>
+                        <h4 class="font-semibold text-gray-900 text-lg md:text-2xl mb-6">計算機概論</h4>
         
-                        <p class="font-light text-gray-400 text-sm md:text-md lg:text-lg mb-10">Help homeless cat and the oether <br> animals by donating sincerely regar...</p>
+                        <!-- <p class="font-light text-gray-400 text-sm md:text-md lg:text-lg mb-10">Help homeless cat and the oether <br> animals by donating sincerely regar...</p> -->
         
                         <div class="flex items-center justify-between mb-8">
-                            <h6 class="font-light text-gray-400 text-sm md:text-lg">Goals : <span class="font-semibold text-gray-900 text-md md:text-lg">$15000</span></h6>
+                            <h6 class="font-black text-gray-600 text-sm md:text-lg">年級 : <span class="font-semibold text-gray-900 text-md md:text-lg">大一【上】</span></h6>
         
-                            <h6 class="font-light text-gray-400 text-sm md:text-lg">Raised : <span class="font-semibold text-gray-900 text-md md:text-lg">$13000</span></h6>
+                            <h6 class="font-black text-gray-600 text-sm md:text-lg">課程 : <span class="font-semibold text-gray-900 text-md md:text-lg">必修</span></h6>
                         </div>
         
-                        <div class="hidden md:block lg:flex items-center justify-between mb-8">
+                        <!-- <div class="hidden md:block lg:flex items-center justify-between mb-8">
                             <div>
                                 <div class="w-72 h-2 bg-info opacity-10 rounded-lg absolute"></div>
         
-                                <div class="w-60 h-2 bg-info rounded-lg relative"></div>
+                                <div class="w-72 h-2 bg-info rounded-lg relative"></div>
                             </div>
         
-                            <p class="font-light text-gray-900 text-md">86%</p>
-                        </div>
+                            <p class="font-light text-gray-900 text-md">100%</p>
+                        </div> -->
 
-                        <button class="w-full py-4 bg-info font-semibold text-white text-lg rounded-xl hover:bg-blue-800 transition ease-in-out duration-500">Donate</button>
+                        <a href="https://www.tenlong.com.tw/products/9789579282543?list_name=srh" class="px-6 py-4 bg-info font-semibold text-white text-lg rounded-xl hover:bg-blue-700 transition ease-in-out duration-500">前往了解</a>
                     </div>
 
-                    <div class="px-6 py-6 w-full border-2 border-gray-200 rounded-3xl">
+                    <!-- <div class="px-6 py-6 w-full border-2 border-gray-200 rounded-3xl">
                         <img src="images/donation-4.png" alt="Image" class="mb-6 hover:opacity-75 transition ease-in-out duration-500">
         
                         <h4 class="font-semibold text-gray-900 text-lg md:text-2xl mb-6">Help save poor children in <br> Pakistan</h4>
@@ -308,7 +307,7 @@
 
                         <button class="w-full py-4 bg-info font-semibold text-white text-lg rounded-xl hover:bg-blue-800 transition ease-in-out duration-500">Donate</button>
                     </div>
-                </div>
+                </div> -->
 
                 <!-- <div class="flex items-center justify-center">
                     <button class="px-7 py-5 font-semibold bg-gray-100 text-gray-900 rounded-2xl hover:bg-gray-300 hover:text-gray-600 transition ease-in-out duration-500">More to donate</button>
@@ -420,10 +419,10 @@
 
                     <div class="space-y-7 mb-10 lg:mb-0">
                         <div class="flex justify-center lg:justify-start">
-                            <img src="images/footer-logo.png" alt="Image">
+                            <img src="images/book-4-fix.png" alt="Image">
                         </div>
                         
-                        <p class="font-light text-gray-400 text-md md:text-lg text-center lg:text-left">Donate and help others people <br> around the world</p>
+                        <p class="font-black text-gray-500 text-md md:text-xl mb-6 text-center lg:text-left">聯大二手書交易平台</p>
 
                         <div class="flex items-center justify-center lg:justify-start space-x-5">
                             <a href="#" class="px-3 py-3 bg-gray-200 text-gray-700 rounded-full hover:bg-info hover:text-white transition ease-in-out duration-500">
@@ -441,35 +440,35 @@
                     </div>
 
                     <div class="text-center lg:text-left space-y-7 mb-10 lg:mb-0">
-                        <h4 class="font-semibold text-gray-900 text-lg md:text-2xl">Quick links</h4>
+                        <h4 class="font-semibold text-gray-900 text-lg md:text-2xl">STEP.1</h4>
 
-                        <a href="#" class="block font-light text-gray-400 text-sm md:text-lg hover:text-gray-800 transition ease-in-out duration-300">Charity Ratings</a>
+                        <p class="block font-black text-gray-800 text-sm md:text-lg hover:text-gray-1000 transition ease-in-out duration-300">註冊帳戶</p>
 
-                        <a href="#" class="block font-light text-gray-400 text-sm md:text-lg hover:text-gray-800 transition ease-in-out duration-300">Top-Rated Charities</a>
+                        <p class="block font-black text-gray-800 text-sm md:text-lg hover:text-gray-1000 transition ease-in-out duration-300">登入帳戶</p>
 
-                        <a href="#" class="block font-light text-gray-400 text-sm md:text-lg hover:text-gray-800 transition ease-in-out duration-300">Top Compensation</a>
+                        <p class="block font-black text-gray-800 text-sm md:text-lg hover:text-gray-1000 transition ease-in-out duration-300">開始使用</p>
 
-                        <a href="#" class="block font-light text-gray-400 text-sm md:text-lg hover:text-gray-800 transition ease-in-out duration-300">High Asset Charities</a>
+                        <!-- <p class="block font-light text-gray-400 text-sm md:text-lg hover:text-gray-800 transition ease-in-out duration-300">About Us</p>   -->
                     </div>
 
                     <div class="text-center lg:text-left space-y-7 mb-10 lg:mb-0">
-                        <h4 class="font-semibold text-gray-900 text-lg md:text-2xl">Company</h4>
+                        <h4 class="font-semibold text-gray-900 text-lg md:text-2xl">STEP.2</h4>
 
-                        <a href="#" class="block font-light text-gray-400 text-sm md:text-lg hover:text-gray-800 transition ease-in-out duration-300">About Us</a>
+                        <p class="block font-black text-gray-800 text-sm md:text-lg hover:text-gray-1000 transition ease-in-out duration-300">點選菜單-商品</p>
 
-                        <a href="#" class="block font-light text-gray-400 text-sm md:text-lg hover:text-gray-800 transition ease-in-out duration-300">Journalists / Media</a>
+                        <p class="block font-black text-gray-800 text-sm md:text-lg hover:text-gray-1000 transition ease-in-out duration-300">瀏覽商品</p>
 
-                        <a href="#" class="block font-light text-gray-400 text-sm md:text-lg hover:text-gray-800 transition ease-in-out duration-300">Membership</a>
+                        <p class="block font-black text-gray-800 text-sm md:text-lg hover:text-gray-1000 transition ease-in-out duration-300">找到喜歡的書</p>
 
-                        <a href="#" class="block font-light text-gray-400 text-sm md:text-lg hover:text-gray-800 transition ease-in-out duration-300">Blog</a>
+                        <!-- <p class="block font-black text-gray-500 text-sm md:text-lg hover:text-gray-800 transition ease-in-out duration-300">購買</p> -->
                     </div>
 
                     <div class="text-center lg:text-left space-y-7 mb-10 lg:mb-0">
-                        <h4 class="font-semibold text-gray-900 text-lg md:text-2xl">Legal</h4>
+                        <h4 class="font-semibold text-gray-900 text-lg md:text-2xl">STEP.3</h4>
 
-                        <a href="#" class="block font-light text-gray-400 text-sm md:text-lg hover:text-gray-800 transition ease-in-out duration-300">FAQ</a>
+                        <p class="block font-black text-gray-800 text-sm md:text-lg hover:text-gray-1000 transition ease-in-out duration-300">私訊賣家</p>
 
-                        <a href="#" class="block font-light text-gray-400 text-sm md:text-lg hover:text-gray-800 transition ease-in-out duration-300">Terms & Conditions</a>
+                        <p class="block font-black text-gray-800 text-sm md:text-lg hover:text-gray-1000 transition ease-in-out duration-300">完成交易</p>
                     </div>
 
                 </div>
