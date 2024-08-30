@@ -27,27 +27,27 @@
                         <img src="images/book-4-fix.png" alt="Logo">
 
                         <button class="lg:hidden w-10 h-10 ml-auto flex items-center justify-center border border-blue-500 text-blue-500 rounded-md" @click="navbarOpen = !navbarOpen">
-                            <i data-feather="menu"></i>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
                         </button>
                     </div>
 
                     <ul class="lg:flex flex-col lg:flex-row lg:items-center lg:mx-auto lg:space-x-8 xl:space-x-14" :class="{'hidden':!navbarOpen,'flex':navbarOpen}">
                         <li class="font-semibold text-gray-900 hover:text-gray-400 transition ease-in-out duration-300 mb-5 lg:mb-0 text-2xl">
-                            <a href="/">首頁</a>
+                            <a href="/user_home">首頁</a>
                         </li>
                         <li class="font-semibold text-gray-900 hover:text-gray-400 transition ease-in-out duration-300 mb-5 lg:mb-0 text-2xl">
-                            <a href="/store">商品</a>
+                            <a href="/user_product">商品</a>
                         </li>
                         <li class="font-semibold text-gray-900 hover:text-gray-400 transition ease-in-out duration-300 mb-5 lg:mb-0 text-2xl">
-                            <a href="/add">刊登</a>
+                            <a href="/user_product_create">刊登</a>
                         </li>
                         <li class="font-semibold text-gray-900 hover:text-gray-400 transition ease-in-out duration-300 mb-5 lg:mb-0 text-2xl">
-                            <a href="/check">我的商品</a>
+                            <a href="/user_product_check">我的商品</a>
                         </li>
                     </ul>
 
                     <div class="lg:flex flex-col md:flex-row md:items-center text-center md:space-x-6" :class="{'hidden':!navbarOpen,'flex':navbarOpen}">
-                        <a href="/regist" class="px-6 py-4 bg-blue-500 text-white font-semibold text-lg rounded-xl hover:bg-blue-700 transition ease-in-out duration-500 mb-5 md:mb-0">註冊</a>
+                        <!-- <a href="/register" class="px-6 py-4 bg-blue-500 text-white font-semibold text-lg rounded-xl hover:bg-blue-700 transition ease-in-out duration-500 mb-5 md:mb-0">註冊</a> -->
 
                         <a href="/login" class="px-6 py-4 border-2 border-blue-500 text-blue-500 font-semibold text-lg rounded-xl hover:bg-blue-700 hover:text-white transition ease-linear duration-500">登入</a>
                     </div>
@@ -80,7 +80,7 @@
         <input
           class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
           id="name"
-          placeholder="Enter product name"
+          placeholder="請輸入書名"
         />
       </div>
       <div class="grid gap-2">
@@ -93,7 +93,7 @@
         <input
           class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
           id="price"
-          placeholder="Enter price"
+          placeholder="輸入價格"
           type="number"
         />
       </div>
@@ -149,16 +149,16 @@
         刊登商品
       </button>
     </form>
-    <div class="grid gap-6 md:grid-cols-2 items-start">
+    <!-- <div class="grid gap-6 md:grid-cols-2 items-start">
       <div>
         <img
-          src="images/book-3.jpg"
+          src=""
           alt="Ex"
           width="600"
           height="600"
           class="aspect-square object-cover border w-full rounded-lg overflow-hidden"
         />
-      </div>
+      </div> -->
     
 
     </body>
