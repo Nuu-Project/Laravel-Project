@@ -56,80 +56,98 @@
                     </div>
                 </nav>
 
-                <style>:root{--background:0 0% 100%;--foreground:240 10% 3.9%;--card:0 0% 100%;--card-foreground:240 10% 3.9%;--popover:0 0% 100%;--popover-foreground:240 10% 3.9%;--primary:240 5.9% 10%;--primary-foreground:0 0% 98%;--secondary:240 4.8% 95.9%;--secondary-foreground:240 5.9% 10%;--muted:240 4.8% 95.9%;--muted-foreground:240 3.8% 45%;--accent:240 4.8% 95.9%;--accent-foreground:240 5.9% 10%;--destructive:0 72% 51%;--destructive-foreground:0 0% 98%;--border:240 5.9% 90%;--input:240 5.9% 90%;--ring:240 5.9% 10%;--chart-1:173 58% 39%;--chart-2:12 76% 61%;--chart-3:197 37% 24%;--chart-4:43 74% 66%;--chart-5:27 87% 67%;--radius:0.5rem;}img[src="/placeholder.svg"],img[src="/placeholder-user.jpg"]{filter:sepia(.3) hue-rotate(-60deg) saturate(.5) opacity(0.8) }</style>
-<style>h1, h2, h3, h4, h5, h6 { font-family: 'Inter', sans-serif; --font-sans-serif: 'Inter'; }
-</style>
-<style>body { font-family: 'Inter', sans-serif; --font-sans-serif: 'Inter'; }
-</style>
-<div class="container mx-auto px-4 md:px-6 py-8">
-  <h1 class="text-2xl font-bold mb-6">我的商品</h1>
-  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-    <div class="bg-background rounded-lg shadow-md overflow-hidden">
-      <img
-        src="/placeholder.svg"
-        alt=""
-        width="400"
-        height="300"
-        class="w-full h-48 object-cover"
-        style="aspect-ratio: 400 / 300; object-fit: cover;"
-      />
-      <div class="p-4">
-        <h3 class="text-lg font-semibold mb-2">商品名稱</h3>
-        <p class="text-primary font-bold mb-2">價格</p>
-        <p class="text-muted-foreground text-sm mb-4">上架時間</p>
-        <p class="text-muted-foreground text-sm line-clamp-3">介紹</p>
+                <div class="flex flex-col w-full min-h-screen">
+  <main class="flex min-h-[calc(100vh_-_theme(spacing.16))] flex-1 flex-col gap-4 p-4 md:gap-8 md:p-10">
+    <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+      <div class="rounded-lg border bg-card text-card-foreground shadow-sm" data-v0-t="card">
+        <div class="space-y-1.5 p-6 flex flex-row items-center justify-between pb-2">
+          <h1 class="text-2xl">商品名稱:會計學</h1>
+          <span class="relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full">
+            <img class="aspect-square h-full w-full" alt="上架者" src="images/user.png" />
+          </span>
+        </div>
+        <div class="p-6">
+          <div class="text-2xl font-bold">$500</div>
+          <h1>上架時間: 2023/8/25</h1>
+          <p class="text-sm mt-2">這是大一必修的會計學課本</p>
+          <div class="mt-4">
+            <img
+              src="images/book-2.jpg"
+              alt="這是圖片"
+              width="1200"
+              height="900"
+              style="aspect-ratio: 900 / 1200; object-fit: cover;"
+              class="w-full rounded-md object-cover"
+            />
+        
+          </div>
+        </div>
+        <div class="flex items-center p-6">
+          <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 ml-auto">
+            購買
+          </button>
+        </div>
       </div>
-    </div>
-    <div class="bg-background rounded-lg shadow-md overflow-hidden">
-      <img
-        src="/placeholder.svg"
-        alt=""
-        width="400"
-        height="300"
-        class="w-full h-48 object-cover"
-        style="aspect-ratio: 400 / 300; object-fit: cover;"
-      />
-      <div class="p-4">
-        <h3 class="text-lg font-semibold mb-2">商品名稱</h3>
-        <p class="text-primary font-bold mb-2">價格</p>
-        <p class="text-muted-foreground text-sm mb-4">上架時間</p>
-        <p class="text-muted-foreground text-sm line-clamp-3">介紹</p>
+      <div class="rounded-lg border bg-card text-card-foreground shadow-sm" data-v0-t="card">
+        <div class="space-y-1.5 p-6 flex flex-row items-center justify-between pb-2">
+        <h1>商品名稱:統計學</h1>
+          <span class="relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full">
+            <img class="aspect-square h-full w-full" alt="上架者" src="images/user.png" />
+          </span>
+        </div>
+        <div class="p-6">
+          <div class="text-2xl font-bold">$600</div>
+          <h1>上架時間: 2023/8/24</h1>
+          <p class="text-sm mt-2">這是大二必修的統計學課本</p>
+          <div class="mt-4">
+            <img
+              src="images/book-1.jpg"
+              alt=""
+              width="1200"
+              height="900"
+              class="w-full rounded-md object-cover"
+              style="aspect-ratio: 900 / 1200; object-fit: cover;"
+            />
+            
+          </div>
+        </div>
+        <div class="flex items-center p-6">
+          <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 ml-auto">
+            購買
+          </button>
+        </div>
       </div>
-    </div>
-    <div class="bg-background rounded-lg shadow-md overflow-hidden">
-      <img
-        src="/placeholder.svg"
-        alt=""
-        width="400"
-        height="300"
-        class="w-full h-48 object-cover"
-        style="aspect-ratio: 400 / 300; object-fit: cover;"
-      />
-      <div class="p-4">
-        <h3 class="text-lg font-semibold mb-2">商品名稱</h3>
-        <p class="text-primary font-bold mb-2">價格</p>
-        <p class="text-muted-foreground text-sm mb-4">上架時間</p>
-        <p class="text-muted-foreground text-sm line-clamp-3">介紹</p>
+      <div class="rounded-lg border bg-card text-card-foreground shadow-sm" data-v0-t="card">
+        <div class="space-y-1.5 p-6 flex flex-row items-center justify-between pb-2">
+        <h1>商品名稱:範例</h1>
+          <span class="relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full">
+            <img class="aspect-square h-full w-full" alt="上架者" src="images/user.png" />
+          </span>
+        </div>
+        <div class="p-6">
+          <div class="text-2xl font-bold">$1800</div>
+          <h1>上架時間: 2023/8/21</h1>
+          <p class="text-sm mt-2">介紹範例</p>
+          <div class="mt-4">
+            <img
+              src="images/book-3.jpg"
+              alt=""
+              width="1200"
+              height="900"
+              class="w-full rounded-md object-cover"
+              style="aspect-ratio: 900 / 1200; object-fit: cover;"
+            />
+            
+          </div>
+        </div>
+        <div class="flex items-center p-6">
+          <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 ml-auto">
+            購買
+          </button>
+        </div>
       </div>
-    </div>
-    <div class="bg-background rounded-lg shadow-md overflow-hidden">
-      <img
-        src="/placeholder.svg"
-        alt=""
-        width="400"
-        height="300"
-        class="w-full h-48 object-cover"
-        style="aspect-ratio: 400 / 300; object-fit: cover;"
-      />
-      <div class="p-4">
-        <h3 class="text-lg font-semibold mb-2">商品名稱</h3>
-        <p class="text-primary font-bold mb-2">價格</p>
-        <p class="text-muted-foreground text-sm mb-4">上架時間</p>
-        <p class="text-muted-foreground text-sm line-clamp-3">介紹</p>
-      </div>
-    </div>
-  </div>
+      
+  </main>
 </div>
-
     </body>
 </html>
