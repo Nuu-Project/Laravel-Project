@@ -67,15 +67,15 @@
     <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
       <div class="rounded-lg border bg-card text-card-foreground shadow-sm" data-v0-t="card">
         <div class="space-y-1.5 p-6 flex flex-row items-center justify-between pb-2">
-          <h1>商品名稱:會計學</h1>
+        <h4 class="font-semibold text-2xl mb-2">商品名稱:會計學</h4>
           <span class="relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full">
             <img class="aspect-square h-full w-full" alt="上架者" src="images/user.png" />
           </span>
         </div>
         <div class="p-6">
           <div class="text-2xl font-bold">$500</div>
-          <h1>上架時間: 2023/8/25</h1>
-          <p class="text-sm mt-2">這是大一必修的會計學課本</p>
+          <h1 class="font-semibold">上架時間: 2023/8/25</h1>
+          <p class="font-semibold text-sm mt-2">這是大一必修的會計學課本</p>
           <div class="mt-4">
             <img
               src="images/book-2.jpg"
@@ -85,18 +85,17 @@
               style="aspect-ratio: 900 / 1200; object-fit: cover;"
               class="w-full rounded-md object-cover"
             />
-            <p>這是會計學</p>
           </div>
         </div>
         <div class="flex items-center p-6">
-          <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 ml-auto">
-            購買
-          </button>
+        <button class="inline-flex items-center justify-center whitespace-nowrap rounded-xl text-lg font-semibold ring-offset-background transition-colors ease-in-out duration-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-blue-500 text-white hover:bg-blue-700 h-10 px-3 py-2 ml-auto">
+            洽談
+        </button>
         </div>
       </div>
       <div class="rounded-lg border bg-card text-card-foreground shadow-sm" data-v0-t="card">
         <div class="space-y-1.5 p-6 flex flex-row items-center justify-between pb-2">
-        <h1>商品名稱:統計學</h1>
+        <h4 class="font-semibold text-2xl mb-2">商品名稱:統計學</h4>
           <span class="relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full">
             <img class="aspect-square h-full w-full" alt="上架者" src="images/user.png" />
           </span>
@@ -104,7 +103,7 @@
         <div class="p-6">
           <div class="text-2xl font-bold">$600</div>
           <h1>上架時間: 2023/8/24</h1>
-          <p class="text-sm mt-2">這是大二必修的統計學課本</p>
+          <p class="font-semibold text-sm mt-2">這是大二必修的統計學課本</p>
           <div class="mt-4">
             <img
               src="images/book-1.jpg"
@@ -113,27 +112,26 @@
               height="900"
               class="w-full rounded-md object-cover"
               style="aspect-ratio: 900 / 1200; object-fit: cover;"
-            />
-            <p class="text-sm text-muted-foreground mt-1">這是統計學</p>
+/>
           </div>
         </div>
         <div class="flex items-center p-6">
-          <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 ml-auto">
-            購買
-          </button>
+        <button class="inline-flex items-center justify-center whitespace-nowrap rounded-xl text-lg font-semibold ring-offset-background transition-colors ease-in-out duration-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-blue-500 text-white hover:bg-blue-700 h-10 px-3 py-2 ml-auto">
+            洽談
+        </button>
         </div>
       </div>
       <div class="rounded-lg border bg-card text-card-foreground shadow-sm" data-v0-t="card">
         <div class="space-y-1.5 p-6 flex flex-row items-center justify-between pb-2">
-        <h1>商品名稱:範例</h1>
+        <h4 class="font-semibold text-2xl mb-2">商品名稱:Android</h4>
           <span class="relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full">
             <img class="aspect-square h-full w-full" alt="上架者" src="images/user.png" />
           </span>
         </div>
         <div class="p-6">
           <div class="text-2xl font-bold">$1800</div>
-          <h1>上架時間: 2023/8/21</h1>
-          <p class="text-sm mt-2">介紹範例</p>
+          <h1 class="font-semibold">上架時間: 2023/8/21</h1>
+          <p class="font-semibold text-sm mt-2">介紹範例</p>
           <div class="mt-4">
             <img
               src="images/book-3.jpg"
@@ -143,13 +141,12 @@
               class="w-full rounded-md object-cover"
               style="aspect-ratio: 900 / 1200; object-fit: cover;"
             />
-            <p class="text-sm text-muted-foreground mt-1">圖片範例</p>
-          </div>
+        </div>
         </div>
         <div class="flex items-center p-6">
-          <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 ml-auto">
-            購買
-          </button>
+        <button class="inline-flex items-center justify-center whitespace-nowrap rounded-xl text-lg font-semibold ring-offset-background transition-colors ease-in-out duration-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-blue-500 text-white hover:bg-blue-700 h-10 px-3 py-2 ml-auto">
+            洽談
+        </button>
         </div>
       </div>
       

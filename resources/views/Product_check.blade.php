@@ -61,15 +61,15 @@
     <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
       <div class="rounded-lg border bg-card text-card-foreground shadow-sm" data-v0-t="card">
         <div class="space-y-1.5 p-6 flex flex-row items-center justify-between pb-2">
-          <h1 class="text-2xl">商品名稱:會計學</h1>
+        <h4 class="font-semibold text-2xl mb-2">商品名稱:會計學</h4>
           <span class="relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full">
             <img class="aspect-square h-full w-full" alt="上架者" src="images/user.png" />
           </span>
         </div>
         <div class="p-6">
           <div class="text-2xl font-bold">$500</div>
-          <h1>上架時間: 2023/8/25</h1>
-          <p class="text-sm mt-2">這是大一必修的會計學課本</p>
+          <h1 class="font-semibold">上架時間: 2023/8/25</h1>
+          <p class="font-semibold text-sm mt-2">這是大一必修的會計學課本</p>
           <div class="mt-4">
             <img
               src="images/book-2.jpg"
@@ -82,23 +82,33 @@
         
           </div>
         </div>
-        <div class="flex items-center p-6">
-          <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 ml-auto">
-            購買
-          </button>
+        <div class="flex justify-center space-x-4">
+            <button class="px-3 py-2 bg-info font-semibold text-white text-lg rounded-xl hover:bg-blue-700 transition ease-in-out duration-500">
+              上架
+            </button>
+            <button class="px-3 py-2 bg-info font-semibold text-white text-lg rounded-xl hover:bg-blue-700 transition ease-in-out duration-500">
+              下架
+            </button>
+            <button class="px-3 py-2 bg-info font-semibold text-white text-lg rounded-xl hover:bg-blue-700 transition ease-in-out duration-500">
+              編輯
+            </button>
+            <button class="px-3 py-2 bg-info font-semibold text-white text-lg rounded-xl hover:bg-blue-700 transition ease-in-out duration-500">
+              刪除
+            </button>
         </div>
-      </div>
+        </div>
+      
       <div class="rounded-lg border bg-card text-card-foreground shadow-sm" data-v0-t="card">
         <div class="space-y-1.5 p-6 flex flex-row items-center justify-between pb-2">
-        <h1>商品名稱:統計學</h1>
+        <h4 class="font-semibold text-2xl mb-2">商品名稱:統計學</h4>
           <span class="relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full">
             <img class="aspect-square h-full w-full" alt="上架者" src="images/user.png" />
           </span>
         </div>
         <div class="p-6">
           <div class="text-2xl font-bold">$600</div>
-          <h1>上架時間: 2023/8/24</h1>
-          <p class="text-sm mt-2">這是大二必修的統計學課本</p>
+          <h1 class="font-semibold">上架時間: 2023/8/24</h1>
+          <p class="font-semibold text-sm mt-2">這是大二必修的統計學課本</p>
           <div class="mt-4">
             <img
               src="images/book-1.jpg"
@@ -111,23 +121,34 @@
             
           </div>
         </div>
-        <div class="flex items-center p-6">
-          <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 ml-auto">
-            購買
-          </button>
+
+        <div class="flex justify-center space-x-4 center">
+        <button class="px-3 py-2 bg-info font-semibold text-white text-lg rounded-xl hover:bg-blue-700 transition ease-in-out duration-500">
+              上架
+            </button>
+            <button class="px-3 py-2 bg-info font-semibold text-white text-lg rounded-xl hover:bg-blue-700 transition ease-in-out duration-500">
+              下架
+            </button>
+            <button class="px-3 py-2 bg-info font-semibold text-white text-lg rounded-xl hover:bg-blue-700 transition ease-in-out duration-500">
+              編輯
+            </button>
+            <button class="px-3 py-2 bg-info font-semibold text-white text-lg rounded-xl hover:bg-blue-700 transition ease-in-out duration-500">
+              刪除
+            </button>
         </div>
       </div>
+
       <div class="rounded-lg border bg-card text-card-foreground shadow-sm" data-v0-t="card">
         <div class="space-y-1.5 p-6 flex flex-row items-center justify-between pb-2">
-        <h1>商品名稱:範例</h1>
-          <span class="relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full">
+        <h4 class="font-semibold text-2xl mb-2">商品名稱:Android</h4>
+          <span class="relative flex h-10  w-10 shrink-0 overflow-hidden rounded-full">
             <img class="aspect-square h-full w-full" alt="上架者" src="images/user.png" />
           </span>
         </div>
-        <div class="p-6">
+        <div class="p-5">
           <div class="text-2xl font-bold">$1800</div>
-          <h1>上架時間: 2023/8/21</h1>
-          <p class="text-sm mt-2">介紹範例</p>
+          <h1 class="font-semibold">上架時間: 2023/8/21</h1>
+          <p class="font-semibold text-sm mt-2">介紹範例</p>
           <div class="mt-4">
             <img
               src="images/book-3.jpg"
@@ -140,10 +161,19 @@
             
           </div>
         </div>
-        <div class="flex items-center p-6">
-          <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 ml-auto">
-            購買
-          </button>
+        <div class="flex justify-center space-x-4 center">
+        <button class="px-3 py-2 bg-info font-semibold text-white text-lg rounded-xl hover:bg-blue-700 transition ease-in-out duration-500">
+              上架
+            </button>
+            <button class="px-3 py-2 bg-info font-semibold text-white text-lg rounded-xl hover:bg-blue-700 transition ease-in-out duration-500">
+              下架
+            </button>
+            <button class="px-3 py-2 bg-info font-semibold text-white text-lg rounded-xl hover:bg-blue-700 transition ease-in-out duration-500">
+              編輯
+            </button>
+            <button class="px-3 py-2 bg-info font-semibold text-white text-lg rounded-xl hover:bg-blue-700 transition ease-in-out duration-500">
+              刪除
+            </button>
         </div>
       </div>
       
