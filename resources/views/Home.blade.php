@@ -56,21 +56,6 @@
                     
                     </div>
                 </nav>
-
-                <div class="flex flex-col lg:flex-row justify-between space-x-20">
-                    <div class="text-center lg:text-left mt-40">
-                        <h1 class="font-semibold text-gray-900 text-3xl md:text-6xl leading-normal mb-6">  聯大資管系 <br> 二手書交易平台</h1>
-
-                        <p class="font-dark text-gray-400 text-md md:text-lg leading-normal mb-12">我們致力打造出一個能系上同學更方便買書的平台</p>
-
-                        <a href="/login" class="px-6 py-4 bg-info font-semibold text-white text-lg rounded-xl hover:bg-blue-700 transition ease-in-out duration-500">Get started</a>
-                    </div>
-
-                    <div class="mt-15 ">
-                        <img class="" src="images/logofix.png" alt="Image">
-                    </div>
-                </div>
-            </div> <!-- container.// -->
         </section>
         
 
