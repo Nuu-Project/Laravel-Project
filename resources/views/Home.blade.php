@@ -81,10 +81,7 @@
                     <p class="font-black text-gray-500 text-md md:text-xl mb-6">沒有繁瑣的流程，一切步驟都經過精簡</p>
 
                     <div class="flex justify-center">
-                        <!-- <a href="#" class="flex items-center gap-5 px-6 py-4 font-semibold text-info text-lg rounded-xl hover:bg-info hover:text-white transition ease-linear duration-500">
-                                Learn more 
-                                <i data-feather="chevron-right"></i> -->
-                        </a>
+                    </a>
                     </div>
                 </div>
 
@@ -100,10 +97,6 @@
                     <p class="font-black text-gray-500 text-md md:text-xl mb-6">在這裡刊登二手書的商品，都是資管系可能或必須用到的書</p>
 
                     <div class="flex justify-center">
-                        <!-- <a href="#" class="flex items-center gap-5 px-6 py-4 font-semibold text-info text-lg rounded-xl hover:bg-info hover:text-white transition ease-linear duration-500">
-                                Learn more 
-                                <i data-feather="chevron-right"></i>
-                            </a> -->
                     </div>
                 </div>
 
@@ -220,10 +213,7 @@
                     <p class="block font-black text-gray-800 text-sm md:text-lg hover:text-gray-1000 transition ease-in-out duration-300">登入帳戶</p>
 
                     <p class="block font-black text-gray-800 text-sm md:text-lg hover:text-gray-1000 transition ease-in-out duration-300">開始使用</p>
-
-                    <!-- <p class="block font-light text-gray-400 text-sm md:text-lg hover:text-gray-800 transition ease-in-out duration-300">About Us</p>   -->
                 </div>
-
                 <div class="text-center lg:text-left space-y-7 mb-10 lg:mb-0">
                     <h4 class="font-semibold text-gray-900 text-lg md:text-2xl">STEP.2</h4>
 
@@ -232,10 +222,7 @@
                     <p class="block font-black text-gray-800 text-sm md:text-lg hover:text-gray-1000 transition ease-in-out duration-300">瀏覽商品</p>
 
                     <p class="block font-black text-gray-800 text-sm md:text-lg hover:text-gray-1000 transition ease-in-out duration-300">找到喜歡的書</p>
-
-                    <!-- <p class="block font-black text-gray-500 text-sm md:text-lg hover:text-gray-800 transition ease-in-out duration-300">購買</p> -->
                 </div>
-
                 <div class="text-center lg:text-left space-y-7 mb-10 lg:mb-0">
                     <h4 class="font-semibold text-gray-900 text-lg md:text-2xl">STEP.3</h4>
 
