@@ -33,10 +33,10 @@
 
                 <ul class="lg:flex flex-col lg:flex-row lg:items-center lg:mx-auto lg:space-x-8 xl:space-x-14" :class="{'hidden':!navbarOpen,'flex':navbarOpen}">
                     <li class="font-semibold text-gray-900 hover:text-gray-400 transition ease-in-out duration-300 mb-5 lg:mb-0 text-2xl">
-                        <a href="/">首頁s</a>
+                        <a href="/">首頁</a>
                     </li>
                     <li class="font-semibold text-gray-900 hover:text-gray-400 transition ease-in-out duration-300 mb-5 lg:mb-0 text-2xl">
-                        <a href="/user-product">商品</a>
+                        <a href="/products">商品</a>
                     </li>
                     <li class="font-semibold text-gray-900 hover:text-gray-400 transition ease-in-out duration-300 mb-5 lg:mb-0 text-2xl">
                         <a href="/user-product-create">刊登</a>
@@ -145,12 +145,12 @@
                             <div class="space-y-1.5 p-6 flex flex-row items-center justify-between pb-2">
                                 <h4 class="font-semibold text-2xl mb-2">商品名稱:會計學</h4>
                                 <span class="relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full">
-                                    <img class="aspect-square h-full w-full" alt="上架者" src="images/user.png" />
+                                    <!-- <img class="aspect-square h-full w-full" alt="上架者" src="images/user.png" /> -->
                                 </span>
                             </div>
                             <div class="p-6">
                                 <div class="text-2xl font-bold">$500</div>
-                                <div><h1>用戶名稱:{{ Auth::user()->name }}</h1></div>
+                                <div><h1 class="font-semibold">用戶名稱:{{ Auth::user()->name }}</h1></div>
                                 <h1 class="font-semibold">上架時間: 2023/8/25</h1>
                                 <p class="font-semibold text-sm mt-2">這是大一必修的會計學課本</p>
                                 <div class="mt-4">
@@ -167,13 +167,13 @@
                             <div class="space-y-1.5 p-6 flex flex-row items-center justify-between pb-2">
                                 <h4 class="font-semibold text-2xl mb-2">商品名稱:統計學</h4>
                                 <span class="relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full">
-                                    <img class="aspect-square h-full w-full" alt="上架者" src="images/user.png" />
+                                    <!-- <img class="aspect-square h-full w-full" alt="上架者" src="images/user.png" /> -->
                                 </span>
                             </div>
                             <div class="p-6">
                                 <div class="text-2xl font-bold">$600</div>
-                                <div><h1>用戶名稱:{{ Auth::user()->name }}</h1></div>
-                                <h1>上架時間: 2023/8/24</h1>
+                                <div><h1 class="font-semibold">用戶名稱:{{ Auth::user()->name }}</h1></div>
+                                <h1 class="font-semibold">上架時間: 2023/8/25</h1>
                                 <p class="font-semibold text-sm mt-2">這是大二必修的統計學課本</p>
                                 <div class="mt-4">
                                     <img src="images/book-1.jpg" alt="" width="1200" height="900" class="w-full rounded-md object-cover" style="aspect-ratio: 900 / 1200; object-fit: cover;" />
@@ -189,12 +189,12 @@
                             <div class="space-y-1.5 p-6 flex flex-row items-center justify-between pb-2">
                                 <h4 class="font-semibold text-2xl mb-2">商品名稱:Android</h4>
                                 <span class="relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full">
-                                    <img class="aspect-square h-full w-full" alt="上架者" src="images/user.png" />
+                                    <!-- <img class="aspect-square h-full w-full" alt="上架者" src="images/user.png" /> -->
                                 </span>
                             </div>
                             <div class="p-6">
                                 <div class="text-2xl font-bold">$1800</div>
-                                <div><h1>用戶名稱:{{ Auth::user()->name }}</h1></div>
+                                <div><h1 class="font-semibold">用戶名稱:{{ Auth::user()->name }}</h1></div>
                                 <h1 class="font-semibold">上架時間: 2023/8/21</h1>
                                 <p class="font-semibold text-sm mt-2">介紹範例</p>
                                 <div class="mt-4">

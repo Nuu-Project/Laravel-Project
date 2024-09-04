@@ -14,7 +14,7 @@ Route::get('/product', function () {
 });
 
 //共用: product
-Route::get('/user-product', function () { 
+Route::get('/products', function () { 
     return view('Product-user');
 });
 
