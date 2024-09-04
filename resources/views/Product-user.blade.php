@@ -33,16 +33,16 @@
 
                 <ul class="lg:flex flex-col lg:flex-row lg:items-center lg:mx-auto lg:space-x-8 xl:space-x-14" :class="{'hidden':!navbarOpen,'flex':navbarOpen}">
                     <li class="font-semibold text-gray-900 hover:text-gray-400 transition ease-in-out duration-300 mb-5 lg:mb-0 text-2xl">
-                        <a href="/user_home">首頁</a>
+                        <a href="/">首頁s</a>
                     </li>
                     <li class="font-semibold text-gray-900 hover:text-gray-400 transition ease-in-out duration-300 mb-5 lg:mb-0 text-2xl">
-                        <a href="/user_product">商品</a>
+                        <a href="/user-product">商品</a>
                     </li>
                     <li class="font-semibold text-gray-900 hover:text-gray-400 transition ease-in-out duration-300 mb-5 lg:mb-0 text-2xl">
-                        <a href="/user_product_create">刊登</a>
+                        <a href="/user-product-create">刊登</a>
                     </li>
                     <li class="font-semibold text-gray-900 hover:text-gray-400 transition ease-in-out duration-300 mb-5 lg:mb-0 text-2xl">
-                        <a href="/user_product_check">我的商品</a>
+                        <a href="/user-product-check">我的商品</a>
                     </li>
                 </ul>
 
@@ -51,7 +51,8 @@
                     <x-dropdown align="right" width="48">
                         <x-slot name="trigger">
                             <button class="inline-flex items-center px-3 py-2 border border-transparent text-3xl leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
-                                <div>{{ Auth::user()->name }}</div>
+                                <img width="65" height="65" src="images/account.png" alt="">
+                                    <div>{{ Auth::user()->name }}</div>
 
                                 <div class="ms-1">
                                     <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
@@ -84,11 +85,6 @@
             </nav>
             <!-- </div> -->
             <!-- </section> -->
-
-            <!--
-// v0 by Vercel.
-// https://v0.dev/t/flglOIfHmoI
--->
 
             <style>
                 :root {
@@ -141,44 +137,80 @@
                     --font-sans-serif: 'Inter';
                 }
             </style>
-            <div class="max-w-2xl mx-auto px-4 py-8 md:px-6 md:py-12">
-                <div class="grid gap-6 md:gap-8">
-                    <div class="grid gap-2">
-                        <h1 class="text-3xl font-bold">新增刊登商品</h1>
-                        <p class="text-muted-foreground">請依照下順序進行填寫，照片上傳張數最多五張。</p>
-                    </div>
-                    <form class="grid gap-6">
-                        <div class="grid gap-2">
-                            <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70" for="name">
-                                書名
-                            </label>
-                            <input class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50" id="name" placeholder="請輸入書名" />
-                        </div>
-                        <div class="grid gap-2">
-                            <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70" for="price">
-                                價格
-                            </label>
-                            <input class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50" id="price" placeholder="輸入價格" type="number" />
-                        </div>
 
-                        <div class="grid gap-2">
-                            <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70" for="description">
-                                商品介紹
-                            </label>
-                            <textarea class="flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50" id="description" placeholder="請填寫有關該書的書況or使用情況等等~~" rows="4"></textarea>
-                        </div>
-                        <div class="grid gap-2">
-                            <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70" for="image">
-                                上傳圖片
-                            </label>
-                            <div class="flex items-center gap-4">
-                                <input class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50" id="image" type="file" />
+            <div class="flex flex-col w-full min-h-screen">
+                <main class="flex min-h-[calc(100vh_-_theme(spacing.16))] flex-1 flex-col gap-4 p-4 md:gap-8 md:p-10">
+                    <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+                        <div class="rounded-lg border bg-card text-card-foreground shadow-sm" data-v0-t="card">
+                            <div class="space-y-1.5 p-6 flex flex-row items-center justify-between pb-2">
+                                <h4 class="font-semibold text-2xl mb-2">商品名稱:會計學</h4>
+                                <span class="relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full">
+                                    <img class="aspect-square h-full w-full" alt="上架者" src="images/user.png" />
+                                </span>
+                            </div>
+                            <div class="p-6">
+                                <div class="text-2xl font-bold">$500</div>
+                                <div><h1>用戶名稱:{{ Auth::user()->name }}</h1></div>
+                                <h1 class="font-semibold">上架時間: 2023/8/25</h1>
+                                <p class="font-semibold text-sm mt-2">這是大一必修的會計學課本</p>
+                                <div class="mt-4">
+                                    <img src="images/book-2.jpg" alt="這是圖片" width="1200" height="900" style="aspect-ratio: 900 / 1200; object-fit: cover;" class="w-full rounded-md object-cover" />
+                                </div>
+                            </div>
+                            <div class="flex items-center p-6">
+                                <button class="inline-flex items-center justify-center whitespace-nowrap rounded-xl text-lg font-semibold ring-offset-background transition-colors ease-in-out duration-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-blue-500 text-white hover:bg-blue-700 h-10 px-3 py-2 ml-auto">
+                                    洽談
+                                </button>
                             </div>
                         </div>
-                        <button class="inline-flex items-center justify-center whitespace-nowrap rounded-xl text-lg font-semibold ring-offset-background transition-colors ease-in-out duration-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-blue-500 text-white hover:bg-blue-700 h-11 px-8" type="submit">
-                            刊登商品
-                        </button>
-                    </form>
+                        <div class="rounded-lg border bg-card text-card-foreground shadow-sm" data-v0-t="card">
+                            <div class="space-y-1.5 p-6 flex flex-row items-center justify-between pb-2">
+                                <h4 class="font-semibold text-2xl mb-2">商品名稱:統計學</h4>
+                                <span class="relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full">
+                                    <img class="aspect-square h-full w-full" alt="上架者" src="images/user.png" />
+                                </span>
+                            </div>
+                            <div class="p-6">
+                                <div class="text-2xl font-bold">$600</div>
+                                <div><h1>用戶名稱:{{ Auth::user()->name }}</h1></div>
+                                <h1>上架時間: 2023/8/24</h1>
+                                <p class="font-semibold text-sm mt-2">這是大二必修的統計學課本</p>
+                                <div class="mt-4">
+                                    <img src="images/book-1.jpg" alt="" width="1200" height="900" class="w-full rounded-md object-cover" style="aspect-ratio: 900 / 1200; object-fit: cover;" />
+                                </div>
+                            </div>
+                            <div class="flex items-center p-6">
+                                <button class="inline-flex items-center justify-center whitespace-nowrap rounded-xl text-lg font-semibold ring-offset-background transition-colors ease-in-out duration-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-blue-500 text-white hover:bg-blue-700 h-10 px-3 py-2 ml-auto">
+                                    洽談
+                                </button>
+                            </div>
+                        </div>
+                        <div class="rounded-lg border bg-card text-card-foreground shadow-sm" data-v0-t="card">
+                            <div class="space-y-1.5 p-6 flex flex-row items-center justify-between pb-2">
+                                <h4 class="font-semibold text-2xl mb-2">商品名稱:Android</h4>
+                                <span class="relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full">
+                                    <img class="aspect-square h-full w-full" alt="上架者" src="images/user.png" />
+                                </span>
+                            </div>
+                            <div class="p-6">
+                                <div class="text-2xl font-bold">$1800</div>
+                                <div><h1>用戶名稱:{{ Auth::user()->name }}</h1></div>
+                                <h1 class="font-semibold">上架時間: 2023/8/21</h1>
+                                <p class="font-semibold text-sm mt-2">介紹範例</p>
+                                <div class="mt-4">
+                                    <img src="images/book-3.jpg" alt="" width="1200" height="900" class="w-full rounded-md object-cover" style="aspect-ratio: 900 / 1200; object-fit: cover;" />
+                                </div>
+                            </div>
+                            <div class="flex items-center p-6">
+                                <button class="inline-flex items-center justify-center whitespace-nowrap rounded-xl text-lg font-semibold ring-offset-background transition-colors ease-in-out duration-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-blue-500 text-white hover:bg-blue-700 h-10 px-3 py-2 ml-auto">
+                                    洽談
+                                </button>
+                            </div>
+                        </div>
+
+                </main>
+            </div>
+
 </body>
 
 </html>
