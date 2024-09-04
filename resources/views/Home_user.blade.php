@@ -107,13 +107,13 @@
 
                     <p class="font-black text-gray-500 text-md md:text-xl mb-6">沒有繁瑣的流程，一切步驟都經過精簡</p>
 
-                    <div class="flex justify-center">
-                        <!-- <a href="#" class="flex items-center gap-5 px-6 py-4 font-semibold text-info text-lg rounded-xl hover:bg-info hover:text-white transition ease-linear duration-500">
+                        <div class="flex justify-center">
+                            <!-- <a href="#" class="flex items-center gap-5 px-6 py-4 font-semibold text-info text-lg rounded-xl hover:bg-info hover:text-white transition ease-linear duration-500">
                                 Learn more 
                                 <i data-feather="chevron-right"></i> -->
-                        </a>
+                            </a>
+                        </div>
                     </div>
-                </div>
 
                 <div class="text-center">
                     <div class="flex justify-center mb-6">
@@ -165,30 +165,16 @@
         <div class="container max-w-screen-xl mx-auto px-4">
 
             <h1 class="font-semibold text-gray-900 text-xl md:text-4xl text-center mb-16">推薦書籍</h1>
-
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
                 <div class="px-6 py-6 w-full border-2 border-gray-200 rounded-3xl">
                     <img src="images/book-5.jpg" alt="Image" class="mb-6 hover:opacity-75 transition ease-in-out duration-500">
 
                     <h4 class="font-semibold text-gray-900 text-lg md:text-2xl mb-6">統計學 <br></h4>
-
-                    <!-- <p class="font-light text-gray-400 text-sm md:text-md lg:text-lg mb-10">Help flood victims in Indonesia by <br> donating sincerely, regardless of the...</p> -->
-
                     <div class="flex items-center justify-between mb-8">
                         <h6 class="font-black text-gray-600 text-sm md:text-lg">年級 : <span class="font-semibold text-gray-900 text-md md:text-lg">大二【上下】</span></h6>
 
                         <h6 class="font-black text-gray-600 text-sm md:text-lg">課程 : <span class="font-semibold text-gray-900 text-md md:text-lg">必修</span></h6>
                     </div>
-
-                    <!-- <div class="hidden md:block lg:flex items-center justify-between mb-8">
-                            <div>
-                                <div class="w-72 h-2 bg-info opacity-10 rounded-lg absolute"></div>
-        
-                                <div class="w-40 h-2 bg-info rounded-lg relative"></div>
-                            </div>
-        
-                            <p class="font-light text-gray-900 text-md">50%</p>
-                        </div> -->
 
                     <a href="https://eshop.tsanghai.com.tw/products/ps0471pc" class="px-6 py-4 bg-info font-semibold text-white text-lg rounded-xl hover:bg-blue-700 transition ease-in-out duration-500">前往了解</a>
                 </div>
@@ -198,23 +184,12 @@
 
                     <h4 class="font-semibold text-gray-900 text-lg md:text-2xl mb-6">會計學<br></h4>
 
-                    <!-- <p class="font-light text-gray-400 text-sm md:text-md lg:text-lg mb-10">Donation for COVID-19 in Indonesia by <br> donating sincerely, regardless of the...</p> -->
 
                     <div class="flex items-center justify-between mb-8">
                         <h6 class="font-black text-gray-600 text-sm md:text-lg">年級 : <span class="font-semibold text-gray-900 text-md md:text-lg">大一【上】</span></h6>
 
                         <h6 class="font-black text-gray-600 text-sm md:text-lg">課程 : <span class="font-semibold text-gray-900 text-md md:text-lg">必修</span></h6>
                     </div>
-
-                    <!-- <div class="hidden md:block lg:flex items-center justify-between mb-8">
-                            <div>
-                                <div class="w-72 h-2 bg-info opacity-10 rounded-lg absolute"></div>
-        
-                                <div class="w-56 h-2 bg-info rounded-lg relative"></div>
-                            </div>
-        
-                            <p class="font-light text-gray-900 text-md">80%</p>
-                        </div> -->
 
                     <a href="https://www.tenlong.com.tw/products/9781119824237?list_name=srh" class="px-6 py-4 bg-info font-semibold text-white text-lg rounded-xl hover:bg-blue-700 transition ease-in-out duration-500">前往了解</a>
                 </div>
@@ -244,189 +219,9 @@
 
                     <a href="https://www.tenlong.com.tw/products/9789579282543?list_name=srh" class="px-6 py-4 bg-info font-semibold text-white text-lg rounded-xl hover:bg-blue-700 transition ease-in-out duration-500">前往了解</a>
                 </div>
-
-                <!-- <div class="px-6 py-6 w-full border-2 border-gray-200 rounded-3xl">
-                        <img src="images/donation-4.png" alt="Image" class="mb-6 hover:opacity-75 transition ease-in-out duration-500">
-        
-                        <h4 class="font-semibold text-gray-900 text-lg md:text-2xl mb-6">Help save poor children in <br> Pakistan</h4>
-        
-                        <p class="font-light text-gray-400 text-sm md:text-md lg:text-lg mb-10">Help save poor children in Pakistas by <br> donating sincerely, regardless of the...</p>
-        
-                        <div class="flex items-center justify-between mb-8">
-                            <h6 class="font-light text-gray-400 text-sm md:text-lg">Goals : <span class="font-semibold text-gray-900 text-md md:text-lg">$75000</span></h6>
-        
-                            <h6 class="font-light text-gray-400 text-sm md:text-lg">Raised : <span class="font-semibold text-gray-900 text-md md:text-lg">$50000</span></h6>
-                        </div>
-        
-                        <div class="hidden md:block lg:flex items-center justify-between mb-8">
-                            <div>
-                                <div class="w-72 h-2 bg-info opacity-10 rounded-lg absolute"></div>
-        
-                                <div class="w-48 h-2 bg-info rounded-lg relative"></div>
-                            </div>
-        
-                            <p class="font-light text-gray-900 text-md">66%</p>
-                        </div>
-
-                        <button class="w-full py-4 bg-info font-semibold text-white text-lg rounded-xl hover:bg-blue-800 transition ease-in-out duration-500">Donate</button>
-                    </div>
-
-                    <div class="px-6 py-6 w-full border-2 border-gray-200 rounded-3xl">
-                        <img src="images/donation-5.png" alt="Image" class="mb-6 hover:opacity-75 transition ease-in-out duration-500">
-        
-                        <h4 class="font-semibold text-gray-900 text-lg md:text-2xl mb-6">Lifeskills for children in <br> South Africa</h4>
-        
-                        <p class="font-light text-gray-400 text-sm md:text-md lg:text-lg mb-10">Donating for children in South Africa <br> by donating sincerely, regardless of...</p>
-        
-                        <div class="flex items-center justify-between mb-8">
-                            <h6 class="font-light text-gray-400 text-sm md:text-lg">Goals : <span class="font-semibold text-gray-900 text-md md:text-lg">$45000</span></h6>
-        
-                            <h6 class="font-light text-gray-400 text-sm md:text-lg">Raised : <span class="font-semibold text-gray-900 text-md md:text-lg">$22500</span></h6>
-                        </div>
-        
-                        <div class="hidden md:block lg:flex items-center justify-between mb-8">
-                            <div>
-                                <div class="w-72 h-2 bg-info opacity-10 rounded-lg absolute"></div>
-        
-                                <div class="w-36 h-2 bg-info rounded-lg relative"></div>
-                            </div>
-        
-                            <p class="font-light text-gray-900 text-md">50%</p>
-                        </div>
-
-                        <button class="w-full py-4 bg-info font-semibold text-white text-lg rounded-xl hover:bg-blue-800 transition ease-in-out duration-500">Donate</button>
-                    </div>
-
-                    <div class="px-6 py-6 w-full border-2 border-gray-200 rounded-3xl">
-                        <img src="images/donation-6.png" alt="Image" class="mb-6 hover:opacity-75 transition ease-in-out duration-500">
-        
-                        <h4 class="font-semibold text-gray-900 text-lg md:text-2xl mb-6">Help donate for children <br> with cancer</h4>
-        
-                        <p class="font-light text-gray-400 text-sm md:text-md lg:text-lg mb-10">Help donate for the children with <br> cancer by donating sincerely, regar...</p>
-        
-                        <div class="flex items-center justify-between mb-8">
-                            <h6 class="font-light text-gray-400 text-sm md:text-lg">Goals : <span class="font-semibold text-gray-900 text-md md:text-lg">$50000</span></h6>
-        
-                            <h6 class="font-light text-gray-400 text-sm md:text-lg">Raised : <span class="font-semibold text-gray-900 text-md md:text-lg">$13000</span></h6>
-                        </div>
-        
-                        <div class="hidden md:block lg:flex items-center justify-between mb-8">
-                            <div>
-                                <div class="w-72 h-2 bg-info opacity-10 rounded-lg absolute"></div>
-        
-                                <div class="w-20 h-2 bg-info rounded-lg relative"></div>
-                            </div>
-        
-                            <p class="font-light text-gray-900 text-md">26%</p>
-                        </div>
-
-                        <button class="w-full py-4 bg-info font-semibold text-white text-lg rounded-xl hover:bg-blue-800 transition ease-in-out duration-500">Donate</button>
-                    </div>
-                </div> -->
-
-                <!-- <div class="flex items-center justify-center">
-                    <button class="px-7 py-5 font-semibold bg-gray-100 text-gray-900 rounded-2xl hover:bg-gray-300 hover:text-gray-600 transition ease-in-out duration-500">More to donate</button>
-                </div> -->
-
             </div> <!-- container.// -->
 
     </section>
-    <!-- donation section //end -->
-
-    <!-- feature section -->
-    <!-- <section class="bg-white py-16">
-
-            <div class="container max-w-screen-xl mx-auto px-4">
-
-                <div class="flex flex-col lg:flex-row justify-between space-x-16">
-                    <div class="flex justify-center lg:justify-start">
-                        <img src="images/feature-img.png" alt="Image">
-                    </div>
-        
-                    <div class="mt-16">
-                        <h1 class="font-semibold text-gray-900 text-xl md:text-4xl mb-20">You can help lots of people by <br> donating</h1>
-        
-                        <div class="grid grid-cols-1 md:grid-cols-2 md:space-x-20 mb-16">
-                            <div class="mb-5 md:mb-0">
-                                <div class="w-20 py-6 flex justify-center bg-info bg-opacity-5 rounded-xl mb-4">
-                                    <i data-feather="sun" class="text-info"></i>
-                                </div>
-            
-                                <h3 class="font-semibold text-gray-900 text-xl md:text-3xl mb-4">10000+</h3>
-            
-                                <p class="font-light text-gray-400 text-md md:text-lg">Fundraising campaign in <br> all time</p>
-                            </div>
-            
-                            <div>
-                                <div class="w-20 py-6 flex justify-center bg-red-500 bg-opacity-5 rounded-xl mb-4">
-                                    <i data-feather="award" class="text-red-500"></i>
-                                </div>
-            
-                                <h3 class="font-semibold text-gray-900 text-xl md:text-3xl mb-4">$120M+</h3>
-            
-                                <p class="font-light text-gray-400 text-md md:text-lg">Raised and counting <br> donations in all time</p>
-                            </div>
-                        </div>
-        
-                        <div class="grid grid-cols-1 md:grid-cols-2 md:space-x-20">
-                            <div class="mb-5 md:mb-0">
-                                <div class="w-20 py-6 flex justify-center bg-yellow-500 bg-opacity-5 rounded-xl mb-4">
-                                    <i data-feather="users" class="text-yellow-500"></i>
-                                </div>
-            
-                                <h3 class="font-semibold text-gray-900 text-xl md:text-3xl mb-4">1200+</h3>
-            
-                                <p class="font-light text-gray-400 text-md md:text-lg">Our volunteer around the <br> world</p>
-                            </div>
-            
-                            <div>
-                                <div class="w-20 py-6 flex justify-center bg-green-500 bg-opacity-5 rounded-xl mb-4">
-                                    <i data-feather="trending-up" class="text-green-500"></i>
-                                </div>
-            
-                                <h3 class="font-semibold text-gray-900 text-xl md:text-3xl mb-4">98%</h3>
-            
-                                <p class="font-light text-gray-400 text-md md:text-lg">Positive review from <br> public</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div> container.//
-
-        </section>
-        feature section //end -->
-
-    <!-- join volunters section -->
-    <!-- <section class="bg-white py-16">
-
-            <div class="container max-w-screen-xl mx-auto px-4">
-
-                <div class="w-full h-full bg-blue-500 rounded-2xl md:rounded-3xl relative lg:flex items-center">
-                    <div class="hidden lg:block">
-                        <img src="images/humans.png" alt="Image" class="relative z-10">
-
-                        <img src="images/pattern-2.png" alt="Image" class="absolute top-14 left-40">
-
-                        <img src="images/pattern.png" alt="Image" class="absolute top-0 z-0">
-                    </div>
-
-                    <div class="lg:relative py-4 lg:py-0">
-                        <h1 class="font-semibold text-white text-xl md:text-4xl text-center lg:text-left leading-normal md:mb-5 lg:mb-10">Interested in volunteering? Join <br> with us now</h1>
-
-                        <div class="hidden md:block flex items-center text-center lg:text-left space-x-5">
-                            <input type="text" placeholder="Email" class="px-4 py-4 w-96 bg-gray-50 placeholder-gray-400 rounded-xl outline-none">
-
-                            <button class="px-6 py-4 font-semibold bg-gray-50 text-info text-lg rounded-xl hover:bg-blue-500 hover:text-white transition ease-in-out duration-500">Join</button>
-                        </div>
-                    </div>
-                </div>
-
-            </div> container.//
-
-        </section>
-        join volunters section //end -->
-
     <footer class="bg-white py-16">
 
         <div class="container max-w-screen-xl mx-auto px-4">
