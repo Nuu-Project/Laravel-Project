@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Spatie\Tags\Tag;
 
 class ProductController extends Controller
 {
@@ -20,7 +22,8 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        $tags = Tag::all();
+        return view('Product-create', compact('tags'));
     }
 
     /**
@@ -28,7 +31,33 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // $request->validate([
+        //     'name' => ['required','string','max:50'],
+        //     'price' => ['required','numeric','max:10'],
+        //     'description' => ['nullable','string'],
+        // ]);
+
+        $user = Auth::user(); 
+
+        $product = new Product();
+        $product->user()->associate($user);
+        $product->name = $request->input('name');
+        $product->price = $request->input('price');
+        $product->description = $request->input('description');
+        $product->save();
+
+        // 添加圖片
+        if ($request->hasFile('image')) {
+            $product->addMedia($request->file('image'))->toMediaCollection('images');
+        }
+
+        // 添加標籤
+        // $tagIds = $request->input('tags'); // 獲取選中的標籤 ID
+        // $tags = Tag::find($tagIds);
+        // $product->attachTags($tags);
+
+
+        return redirect()->route('products.create');
     }
 
     /**
