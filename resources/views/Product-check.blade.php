@@ -33,16 +33,16 @@
 
                 <ul class="lg:flex flex-col lg:flex-row lg:items-center lg:mx-auto lg:space-x-8 xl:space-x-14" :class="{'hidden':!navbarOpen,'flex':navbarOpen}">
                     <li class="font-semibold text-gray-900 hover:text-gray-400 transition ease-in-out duration-300 mb-5 lg:mb-0 text-2xl">
-                        <a href="/user_home">首頁</a>
+                        <a href="/">首頁</a>
                     </li>
                     <li class="font-semibold text-gray-900 hover:text-gray-400 transition ease-in-out duration-300 mb-5 lg:mb-0 text-2xl">
-                        <a href="/user_product">商品</a>
+                        <a href="/products">商品</a>
                     </li>
                     <li class="font-semibold text-gray-900 hover:text-gray-400 transition ease-in-out duration-300 mb-5 lg:mb-0 text-2xl">
-                        <a href="/user_product_create">刊登</a>
+                        <a href="/user-product-create">刊登</a>
                     </li>
                     <li class="font-semibold text-gray-900 hover:text-gray-400 transition ease-in-out duration-300 mb-5 lg:mb-0 text-2xl">
-                        <a href="/user_product_check">我的商品</a>
+                        <a href="/user-product-check">我的商品</a>
                     </li>
                 </ul>
 
@@ -51,7 +51,8 @@
                     <x-dropdown align="right" width="48">
                         <x-slot name="trigger">
                             <button class="inline-flex items-center px-3 py-2 border border-transparent text-3xl leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
-                                <div>{{ Auth::user()->name }}</div>
+                                <img width="65" height="65" src="images/account.png" alt="">
+                                    <div>{{ Auth::user()->name }}</div>
 
                                 <div class="ms-1">
                                     <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">

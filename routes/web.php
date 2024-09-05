@@ -8,33 +8,28 @@ Route::get('/', function () {
     return view('Home');
 });
 
-//已登入首頁
-Route::get('/user_home', function () {
-    return view('Home_user');
-});
-
 //共用: product
 Route::get('/product', function () { 
     return view('Product');
 });
 
 //共用: product
-Route::get('/user_product', function () { 
-    return view('Product_user');
+Route::get('/products', function () { 
+    return view('Product-user');
 });
 
 //登入: product_create
-Route::get('/user_product_create', function () {
-    return view('Product_create');
+Route::get('/user-product-create', function () {
+    return view('Product-create');
 });
 
 //登入: 查看用戶刊登商品
-Route::get('/user_product_check', function () {
-    return view('Product_check');
+Route::get('/user-product-check', function () {
+    return view('Product-check');
 });
 
 Route::get('/dashboard', function () {
-    return view('Home_user');
+    return view('Home');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
@@ -42,6 +37,5 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
-
 
 require __DIR__.'/auth.php';

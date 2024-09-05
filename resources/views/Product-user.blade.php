@@ -33,16 +33,16 @@
 
                 <ul class="lg:flex flex-col lg:flex-row lg:items-center lg:mx-auto lg:space-x-8 xl:space-x-14" :class="{'hidden':!navbarOpen,'flex':navbarOpen}">
                     <li class="font-semibold text-gray-900 hover:text-gray-400 transition ease-in-out duration-300 mb-5 lg:mb-0 text-2xl">
-                        <a href="/user_home">首頁</a>
+                        <a href="/">首頁</a>
                     </li>
                     <li class="font-semibold text-gray-900 hover:text-gray-400 transition ease-in-out duration-300 mb-5 lg:mb-0 text-2xl">
-                        <a href="/user_product">商品</a>
+                        <a href="/products">商品</a>
                     </li>
                     <li class="font-semibold text-gray-900 hover:text-gray-400 transition ease-in-out duration-300 mb-5 lg:mb-0 text-2xl">
-                        <a href="/user_product_create">刊登</a>
+                        <a href="/user-product-create">刊登</a>
                     </li>
                     <li class="font-semibold text-gray-900 hover:text-gray-400 transition ease-in-out duration-300 mb-5 lg:mb-0 text-2xl">
-                        <a href="/user_product_check">我的商品</a>
+                        <a href="/user-product-check">我的商品</a>
                     </li>
                 </ul>
 
@@ -51,7 +51,8 @@
                     <x-dropdown align="right" width="48">
                         <x-slot name="trigger">
                             <button class="inline-flex items-center px-3 py-2 border border-transparent text-3xl leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
-                                <div>{{ Auth::user()->name }}</div>
+                                <img width="65" height="65" src="images/account.png" alt="">
+                                    <div>{{ Auth::user()->name }}</div>
 
                                 <div class="ms-1">
                                     <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
@@ -144,11 +145,12 @@
                             <div class="space-y-1.5 p-6 flex flex-row items-center justify-between pb-2">
                                 <h4 class="font-semibold text-2xl mb-2">商品名稱:會計學</h4>
                                 <span class="relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full">
-                                    <img class="aspect-square h-full w-full" alt="上架者" src="images/user.png" />
+                                    <!-- <img class="aspect-square h-full w-full" alt="上架者" src="images/user.png" /> -->
                                 </span>
                             </div>
                             <div class="p-6">
                                 <div class="text-2xl font-bold">$500</div>
+                                <div><h1 class="font-semibold">用戶名稱:{{ Auth::user()->name }}</h1></div>
                                 <h1 class="font-semibold">上架時間: 2023/8/25</h1>
                                 <p class="font-semibold text-sm mt-2">這是大一必修的會計學課本</p>
                                 <div class="mt-4">
@@ -165,12 +167,13 @@
                             <div class="space-y-1.5 p-6 flex flex-row items-center justify-between pb-2">
                                 <h4 class="font-semibold text-2xl mb-2">商品名稱:統計學</h4>
                                 <span class="relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full">
-                                    <img class="aspect-square h-full w-full" alt="上架者" src="images/user.png" />
+                                    <!-- <img class="aspect-square h-full w-full" alt="上架者" src="images/user.png" /> -->
                                 </span>
                             </div>
                             <div class="p-6">
                                 <div class="text-2xl font-bold">$600</div>
-                                <h1>上架時間: 2023/8/24</h1>
+                                <div><h1 class="font-semibold">用戶名稱:{{ Auth::user()->name }}</h1></div>
+                                <h1 class="font-semibold">上架時間: 2023/8/25</h1>
                                 <p class="font-semibold text-sm mt-2">這是大二必修的統計學課本</p>
                                 <div class="mt-4">
                                     <img src="images/book-1.jpg" alt="" width="1200" height="900" class="w-full rounded-md object-cover" style="aspect-ratio: 900 / 1200; object-fit: cover;" />
@@ -186,11 +189,12 @@
                             <div class="space-y-1.5 p-6 flex flex-row items-center justify-between pb-2">
                                 <h4 class="font-semibold text-2xl mb-2">商品名稱:Android</h4>
                                 <span class="relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full">
-                                    <img class="aspect-square h-full w-full" alt="上架者" src="images/user.png" />
+                                    <!-- <img class="aspect-square h-full w-full" alt="上架者" src="images/user.png" /> -->
                                 </span>
                             </div>
                             <div class="p-6">
                                 <div class="text-2xl font-bold">$1800</div>
+                                <div><h1 class="font-semibold">用戶名稱:{{ Auth::user()->name }}</h1></div>
                                 <h1 class="font-semibold">上架時間: 2023/8/21</h1>
                                 <p class="font-semibold text-sm mt-2">介紹範例</p>
                                 <div class="mt-4">
