@@ -101,7 +101,7 @@ class TagSeeder extends Seeder
         ];
 
         foreach ($tags as $tagData) {
-            $tag = Tag::findOrCreate($tagData['name'], $tagData['type'], $tagData['slug'], $tagData['order_column']);
+            $tag = Tag::tagFindOrCreate($tagData['name'], $tagData['type'], $tagData['slug'], $tagData['order_column']);
         }
     }
 }
