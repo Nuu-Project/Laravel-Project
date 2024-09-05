@@ -137,20 +137,52 @@
                     --font-sans-serif: 'Inter';
                 }
             </style>
-
+            <style>:root{--background:0 0% 100%;--foreground:240 10% 3.9%;--card:0 0% 100%;--card-foreground:240 10% 3.9%;--popover:0 0% 100%;--popover-foreground:240 10% 3.9%;--primary:240 5.9% 10%;--primary-foreground:0 0% 98%;--secondary:240 4.8% 95.9%;--secondary-foreground:240 5.9% 10%;--muted:240 4.8% 95.9%;--muted-foreground:240 3.8% 45%;--accent:240 4.8% 95.9%;--accent-foreground:240 5.9% 10%;--destructive:0 72% 51%;--destructive-foreground:0 0% 98%;--border:240 5.9% 90%;--input:240 5.9% 90%;--ring:240 5.9% 10%;--chart-1:173 58% 39%;--chart-2:12 76% 61%;--chart-3:197 37% 24%;--chart-4:43 74% 66%;--chart-5:27 87% 67%;--radius:0.5rem;}img[src="/placeholder.svg"],img[src="/placeholder-user.jpg"]{filter:sepia(.3) hue-rotate(-60deg) saturate(.5) opacity(0.8) }</style>
+<style>h1, h2, h3, h4, h5, h6 { font-family: 'Inter', sans-serif; --font-sans-serif: 'Inter'; }
+</style>
+<style>body { font-family: 'Inter', sans-serif; --font-sans-serif: 'Inter'; }
+</style>
+<style>:root{--background:0 0% 100%;--foreground:240 10% 3.9%;--card:0 0% 100%;--card-foreground:240 10% 3.9%;--popover:0 0% 100%;--popover-foreground:240 10% 3.9%;--primary:240 5.9% 10%;--primary-foreground:0 0% 98%;--secondary:240 4.8% 95.9%;--secondary-foreground:240 5.9% 10%;--muted:240 4.8% 95.9%;--muted-foreground:240 3.8% 45%;--accent:240 4.8% 95.9%;--accent-foreground:240 5.9% 10%;--destructive:0 72% 51%;--destructive-foreground:0 0% 98%;--border:240 5.9% 90%;--input:240 5.9% 90%;--ring:240 5.9% 10%;--chart-1:173 58% 39%;--chart-2:12 76% 61%;--chart-3:197 37% 24%;--chart-4:43 74% 66%;--chart-5:27 87% 67%;--radius:0.5rem;}img[src="/placeholder.svg"],img[src="/placeholder-user.jpg"]{filter:sepia(.3) hue-rotate(-60deg) saturate(.5) opacity(0.8) }</style>
+<style>h1, h2, h3, h4, h5, h6 { font-family: 'Inter', sans-serif; --font-sans-serif: 'Inter'; }
+</style>
+<style>body { font-family: 'Inter', sans-serif; --font-sans-serif: 'Inter'; }
+</style>
+<div class="flex flex-wrap gap-2 justify-center">
+  <a
+    class="bg-gray text-primary-foreground px-4 py-2 rounded-md hover:text-blue-400 transition ease-in-out duration-300"
+    href="#"
+  >
+    #Clothing
+  </a>
+  <a
+    class="bg-gray text-primary-foreground px-4 py-2 rounded-md hover:text-blue-400 transition ease-in-out duration-300"
+    href="#"
+  >
+    #Clothing
+  </a>
+  <a
+    class="bg-gray text-primary-foreground px-4 py-2 rounded-md hover:text-blue-400 transition ease-in-out duration-300"
+    href="#"
+  >
+    #Clothing
+  </a>
+  <a
+    class="bg-gray text-primary-foreground px-4 py-2 rounded-md hover:text-blue-400 transition ease-in-out duration-300"
+    href="#"
+  >
+    #Clothing
+  </a>
+</div>
             <div class="flex flex-col w-full min-h-screen">
                 <main class="flex min-h-[calc(100vh_-_theme(spacing.16))] flex-1 flex-col gap-4 p-4 md:gap-8 md:p-10">
                     <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
                         <div class="rounded-lg border bg-card text-card-foreground shadow-sm" data-v0-t="card">
-                            <div class="space-y-1.5 p-6 flex flex-row items-center justify-between pb-2">
+                            <div class="space-y-1.5 p-6">
                                 <h4 class="font-semibold text-2xl mb-2">商品名稱:會計學</h4>
-                                <span class="relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full">
-                                    <!-- <img class="aspect-square h-full w-full" alt="上架者" src="images/user.png" /> -->
-                                </span>
+                                <div><h1 class="font-semibold">用戶名稱:{{ Auth::user()->name }}</h1></div>
                             </div>
                             <div class="p-6">
                                 <div class="text-2xl font-bold">$500</div>
-                                <div><h1 class="font-semibold">用戶名稱:{{ Auth::user()->name }}</h1></div>
                                 <h1 class="font-semibold">上架時間: 2023/8/25</h1>
                                 <p class="font-semibold text-sm mt-2">這是大一必修的會計學課本</p>
                                 <div class="mt-4">
@@ -164,15 +196,12 @@
                             </div>
                         </div>
                         <div class="rounded-lg border bg-card text-card-foreground shadow-sm" data-v0-t="card">
-                            <div class="space-y-1.5 p-6 flex flex-row items-center justify-between pb-2">
+                            <div class="space-y-1.5 p-6">
                                 <h4 class="font-semibold text-2xl mb-2">商品名稱:統計學</h4>
-                                <span class="relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full">
-                                    <!-- <img class="aspect-square h-full w-full" alt="上架者" src="images/user.png" /> -->
-                                </span>
+                                <div><h1 class="font-semibold">用戶名稱:{{ Auth::user()->name }}</h1></div>
                             </div>
                             <div class="p-6">
                                 <div class="text-2xl font-bold">$600</div>
-                                <div><h1 class="font-semibold">用戶名稱:{{ Auth::user()->name }}</h1></div>
                                 <h1 class="font-semibold">上架時間: 2023/8/25</h1>
                                 <p class="font-semibold text-sm mt-2">這是大二必修的統計學課本</p>
                                 <div class="mt-4">
@@ -186,15 +215,13 @@
                             </div>
                         </div>
                         <div class="rounded-lg border bg-card text-card-foreground shadow-sm" data-v0-t="card">
-                            <div class="space-y-1.5 p-6 flex flex-row items-center justify-between pb-2">
+                            <div class="space-y-1.5 p-6">
                                 <h4 class="font-semibold text-2xl mb-2">商品名稱:Android</h4>
-                                <span class="relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full">
-                                    <!-- <img class="aspect-square h-full w-full" alt="上架者" src="images/user.png" /> -->
-                                </span>
+                                <div><h1 class="font-semibold">用戶名稱:{{ Auth::user()->name }}</h1></div>
                             </div>
+                            
                             <div class="p-6">
                                 <div class="text-2xl font-bold">$1800</div>
-                                <div><h1 class="font-semibold">用戶名稱:{{ Auth::user()->name }}</h1></div>
                                 <h1 class="font-semibold">上架時間: 2023/8/21</h1>
                                 <p class="font-semibold text-sm mt-2">介紹範例</p>
                                 <div class="mt-4">
