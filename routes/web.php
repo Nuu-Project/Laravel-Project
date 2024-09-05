@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Route;
 //訪客首頁
 Route::get('/', function () {
     return view('Home');
-});
+})->middleware(['auth', 'verified'])->name('dashboard');
 
 //共用: product
 Route::get('/product', function () { 
@@ -27,10 +27,6 @@ Route::get('/user-product-create', function () {
 Route::get('/user-product-check', function () {
     return view('Product-check');
 });
-
-Route::get('/dashboard', function () {
-    return view('Home');
-})->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
