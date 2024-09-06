@@ -10,9 +10,11 @@ Route::get('/', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 //共用: product
-Route::get('/product', function () { 
-    return view('Product');
-});
+// Route::get('/product', function () { 
+//     return view('Product');
+// });
+
+Route::get('/product', [ProductController::class, 'index'])->name('products.index');
 
 //共用: product
 Route::get('/products', function () { 
