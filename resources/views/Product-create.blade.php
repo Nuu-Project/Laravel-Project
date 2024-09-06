@@ -13,6 +13,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js" integrity="sha512-7x3zila4t2qNycrtZ31HO0NnJr8kg2VI67YLoRSyi9hGhRN66FHYWr7Axa9Y1J9tGYHVBPqIjSE1ogHrJTz51g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>     <!--  圖片預覽  -->
 </head>
 
 <body class="font-body">
@@ -142,6 +143,20 @@
                     --font-sans-serif: 'Inter';
                 }
             </style>
+            <!-- 圖片預覽 -->
+            <script>
+                $(document).ready(function() {
+                    $('#image').change(function() {
+                        let reader = new FileReader();
+                        reader.onload = (e) => {
+                            $('#preview').attr('src', e.target.result).show();
+                        }
+                        reader.readAsDataURL(this.files[0]);
+                    });
+                });
+            </script>
+            <!-- 圖片預覽 -->
+
             <div class="max-w-2xl mx-auto px-4 py-8 md:px-6 md:py-12">
                 <div class="grid gap-6 md:gap-8">
                     <div class="grid gap-2">
@@ -176,6 +191,11 @@
                             <div class="flex items-center gap-4">
                                 <input class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50" id="image" name="image" type="file" />
                             </div>
+                            <!-- 圖片預覽 -->
+                            <br>
+                            <img id="preview" src="#" alt="你的圖片預覽" style="display: none; max-width: 300px;">
+                            <br>
+                            <!-- 圖片預覽 -->
                         </div>
                         <button class="inline-flex items-center justify-center whitespace-nowrap rounded-xl text-lg font-semibold ring-offset-background transition-colors ease-in-out duration-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-blue-500 text-white hover:bg-blue-700 h-11 px-8" type="submit">
                             刊登商品
