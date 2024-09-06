@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Route;
 //訪客首頁
 Route::get('/', function () {
     return view('Home');
-})->middleware(['auth', 'verified'])->name('dashboard');
+});
 
 //共用: product
 Route::get('/product', function () { 
@@ -36,4 +36,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::get('/dashboard', function () {
+    return view('Home');
+})->middleware(['auth', 'verified'])->name('dashboard');
 require __DIR__.'/auth.php';
