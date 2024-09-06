@@ -112,27 +112,41 @@
             <div class="flex flex-col w-full min-h-screen">
                 <main class="flex min-h-[calc(100vh_-_theme(spacing.16))] flex-1 flex-col gap-4 p-4 md:gap-8 md:p-10">
                     <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-                        <div class="rounded-lg border bg-card text-card-foreground shadow-sm" data-v0-t="card">
-                            <div class="space-y-1.5 p-6 flex flex-row items-center justify-between pb-2">
-                                <h4 class="font-semibold text-2xl mb-2">商品名稱:會計學</h4>
-                                <span class="relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full">
-                                    <img class="aspect-square h-full w-full" alt="上架者" src="images/user.png" />
-                                </span>
-                            </div>
-                            <div class="p-6">
-                                <div class="text-2xl font-bold">$500</div>
-                                <h1 class="font-semibold">上架時間: 2023/8/25</h1>
-                                <p class="font-semibold text-sm mt-2">這是大一必修的會計學課本</p>
-                                <div class="mt-4">
-                                    <img src="images/book-2.jpg" alt="這是圖片" width="1200" height="900" style="aspect-ratio: 900 / 1200; object-fit: cover;" class="w-full rounded-md object-cover" />
+                        @foreach($products as $product)
+                            <div class="rounded-lg border bg-card text-card-foreground shadow-sm" data-v0-t="card">
+                                <div class="space-y-1.5 p-6 flex flex-row items-center justify-between pb-2">
+                                    <h4 class="font-semibold text-2xl mb-2">商品名稱:{{$product->name}}</h4>
+                                    <div><h1 class="font-semibold">用戶名稱:{{ $product->user->name }}</h1></div>
+                                    <span class="relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full">
+                                        <img class="aspect-square h-full w-full" alt="上架者" src="images/user.png" />
+                                    </span>
+                                </div>
+                                <div class="p-6">
+                                    <div class="text-2xl font-bold">${{$product->price}}</div>
+                                    <h1 class="font-semibold">上架時間: {{$product->updated_at->format('Y/m/d')}}</h1>
+                                    <p class="font-semibold text-sm mt-2">{{$product->description}}</p>
+                                    <div class="mt-4">
+                                        @if($product->media->isNotEmpty())
+                                            @php
+                                                $media = $product->getFirstMedia('images');
+                                            @endphp
+                                            @if($media)
+                                                <img src="{{ asset('images/' . $media->file_name) }}" alt="這是圖片" width="1200" height="900" style="aspect-ratio: 900 / 1200; object-fit: cover;" class="w-full rounded-md object-cover" />
+                                            @else
+                                            <div>沒圖片</div>
+                                            @endif
+                                        @else
+                                            <div>沒有圖片</div>
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="flex items-center p-6">
+                                    <button class="inline-flex items-center justify-center whitespace-nowrap rounded-xl text-lg font-semibold ring-offset-background transition-colors ease-in-out duration-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-blue-500 text-white hover:bg-blue-700 h-10 px-3 py-2 ml-auto">
+                                        洽談
+                                    </button>
                                 </div>
                             </div>
-                            <div class="flex items-center p-6">
-                                <button class="inline-flex items-center justify-center whitespace-nowrap rounded-xl text-lg font-semibold ring-offset-background transition-colors ease-in-out duration-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-blue-500 text-white hover:bg-blue-700 h-10 px-3 py-2 ml-auto">
-                                    洽談
-                                </button>
-                            </div>
-                        </div>
+                        @endforeach
                         <div class="rounded-lg border bg-card text-card-foreground shadow-sm" data-v0-t="card">
                             <div class="space-y-1.5 p-6 flex flex-row items-center justify-between pb-2">
                                 <h4 class="font-semibold text-2xl mb-2">商品名稱:統計學</h4>

@@ -10,9 +10,11 @@ Route::get('/', function () {
 });
 
 //共用: product
-Route::get('/product', function () { 
-    return view('Product');
-});
+// Route::get('/product', function () { 
+//     return view('Product');
+// });
+
+Route::get('/product', [ProductController::class, 'index'])->name('products.index');
 
 //共用: product
 Route::get('/products', function () { 
@@ -26,9 +28,10 @@ Route::get('/user-product-create', [ProductController::class, 'create'])->name('
 Route::post('/user-product-create', [ProductController::class, 'store'])->name('products.store');
 
 //登入: 查看用戶刊登商品
-Route::get('/user-product-check', function () {
-    return view('Product-check');
-});
+// Route::get('/user-product-check', function () {
+//     return view('Product-check');
+// });
+Route::get('/user-product-check', [ProductController::class, 'index'])->name('products.check');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
