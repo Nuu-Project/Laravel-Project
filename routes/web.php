@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 
 //訪客首頁
@@ -19,9 +20,10 @@ Route::get('/products', function () {
 });
 
 //登入: product_create
-Route::get('/user-product-create', function () {
-    return view('Product-create');
-});
+Route::get('/user-product-create', [ProductController::class, 'create'])->name('products.create');
+
+//送出表單: product_create
+Route::post('/user-product-create', [ProductController::class, 'store'])->name('products.store');
 
 //登入: 查看用戶刊登商品
 Route::get('/user-product-check', function () {
