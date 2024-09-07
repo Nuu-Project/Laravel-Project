@@ -12,13 +12,27 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      */
+    // public function index(Request $request)
+    // {
+    //     $userId = Auth::user()->id;
+    //     $products = Product::with(['media', 'user'])->get();
+    //     if ($request->routeIs('products.index')) {
+    //         return view('product', compact('products'));
+    //     }elseif($request->routeIs('products.check')){  
+    //         return view('product-check', compact('products'));
+    //     }
+    // }
     public function index(Request $request)
     {
+        $userId = Auth::user()->id;
         $products = Product::with(['media', 'user'])->get();
         if ($request->routeIs('products.index')) {
             return view('product', compact('products'));
         }elseif($request->routeIs('products.check')){  
-            return view('product-check', compact('products'));
+            $userProducts = Product::with(['media', 'user'])
+            ->where('user_id', $userId)
+            ->get();
+            return view('product-check', compact('userProducts'));
         }
     }
     /**
