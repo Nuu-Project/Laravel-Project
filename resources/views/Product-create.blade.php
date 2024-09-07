@@ -179,6 +179,43 @@
                         </div>
 
                         <div class="grid gap-2">
+                            <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70" for="userTown">
+                                            年級
+                            </label>
+                        <select id="userTown" class="flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50">
+                        <option selected>選擇適用的年級...</option>
+                            <option>一年級</option>
+                            <option>二年級</option>
+                            <option>三年級</option>
+                            <option>四年級</option>
+                            <option>其他</option>
+                        </select>
+                        </div>
+
+                        <div class="grid gap-2">
+                            <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70" for="userTown">
+                                            學期
+                            </label>
+                        <select id="userTown" class="flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50">
+                        <option selected>學期</option>
+                            <option>上學期</option>
+                            <option>下學期</option>
+                        </select>
+                        </div>
+
+                        <div class="grid gap-2">
+                            <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70" for="userTown">
+                                            類別
+                            </label>
+                        <select id="userTown" class="flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50">
+                        <option selected>課程類別</option>
+                            <option>必修</option>
+                            <option>選修</option>
+                            <option>其他</option>
+                        </select>
+                        </div>
+
+                        <div class="grid gap-2">
                             <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70" for="description">
                                 商品介紹
                             </label>
