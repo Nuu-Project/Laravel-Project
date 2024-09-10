@@ -16,10 +16,7 @@ Route::get('/', function () {
 
 Route::get('/product', [ProductController::class, 'index'])->name('products.index');
 
-//共用: product
-Route::get('/products', function () { 
-    return view('Product-user');
-});
+
 
 //登入: product_create
 Route::get('/user-product-create', [ProductController::class, 'create'])->name('products.create');
@@ -32,6 +29,12 @@ Route::post('/user-product-create', [ProductController::class, 'store'])->name('
 //     return view('Product-check');
 // });
 Route::get('/user-product-check', [ProductController::class, 'index'])->name('products.check');
+
+Route::get('/user-product-info', [ProductController::class, 'index'])->name('products.info');
+
+// Route::get('/product-info', function () {
+//     return view('Product-info');
+// });
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
