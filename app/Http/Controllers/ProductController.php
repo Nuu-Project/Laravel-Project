@@ -27,7 +27,7 @@ class ProductController extends Controller
         $userId = Auth::user()->id;
         $products = Product::with(['media', 'user'])->get();
         if ($request->routeIs('products.index')) {
-            return view('product', compact('products'));
+            return view('Product', compact('products'));
         }elseif($request->routeIs('products.check')){  
             $userProducts = Product::with(['media', 'user'])
             ->where('user_id', $userId)
@@ -49,11 +49,11 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        // $request->validate([
-        //     'name' => ['required','string','max:50'],
-        //     'price' => ['required','numeric','max:10'],
-        //     'description' => ['nullable','string'],
-        // ]);
+        $request->validate([
+            'name' => ['required','string','max:50'],
+            'price' => ['required','numeric','max:10'],
+            'description' => ['nullable','string'],
+        ]);
 
         $user = Auth::user(); 
 

@@ -40,13 +40,13 @@
             <a href="/">首頁</a>
         </li>
         <li class="font-semibold text-gray-900 hover:text-gray-400 transition ease-in-out duration-300 mb-5 lg:mb-0 text-2xl">
-            <a href="/products">商品</a>
+            <a href="{{route('products.index')}}">商品</a>
         </li>
         <li class="font-semibold text-gray-900 hover:text-gray-400 transition ease-in-out duration-300 mb-5 lg:mb-0 text-2xl">
             <a href="/user-product-create">刊登</a>
         </li>
         <li class="font-semibold text-gray-900 hover:text-gray-400 transition ease-in-out duration-300 mb-5 lg:mb-0 text-2xl">
-            <a href="/user-product-check">我的商品</a>
+            <a href="{{route('products.check')}}">我的商品</a>
         </li>  
     </ul>
     @else
@@ -235,11 +235,15 @@
 
                 <div class="text-center lg:text-left space-y-7 mb-10 lg:mb-0">
                     <h4 class="font-semibold text-gray-900 text-lg md:text-2xl">STEP.1</h4>
+                @auth
+                    <a href="/" class="block font-black text-gray-800 text-sm md:text-lg hover:text-gray-1000 transition ease-in-out duration-300">註冊帳戶</a>
 
-                    <p class="block font-black text-gray-800 text-sm md:text-lg hover:text-gray-1000 transition ease-in-out duration-300">註冊帳戶</p>
+                    <a href="/" class="block font-black text-gray-800 text-sm md:text-lg hover:text-gray-1000 transition ease-in-out duration-300">登入帳戶</a>
+                @else
+                    <a href="/register" class="block font-black text-gray-800 text-sm md:text-lg hover:text-gray-1000 transition ease-in-out duration-300">註冊帳戶</a>
 
-                    <p class="block font-black text-gray-800 text-sm md:text-lg hover:text-gray-1000 transition ease-in-out duration-300">登入帳戶</p>
-
+                    <a href="/login" class="block font-black text-gray-800 text-sm md:text-lg hover:text-gray-1000 transition ease-in-out duration-300">登入帳戶</a>
+                @endauth
                     <p class="block font-black text-gray-800 text-sm md:text-lg hover:text-gray-1000 transition ease-in-out duration-300">開始使用</p>
                 </div>
 

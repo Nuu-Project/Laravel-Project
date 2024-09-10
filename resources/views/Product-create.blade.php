@@ -37,7 +37,7 @@
                         <a href="/">首頁</a>
                     </li>
                     <li class="font-semibold text-gray-900 hover:text-gray-400 transition ease-in-out duration-300 mb-5 lg:mb-0 text-2xl">
-                        <a href="/products">商品</a>
+                        <a href="{{route('products.index')}}">商品</a>
                     </li>
                     <li class="font-semibold text-gray-900 hover:text-gray-400 transition ease-in-out duration-300 mb-5 lg:mb-0 text-2xl">
                         <a href="/user-product-create">刊登</a>
@@ -53,7 +53,7 @@
                         <x-slot name="trigger">
                             <button class="inline-flex items-center px-3 py-2 border border-transparent text-3xl leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
                             <img width="65" height="65" src="images/account.png" alt="">
-                                    <div>{{ Auth::user()->name }}</div>
+                                    <div>{{ Auth::user()->name}}</div>
 
                                 <div class="ms-1">
                                     <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
@@ -86,12 +86,6 @@
             </nav>
             <!-- </div> -->
             <!-- </section> -->
-
-            <!--
-// v0 by Vercel.
-// https://v0.dev/t/flglOIfHmoI
--->
-
             <style>
                 :root {
                     --background: 0 0% 100%;
@@ -176,6 +170,43 @@
                                 價格
                             </label>
                             <input class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50" id="price" name="price" placeholder="輸入價格" type="number" />
+                        </div>
+
+                        <div class="grid gap-2">
+                            <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70" for="userTown">
+                                            年級
+                            </label>
+                        <select id="userTown" class="flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50">
+                        <option selected>選擇適用的年級...</option>
+                            <option>一年級</option>
+                            <option>二年級</option>
+                            <option>三年級</option>
+                            <option>四年級</option>
+                            <option>其他</option>
+                        </select>
+                        </div>
+
+                        <div class="grid gap-2">
+                            <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70" for="userTown">
+                                            學期
+                            </label>
+                        <select id="userTown" class="flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50">
+                        <option selected>學期</option>
+                            <option>上學期</option>
+                            <option>下學期</option>
+                        </select>
+                        </div>
+
+                        <div class="grid gap-2">
+                            <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70" for="userTown">
+                                            類別
+                            </label>
+                        <select id="userTown" class="flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50">
+                        <option selected>課程類別</option>
+                            <option>必修</option>
+                            <option>選修</option>
+                            <option>其他</option>
+                        </select>
                         </div>
 
                         <div class="grid gap-2">
