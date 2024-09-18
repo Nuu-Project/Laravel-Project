@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
+use Illuminate\Support\Str;
 
 class RegisteredUserController extends Controller
 {
@@ -31,7 +32,7 @@ class RegisteredUserController extends Controller
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class, 'regex:/^[a-zA-Z0-9._%+-]+@o365\.nuu\.edu\.tw$/'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:' . User::class, Str::endsWith('user@o365.nuu.edu.tw', '@o365.nuu.edu.tw')],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
@@ -42,7 +43,7 @@ class RegisteredUserController extends Controller
         ]);
 
         event(new Registered($user));
-        
+
         Auth::login($user);
 
         return redirect(route('dashboard', absolute: false));
