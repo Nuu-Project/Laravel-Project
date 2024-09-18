@@ -11,17 +11,14 @@ class ProductController extends Controller
 {
     /**
      * Display a listing of the resource.
-     */      //
+     */
     public function index(Request $request)
     {
-        $products = Product::with(['media', 'user'])->where('user_id', 3)->get();
+        $products = Product::with(['media', 'user'])->get();
         if ($request->routeIs('products.index')) {
-            return view('Product', compact('products'));
+            return view('product', compact('products'));
         }elseif($request->routeIs('products.check')){  
-            return view('Product-check', compact('products'));
-        }
-        elseif ($request->routeIs('products.info')) {
-            return view('Product-info', compact('products'));
+            return view('product-check', compact('products'));
         }
     }
     /**
@@ -40,8 +37,8 @@ class ProductController extends Controller
     {
         $validated = $request->validate([
             'name' => ['required','string','max:50'],
-            'price' => ['required','numeric','max:10'],
-            'description' => ['nullable','string'],
+            'price' => ['required','numeric','digits_between:1,10'],
+            'description' => ['required','string'],
         ]);
 
         $product = Product::create($validated + [
