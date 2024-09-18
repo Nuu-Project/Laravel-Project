@@ -90,7 +90,7 @@
             <div class="flex flex-col w-full min-h-screen">
                 <main class="flex min-h-[calc(100vh_-_theme(spacing.16))] flex-1 flex-col gap-4 p-4 md:gap-8 md:p-10">
                     <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-                        @foreach($userProducts as $product)
+                        @foreach($userProducts as $product) 
                             <div class="rounded-lg border bg-card text-card-foreground shadow-sm" data-v0-t="card">
                                 <div class="space-y-1.5 p-6 flex flex-row items-center justify-between pb-2">
                                     <h4 class="font-semibold text-2xl mb-2">商品名稱:{{$product->name}}</h4>

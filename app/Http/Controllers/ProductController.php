@@ -11,17 +11,29 @@ class ProductController extends Controller
 {
     /**
      * Display a listing of the resource.
-     */      //
+     */
+    // public function index(Request $request)
+    // {
+    //     $userId = Auth::user()->id;
+    //     $products = Product::with(['media', 'user'])->get();
+    //     if ($request->routeIs('products.index')) {
+    //         return view('product', compact('products'));
+    //     }elseif($request->routeIs('products.check')){  
+    //         return view('product-check', compact('products'));
+    //     }
+    // }
     public function index(Request $request)
     {
-        $products = Product::with(['media', 'user'])->where('user_id', 3)->get();
+        $userId = Auth::user()->id;
+        $products = Product::with(['media', 'user'])->get();
         if ($request->routeIs('products.index')) {
-            return view('Product', compact('products'));
+            return view('product', compact('products'));
         }elseif($request->routeIs('products.check')){  
-            return view('Product-check', compact('products'));
-        }
-        elseif ($request->routeIs('products.info')) {
-            return view('Product-info', compact('products'));
+            $userProducts = Product::with(['media', 'user'])
+            ->where('user_id', $userId)
+            ->get();
+            return view('product-check', compact('userProducts'));
+
         }
     }
     /**
@@ -38,33 +50,45 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
+        $validated = $request->validate([
             'name' => ['required','string','max:50'],
-            'price' => ['required','numeric','max:10'],
-            'description' => ['nullable','string'],
+            'price' => ['required','numeric','digits_between:1,10'],
+            'description' => ['required','string'],
         ]);
 
-        $user = Auth::user(); 
-
-        $product = new Product();
-        $product->user()->associate($user);
-        $product->name = $request->input('name');
-        $product->price = $request->input('price');
-        $product->description = $request->input('description');
-        $product->save();
+        $product = Product::create($validated + [
+            'user_id' => auth()->id(),
+        ]);
 
         // 添加圖片
         if ($request->hasFile('image')) {
             $product->addMedia($request->file('image'))->toMediaCollection('images');
         }
 
-        // 添加標籤
-        // $tagIds = $request->input('tags'); // 獲取選中的標籤 ID
-        // $tags = Tag::find($tagIds);
-        // $product->attachTags($tags);
+         // 獲取表單資料
+        $grade = $request->input('grade');
+        $semester = $request->input('semester');
+        $category = $request->input('category');
 
+         // 根據年級和學期查找對應的年級標籤
+         $gradeTagName = Product::getGradeTagName($grade, $semester);
+         $gradeTag = Tag::where('name->zh', $gradeTagName)->where('type', '年級')->first();
+ 
+         // 根據課程類別查找對應的課程標籤
+         $categoryTag = Tag::where('name->zh', $category)->where('type', '課程')->first();
 
-        return redirect()->route('products.create');
+        // 附加年級標籤到產品
+        if ($gradeTag) {
+            $product->attachTag($gradeTag);
+        }
+
+        // 附加課程標籤到產品
+        if ($categoryTag) {
+            $product->attachTag($categoryTag);
+        }
+
+        
+        return redirect()->route('products.create')->with('success', '產品已成功創建並附加標籤');
     }
 
     /**

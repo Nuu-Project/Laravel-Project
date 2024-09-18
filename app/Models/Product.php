@@ -30,4 +30,36 @@ class Product extends Model implements HasMedia
         $this->addMediaCollection('images')
              ->useDisk('public_images');
     }
+
+    protected $fillable = [
+        'name',
+        'price',
+        'description',
+        'user_id',
+    ];
+
+
+    public static function getGradeTagName($grade, $semester)
+    {
+        $grades = [
+            1 => '大一',
+            2 => '大二',
+            3 => '大三',
+            4 => '大四',
+            '其他' => '其他年級'
+        ];
+
+        $semesters = [
+            1 => '上',
+            2 => '下',
+            '其他' => '' // 其他年級不需要學期資訊
+        ];
+
+        // 如果是其他年級，忽略學期部分
+        if ($grade == '其他') {
+            return $grades[$grade];
+        }
+
+        return $grades[$grade] . $semesters[$semester];
+    }
 }
