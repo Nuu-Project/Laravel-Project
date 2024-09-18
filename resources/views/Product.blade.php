@@ -40,7 +40,7 @@
             <a href="/">首頁</a>
         </li>
         <li class="font-semibold text-gray-900 hover:text-gray-400 transition ease-in-out duration-300 mb-5 lg:mb-0 text-2xl">
-            <a href="{{route('products.index')}}">商品</a>
+            <a href="/products">商品</a>
         </li>
         <li class="font-semibold text-gray-900 hover:text-gray-400 transition ease-in-out duration-300 mb-5 lg:mb-0 text-2xl">
             <a href="/user-product-create">刊登</a>
@@ -78,7 +78,7 @@
 
             <x-slot name="content">
                 <x-dropdown-link :href="route('profile.edit')">
-                    {{ __('個人資料') }}
+                    {{ __('Profile') }}
                 </x-dropdown-link>
 
                 <!-- Authentication -->
@@ -87,7 +87,7 @@
 
                     <x-dropdown-link :href="route('logout')" onclick="event.preventDefault();
                                         this.closest('form').submit();">
-                        {{ __('登出') }}
+                        {{ __('Log Out') }}
                     </x-dropdown-link>
                 </form>
             </x-slot>
@@ -214,10 +214,9 @@
                                  </div>
                                 </div>
                                 <div class="flex items-center p-6">
-                                    <a href="{{route ('products.info')}}"><button class="inline-flex items-center justify-center whitespace-nowrap rounded-xl text-lg font-semibold ring-offset-background transition-colors ease-in-out duration-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-blue-500 text-white hover:bg-blue-700 h-10 px-3 py-2 ml-auto">
+                                    <button class="inline-flex items-center justify-center whitespace-nowrap rounded-xl text-lg font-semibold ring-offset-background transition-colors ease-in-out duration-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-blue-500 text-white hover:bg-blue-700 h-10 px-3 py-2 ml-auto">
                                         洽談
                                     </button>
-                                    </a>
                                 </div>
                             </div>
                         @endforeach

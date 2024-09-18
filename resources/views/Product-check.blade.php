@@ -36,7 +36,7 @@
                         <a href="/">首頁</a>
                     </li>
                     <li class="font-semibold text-gray-900 hover:text-gray-400 transition ease-in-out duration-300 mb-5 lg:mb-0 text-2xl">
-                        <a href="{{route('products.index')}}">商品</a>
+                        <a href="/product">商品</a>
                     </li>
                     <li class="font-semibold text-gray-900 hover:text-gray-400 transition ease-in-out duration-300 mb-5 lg:mb-0 text-2xl">
                         <a href="/user-product-create">刊登</a>
@@ -64,7 +64,7 @@
 
                         <x-slot name="content">
                             <x-dropdown-link :href="route('profile.edit')">
-                                {{ __('個人資料') }}
+                                {{ __('Profile') }}
                             </x-dropdown-link>
 
                             <!-- Authentication -->
@@ -73,7 +73,7 @@
 
                                 <x-dropdown-link :href="route('logout')" onclick="event.preventDefault();
                                                     this.closest('form').submit();">
-                                    {{ __('登出') }}
+                                    {{ __('Log Out') }}
                                 </x-dropdown-link>
                             </form>
                         </x-slot>
@@ -94,9 +94,7 @@
                             <div class="rounded-lg border bg-card text-card-foreground shadow-sm" data-v0-t="card">
                                 <div class="space-y-1.5 p-6 flex flex-row items-center justify-between pb-2">
                                     <h4 class="font-semibold text-2xl mb-2">商品名稱:{{$product->name}}</h4>
-                                    <span class="relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full">
-                                        <img class="aspect-square h-full w-full" alt="上架者" src="images/user.png" />
-                                    </span>
+                                    <div><h1 class="font-semibold">用戶名稱:{{ $product->user->name }}</h1></div>
                                 </div>
                                 <div class="p-6">
                                     <div class="text-2xl font-bold">${{$product->price}}</div>

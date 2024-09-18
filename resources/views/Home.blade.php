@@ -78,7 +78,7 @@
 
             <x-slot name="content">
                 <x-dropdown-link :href="route('profile.edit')">
-                    {{ __('個人資料') }}
+                    {{ __('Profile') }}
                 </x-dropdown-link>
 
                 <!-- Authentication -->
@@ -87,7 +87,7 @@
 
                     <x-dropdown-link :href="route('logout')" onclick="event.preventDefault();
                                         this.closest('form').submit();">
-                        {{ __('登出') }}
+                        {{ __('Log Out') }}
                     </x-dropdown-link>
                 </form>
             </x-slot>
@@ -171,7 +171,6 @@
         <div class="container max-w-screen-xl mx-auto px-4">
 
             <h1 class="font-semibold text-gray-900 text-xl md:text-4xl text-center mb-16">推薦書籍</h1>
-
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
                 <div class="px-6 py-6 w-full border-2 border-gray-200 rounded-3xl">
                     <img src="images/book-5.jpg" alt="Image" class="mb-6 hover:opacity-75 transition ease-in-out duration-500">
@@ -235,26 +234,18 @@
 
                 <div class="text-center lg:text-left space-y-7 mb-10 lg:mb-0">
                     <h4 class="font-semibold text-gray-900 text-lg md:text-2xl">STEP.1</h4>
-                @auth
-                    <a href="/" class="block font-black text-gray-800 text-sm md:text-lg hover:text-gray-1000 transition ease-in-out duration-300">註冊帳戶</a>
-
-                    <a href="/" class="block font-black text-gray-800 text-sm md:text-lg hover:text-gray-1000 transition ease-in-out duration-300">登入帳戶</a>
-                @else
                     <a href="/register" class="block font-black text-gray-800 text-sm md:text-lg hover:text-gray-1000 transition ease-in-out duration-300">註冊帳戶</a>
 
                     <a href="/login" class="block font-black text-gray-800 text-sm md:text-lg hover:text-gray-1000 transition ease-in-out duration-300">登入帳戶</a>
-                @endauth
-                    <p class="block font-black text-gray-800 text-sm md:text-lg hover:text-gray-1000 transition ease-in-out duration-300">開始使用</p>
                 </div>
 
                 <div class="text-center lg:text-left space-y-7 mb-10 lg:mb-0">
                     <h4 class="font-semibold text-gray-900 text-lg md:text-2xl">STEP.2</h4>
 
-                    <p class="block font-black text-gray-800 text-sm md:text-lg hover:text-gray-1000 transition ease-in-out duration-300">點選菜單-商品</p>
+                    <a href="/product" class="block font-black text-gray-800 text-sm md:text-lg hover:text-gray-1000 transition ease-in-out duration-300">點選菜單-商品</a>
 
-                    <p class="block font-black text-gray-800 text-sm md:text-lg hover:text-gray-1000 transition ease-in-out duration-300">瀏覽商品</p>
+                    <a href="/product" class="block font-black text-gray-800 text-sm md:text-lg hover:text-gray-1000 transition ease-in-out duration-300">瀏覽商品</a>
 
-                    <p class="block font-black text-gray-800 text-sm md:text-lg hover:text-gray-1000 transition ease-in-out duration-300">找到喜歡的書</p>
                 </div>
 
                 <div class="text-center lg:text-left space-y-7 mb-10 lg:mb-0">

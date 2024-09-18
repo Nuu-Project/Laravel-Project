@@ -37,7 +37,7 @@
                         <a href="/">首頁</a>
                     </li>
                     <li class="font-semibold text-gray-900 hover:text-gray-400 transition ease-in-out duration-300 mb-5 lg:mb-0 text-2xl">
-                        <a href="{{route('products.index')}}">商品</a>
+                        <a href="/products">商品</a>
                     </li>
                     <li class="font-semibold text-gray-900 hover:text-gray-400 transition ease-in-out duration-300 mb-5 lg:mb-0 text-2xl">
                         <a href="/user-product-create">刊登</a>
@@ -65,7 +65,7 @@
 
                         <x-slot name="content">
                             <x-dropdown-link :href="route('profile.edit')">
-                                {{ __('Profile') }}
+                                {{ __('個人資料') }}
                             </x-dropdown-link>
 
                             <!-- Authentication -->
@@ -74,123 +74,86 @@
 
                                 <x-dropdown-link :href="route('logout')" onclick="event.preventDefault();
                                                     this.closest('form').submit();">
-                                    {{ __('Log Out') }}
+                                    {{ __('登出') }}
                                 </x-dropdown-link>
                             </form>
                         </x-slot>
                     </x-dropdown>
                     @else
+                    <a href="/register" class="px-6 py-4 bg-blue-500 text-white font-semibold text-lg rounded-xl hover:bg-blue-700 transition ease-in-out duration-500 mb-5 md:mb-0">註冊</a>
                     <a href="/login" class="px-6 py-4 border-2 border-blue-500 text-blue-500 font-semibold text-lg rounded-xl hover:bg-blue-700 hover:text-white transition ease-linear duration-500">登入</a>
                     @endauth
                 </div>
             </nav>
-        
-        <style>
-        /* .testcontainer {
-            display: flex;
-            max-width: 1200px;
-            margin: 0 auto;
-        } */
-
-        .product-images {
-            width: 40%;
-            padding-right: 20px;
-        }
-
-        .product-images img {
-            width: 70%;
-            height: 45%;
-            object-fit: cover;
-        }
-
-        .thumbnail-container {
-            display:flex;
-            margin-top: 10px;
-        }
-
-        .thumbnail {
-            width: 60px;
-            height: 60px;
-            margin-right: 10px;
-            object-fit: cover;
-            cursor: pointer;
-        }
-
-        .product-info {
-            width: 60%;
-            padding: 20px;
-        }
-
-        .product-title {
-            font-size: 24px;
-            margin-bottom: 15px;
-        }
-
-        .price {
-            color: red;
-            font-size: 28px;
-            margin-bottom: 10px;
-        }
-
-        .color-options {
-            margin-bottom: 15px;
-        }
-
-        .btn {
-            padding: 12px 24px;
-            margin-right: 15px;
-            font-size: 16px;
-            cursor: pointer;
-        }
-
-        .thumbnail.active {
-           border: 2px solid #ee5253;
-        }
-
-        #main-image {
-            cursor: pointer;
-        }
-
-    </style>
 
 
-    <div class="testcontainer">
-        <div class="product-images">
-            <img id="main-image" src="images/book-5.jpg" alt="產品圖片">
-            <div class="thumbnail-container">
-                <img src="images/book-1.jpg" alt="縮略圖1" class="thumbnail" data-src="images/book-1.jpg">
-                <img src="images/book-2.jpg" alt="縮略圖2" class="thumbnail" data-src="images/book-2.jpg">
-                <img src="images/book-3.jpg" alt="縮略圖3" class="thumbnail" data-src="images/book-3.jpg">
-            </div>
+
+            <!--
+// v0 by Vercel.
+// https://v0.dev/t/E4DuXrlqfSv
+-->
+
+<style>:root{--background:0 0% 100%;--foreground:240 10% 3.9%;--card:0 0% 100%;--card-foreground:240 10% 3.9%;--popover:0 0% 100%;--popover-foreground:240 10% 3.9%;--primary:240 5.9% 10%;--primary-foreground:0 0% 98%;--secondary:240 4.8% 95.9%;--secondary-foreground:240 5.9% 10%;--muted:240 4.8% 95.9%;--muted-foreground:240 3.8% 45%;--accent:240 4.8% 95.9%;--accent-foreground:240 5.9% 10%;--destructive:0 72% 51%;--destructive-foreground:0 0% 98%;--border:240 5.9% 90%;--input:240 5.9% 90%;--ring:240 5.9% 10%;--chart-1:173 58% 39%;--chart-2:12 76% 61%;--chart-3:197 37% 24%;--chart-4:43 74% 66%;--chart-5:27 87% 67%;--radius:0.5rem;}img[src="/placeholder.svg"],img[src="/placeholder-user.jpg"]{filter:sepia(.3) hue-rotate(-60deg) saturate(.5) opacity(0.8) }</style>
+<style>h1, h2, h3, h4, h5, h6 { font-family: 'Inter', sans-serif; --font-sans-serif: 'Inter'; }
+</style>
+<style>body { font-family: 'Inter', sans-serif; --font-sans-serif: 'Inter'; }
+</style>
+<div class="grid md:grid-cols-2 gap-6 lg:gap-12 items-start max-w-6xl px-4 mx-auto py-6">
+  <div class="grid gap-4 md:gap-10 items-start">
+    <img
+      src="images/book-1.jpg"
+      alt="Product Image"
+      width="600"
+      height="600"
+      class="aspect-square object-cover border w-full rounded-lg overflow-hidden"
+    />
+  </div>
+  <div class="grid gap-4 md:gap-10 items-start">
+    <div class="grid gap-2">
+      <h1 class="text-3xl font-bold">商品名稱:</h1>
+      <div class="flex items-center gap-2">
+        <div class="flex items-center gap-0.5">
+        <div><h1 class="font-semibold text-xl">用戶名稱:{{ Auth::user()->name }}</h1></div>
+
         </div>
-        <div class="product-info">
-            <h1 class="product-title">我是商品名</h1>
-            <h1 class="product-title">商品描述</h1>
-            <h1 class="product-title">創建日期</h1>
-            <h1 class="product-title">最後更新時間</h1>
-
-            <p class="price">
-                我可能是底價嗎
-            </p>
-        </div>
+      </div>
     </div>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const mainImage = document.getElementById('main-image');
-            const thumbnails = document.querySelectorAll('.thumbnail');
+    <div class="grid gap-2">
+      <p class="text-2xl font-bold">$29.99</p>
+      <p class="text-muted-foreground">商品介紹:</p>
+    </div>
+    <form class="grid gap-4">
+      <div class="grid gap-2">
+        <div
+          role="radiogroup"
+          aria-required="false"
+          dir="ltr"
+          class="flex items-center gap-2"
+          id="color"
+          tabindex="0"
+          style="outline: none;"
+        >
+          <!--  -->
+        </div>
+      </div>
+      <div class="grid gap-2">
+        
 
-            function updateImage(src) {
-                mainImage.src = src;
-                thumbnails.forEach(t => t.classList.remove('active'));
-                Array.from(thumbnails).find(t => t.getAttribute('data-src') === src).classList.add('active');
-            }
+        </div>
+      </div>
+      <div class="grid gap-2">
+        
 
-            thumbnails.forEach(thumbnail => {
-                thumbnail.addEventListener('click', function() {
-                    updateImage(this.getAttribute('data-src'));
-                });
-            });
-        });
-    </script>
+       
+      </div>
+      <div class="flex flex-col gap-2 min-[400px]:flex-row">
+        <button class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-11 rounded-md px-8">
+          Add to cart
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
 </body>
 </html>
