@@ -9,14 +9,17 @@ Route::get('/', function () {
     return view('Home');
 });
 
+
+Route::get('/s', function () {
+    return view('test');
+});
+
 //共用: product
 // Route::get('/product', function () { 
 //     return view('Product');
 // });
 
 Route::get('/product', [ProductController::class, 'index'])->name('products.index');
-
-
 
 //登入: product_create
 Route::get('/user-product-create', [ProductController::class, 'create'])->name('products.create');
