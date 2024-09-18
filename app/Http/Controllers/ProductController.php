@@ -27,12 +27,13 @@ class ProductController extends Controller
         $userId = Auth::user()->id;
         $products = Product::with(['media', 'user'])->get();
         if ($request->routeIs('products.index')) {
-            return view('Product', compact('products'));
+            return view('product', compact('products'));
         }elseif($request->routeIs('products.check')){  
             $userProducts = Product::with(['media', 'user'])
             ->where('user_id', $userId)
             ->get();
             return view('product-check', compact('userProducts'));
+
         }
     }
     /**
@@ -51,8 +52,8 @@ class ProductController extends Controller
     {
         $validated = $request->validate([
             'name' => ['required','string','max:50'],
-            'price' => ['required','numeric','max:10'],
-            'description' => ['nullable','string'],
+            'price' => ['required','numeric','digits_between:1,10'],
+            'description' => ['required','string'],
         ]);
 
         $product = Product::create($validated + [
