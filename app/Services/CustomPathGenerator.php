@@ -9,7 +9,7 @@ class CustomPathGenerator implements PathGenerator
 {
     public function getPath(Media $media): string
     {
-        return '';
+        return $media->id . '/';
     }
 
     public function getPathForConversions(Media $media): string

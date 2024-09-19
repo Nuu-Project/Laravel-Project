@@ -106,7 +106,7 @@
                                                 $media = $product->getFirstMedia('images');
                                             @endphp
                                             @if($media)
-                                                <img src="{{ asset('images/' . $media->file_name) }}" alt="這是圖片" width="1200" height="900" style="aspect-ratio: 900 / 1200; object-fit: cover;" class="w-full rounded-md object-cover" />
+                                                <img src="{{ $media->getUrl() }}" alt="這是圖片" width="1200" height="900" style="aspect-ratio: 900 / 1200; object-fit: cover;" class="w-full rounded-md object-cover" />
                                             @else
                                             <div>沒圖片</div>
                                             @endif
