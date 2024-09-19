@@ -33,7 +33,8 @@ class ProductController extends Controller
             ->where('user_id', $userId)
             ->get();
             return view('Product-check', compact('userProducts'));
-
+        }elseif ($request->routeIs('products.info')) {
+            return view('Product-info', compact('products'));
         }
     }
     /**
