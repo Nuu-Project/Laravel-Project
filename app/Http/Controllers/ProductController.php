@@ -70,10 +70,10 @@ class ProductController extends Controller
         $semester = $request->input('semester');
         $category = $request->input('category');
 
-         // 根據年級和學期查找對應的年級標籤
-         $gradeTagName = Product::getGradeTagName($grade, $semester);
-         $gradeTag = Tag::where('name->zh', $gradeTagName)->where('type', '年級')->first();
- 
+         // 根據年級查找對應的年級標籤
+         $gradeTag = Tag::where('order_column', $grade)->where('type', '年級')->first();
+         // 根據學期查找對應的學期標籤
+         $semesterTag = Tag::where('order_column', $semester)->where('type', '學期')->first();
          // 根據課程類別查找對應的課程標籤
          $categoryTag = Tag::where('name->zh', $category)->where('type', '課程')->first();
 
@@ -81,7 +81,10 @@ class ProductController extends Controller
         if ($gradeTag) {
             $product->attachTag($gradeTag);
         }
-
+        // 附加學期標籤到產品
+        if ($semesterTag) {
+            $product->attachTag($semesterTag);
+        }
         // 附加課程標籤到產品
         if ($categoryTag) {
             $product->attachTag($categoryTag);
