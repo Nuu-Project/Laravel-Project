@@ -113,7 +113,17 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-        //
+        $validatedData = $request->validate([
+            'status' => 'required|in:100,200',  // 100 表示上架，200 表示下架
+        ]);
+    
+        // 更新商品的狀態
+        $product->update([
+            'status' => $validatedData['status'],
+        ]);
+    
+        // 返回更新成功的響應
+        return response()->json(['message' => '商品狀態更新成功！'], 200);
     }
 
     /**

@@ -33,6 +33,8 @@ Route::post('/user-product-create', [ProductController::class, 'store'])->name('
 // });
 Route::get('/user-product-check', [ProductController::class, 'index'])->name('products.check');
 
+Route::put('/user-product-check', [ProductController::class, 'update'])->name('products.updateStatus');
+
 Route::get('/user-product-info', [ProductController::class, 'index'])->name('products.info');
 
 // Route::get('/product-info', function () {
