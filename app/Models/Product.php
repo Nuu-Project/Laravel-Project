@@ -62,4 +62,14 @@ class Product extends Model implements HasMedia
 
         return $grades[$grade] . $semesters[$semester];
     }
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function ($product) {
+            // 自動分離所有標籤
+            $product->detachTags();
+        });
+    }
 }
