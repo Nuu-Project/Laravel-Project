@@ -18,82 +18,66 @@ class TagSeeder extends Seeder
             
             //年級
             [
-                'name' => ['en' => 'Freshman-FirstSemester', 'zh' => '大一上'],
-                'slug' => ['en' => 'Freshman-FirstSemester', 'zh' => 'Freshman-FirstSemester'],
+                'name' => ['en' => 'Freshman', 'zh' => '一年級'],
+                'slug' => ['en' => 'freshman', 'zh' => 'freshman'],
                 'type' => '年級',
                 'order_column' => 1,
             ],
             [
-                'name' => ['en' => 'Freshman-SecondSemester', 'zh' => '大一下'],
-                'slug' => ['en' => 'Freshman-SecondSemester', 'zh' => 'Freshman-SecondSemester'],
+                'name' => ['en' => 'Sophomore', 'zh' => '二年級'],
+                'slug' => ['en' => 'sophomore', 'zh' => 'sophomore'],
                 'type' => '年級',
                 'order_column' => 2,
             ],
             [
-                'name' => ['en' => 'Sophomore-FirstSemester', 'zh' => '大二上'],
-                'slug' => ['en' => 'Sophomore-FirstSemester', 'zh' => 'Sophomore-FirstSemester'],
+                'name' => ['en' => 'Junior', 'zh' => '三年級'],
+                'slug' => ['en' => 'junior', 'zh' => 'junior'],
                 'type' => '年級',
                 'order_column' => 3,
             ],
             [
-                'name' => ['en' => 'Sophomore-SecondSemester', 'zh' => '大二下'],
-                'slug' => ['en' => 'Sophomore-SecondSemester', 'zh' => 'Sophomore-SecondSemester'],
+                'name' => ['en' => 'Senior', 'zh' => '四年級'],
+                'slug' => ['en' => 'senior', 'zh' => 'senior'],
                 'type' => '年級',
                 'order_column' => 4,
             ],
             [
-                'name' => ['en' => 'Junior-FirstSemester', 'zh' => '大三上'],
-                'slug' => ['en' => 'Junior-FirstSemester', 'zh' => 'Junior-FirstSemester'],
+                'name' => ['en' => 'Other-grades', 'zh' => '其他年級'],
+                'slug' => ['en' => 'other-grades', 'zh' => 'other-grades'],
                 'type' => '年級',
                 'order_column' => 5,
             ],
+
+            //學期
             [
-                'name' => ['en' => 'Junior-SecondSemester', 'zh' => '大三下'],
-                'slug' => ['en' => 'Junior-SecondSemester', 'zh' => 'Junior-SecondSemester'],
-                'type' => '年級',
-                'order_column' => 6,
+                'name' => ['en' => 'Firstsemester', 'zh' => '上學期'],
+                'slug' => ['en' => 'firstsemester', 'zh' => 'firstsemester'],
+                'type' => '學期',
+                'order_column' => 1,
             ],
             [
-                'name' => ['en' => 'senior-FirstSemester', 'zh' => '大四上'],
-                'slug' => ['en' => 'senior-FirstSemester', 'zh' => 'senior-FirstSemester'],
-                'type' => '年級',
-                'order_column' => 7,
-            ],
-            [
-                'name' => ['en' => 'senior-SecondSemester', 'zh' => '大四下'],
-                'slug' => ['en' => 'senior-SecondSemester', 'zh' => 'senior-SecondSemester'],
-                'type' => '年級',
-                'order_column' => 8,
-            ],
-            [
-                'name' => ['en' => 'senior-SecondSemester', 'zh' => '大四下'],
-                'slug' => ['en' => 'senior-SecondSemester', 'zh' => 'senior-SecondSemester'],
-                'type' => '年級',
-                'order_column' => 8,
-            ],
-            [
-                'name' => ['en' => 'other-grades', 'zh' => '其他年級'],
-                'slug' => ['en' => 'other-grades', 'zh' => 'other-grades'],
-                'type' => '年級',
-                'order_column' => 9,
+                'name' => ['en' => 'Secondsemester', 'zh' => '下學期'],
+                'slug' => ['en' => 'secondsemester', 'zh' => 'secondsemester'],
+                'type' => '學期',
+                'order_column' => 2,
             ],
 
             //課程
             [
                 'name' => ['en' => 'Compulsory-course', 'zh' => '必修課'],
-                'slug' => ['en' => 'Compulsory-course', 'zh' => 'Compulsory-course'],
+                'slug' => ['en' => 'compulsory-course', 'zh' => 'compulsory-course'],
                 'type' => '課程',
                 'order_column' => 1,
             ],
             [
                 'name' => ['en' => 'Elective-courses', 'zh' => '選修課'],
-                'slug' => ['en' => 'Elective-courses', 'zh' => 'Elective-courses'],
+                'slug' => ['en' => 'elective-courses', 'zh' => 'elective-courses'],
                 'type' => '課程',
                 'order_column' => 2,
             ],
             [
                 'name' => ['en' => 'Other-courses', 'zh' => '其他課程'],
-                'slug' => ['en' => 'Other-courses', 'zh' => 'Other-courses'],
+                'slug' => ['en' => 'other-courses', 'zh' => 'other-courses'],
                 'type' => '課程',
                 'order_column' => 3,
             ],
@@ -101,7 +85,13 @@ class TagSeeder extends Seeder
         ];
 
         foreach ($tags as $tagData) {
-            $tag = Tag::tagFindOrCreate($tagData['name'], $tagData['type'], $tagData['slug'], $tagData['order_column']);
+            $tag = Tag::updateOrCreate(
+                ['slug->en' => $tagData['slug']['en'],
+                'slug->zh' => $tagData['slug']['zh'],],
+                ['name' => $tagData['name'],
+                'type' => $tagData['type'],
+                'order_column' => $tagData['order_column']],
+            );
         }
     }
 }

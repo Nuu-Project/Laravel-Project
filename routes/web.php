@@ -19,10 +19,10 @@ Route::get('/s', function () {
 //     return view('Product');
 // });
 
-Route::get('/product', [ProductController::class, 'index'])->name('products.index');
+Route::get('/products', [ProductController::class, 'index'])->name('products.index');
 
 //登入: product_create
-Route::get('/user-product-create', [ProductController::class, 'create'])->name('products.create');
+Route::get('/products-create', [ProductController::class, 'create'])->name('products.create');
 
 //送出表單: product_create
 Route::post('/user-product-create', [ProductController::class, 'store'])->name('products.store');
@@ -31,7 +31,7 @@ Route::post('/user-product-create', [ProductController::class, 'store'])->name('
 // Route::get('/user-product-check', function () {
 //     return view('Product-check');
 // });
-Route::get('/user-product-check', [ProductController::class, 'index'])->name('products.check');
+Route::get('/products-check', [ProductController::class, 'index'])->name('products.check');
 
 Route::put('/user-product-check', [ProductController::class, 'update'])->name('products.updateStatus');
 

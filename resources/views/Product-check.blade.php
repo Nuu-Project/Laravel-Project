@@ -36,10 +36,10 @@
                         <a href="/">首頁</a>
                     </li>
                     <li class="font-semibold text-gray-900 hover:text-gray-400 transition ease-in-out duration-300 mb-5 lg:mb-0 text-2xl">
-                        <a href="/product">商品</a>
+                        <a href="/products">商品</a>
                     </li>
                     <li class="font-semibold text-gray-900 hover:text-gray-400 transition ease-in-out duration-300 mb-5 lg:mb-0 text-2xl">
-                        <a href="/user-product-create">刊登</a>
+                        <a href="/products-create">刊登</a>
                     </li>
                     <li class="font-semibold text-gray-900 hover:text-gray-400 transition ease-in-out duration-300 mb-5 lg:mb-0 text-2xl">
                         <a href="{{route('products.check')}}">我的商品</a>
@@ -106,7 +106,7 @@
                                                 $media = $product->getFirstMedia('images');
                                             @endphp
                                             @if($media)
-                                                <img src="{{ asset('images/' . $media->file_name) }}" alt="這是圖片" width="1200" height="900" style="aspect-ratio: 900 / 1200; object-fit: cover;" class="w-full rounded-md object-cover" />
+                                                <img src="{{ $media->getUrl() }}" alt="這是圖片" width="1200" height="900" style="aspect-ratio: 900 / 1200; object-fit: cover;" class="w-full rounded-md object-cover" />
                                             @else
                                             <div>沒圖片</div>
                                             @endif
