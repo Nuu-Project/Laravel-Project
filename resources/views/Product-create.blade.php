@@ -128,42 +128,40 @@
                         </div>
 
                         <div class="grid gap-2">
-                            <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70" for="grade">
-                                            年級
-                            </label>
-                        <select id="grade" name="grade" class="flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50">
-                            <option selected>選擇適用的年級...</option>
-                                <option value="1">一年級</option>
-                                <option value="2">二年級</option>
-                                <option value="3">三年級</option>
-                                <option value="4">四年級</option>
-                                <option value="其他">其他</option>
-                        </select>
+                            <label class="text-sm font-medium leading-none" for="grade">年級</label>
+                            <select id="grade" name="grade" class="flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
+                                <option selected>選擇適用的年級...</option>
+                                @foreach($tags as $tag)
+                                    @if($tag->type === '年級')
+                                        <option value="{{ $tag->getTranslation('slug', 'zh') }}">{{ $tag->getTranslation('name', 'zh') }}</option>
+                                    @endif
+                                @endforeach
+                            </select>
                         </div>
-
+                        
                         <div class="grid gap-2">
-                            <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70" for="semester">
-                                            學期
-                            </label>
-                        <select id="semester" name="semester" class="flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50">
-                            <option selected>選擇學期...</option>
-                                <option value="1">上學期</option>
-                                <option value="2">下學期</option>
-                                <option value="其他">其他</option>
-                        </select>
+                            <label class="text-sm font-medium leading-none" for="semester">學期</label>
+                            <select id="semester" name="semester" class="flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
+                                <option selected>選擇學期...</option>
+                                @foreach($tags as $tag)
+                                    @if($tag->type === '學期')
+                                        <option value="{{ $tag->getTranslation('slug', 'zh') }}">{{ $tag->getTranslation('name', 'zh') }}</option>
+                                    @endif
+                                @endforeach
+                            </select>
                         </div>
-
+                        
                         <div class="grid gap-2">
-                            <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70" for="category">
-                                課程類別
-                            </label>
-                        <select id="category" name="category" class="flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50">
-                        <option selected>選擇課程類別...</option>
-                            <option value="必修課">必修</option>
-                            <option value="選修課">選修</option>
-                            <option value="其他課程">其他</option>
-                        </select>
-                        </div>
+                            <label class="text-sm font-medium leading-none" for="category">課程類別</label>
+                            <select id="category" name="category" class="flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
+                                <option selected>選擇課程類別...</option>
+                                @foreach($tags as $tag)
+                                    @if($tag->type === '課程')
+                                        <option value="{{ $tag->getTranslation('slug', 'zh') }}">{{ $tag->getTranslation('name', 'zh') }}</option>
+                                    @endif
+                                @endforeach
+                            </select>
+                        </div>                        
 
                         <div class="grid gap-2">
                             <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70" for="description">
