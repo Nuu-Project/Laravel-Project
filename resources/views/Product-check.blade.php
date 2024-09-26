@@ -131,9 +131,13 @@
                                     <button class="px-3 py-2 bg-info font-semibold text-white text-lg rounded-xl hover:bg-blue-700 transition ease-in-out duration-500">
                                         編輯
                                     </button>
+                                    <form action="{{ route('products.update', ['product' => $product->id])  }}" method="POST" class="inline-block">
+                                        @csrf
+                                        @method('delete')
                                     <button class="px-3 py-2 bg-info font-semibold text-white text-lg rounded-xl hover:bg-blue-700 transition ease-in-out duration-500">
                                         刪除
                                     </button>
+                                    </form>
                                 </div>
                             </div>
                         @endforeach

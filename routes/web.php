@@ -35,7 +35,7 @@ Route::get('/products-check', [ProductController::class, 'index'])->name('produc
 
 Route::put('/user-product-check/{product}', [ProductController::class, 'update'])->name('products.update');
     
-Route::put('/user-product-check', [ProductController::class, 'destroy'])->name('products.destroy');
+Route::delete('/user-product-check/{product}', [ProductController::class, 'destroy'])->name('products.destroy');
 
 Route::get('/user-product-info', [ProductController::class, 'index'])->name('products.info');
 
