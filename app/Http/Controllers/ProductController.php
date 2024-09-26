@@ -132,24 +132,19 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-        // 驗證傳入的狀態必須是 100 或 200
-        $validatedData = $request->validate([
-            'status' => 'required|in:100,200',  // 100 表示上架，200 表示下架
-        ]);
-
-        // 根據傳入的狀態進行切換
-        if ($validatedData['status'] == 100) {
+        if ($product->status == 100) {
             $newStatus = 200;
-            $message = '商品已下架！';  // 如果傳入 100，則切換為 200
+            $message = '商品已下架！';  // 當前狀態是 100（上架），切換為 200（下架）
         } else {
             $newStatus = 100;
-            $message = '商品已上架！';  // 如果傳入 200，則切換為 100
+            $message = '商品已上架！';  // 當前狀態是 200（下架），切換為 100（上架）
         }
 
         // 更新商品的狀態
         $product->update([
             'status' => $newStatus,         
         ]);
+
         // 返回更新成功的響應和相應的消息
         return response()->json([
             'message' => $message,
