@@ -17,6 +17,11 @@ class Tag extends Model
 
     public $translatable = ['name', 'slug'];
 
+    protected $casts = [
+        'name' => 'array',
+        'slug' => 'array', 
+    ];
+
     public static function tagFindOrCreate($name, $type, $slug, $orderColumn)
     {
         $tag = static::where('name->en', $name['en'])->where('type', $type)->first();

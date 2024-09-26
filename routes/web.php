@@ -21,6 +21,8 @@ Route::get('/s', function () {
 
 Route::get('/products', [ProductController::class, 'index'])->name('products.index');
 
+Route::get('/products/{slug}', [ProductController::class, 'show'])->name('products.show');
+
 //登入: product_create
 Route::get('/products-create', [ProductController::class, 'create'])->name('products.create');
 
