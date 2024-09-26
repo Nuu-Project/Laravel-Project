@@ -35,7 +35,9 @@ Route::post('/user-product-create', [ProductController::class, 'store'])->name('
 // });
 Route::get('/products-check', [ProductController::class, 'index'])->name('products.check');
 
-Route::put('/user-product-check', [ProductController::class, 'update'])->name('products.updateStatus');
+Route::put('/user-product-check/{product}', [ProductController::class, 'update'])->name('products.update');
+    
+Route::delete('/user-product-check/{product}', [ProductController::class, 'destroy'])->name('products.destroy');
 
 Route::get('/user-product-info', [ProductController::class, 'index'])->name('products.info');
 

@@ -95,6 +95,13 @@
                                 <div class="space-y-1.5 p-6">
                                     <h4 class="font-semibold text-2xl mb-2">商品名稱:{{$product->name}}</h4>
                                     <div><h1 class="font-semibold">用戶名稱:{{ $product->user->name }}</h1></div>
+                                    @if($product->status == 100)
+                                        <div><h1 class="font-semibold">目前狀態:上架中</h1></div>
+                                    @elseif($product->status == 200)   
+                                        <div><h1 class="font-semibold">目前狀態:已下架</h1></div>
+                                    @else
+                                        <div><h1 class="font-semibold">目前狀態:未知</h1></div>
+                                    @endif
                                 </div>
                                 <div class="p-6">
                                     <div class="text-2xl font-bold">${{$product->price}}</div>
@@ -119,15 +126,25 @@
                                     <!-- <button class="px-3 py-2 bg-info font-semibold text-white text-lg rounded-xl hover:bg-blue-700 transition ease-in-out duration-500">
                                         上架
                                     </button> -->
-                                    <button class="px-3 py-2 bg-info font-semibold text-white text-lg rounded-xl hover:bg-blue-700 transition ease-in-out duration-500">
-                                        下架
-                                    </button>
+                                    <form action="{{ route('products.update', ['product' => $product->id])  }}" method="POST" class="inline-block">
+                                        @csrf
+                                        @method('PUT')
+                                        <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                        <input type="hidden" name="status" value="200"> 
+                                        <button type="submit" class="px-3 py-2 bg-info font-semibold text-white text-lg rounded-xl hover:bg-blue-700 transition ease-in-out duration-500">
+                                            下架
+                                        </button>
+                                    </form>
                                     <button class="px-3 py-2 bg-info font-semibold text-white text-lg rounded-xl hover:bg-blue-700 transition ease-in-out duration-500">
                                         編輯
                                     </button>
+                                    <form action="{{ route('products.update', ['product' => $product->id])  }}" method="POST" class="inline-block">
+                                        @csrf
+                                        @method('delete')
                                     <button class="px-3 py-2 bg-info font-semibold text-white text-lg rounded-xl hover:bg-blue-700 transition ease-in-out duration-500">
                                         刪除
                                     </button>
+                                    </form>
                                 </div>
                             </div>
                         @endforeach
