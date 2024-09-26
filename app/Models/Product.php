@@ -70,7 +70,7 @@ class Product extends Model implements HasMedia
 
         static::deleting(function ($product) {
             // 自動分離所有標籤
-            $product->detachTags();
+            $product->detachTags([]);
         });
     }
 }
