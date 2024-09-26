@@ -119,9 +119,15 @@
                                     <!-- <button class="px-3 py-2 bg-info font-semibold text-white text-lg rounded-xl hover:bg-blue-700 transition ease-in-out duration-500">
                                         上架
                                     </button> -->
-                                    <button class="px-3 py-2 bg-info font-semibold text-white text-lg rounded-xl hover:bg-blue-700 transition ease-in-out duration-500">
-                                        下架
-                                    </button>
+                                    <form action="{{ route('products.update', ['product' => $product->id])  }}" method="POST" class="inline-block">
+                                        @csrf
+                                        @method('PUT')
+                                        <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                        <input type="hidden" name="status" value="200"> 
+                                        <button type="submit" class="px-3 py-2 bg-info font-semibold text-white text-lg rounded-xl hover:bg-blue-700 transition ease-in-out duration-500">
+                                            下架
+                                        </button>
+                                    </form>
                                     <button class="px-3 py-2 bg-info font-semibold text-white text-lg rounded-xl hover:bg-blue-700 transition ease-in-out duration-500">
                                         編輯
                                     </button>

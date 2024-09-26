@@ -24,18 +24,21 @@ class ProductController extends Controller
     // }
     public function index(Request $request)
     {
-        $userId = Auth::user()->id;
-        $products = Product::with(['media', 'user'])->get();
-        if ($request->routeIs('products.index')) {
-            return view('Product', compact('products'));
-        }elseif($request->routeIs('products.check')){  
-            $userProducts = Product::with(['media', 'user'])
-            ->where('user_id', $userId)
-            ->get();
-            return view('Product-check', compact('userProducts'));
-        }elseif ($request->routeIs('products.info')) {
-            return view('Product-info', compact('products'));
-        }
+            if ($request->routeIs('products.index')) {
+                $products = Product::with(['media', 'user'])
+                ->where('status', 100)
+                ->get();
+                    return view('Product', compact('products'));
+            }elseif($request->routeIs('products.check')){  
+                $userId = Auth::user()->id;
+                $userProducts = Product::with(['media', 'user'])
+                ->where('user_id', $userId)
+                ->get();
+                return view('Product-check', compact('userProducts'));
+            }elseif ($request->routeIs('products.info')) {
+                $products = Product::with(['media', 'user'])->get();
+                return view('Product-info', compact('products'));
+            }
     }
     /**
      * Show the form for creating a new resource.
@@ -116,17 +119,29 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
+        // 驗證傳入的狀態必須是 100 或 200
         $validatedData = $request->validate([
             'status' => 'required|in:100,200',  // 100 表示上架，200 表示下架
         ]);
-    
+
+        // 根據傳入的狀態進行切換
+        if ($validatedData['status'] == 100) {
+            $newStatus = 200;
+            $message = '商品已下架！';  // 如果傳入 100，則切換為 200
+        } else {
+            $newStatus = 100;
+            $message = '商品已上架！';  // 如果傳入 200，則切換為 100
+        }
+
         // 更新商品的狀態
         $product->update([
-            'status' => $validatedData['status'],
+            'status' => $newStatus,         
         ]);
-    
-        // 返回更新成功的響應
-        return response()->json(['message' => '商品狀態更新成功！'], 200);
+        // 返回更新成功的響應和相應的消息
+        return response()->json([
+            'message' => $message,
+            'new_status' => $newStatus,
+        ], 200);
     }
 
     /**
