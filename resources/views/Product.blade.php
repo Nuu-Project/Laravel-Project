@@ -102,30 +102,21 @@
             </section> -->
 
             <div class="flex flex-wrap gap-2 justify-center">
-  <a
-    class="bg-gray text-primary-foreground px-4 py-2 rounded-md hover:text-blue-400 transition ease-in-out duration-300"
-    href="#"
-  >
-    #Clothing
-  </a>
-  <a
-    class="bg-gray text-primary-foreground px-4 py-2 rounded-md hover:text-blue-400 transition ease-in-out duration-300"
-    href="#"
-  >
-    #Clothing
-  </a>
-  <a
-    class="bg-gray text-primary-foreground px-4 py-2 rounded-md hover:text-blue-400 transition ease-in-out duration-300"
-    href="#"
-  >
-    #Clothing
-  </a>
-  <a
-    class="bg-gray text-primary-foreground px-4 py-2 rounded-md hover:text-blue-400 transition ease-in-out duration-300"
-    href="#"
-  >
-    #Clothing
-  </a>
+            <select class="bg-gray text-primary-foreground px-4 py-2 rounded-md">
+    <option value="">選擇科目</option>
+    
+  </select>
+  <select class="bg-gray text-primary-foreground px-4 py-2 rounded-md">
+    <option value="">選擇課程</option>
+    
+  </select>
+  <select class="bg-gray text-primary-foreground px-4 py-2 rounded-md">
+    <option value="">選擇年級</option>
+    
+  </select>
+  <button class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition ease-in-out duration-300">
+    搜索
+  </button>
 </div>
 
 
