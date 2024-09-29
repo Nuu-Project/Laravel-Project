@@ -31,10 +31,8 @@
         </button>
     </div>
 
-   
-    
-    
     @auth
+    
     <ul class="lg:flex flex-col lg:flex-row lg:items-center lg:mx-auto lg:space-x-8 xl:space-x-14" :class="{'hidden':!navbarOpen,'flex':navbarOpen}">
     <li class="font-semibold text-gray-900 hover:text-gray-400 transition ease-in-out duration-300 mb-5 lg:mb-0 text-2xl">
             <a href="/">首頁</a>
@@ -55,7 +53,7 @@
             <a href="/">首頁</a>
         </li>
         <li class="font-semibold text-gray-900 hover:text-gray-400 transition ease-in-out duration-300 mb-5 lg:mb-0 text-2xl">
-            <a href="/n_login.product">商品</a>
+            <a href="/products">商品</a>
         </li>
     </ul>
     @endauth
@@ -175,5 +173,4 @@
     </script>
 
 </body>
-
 </html>

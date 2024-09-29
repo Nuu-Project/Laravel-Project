@@ -153,10 +153,13 @@
                                  </div>
                                 </div>
                                 <div class="flex items-center p-6">
-                                <a href="product">
-                                    <button class="inline-flex items-center justify-center whitespace-nowrap rounded-xl text-lg font-semibold ring-offset-background transition-colors ease-in-out duration-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-blue-500 text-white hover:bg-blue-700 h-10 px-3 py-2 ml-auto">
-                                        洽談
-                                    </button>
+                                <a href="/products-info" class="inline-flex items-center justify-center whitespace-nowrap rounded-xl 
+                                        text-lg font-semibold ring-offset-background 
+                                        transition-colors ease-in-out duration-500 focus-visible:outline-none 
+                                        focus-visible:ring-2 focus-visible:ring-ring 
+                                        focus-visible:ring-offset-2 disabled:pointer-events-none 
+                                        disabled:opacity-50 bg-blue-500 text-white hover:bg-blue-700 h-10 px-3 py-2 ml-auto">
+                                    洽談
                                 </a>
                                 </div>
                             </div>
