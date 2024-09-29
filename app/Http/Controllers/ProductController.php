@@ -18,31 +18,36 @@ class ProductController extends Controller
     //     $products = Product::with(['media', 'user'])->get();
     //     if ($request->routeIs('products.index')) {
     //         return view('product', compact('products'));
-    //     }elseif($request->routeIs('products.check')){  
+    //     }elseif($request->routeIs('products.check')){
     //         return view('product-check', compact('products'));
     //     }
     // }
     public function index(Request $request)
     {
-        $userId = Auth::user()->id;
-        $products = Product::with(['media', 'user'])->get();
-        if ($request->routeIs('products.index')) {
-            return view('n_login.Product', compact('products'));
-        }elseif($request->routeIs('products.check')){  
-            $userProducts = Product::with(['media', 'user'])
-            ->where('user_id', $userId)
-            ->get();
-            return view('n_login.Product-check', compact('userProducts'));
-        }elseif ($request->routeIs('products.info')) {
-            return view('n_login.Product-info', compact('products'));
-        }
+            if ($request->routeIs('products.index')) {
+                $products = Product::with(['media', 'user'])
+                ->where('status', 100)
+                ->get();
+                    return view('Product', compact('products'));
+            }elseif($request->routeIs('products.check')){  
+                $userId = Auth::user()->id;
+                $userProducts = Product::with(['media', 'user'])
+                ->where('user_id', $userId)
+                ->get();
+                return view('Product-check', compact('userProducts'));
+            }elseif ($request->routeIs('products.info')) {
+                $products = Product::with(['media', 'user'])->get();
+                return view('Product-info', compact('products'));
+            }
     }
+
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
         $tags = Tag::all();
+
         return view('Product-create', compact('tags'));
     }
 
@@ -52,9 +57,13 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'name' => ['required','string','max:50'],
-            'price' => ['required','numeric','digits_between:1,10'],
-            'description' => ['required','string'],
+            'name' => ['required', 'string', 'max:50'],
+            'price' => ['required', 'numeric', 'digits_between:1,10'],
+            'description' => ['required', 'string'],
+            'grade' => ['required', 'string'],      
+            'semester' => ['required', 'string'],   
+            'category' => ['required', 'string'],   
+            'image' => ['nullable', 'image'],       
         ]);
 
         $product = Product::create($validated + [
@@ -66,17 +75,17 @@ class ProductController extends Controller
             $product->addMedia($request->file('image'))->toMediaCollection('images');
         }
 
-         // 獲取表單資料
-        $grade = $request->input('grade');
-        $semester = $request->input('semester');
-        $category = $request->input('category');
+        // 獲取表單資料
+        $gradeSlug = $request->input('grade');      
+        $semesterSlug = $request->input('semester'); 
+        $categorySlug = $request->input('category'); 
 
-         // 根據年級查找對應的年級標籤
-         $gradeTag = Tag::where('order_column', $grade)->where('type', '年級')->first();
-         // 根據學期查找對應的學期標籤
-         $semesterTag = Tag::where('order_column', $semester)->where('type', '學期')->first();
-         // 根據課程類別查找對應的課程標籤
-         $categoryTag = Tag::where('name->zh', $category)->where('type', '課程')->first();
+        // 根據年級查找對應的年級標籤
+        $gradeTag = Tag::where('slug->zh', $gradeSlug)->where('type', '年級')->first();
+        // 根據學期查找對應的學期標籤
+        $semesterTag = Tag::where('slug->zh', $semesterSlug)->where('type', '學期')->first();
+        // 根據課程類別查找對應的課程標籤
+        $categoryTag = Tag::where('slug->zh', $categorySlug)->where('type', '課程')->first();
 
         // 附加年級標籤到產品
         if ($gradeTag) {
@@ -91,7 +100,6 @@ class ProductController extends Controller
             $product->attachTag($categoryTag);
         }
 
-        
         return redirect()->route('products.create')->with('success', '產品已成功創建並附加標籤');
     }
 
@@ -100,7 +108,15 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        //
+        $tag = request('tag');
+
+        // 根據標籤過濾商品
+        $filteredProducts = $product->whereHas('tags', function ($query) use ($tag) {
+            $query->where('name', $tag);
+        })->get();
+
+        // 返回過濾後的商品
+        return view('products.show', compact('filteredProducts'));
     }
 
     /**
@@ -116,17 +132,24 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-        $validatedData = $request->validate([
-            'status' => 'required|in:100,200',  // 100 表示上架，200 表示下架
-        ]);
-    
+        if ($product->status == 100) {
+            $newStatus = 200;
+            $message = '商品已下架！';  // 當前狀態是 100（上架），切換為 200（下架）
+        } else {
+            $newStatus = 100;
+            $message = '商品已上架！';  // 當前狀態是 200（下架），切換為 100（上架）
+        }
+
         // 更新商品的狀態
         $product->update([
-            'status' => $validatedData['status'],
+            'status' => $newStatus,         
         ]);
-    
-        // 返回更新成功的響應
-        return response()->json(['message' => '商品狀態更新成功！'], 200);
+
+        // 返回更新成功的響應和相應的消息
+        return response()->json([
+            'message' => $message,
+            'new_status' => $newStatus,
+        ], 200);
     }
 
     /**
@@ -136,10 +159,10 @@ class ProductController extends Controller
     {
         // 清空產品的媒體集合
         $product->clearMediaCollection('images');
-    
+
         // 刪除產品本身，這將自動處理標籤的分離
         $product->delete();
-    
+
         // 重定向到產品列表頁面，並帶有成功消息
         return redirect()->route('products.index')->with('success', '產品及其關聯媒體和標籤已成功刪除');
     }
