@@ -27,14 +27,14 @@ class ProductController extends Controller
         $userId = Auth::user()->id;
         $products = Product::with(['media', 'user'])->get();
         if ($request->routeIs('products.index')) {
-            return view('Product', compact('products'));
+            return view('n_login.Product', compact('products'));
         }elseif($request->routeIs('products.check')){  
             $userProducts = Product::with(['media', 'user'])
             ->where('user_id', $userId)
             ->get();
-            return view('Product-check', compact('userProducts'));
+            return view('n_login.Product-check', compact('userProducts'));
         }elseif ($request->routeIs('products.info')) {
-            return view('Product-info', compact('products'));
+            return view('n_login.Product-info', compact('products'));
         }
     }
     /**

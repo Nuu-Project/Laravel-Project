@@ -14,6 +14,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js" integrity="sha512-7x3zila4t2qNycrtZ31HO0NnJr8kg2VI67YLoRSyi9hGhRN66FHYWr7Axa9Y1J9tGYHVBPqIjSE1ogHrJTz51g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>     <!--  圖片預覽  -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 </head>
 
 <body class="font-body">
@@ -86,13 +88,6 @@
                 </div>
             </nav>
 
-
-
-            <!--
-// v0 by Vercel.
-// https://v0.dev/t/E4DuXrlqfSv
--->
-
 <style>:root{--background:0 0% 100%;--foreground:240 10% 3.9%;--card:0 0% 100%;--card-foreground:240 10% 3.9%;--popover:0 0% 100%;--popover-foreground:240 10% 3.9%;--primary:240 5.9% 10%;--primary-foreground:0 0% 98%;--secondary:240 4.8% 95.9%;--secondary-foreground:240 5.9% 10%;--muted:240 4.8% 95.9%;--muted-foreground:240 3.8% 45%;--accent:240 4.8% 95.9%;--accent-foreground:240 5.9% 10%;--destructive:0 72% 51%;--destructive-foreground:0 0% 98%;--border:240 5.9% 90%;--input:240 5.9% 90%;--ring:240 5.9% 10%;--chart-1:173 58% 39%;--chart-2:12 76% 61%;--chart-3:197 37% 24%;--chart-4:43 74% 66%;--chart-5:27 87% 67%;--radius:0.5rem;}img[src="/placeholder.svg"],img[src="/placeholder-user.jpg"]{filter:sepia(.3) hue-rotate(-60deg) saturate(.5) opacity(0.8) }</style>
 <style>h1, h2, h3, h4, h5, h6 { font-family: 'Inter', sans-serif; --font-sans-serif: 'Inter'; }
 </style>
@@ -110,7 +105,12 @@
   </div>
   <div class="grid gap-4 md:gap-10 items-start">
     <div class="grid gap-2">
+    <div class="flex justify-between items-center">
       <h1 class="text-3xl font-bold">商品名稱:</h1>
+      <button id="reportButton" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded">
+      檢舉
+      </button>
+    </div>
       <div class="flex items-center gap-2">
         <div class="flex items-center gap-0.5">
         <div><h1 class="font-semibold text-xl">用戶名稱:{{ Auth::user()->name }}</h1></div>
@@ -120,7 +120,8 @@
     </div>
     <div class="grid gap-2">
       <p class="text-2xl font-bold">$29.99</p>
-      <p class="text-muted-foreground">商品介紹:</p>
+      <h1 class="font-semibold">上架時間:</h1>
+      <p class="text-muted-foreground text-2xl">商品介紹:</p>
     </div>
     <form class="grid gap-4">
       <div class="grid gap-2">
@@ -154,6 +155,48 @@
     </form>
   </div>
 </div>
+
+    <script>
+    window.addEventListener('load', function() {
+        console.log('頁面已完全加載');
+        var reportButton = document.getElementById('reportButton');
+        if (reportButton) {
+            console.log('找到檢舉按鈕');
+            reportButton.addEventListener('click', function() {
+                console.log('檢舉按鈕被點擊');
+                try {
+                    Swal.fire({
+                        title: '檢舉',
+                        input: 'select',
+                        inputOptions: {
+                            'report1': 'Report 1',
+                            'report2': 'Report 2',
+                            'report3': 'Report 3',
+                            'report4': 'Report 4'
+                        },
+                        inputPlaceholder: '選擇檢舉原因',
+                        showCancelButton: true,
+                        confirmButtonText: '送出檢舉',
+                        cancelButtonText: '取消',
+                        inputValidator: (value) => {
+                            if (!value) {
+                                return '請選擇一個選項'
+                            }
+                        }
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            Swal.fire('檢舉已送出', '感謝您的回報', 'success')
+                        }
+                    });
+                } catch (error) {
+                    console.error('SweetAlert2 錯誤:', error);
+                }
+            });
+        } else {
+            console.error('未找到檢舉按鈕');
+        }
+    });
+    </script>
 
 </body>
 </html>
