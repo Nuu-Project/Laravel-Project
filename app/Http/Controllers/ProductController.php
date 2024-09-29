@@ -34,7 +34,12 @@ class ProductController extends Controller
                 $userProducts = Product::with(['media', 'user'])
                 ->where('user_id', $userId)
                 ->get();
-                return view('login.Product-check', compact('userProducts'));
+                if ($userProducts->isEmpty()) {
+                    $message = '您目前沒有任何商品，趕緊刊登一個吧!';
+                }else {
+                    $message = null; // 如果有商品，則不顯示訊息
+                };
+                return view('login.Product-check', compact('userProducts', 'message'));
             }elseif ($request->routeIs('products.info')) {
                 $products = Product::with(['media', 'user'])->get();
                 return view('login.Product-info', compact('products'));
