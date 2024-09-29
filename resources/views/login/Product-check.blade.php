@@ -135,10 +135,8 @@
                                             下架
                                         </button>
                                     </form>
-                                    <a href="/products-edit">
-                                    <button class="px-3 py-2 bg-info font-semibold text-white text-lg rounded-xl hover:bg-blue-700 transition ease-in-out duration-500">
+                                    <a href="/products-edit" class="px-3 py-2 bg-info font-semibold text-white text-lg rounded-xl hover:bg-blue-700 transition ease-in-out duration-500">
                                         編輯
-                                    </button>
                                     </a>
                                     <form action="{{ route('products.update', ['product' => $product->id])  }}" method="POST" class="inline-block">
                                         @csrf
