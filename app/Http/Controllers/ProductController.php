@@ -28,16 +28,16 @@ class ProductController extends Controller
                 $products = Product::with(['media', 'user'])
                 ->where('status', 100)
                 ->get();
-                    return view('Product', compact('products'));
+                    return view('n_login.Product', compact('products'));
             }elseif($request->routeIs('products.check')){  
                 $userId = Auth::user()->id;
                 $userProducts = Product::with(['media', 'user'])
                 ->where('user_id', $userId)
                 ->get();
-                return view('Product-check', compact('userProducts'));
+                return view('login.Product-check', compact('userProducts'));
             }elseif ($request->routeIs('products.info')) {
                 $products = Product::with(['media', 'user'])->get();
-                return view('Product-info', compact('products'));
+                return view('login.Product-info', compact('products'));
             }
     }
 
@@ -48,7 +48,7 @@ class ProductController extends Controller
     {
         $tags = Tag::all();
 
-        return view('Product-create', compact('tags'));
+        return view('login.Product-create', compact('tags'));
     }
 
     /**
