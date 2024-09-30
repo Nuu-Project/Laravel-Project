@@ -114,22 +114,28 @@ class ProductController extends Controller
     public function show(Product $product)
     {
         $tag = request('tag');
-
+        
         // 根據標籤過濾商品
-        $filteredProducts = $product->whereHas('tags', function ($query) use ($tag) {
+        $products = $product->whereHas('tags', function ($query) use ($tag) {
             $query->where('name', $tag);
         })->get();
 
         // 返回過濾後的商品
-        return view('products.show', compact('filteredProducts'));
+        return view('products.show', compact('products'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Product $product)
+    public function edit(Request $request,Product $product)
     {
-        //
+        $tags = Tag::all();
+        // $tag = $request->input('tag');
+        // $products = Product::whereHas('tags', function ($query) use ($tag) {
+        //     $query->where('name', $tag);
+        // })->get();
+        // 返回視圖，包含產品、標籤和過濾的產品（如果需要）
+        return view('login.Product-edit', compact('product', 'tags'));
     }
 
     /**

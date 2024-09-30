@@ -107,85 +107,91 @@
             @endif
 
             <div class="max-w-2xl mx-auto px-4 py-8 md:px-6 md:py-12">
-                <div class="grid gap-6 md:gap-8">
-                    <div class="grid gap-2">
-                        <h1 class="text-3xl font-bold">修改刊登商品</h1>
-                        <p class="text-muted-foreground">請依照下順序進行填寫，照片上傳張數最多五張。</p>
-                    </div>
-                    <form class="grid gap-6" action="{{ route('products.store') }}" method="POST" enctype="multipart/form-data">
-                        @csrf
+                
+                    <div class="grid gap-6 md:gap-8">
                         <div class="grid gap-2">
-                            <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70" for="name">
-                                書名
-                            </label>
-                            <input class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50" id="name" name="name" placeholder="請輸入書名" />
+                            <h1 class="text-3xl font-bold">修改刊登商品</h1>
+                            <p class="text-muted-foreground">請依照下順序進行填寫，照片上傳張數最多五張。</p>
                         </div>
-                        <div class="grid gap-2">
-                            <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70" for="price">
-                                價格
-                            </label>
-                            <input class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50" id="price" name="price" placeholder="輸入價格" type="number" />
-                        </div>
-
-                        <div class="grid gap-2">
-                            <label class="text-sm font-medium leading-none" for="grade">年級</label>
-                            <select id="grade" name="grade" class="flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
-                                <option selected>選擇適用的年級...</option>
-                                @foreach($tags as $tag)
-                                    @if($tag->type === '年級')
-                                        <option value="{{ $tag->getTranslation('slug', 'zh') }}">{{ $tag->getTranslation('name', 'zh') }}</option>
-                                    @endif
-                                @endforeach
-                            </select>
-                        </div>
-                        
-                        <div class="grid gap-2">
-                            <label class="text-sm font-medium leading-none" for="semester">學期</label>
-                            <select id="semester" name="semester" class="flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
-                                <option selected>選擇學期...</option>
-                                @foreach($tags as $tag)
-                                    @if($tag->type === '學期')
-                                        <option value="{{ $tag->getTranslation('slug', 'zh') }}">{{ $tag->getTranslation('name', 'zh') }}</option>
-                                    @endif
-                                @endforeach
-                            </select>
-                        </div>
-                        
-                        <div class="grid gap-2">
-                            <label class="text-sm font-medium leading-none" for="category">課程類別</label>
-                            <select id="category" name="category" class="flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
-                                <option selected>選擇課程類別...</option>
-                                @foreach($tags as $tag)
-                                    @if($tag->type === '課程')
-                                        <option value="{{ $tag->getTranslation('slug', 'zh') }}">{{ $tag->getTranslation('name', 'zh') }}</option>
-                                    @endif
-                                @endforeach
-                            </select>
-                        </div>                        
-
-                        <div class="grid gap-2">
-                            <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70" for="description">
-                                商品介紹
-                            </label>
-                            <textarea class="flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50" id="description" name="description" placeholder="請填寫有關該書的書況or使用情況等等~~" rows="4"></textarea>
-                        </div>
-                        <div class="grid gap-2">
-                            <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70" for="image">
-                                上傳圖片
-                            </label>
-                            <div class="flex items-center gap-4">
-                                <input class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50" id="image" name="image" type="file" />
+                        <form class="grid gap-6" action="{{ route('products.update',  ['product' => $product->id])  }}" method="POST" enctype="multipart/form-data">
+                            @csrf
+                            @method('PUT')
+                            <div class="grid gap-2">
+                                <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70" for="name">
+                                    書名
+                                </label>
+                                <input class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50" id="name" name="name" placeholder="請輸入書名" value="{{ $product->name }}"/>
                             </div>
-                            <!-- 圖片預覽 -->
-                            <br>
-                            <img id="preview" src="#" alt="你的圖片預覽" style="display: none; max-width: 300px;">
-                            <br>
-                            <!-- 圖片預覽 -->
-                        </div>
-                        <button class="inline-flex items-center justify-center whitespace-nowrap rounded-xl text-lg font-semibold ring-offset-background transition-colors ease-in-out duration-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-blue-500 text-white hover:bg-blue-700 h-11 px-8" type="submit">
-                            儲存修改
-                        </button>
-                    </form>
+                            <div class="grid gap-2">
+                                <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70" for="price">
+                                    價格
+                                </label>
+                                <input class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50" id="price" name="price" placeholder="輸入價格" type="number" value="{{ $product->price }}"/>
+                            </div>
+
+                            <div class="grid gap-2">
+                                <label class="text-sm font-medium leading-none" for="grade">年級</label>
+                                <select id="grade" name="grade" class="flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
+                                    <option value="" disabled @if(empty($product->grade)) selected @endif>選擇適用的年級...</option>
+                                    @foreach($tags as $tag)
+                                        @if($tag->type === '年級')
+                                            <option value="{{ $tag->getTranslation('slug', 'zh') }}"
+                                                @if($tag->getTranslation('slug', 'zh') == $product->grade) selected @endif>
+                                                {{ $tag->getTranslation('name', 'zh') }}
+                                            </option>
+                                        @endif
+                                    @endforeach
+                                </select>
+                            </div>
+                            
+                            <div class="grid gap-2">
+                                <label class="text-sm font-medium leading-none" for="semester">學期</label>
+                                <select id="semester" name="semester" class="flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
+                                    <option selected>選擇學期...</option>
+                                    @foreach($tags as $tag)
+                                        @if($tag->type === '學期')
+                                            <option value="{{ $tag->getTranslation('slug', 'zh') }}">{{ $tag->getTranslation('name', 'zh') }}</option>
+                                        @endif
+                                    @endforeach
+                                </select>
+                            </div>
+                            
+                            <div class="grid gap-2">
+                                <label class="text-sm font-medium leading-none" for="category">課程類別</label>
+                                <select id="category" name="category" class="flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
+                                    <option selected>選擇課程類別...</option>
+                                    @foreach($tags as $tag)
+                                        @if($tag->type === '課程')
+                                            <option value="{{ $tag->getTranslation('slug', 'zh') }}">{{ $tag->getTranslation('name', 'zh') }}</option>
+                                        @endif
+                                    @endforeach
+                                </select>
+                            </div>                        
+
+                            <div class="grid gap-2">
+                                <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70" for="description">
+                                    商品介紹
+                                </label>
+                                <textarea class="flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50" id="description" name="description" placeholder="請填寫有關該書的書況or使用情況等等~~" rows="4">{{ $product->description }}</textarea>
+                            </div>
+                            <div class="grid gap-2">
+                                <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70" for="image">
+                                    上傳圖片
+                                </label>
+                                <div class="flex items-center gap-4">
+                                    <input class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50" id="image" name="image" type="file" />
+                                </div>
+                                <!-- 圖片預覽 -->
+                                <br>
+                                <img id="preview" src="#" alt="你的圖片預覽" style="display: none; max-width: 300px;">
+                                <br>
+                                <!-- 圖片預覽 -->
+                            </div>
+                            <button class="inline-flex items-center justify-center whitespace-nowrap rounded-xl text-lg font-semibold ring-offset-background transition-colors ease-in-out duration-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-blue-500 text-white hover:bg-blue-700 h-11 px-8" type="submit">
+                                儲存修改
+                            </button>
+                        </form>
+            
 </body>
 
 </html>

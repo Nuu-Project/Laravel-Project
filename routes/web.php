@@ -42,7 +42,7 @@ Route::delete('/user-product-check/{product}', [ProductController::class, 'destr
 
 Route::get('/user-product-info', [ProductController::class, 'index'])->name('products.info');
 
-Route::get('/user-product-edit', [ProductController::class, 'index'])->name('products.edit');
+Route::get('/user-product-edit/{product}', [ProductController::class, 'edit'])->name('products.edit');
 
 // Route::get('/product-info', function () {
 //     return view('Product-info');
