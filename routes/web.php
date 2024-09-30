@@ -36,7 +36,9 @@ Route::post('/user-product-create', [ProductController::class, 'store'])->name('
 // });
 Route::get('/products-check', [ProductController::class, 'index'])->name('products.check');
 
-Route::put('/user-product-check/{product}', [ProductController::class, 'update'])->name('products.update');
+Route::put('/user-product-edit/{product}', [ProductController::class, 'update'])->name('products.update');
+ 
+Route::put('/user-product-check/{product}', [ProductController::class, 'demoteData'])->name('products.demoteData');
     
 Route::delete('/user-product-check/{product}', [ProductController::class, 'destroy'])->name('products.destroy');
 

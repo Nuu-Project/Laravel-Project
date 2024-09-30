@@ -131,7 +131,7 @@
                                     <!-- <button class="px-3 py-2 bg-info font-semibold text-white text-lg rounded-xl hover:bg-blue-700 transition ease-in-out duration-500">
                                         上架
                                     </button> -->
-                                    <form action="{{ route('products.update', ['product' => $product->id])  }}" method="POST" class="inline-block">
+                                    <form action="{{ route('products.demoteData', ['product' => $product->id])  }}" method="POST" class="inline-block">
                                         @csrf
                                         @method('PUT')
                                         <input type="hidden" name="product_id" value="{{ $product->id }}">
