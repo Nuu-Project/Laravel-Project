@@ -40,6 +40,7 @@ class ProductController extends Controller
                     $message = null; // 如果有商品，則不顯示訊息
                 };
                 return view('login.Product-check', compact('userProducts', 'message'));
+                
             }elseif ($request->routeIs('products.info')) {
                 $products = Product::with(['media', 'user'])->get();
                 return view('login.Product-info', compact('products'));

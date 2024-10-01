@@ -15,9 +15,8 @@ class ChirpController extends Controller
      */
     public function index(): View
     {
-        return view('chirps.index', [
-            'chirps' => Chirp::with('user')->latest()->get(),
-        ]);
+      $chirps = Chirp::with('user')->latest()->get();
+        return view('login.Product-info' , compact('chirps'));
     }
 
     /**
@@ -42,7 +41,7 @@ class ChirpController extends Controller
 
         $request->user()->chirps()->create($validated);
  
-        return redirect(route('chirps.index'));
+        return redirect(route('login.Product-info'));
     }
 
     /**
@@ -81,7 +80,7 @@ class ChirpController extends Controller
  
         $chirp->update($validated);
  
-        return redirect(route('chirps.index'));
+        return redirect(route('login.Product-info'));
     }
 
 
@@ -95,6 +94,6 @@ class ChirpController extends Controller
  
         $chirp->delete();
  
-        return redirect(route('chirps.index'));
+        return redirect(route('login.Product-info'));
     }
 }
