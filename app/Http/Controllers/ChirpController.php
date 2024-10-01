@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Chirp;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Gate;
 
@@ -16,7 +18,9 @@ class ChirpController extends Controller
     public function index(): View
     {
       $chirps = Chirp::with('user')->latest()->get();
-        return view('login.Product-info' , compact('chirps'));
+      $userId = Auth::user()->id;
+      $products = Product::with(['media', 'user'])->where('user_id', $userId)->get();
+        return view('login.Product-info' , compact('chirps','products'));
     }
 
     /**

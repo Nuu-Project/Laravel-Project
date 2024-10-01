@@ -94,66 +94,68 @@
 <style>body { font-family: 'Inter', sans-serif; --font-sans-serif: 'Inter'; }
 </style>
 <div class="grid md:grid-cols-2 gap-6 lg:gap-12 items-start max-w-6xl px-4 mx-auto py-6">
-  <div class="grid gap-4 md:gap-10 items-start">
-    <img
-      src="images/book-1.jpg"
-      alt="Product Image"
-      width="600"
-      height="600"
-      class="aspect-square object-cover border w-full rounded-lg overflow-hidden"
-    />
-  </div>
-  <div class="grid gap-4 md:gap-10 items-start">
-    <div class="grid gap-2">
-    <div class="flex justify-between items-center">
-      <h1 class="text-3xl font-bold">商品名稱:</h1>
-      <button id="reportButton" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded">
-      檢舉
-      </button>
+  @foreach($products as $product)
+    <div class="grid gap-4 md:gap-10 items-start">
+        <img
+        src="images/book-1.jpg"
+        alt="Product Image"
+        width="600"
+        height="600"
+        class="aspect-square object-cover border w-full rounded-lg overflow-hidden"
+        />
     </div>
-      <div class="flex items-center gap-2">
-        <div class="flex items-center gap-0.5">
-        <div><h1 class="font-semibold text-xl">用戶名稱:{{ Auth::user()->name }}</h1></div>
-
-        </div>
-      </div>
-    </div>
-    <div class="grid gap-2">
-      <p class="text-2xl font-bold">$29.99</p>
-      <h1 class="font-semibold">上架時間:</h1>
-      <p class="text-muted-foreground text-2xl">商品介紹:</p>
-    </div>
-    <form class="grid gap-4">
-      <div class="grid gap-2">
-        <div
-          role="radiogroup"
-          aria-required="false"
-          dir="ltr"
-          class="flex items-center gap-2"
-          id="color"
-          tabindex="0"
-          style="outline: none;"
-        >
-          <!--  -->
-        </div>
-      </div>
-      <div class="grid gap-2">
-        
-
-        </div>
-      </div>
-      <div class="grid gap-2">
-        
-
-       
-      </div>
-      <div class="flex flex-col gap-2 min-[400px]:flex-row">
-        <button class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-11 rounded-md px-8">
-          Add to cart
+    <div class="grid gap-4 md:gap-10 items-start">
+        <div class="grid gap-2">
+        <div class="flex justify-between items-center">
+        <h1 class="text-3xl font-bold">商品名稱:{{$product->name}}</h1>
+        <button id="reportButton" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded">
+        檢舉
         </button>
-      </div>
-    </form>
-  </div>
+        </div>
+        <div class="flex items-center gap-2">
+            <div class="flex items-center gap-0.5">
+            <div><h1 class="font-semibold text-xl">用戶名稱:{{ Auth::user()->name }}</h1></div>
+
+            </div>
+        </div>
+        </div>
+        <div class="grid gap-2">
+        <p class="text-2xl font-bold">${{$product->price}}</p>
+        <h1 class="font-semibold">上架時間:{{$product->created_at}}</h1>
+        <p class="text-muted-foreground text-2xl">商品介紹:{{$product->description}}</p>
+        </div>
+        <form class="grid gap-4">
+        <div class="grid gap-2">
+            <div
+            role="radiogroup"
+            aria-required="false"
+            dir="ltr"
+            class="flex items-center gap-2"
+            id="color"
+            tabindex="0"
+            style="outline: none;"
+            >
+            <!--  -->
+            </div>
+        </div>
+        <div class="grid gap-2">
+            
+
+            </div>
+        </div>
+        <div class="grid gap-2">
+            
+
+        
+        </div>
+        <div class="flex flex-col gap-2 min-[400px]:flex-row">
+            <button class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-11 rounded-md px-8">
+            Add to cart
+            </button>
+        </div>
+        </form>
+    </div>
+  @endforeach
 </div>
 
     <script>
