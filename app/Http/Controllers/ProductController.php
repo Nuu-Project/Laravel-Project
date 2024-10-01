@@ -130,13 +130,11 @@ class ProductController extends Controller
      */
     public function edit(Request $request,Product $product)
     {
+        $gradeTag = $product->tags->firstWhere('type', '年級');
+        $semesterTag = $product->tags->firstWhere('type', '學期');
+        $categoryTag = $product->tags->firstWhere('type', '課程');
         $tags = Tag::all();
-        // $tag = $request->input('tag');
-        // $products = Product::whereHas('tags', function ($query) use ($tag) {
-        //     $query->where('name', $tag);
-        // })->get();
-        // 返回視圖，包含產品、標籤和過濾的產品（如果需要）
-        return view('login.Product-edit', compact('product', 'tags'));
+        return view('login.Product-edit', compact('product', 'tags', 'gradeTag', 'semesterTag', 'categoryTag'));
     }
 
     /**

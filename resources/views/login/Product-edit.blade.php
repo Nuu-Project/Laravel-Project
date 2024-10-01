@@ -132,10 +132,11 @@
                                 <label class="text-sm font-medium leading-none" for="grade">年級</label>
                                 <select id="grade" name="grade" class="flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
                                     <option value="" disabled @if(empty($product->grade)) selected @endif>選擇適用的年級...</option>
+                                    
                                     @foreach($tags as $tag)
                                         @if($tag->type === '年級')
                                             <option value="{{ $tag->getTranslation('slug', 'zh') }}"
-                                                @if($tag->getTranslation('slug', 'zh') == $product->grade) selected @endif>
+                                                @if($gradeTag && $tag->getTranslation('slug', 'zh') == $gradeTag->getTranslation('slug', 'zh')) selected @endif>
                                                 {{ $tag->getTranslation('name', 'zh') }}
                                             </option>
                                         @endif
@@ -149,7 +150,10 @@
                                     <option selected>選擇學期...</option>
                                     @foreach($tags as $tag)
                                         @if($tag->type === '學期')
-                                            <option value="{{ $tag->getTranslation('slug', 'zh') }}">{{ $tag->getTranslation('name', 'zh') }}</option>
+                                            <option value="{{ $tag->getTranslation('slug', 'zh') }}"
+                                                @if($semesterTag && $tag->getTranslation('slug', 'zh') == $semesterTag->getTranslation('slug', 'zh')) selected @endif>
+                                                {{ $tag->getTranslation('name', 'zh') }}
+                                            </option>
                                         @endif
                                     @endforeach
                                 </select>
@@ -161,7 +165,10 @@
                                     <option selected>選擇課程類別...</option>
                                     @foreach($tags as $tag)
                                         @if($tag->type === '課程')
-                                            <option value="{{ $tag->getTranslation('slug', 'zh') }}">{{ $tag->getTranslation('name', 'zh') }}</option>
+                                            <option value="{{ $tag->getTranslation('slug', 'zh') }}"
+                                                @if($categoryTag && $tag->getTranslation('slug', 'zh') == $categoryTag->getTranslation('slug', 'zh')) selected @endif>
+                                                {{ $tag->getTranslation('name', 'zh') }}
+                                            </option>
                                         @endif
                                     @endforeach
                                 </select>
