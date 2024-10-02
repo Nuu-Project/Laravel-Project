@@ -27,13 +27,13 @@ class ProductController extends Controller
             if ($request->routeIs('products.index')) {
                 $products = Product::with(['media', 'user'])
                 ->where('status', 100)
-                ->get();
+                ->paginate(3);
                     return view('n_login.Product', compact('products'));
             }elseif($request->routeIs('products.check')){  
                 $userId = Auth::user()->id;
                 $userProducts = Product::with(['media', 'user'])
                 ->where('user_id', $userId)
-                ->get();
+                ->paginate(3);
                 if ($userProducts->isEmpty()) {
                     $message = '您目前沒有任何商品，趕緊刊登一個吧!';
                 }else {
@@ -45,6 +45,11 @@ class ProductController extends Controller
                 $products = Product::with(['media', 'user'])->get();
                 return view('login.Product-info', compact('products'));
             }
+                $products = Product::with('user', 'media')->paginate(3);
+                return view('n_login.Product', compact('products'));
+
+                $userProducts = Product::with('user', 'media')->paginate(3);
+                return view('login.Product-check', compact('userProducts'));
     }
 
     /**
@@ -77,8 +82,12 @@ class ProductController extends Controller
         ]);
 
         // 添加圖片
-        if ($request->hasFile('image')) {
-            $product->addMedia($request->file('image'))->toMediaCollection('images');
+        if ($request->hasFile('images')) {
+            $images = $request->file('images');
+            foreach ($images as $index => $image) {
+                if ($index >= 5) break; // 最多處理 5 張圖片
+                $product->addMedia($image)->toMediaCollection('images');
+            }
         }
 
         // 獲取表單資料
