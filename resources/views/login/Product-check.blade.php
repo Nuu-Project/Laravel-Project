@@ -153,6 +153,11 @@
                                 </div>
                             </div>
                         @endforeach
+                        </div>
+
+                    <div class="mt-6">
+                        {{ $userProducts->links() }}
+                    </div>
                 </main>
             </div>
         </body>

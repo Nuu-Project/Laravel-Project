@@ -173,15 +173,43 @@
                             <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70" for="image">
                                 上傳圖片
                             </label>
-                            <div class="flex items-center gap-4">
-                                <input class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50" id="image" name="image" type="file" />
+                            <div class="grid grid-cols-5 gap-4">
+                                @for ($i = 1; $i <= 5; $i++)
+                                    <div class="relative w-full aspect-square">
+                                        <input type="file" name="images[]" id="image{{ $i }}" class="hidden" accept="image/*" onchange="previewImage(this, {{ $i }})">
+                                        <label for="image{{ $i }}" class="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100 overflow-hidden">
+                                            <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                                                <p class="text-sm text-gray-500">圖片 {{ $i }}</p>
+                                                <!-- <img id="preview{{ $i }}" src="#" alt="預覽圖片" class="hidden w-full h-full object-cover"> -->
+                                            </div>
+                                            <img id="preview{{ $i }}" src="#" alt="預覽圖片" class="hidden w-full h-full object-cover absolute inset-0">
+                                        </label>
+                                    </div>
+                                @endfor
                             </div>
-                            <!-- 圖片預覽 -->
-                            <br>
-                            <img id="preview" src="#" alt="你的圖片預覽" style="display: none; max-width: 300px;">
-                            <br>
-                            <!-- 圖片預覽 -->
                         </div>
+<script>
+function previewImage(input, number) {
+    const preview = document.getElementById('preview' + number);
+    const label = preview.parentElement;
+    const file = input.files[0];
+    const reader = new FileReader();
+
+    reader.onloadend = function () {
+        preview.src = reader.result;
+        preview.classList.remove('hidden');
+        label.querySelector('div').classList.add('hidden'); // 隱藏 "圖片 X" 文字
+    }
+
+    if (file) {
+        reader.readAsDataURL(file);
+    } else {
+        preview.src = "";
+        preview.classList.add('hidden');
+        label.querySelector('div').classList.remove('hidden'); // 顯示 "圖片 X" 文字
+    }
+}
+</script>
                         <button class="inline-flex items-center justify-center whitespace-nowrap rounded-xl text-lg font-semibold ring-offset-background transition-colors ease-in-out duration-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-blue-500 text-white hover:bg-blue-700 h-11 px-8" type="submit">
                             刊登商品
                         </button>
