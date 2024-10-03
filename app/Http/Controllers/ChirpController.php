@@ -37,16 +37,18 @@ class ChirpController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $validated = $request->validate([
-            'message' => ['required', 'string', 'max:255',]
+            'message' => ['required', 'string', 'max:255'],
         ]);
-
+    
         info($validated);
         info($request->user());
-
+    
         $request->user()->chirps()->create($validated);
- 
-        return redirect(route('login.Product-info'));
+    
+        // 使用已定義的路由名稱進行重定向
+        return redirect()->route('products.info');
     }
+    
 
     /**
      * Display the specified resource.
@@ -84,7 +86,7 @@ class ChirpController extends Controller
  
         $chirp->update($validated);
  
-        return redirect(route('login.Product-info'));
+        return redirect(route('products.info'));
     }
 
 
@@ -98,6 +100,6 @@ class ChirpController extends Controller
  
         $chirp->delete();
  
-        return redirect(route('login.Product-info'));
+        return redirect(route('products.info'));
     }
 }

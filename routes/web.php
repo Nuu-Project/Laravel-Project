@@ -42,9 +42,9 @@ Route::put('/user-product-check/{product}', [ProductController::class, 'demoteDa
     
 Route::delete('/user-product-check/{product}', [ProductController::class, 'destroy'])->name('products.destroy');
 
-Route::get('/user-product-info', [ProductController::class, 'index'])->name('products.info');
+Route::get('/user-product-info' , [ProductController::class,'index'])->name('products.info');
 
-Route::get('/user-product-edit/{product}', [ProductController::class, 'edit'])->name('products.edit');
+Route::get('/user-product-edit/{product}', [ProductController::class,'edit'])->name('products.edit');
 
 // Route::get('/product-info', function () {
 //     return view('Product-info');

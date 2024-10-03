@@ -23,34 +23,34 @@ class ProductController extends Controller
     //     }
     // }
     public function index(Request $request)
-    {
-            if ($request->routeIs('products.index')) {
-                $products = Product::with(['media', 'user'])
-                ->where('status', 100)
-                ->paginate(3);
-                    return view('n_login.Product', compact('products'));
-            }elseif($request->routeIs('products.check')){  
-                $userId = Auth::user()->id;
-                $userProducts = Product::with(['media', 'user'])
-                ->where('user_id', $userId)
-                ->paginate(3);
-                if ($userProducts->isEmpty()) {
-                    $message = '您目前沒有任何商品，趕緊刊登一個吧!';
-                }else {
-                    $message = null; // 如果有商品，則不顯示訊息
-                };
-                return view('login.Product-check', compact('userProducts', 'message'));
-                
-            }elseif ($request->routeIs('products.info')) {
-                $products = Product::with(['media', 'user'])->get();
-                return view('login.Product-info', compact('products'));
-            }
-                $products = Product::with('user', 'media')->paginate(3);
-                return view('n_login.Product', compact('products'));
-
-                $userProducts = Product::with('user', 'media')->paginate(3);
-                return view('login.Product-check', compact('userProducts'));
+{
+    if ($request->routeIs('products.index')) {
+        $products = Product::with(['media', 'user'])
+            ->where('status', 100)
+            ->paginate(3);
+        return view('n_login.Product', compact('products'));
+    } elseif ($request->routeIs('products.check')) {  
+        $userId = Auth::user()->id;
+        $userProducts = Product::with(['media', 'user'])
+            ->where('user_id', $userId)
+            ->paginate(3);
+        $message = $userProducts->isEmpty() ? '您目前沒有任何商品，趕緊刊登一個吧!' : null;
+        return view('login.Product-check', compact('userProducts', 'message'));
+    } elseif ($request->routeIs('products.info')) {
+        $chirps = Auth::user()->chirps()->latest()->get(); // 獲取當前用戶的 chirps
+        $products = Product::with(['media', 'user'])->get(); // 根據需求獲取相關產品
+        return view('login.Product-info', compact('chirps', 'products'));
     }
+
+    // 移除無法執行的代碼
+    /*
+    $products = Product::with('user', 'media')->paginate(3);
+    return view('n_login.Product', compact('products'));
+
+    $userProducts = Product::with('user', 'media')->paginate(3);
+    return view('login.Product-check', compact('userProducts'));
+    */
+}
 
     /**
      * Show the form for creating a new resource.
