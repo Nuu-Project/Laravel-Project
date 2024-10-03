@@ -16,7 +16,7 @@ class ProfileController extends Controller
      */
     public function edit(Request $request): View
     {
-        return view('profile.edit', [
+        return view('profile.partials.edit', [
             'user' => $request->user(),
         ]);
     }
@@ -57,4 +57,10 @@ class ProfileController extends Controller
 
         return Redirect::to('/');
     }
+
+    public function control()
+    {
+    return view('profile.partials.control');
+    }
+
 }
