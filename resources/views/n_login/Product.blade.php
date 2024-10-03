@@ -150,7 +150,7 @@
                                  </div>
                                 </div>
                                 <div class="flex items-center p-6">
-                                <a href= "{{route('chirps.index')}}" class="inline-flex items-center justify-center whitespace-nowrap rounded-xl 
+                                <a href= "{{route('products.info')}}" class="inline-flex items-center justify-center whitespace-nowrap rounded-xl 
                                         text-lg font-semibold ring-offset-background 
                                         transition-colors ease-in-out duration-500 focus-visible:outline-none 
                                         focus-visible:ring-2 focus-visible:ring-ring 
