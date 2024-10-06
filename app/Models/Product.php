@@ -24,6 +24,10 @@ class Product extends Model implements HasMedia
         return $this->morphToMany(Tag::class, 'taggable');
     }
 
+    public function chirps()
+    {
+        return $this->hasMany(Chirp::class);
+    }
 
     public function registerMediaCollections(): void
     {

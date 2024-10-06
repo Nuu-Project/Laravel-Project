@@ -94,7 +94,7 @@
 <style>body { font-family: 'Inter', sans-serif; --font-sans-serif: 'Inter'; }
 </style>
 <div class="grid md:grid-cols-2 gap-6 lg:gap-12 items-start max-w-6xl px-4 mx-auto py-6">
-  @foreach($products as $product)
+  
     <div class="grid gap-4 md:gap-10 items-start">
         <img
         src="images/book-1.jpg"
@@ -155,7 +155,7 @@
         </div>
         </form>
     </div>
-  @endforeach
+
 </div>
 
     <script>
@@ -201,7 +201,7 @@
     </script>
 
     <div class="max-w-2xl mx-auto p-4 sm:p-6 lg:p-8">
-        <form method="POST" action="{{ route('chirps.store') }}">
+        <form method="POST" action="{{ route('products.chirps.store', ['product' => $product->id]) }}">
             @csrf
             <textarea
                 name="message"
@@ -237,7 +237,7 @@
                                         </button>
                                     </x-slot>
                                     <x-slot name="content">
-                                        <x-dropdown-link :href="route('chirps.edit', $chirp)">
+                                        <x-dropdown-link :href="route('products.chirps.edit', $chirp)">
                                             {{ __('更改') }}
                                         </x-dropdown-link>
                                         <form method="POST" action="{{ route('chirps.destroy', $chirp) }}">
