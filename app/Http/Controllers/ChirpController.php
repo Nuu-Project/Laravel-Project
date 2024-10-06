@@ -17,10 +17,11 @@ class ChirpController extends Controller
      */
     public function index(): View
     {
-      $chirps = Chirp::with('user')->latest()->get();
-      $userId = Auth::user()->id;
-      $products = Product::with(['media', 'user'])->where('user_id', $userId)->get();
-        return view('login.Product-info' , compact('chirps','products'));
+        $product = Product::findOrFail($productId);
+        
+        $chirps = $product->chirps()->with('user')->get();
+
+        return view('login.Product-info' , compact('chirps','product'));
     }
 
     /**

@@ -57,7 +57,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile/control', [ProfileController::class, 'control'])->name('profile.partials.control');
 });
 
-Route::resource('chirps', ChirpController::class)
+Route::resource('products.chirps', ChirpController::class)
     ->only(['index', 'store', 'edit', 'update', 'destroy'])
     ->middleware(['auth', 'verified']);
 
