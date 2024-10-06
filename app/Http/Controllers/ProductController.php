@@ -238,15 +238,15 @@ class ProductController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Product $product)
+        public function destroy(Product $product)
     {
         // 清空產品的媒體集合
         $product->clearMediaCollection('images');
 
-        // 刪除產品本身，這將自動處理標籤的分離
+        // 软删除产品，保留记录但标记为已删除
         $product->delete();
 
-        // 重定向到產品列表頁面，並帶有成功消息
-        return redirect()->route('products.index')->with('success', '產品及其關聯媒體和標籤已成功刪除');
+        // 重定向到产品列表页面，并带有成功消息
+        return redirect()->route('products.index')->with('success', '產品及其關聯媒體和標籤已成功軟刪除');
     }
 }
