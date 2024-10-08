@@ -15,7 +15,7 @@ class ChirpController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index($productId): View
+    public function index(): View
     {
         $product = Product::findOrFail($productId);
         
