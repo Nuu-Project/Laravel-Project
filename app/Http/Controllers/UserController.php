@@ -46,7 +46,7 @@ class UserController extends Controller
     {
         $user = User::findOrFail($id);
         $user->delete(); // 软删除用户
-        return redirect()->route('users.index')->with('success', '用户已删除');
+        return redirect()->route('users.index')->with('success', '用户已刪除');
     }
 }
 
