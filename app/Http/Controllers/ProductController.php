@@ -240,9 +240,6 @@ class ProductController extends Controller
      */
         public function destroy(Product $product)
     {
-        // 清空產品的媒體集合
-        $product->clearMediaCollection('images');
-
         // 软删除产品，保留记录但标记为已删除
         $product->delete();
 
