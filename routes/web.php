@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
-// use App\Http\Controllers\ProductController;
 use App\Http\Controllers\Product\CheckController;
 use App\Http\Controllers\Product\CreateController;
 use App\Http\Controllers\Product\EditController;
