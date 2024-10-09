@@ -23,9 +23,6 @@ Route::get('/products', [ProductController::class, 'index'])->name('products.ind
 
 Route::get('/user-product-info' , [InfoController::class,'index'])->name('products.info');
 
-// 還未使用
-// Route::get('/products/{slug}', [ProductController::class, 'show'])->name('products.show');
-
 //登入: product_create
 Route::get('/products-create', [CreateController::class, 'create'])->name('products.create');
 
