@@ -102,15 +102,32 @@
             </section> -->
 
             <div class="flex flex-wrap gap-2 justify-center">
-            <select class="bg-gray text-primary-foreground px-4 py-2 rounded-md">
-                <option value="">選擇科目</option>
+            <select id="semester" name="semester" class="bg-gray text-primary-foreground px-4 py-2 rounded-md">
+                <option value="">選擇科目...</option>
             </select>
-            <select class="bg-gray text-primary-foreground px-4 py-2 rounded-md">
-                <option value="">選擇課程</option>
-    
+            <select id="category" name="category" class="bg-gray text-primary-foreground px-4 py-2 rounded-md">
+                <option selected>選擇課程...</option>
+                @foreach($tags as $tag)
+                    @if($tag->type === '課程')
+                        <option value="{{ $tag->getTranslation('slug', 'zh') }}">{{ $tag->getTranslation('name', 'zh') }}</option>
+                    @endif
+                @endforeach
             </select>
-            <select class="bg-gray text-primary-foreground px-4 py-2 rounded-md">
-                    <option value="">選擇年級</option>
+            <select id="grade" name="grade" class="bg-gray text-primary-foreground px-4 py-2 rounded-md">
+                <option selected>選擇年級...</option>
+                @foreach($tags as $tag)
+                    @if($tag->type === '年級')
+                        <option value="{{ $tag->getTranslation('slug', 'zh') }}">{{ $tag->getTranslation('name', 'zh') }}</option>
+                    @endif
+                @endforeach
+            </select>
+            <select id="semester" name="semester" class="bg-gray text-primary-foreground px-4 py-2 rounded-md">
+                <option selected>選擇學期...</option>
+                    @foreach($tags as $tag)
+                        @if($tag->type === '學期')
+                            <option value="{{ $tag->getTranslation('slug', 'zh') }}">{{ $tag->getTranslation('name', 'zh') }}</option>
+                        @endif
+                    @endforeach
             </select>
             <button class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition ease-in-out duration-300">
                         搜索
