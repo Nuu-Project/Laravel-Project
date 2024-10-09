@@ -1,7 +1,11 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\ProductController;
+use App\Http\Controllers\Product\CheckController;
+use App\Http\Controllers\Product\CreateController;
+use App\Http\Controllers\Product\EditController;
+use App\Http\Controllers\Product\InfoController;
+use App\Http\Controllers\Product\ProductController;
 use App\Http\Controllers\ChirpController;
 use Illuminate\Support\Facades\Route;
 
@@ -15,40 +19,26 @@ Route::get('/s', function () {
     return view('test');
 });
 
-//共用: product
-// Route::get('/product', function () { 
-//     return view('Product');
-// });
-
 Route::get('/products', [ProductController::class, 'index'])->name('products.index');
 
-Route::get('/products/{slug}', [ProductController::class, 'show'])->name('products.show');
+Route::get('/user-product-info' , [InfoController::class,'index'])->name('products.info');
 
 //登入: product_create
-Route::get('/products-create', [ProductController::class, 'create'])->name('products.create');
+Route::get('/products-create', [CreateController::class, 'create'])->name('products.create');
 
 //送出表單: product_create
-Route::post('/user-product-create', [ProductController::class, 'store'])->name('products.store');
+Route::post('/user-product-create', [CreateController::class, 'store'])->name('products.store');
 
-//登入: 查看用戶刊登商品
-// Route::get('/user-product-check', function () {
-//     return view('Product-check');
-// });
-Route::get('/products-check', [ProductController::class, 'index'])->name('products.check');
-
-Route::put('/user-product-edit/{product}', [ProductController::class, 'update'])->name('products.update');
+Route::get('/products-check', [CheckController::class, 'index'])->name('products.check');
  
-Route::put('/user-product-check/{product}', [ProductController::class, 'demoteData'])->name('products.demoteData');
+Route::put('/user-product-check/{product}', [CheckController::class, 'demoteData'])->name('products.demoteData');
     
-Route::delete('/user-product-check/{product}', [ProductController::class, 'destroy'])->name('products.destroy');
+Route::delete('/user-product-check/{product}', [CheckController::class, 'destroy'])->name('products.destroy');
 
-Route::get('/user-product-info' , [ProductController::class,'index'])->name('products.info');
+Route::put('/user-product-edit/{product}', [EditController::class, 'update'])->name('products.update');
 
-Route::get('/user-product-edit/{product}', [ProductController::class,'edit'])->name('products.edit');
+Route::get('/user-product-edit/{product}', [EditController::class,'edit'])->name('products.edit');
 
-// Route::get('/product-info', function () {
-//     return view('Product-info');
-// });
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
