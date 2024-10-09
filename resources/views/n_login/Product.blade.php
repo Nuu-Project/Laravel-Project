@@ -210,7 +210,7 @@
                         </div>
                         
                     <div class="mt-6">
-                        {{ $products->links() }}
+                        {{ $products->appends(request()->query())->links() }}
                     </div>
                 </main>
             </div>
