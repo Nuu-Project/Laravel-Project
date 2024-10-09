@@ -15,8 +15,10 @@ class ProductController extends Controller
         $products = Product::with(['media', 'user'])
             ->where('status', 100)
             ->paginate(3);
+        
+        $tags = Tag::all();
 
-        return view('n_login.Product', compact('products'));
+        return view('n_login.Product', compact('products','tags'));
     }
 
     public function create()
