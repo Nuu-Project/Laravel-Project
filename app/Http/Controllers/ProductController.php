@@ -41,15 +41,7 @@ class ProductController extends Controller
         $products = Product::with(['media', 'user'])->get(); // 根據需求獲取相關產品
         return view('login.Product-info', compact('chirps', 'products'));
     }
-
-    // 移除無法執行的代碼
-    /*
-    $products = Product::with('user', 'media')->paginate(3);
-    return view('n_login.Product', compact('products'));
-
-    $userProducts = Product::with('user', 'media')->paginate(3);
-    return view('login.Product-check', compact('userProducts'));
-    */
+    
 }
 
     /**
