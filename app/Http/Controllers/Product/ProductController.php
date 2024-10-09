@@ -10,15 +10,36 @@ use Spatie\Tags\Tag;
 
 class ProductController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $products = Product::with(['media', 'user'])
-            ->where('status', 100)
-            ->paginate(3);
-        
-        $tags = Tag::all();
+        // 獲取請求中的標籤 slug
+        $tagSlugs = $request->input('tags', []);
 
-        return view('n_login.Product', compact('products','tags'));
+        // 將 slug 轉換為標籤名稱和類型
+        $tags = Tag::whereIn('slug->zh', $tagSlugs)->get()->map(function ($tag) {
+            return [
+                'name' => $tag->getTranslation('name', 'zh'),
+                'type' => $tag->type,
+            ];
+        })->toArray();
+
+        // 根據所有標籤篩選商品
+        $productsQuery = Product::with(['media', 'user'])
+            ->where('status', 100);
+
+        if (!empty($tags)) {
+            foreach ($tags as $tag) {
+                $productsQuery->whereHas('tags', function ($query) use ($tag) {
+                    $query->where('name->zh', $tag['name'])
+                          ->where('type', $tag['type']);
+                });
+            }
+        }
+
+        $products = $productsQuery->paginate(3);
+        $allTags = Tag::all();
+
+        return view('n_login.Product', compact('products', 'allTags', 'tagSlugs'));
     }
 
     public function create()
@@ -33,15 +54,7 @@ class ProductController extends Controller
 
     public function show(Product $product)
     {
-        $tag = request('tag');
-
-        // 根據標籤過濾商品
-        $products = $product->whereHas('tags', function ($query) use ($tag) {
-            $query->where('name', $tag);
-        })->get();
-
-        // 返回過濾後的商品
-        return view('products.show', compact('products'));
+        // 
     }
 
     public function edit(string $id)

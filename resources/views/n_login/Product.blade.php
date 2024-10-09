@@ -101,38 +101,51 @@
             <!-- </div>
             </section> -->
 
-            <div class="flex flex-wrap gap-2 justify-center">
-            <select id="semester" name="semester" class="bg-gray text-primary-foreground px-4 py-2 rounded-md">
-                <option value="">選擇科目...</option>
-            </select>
-            <select id="category" name="category" class="bg-gray text-primary-foreground px-4 py-2 rounded-md">
-                <option selected>選擇課程...</option>
-                @foreach($tags as $tag)
-                    @if($tag->type === '課程')
-                        <option value="{{ $tag->getTranslation('slug', 'zh') }}">{{ $tag->getTranslation('name', 'zh') }}</option>
-                    @endif
-                @endforeach
-            </select>
-            <select id="grade" name="grade" class="bg-gray text-primary-foreground px-4 py-2 rounded-md">
-                <option selected>選擇年級...</option>
-                @foreach($tags as $tag)
-                    @if($tag->type === '年級')
-                        <option value="{{ $tag->getTranslation('slug', 'zh') }}">{{ $tag->getTranslation('name', 'zh') }}</option>
-                    @endif
-                @endforeach
-            </select>
-            <select id="semester" name="semester" class="bg-gray text-primary-foreground px-4 py-2 rounded-md">
-                <option selected>選擇學期...</option>
-                    @foreach($tags as $tag)
-                        @if($tag->type === '學期')
-                            <option value="{{ $tag->getTranslation('slug', 'zh') }}">{{ $tag->getTranslation('name', 'zh') }}</option>
+            <form action="{{ route('products.index') }}" method="GET" class="flex flex-wrap gap-2 justify-center">
+                {{-- <select id="" name="tags[]" class="bg-gray text-primary-foreground px-4 py-2 rounded-md">
+                    <option value="">選擇科目...</option>
+                    @foreach($allTags as $tag)
+                        @if($tag->type === '科目')
+                            <option value="{{ $tag->getTranslation('slug', 'zh') }}" {{ in_array($tag->getTranslation('slug', 'zh'), $tagSlugs) ? 'selected' : '' }}>
+                                {{ $tag->getTranslation('name', 'zh') }}
+                            </option>
                         @endif
                     @endforeach
-            </select>
-            <button class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition ease-in-out duration-300">
-                        搜索
-            </button>
-            </div>
+                </select> --}}
+                <select id="category" name="tags[]" class="bg-gray text-primary-foreground px-4 py-2 rounded-md">
+                    <option value="">選擇課程...</option>
+                    @foreach($allTags as $tag)
+                        @if($tag->type === '課程')
+                            <option value="{{ $tag->getTranslation('slug', 'zh') }}" {{ in_array($tag->getTranslation('slug', 'zh'), $tagSlugs) ? 'selected' : '' }}>
+                                {{ $tag->getTranslation('name', 'zh') }}
+                            </option>
+                        @endif
+                    @endforeach
+                </select>
+                <select id="grade" name="tags[]" class="bg-gray text-primary-foreground px-4 py-2 rounded-md">
+                    <option value="">選擇年級...</option>
+                    @foreach($allTags as $tag)
+                        @if($tag->type === '年級')
+                            <option value="{{ $tag->getTranslation('slug', 'zh') }}" {{ in_array($tag->getTranslation('slug', 'zh'), $tagSlugs) ? 'selected' : '' }}>
+                                {{ $tag->getTranslation('name', 'zh') }}
+                            </option>
+                        @endif
+                    @endforeach
+                </select>
+                <select id="semester" name="tags[]" class="bg-gray text-primary-foreground px-4 py-2 rounded-md">
+                    <option value="">選擇學期...</option>
+                    @foreach($allTags as $tag)
+                        @if($tag->type === '學期')
+                            <option value="{{ $tag->getTranslation('slug', 'zh') }}" {{ in_array($tag->getTranslation('slug', 'zh'), $tagSlugs) ? 'selected' : '' }}>
+                                {{ $tag->getTranslation('name', 'zh') }}
+                            </option>
+                        @endif
+                    @endforeach
+                </select>
+                <button class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition ease-in-out duration-300">
+                    搜索
+                </button>
+            </form>
 
             <div class="flex flex-col w-full min-h-screen">
                 <main class="flex min-h-[calc(100vh_-_theme(spacing.16))] flex-1 flex-col gap-4 p-4 md:gap-8 md:p-10">
@@ -162,8 +175,24 @@
                                         @endif
                                     </div>
                                     <div class="flex items-center justify-between mb-8">
-                                        <h6 class="font-black text-gray-600 text-sm md:text-lg">年級 : <span class="font-semibold text-gray-900 text-md md:text-lg">大一【上】</span></h6>
-                                        <h6 class="font-black text-gray-600 text-sm md:text-lg">課程 : <span class="font-semibold text-gray-900 text-md md:text-lg">必修</span></h6>
+                                        <h6 class="font-black text-gray-600 text-sm md:text-lg">年級 : 
+                                            <span class="font-semibold text-gray-900 text-md md:text-lg">
+                                            @php
+                                                $gradeTag = $product->tags->firstWhere('type', '年級');
+                                                $semesterTag = $product->tags->firstWhere('type', '學期');
+                                            @endphp
+                                            {{ $gradeTag ? $gradeTag->getTranslation('name', 'zh') : '無' }}
+                                            {{ $semesterTag ? $semesterTag->getTranslation('name', 'zh') : '學期:無' }}
+                                            </span>
+                                        </h6>
+                                        <h6 class="font-black text-gray-600 text-sm md:text-lg">課程 : 
+                                            <span class="font-semibold text-gray-900 text-md md:text-lg">
+                                                @php
+                                                    $categoryTag = $product->tags->firstWhere('type', '課程');
+                                                @endphp
+                                                {{ $categoryTag ? $categoryTag->getTranslation('name', 'zh') : '無' }}
+                                            </span>
+                                        </h6>
                                  </div>
                                 </div>
                                 <div class="flex items-center p-6">
