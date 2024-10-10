@@ -21,7 +21,7 @@ class ChirpController extends Controller
         
         $chirps = $product->chirps()->with('user')->get();
 
-        return view('login.Product-info' , compact('chirps','product'));
+        return view('user.products.info' , compact('chirps','product'));
     }
 
     /**
@@ -43,7 +43,7 @@ class ChirpController extends Controller
     
         info($validated);
         info($request->user());
-    
+
         $request->user()->chirps()->create($validated);
     
         // 使用已定義的路由名稱進行重定向

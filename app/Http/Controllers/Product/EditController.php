@@ -34,7 +34,7 @@ class EditController extends Controller
         $categoryTag = $product->tags->firstWhere('type', '課程');
         $tags = Tag::all();
 
-        return view('login.Product-edit', compact('product', 'tags', 'gradeTag', 'semesterTag', 'categoryTag'));
+        return view('user.products.edit', compact('product', 'tags', 'gradeTag', 'semesterTag', 'categoryTag'));
     }
 
     public function update(Request $request, string $id)
