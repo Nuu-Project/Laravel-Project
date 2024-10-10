@@ -15,13 +15,13 @@ class ChirpController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(): View
+    public function index($productId): View
     {
         $product = Product::findOrFail($productId);
         
         $chirps = $product->chirps()->with('user')->get();
 
-        return view('login.Product-info' , compact('chirps','product'));
+        return view('user.products.info' , compact('chirps','product'));
     }
 
     /**
@@ -43,7 +43,7 @@ class ChirpController extends Controller
     
         info($validated);
         info($request->user());
-    
+
         $request->user()->chirps()->create($validated);
     
         // 使用已定義的路由名稱進行重定向

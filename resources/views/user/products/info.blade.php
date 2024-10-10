@@ -114,7 +114,7 @@
         </div>
         <div class="flex items-center gap-2">
             <div class="flex items-center gap-0.5">
-            <div><h1 class="font-semibold text-xl">用戶名稱:{{ Auth::user()->name }}</h1></div>
+            <div><h1 class="font-semibold text-xl">用戶名稱:{{$product->user->name}}</h1></div>
 
             </div>
         </div>
