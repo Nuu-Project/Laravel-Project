@@ -19,7 +19,7 @@ class CreateController extends Controller
     {
         $tags = Tag::all();
 
-        return view('login.Product-create', compact('tags'));
+        return view('user.products.create', compact('tags'));
     }
 
     public function store(Request $request)

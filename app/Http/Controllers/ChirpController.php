@@ -21,7 +21,7 @@ class ChirpController extends Controller
         
         $chirps = $product->chirps()->with('user')->get();
 
-        return view('login.Product-info' , compact('chirps','product'));
+        return view('user.products.info' , compact('chirps','product'));
     }
 
     /**
