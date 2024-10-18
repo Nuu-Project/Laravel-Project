@@ -17,7 +17,7 @@ class ChirpController extends Controller
      */
     public function index($productId): View
     {
-        $product = Product::findOrFail($productId);
+        $product = Product::with('media')->findOrFail($productId);
         
         $chirps = $product->chirps()->with('user')->get();
 
