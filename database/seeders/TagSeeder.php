@@ -82,6 +82,26 @@ class TagSeeder extends Seeder
                 'order_column' => 3,
             ],
 
+            //科目
+            [
+                'name' => ['en' => 'Statistics', 'zh' => '統計學'],
+                'slug' => ['en' => 'statistics', 'zh' => 'statistics'],
+                'type' => '科目',
+                'order_column' => 1,
+            ],
+            [
+                'name' => ['en' => 'Accounting', 'zh' => '會計學'],
+                'slug' => ['en' => 'accounting', 'zh' => 'accounting'],
+                'type' => '科目',
+                'order_column' => 2,
+            ],
+            [
+                'name' => ['en' => 'Introduction-to-Computer-Science', 'zh' => '計算機概論'],
+                'slug' => ['en' => 'introduction-to-computer-science', 'zh' => 'introduction-to-computer-science'],
+                'type' => '科目',
+                'order_column' => 3,
+            ],
+
         ];
 
         foreach ($tags as $tagData) {

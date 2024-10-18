@@ -113,7 +113,7 @@
                 @endforeach
             </form>
             <form action="{{ route('products.index') }}" method="GET" class="flex flex-wrap gap-2 justify-center">
-                {{-- <select id="" name="tags[]" class="bg-gray text-primary-foreground px-4 py-2 rounded-md">
+                <select id="subject" name="tags[]" class="bg-gray text-primary-foreground px-4 py-2 rounded-md">
                     <option value="">選擇科目...</option>
                     @foreach($allTags as $tag)
                         @if($tag->type === '科目')
@@ -122,7 +122,7 @@
                             </option>
                         @endif
                     @endforeach
-                </select> --}}
+                </select>
                 <select id="category" name="tags[]" class="bg-gray text-primary-foreground px-4 py-2 rounded-md">
                     <option value="">選擇課程...</option>
                     @foreach($allTags as $tag)
