@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/png" href="images/icon.png">
+    <link rel="icon" type="image/png" href="{{ asset('images/icon.png') }}">
     <title>聯大二手書交易平台</title>
     <link rel="stylesheet" href="{{ asset('css/tailwind.css') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -93,47 +93,46 @@
 </style>
 <style>body { font-family: 'Inter', sans-serif; --font-sans-serif: 'Inter'; }
 </style>
-<div class="grid md:grid-cols-2 gap-6 lg:gap-12 items-start max-w-6xl px-4 mx-auto py-6">
-  
-    <div class="grid gap-4 md:gap-10 items-start">
-    @if($product->media->isNotEmpty())
-        @php
-            $media = $product->getFirstMedia('images');
-        @endphp
-        @if($media)
-            <img
-                src="{{ $media->getUrl() }}"
-                alt="Product Image"
-                width="600"
-                height="600"
-                class="aspect-square object-cover border w-full rounded-lg overflow-hidden"
-            />
+    <div class="grid md:grid-cols-2 gap-6 lg:gap-12 items-start max-w-6xl px-4 mx-auto py-6">
+        {{-- 檢查是否有媒體 --}}
+        @if($product->media->isNotEmpty())
+            @php
+                $media = $product->getFirstMedia('images');
+            @endphp
+            {{-- 檢查是否有圖片 --}}
+            @if($media)
+                <img 
+                    src="{{ $media->getUrl() }}" 
+                    alt="Product Image" 
+                    width="600" 
+                    height="600" 
+                    class="aspect-square object-cover border w-full rounded-lg overflow-hidden" 
+                />
+            @else
+                <div>沒圖片</div>
+            @endif
         @else
             <div>沒有圖片</div>
         @endif
-    @else
-        <div>沒有圖片</div>
-    @endif
-    </div>
     <div class="grid gap-4 md:gap-10 items-start">
         <div class="grid gap-2">
         <div class="flex justify-between items-center">
-        <h1 class="text-3xl font-bold">商品名稱:{{$product->name}}</h1>
+        <h1 class="text-3xl font-bold">商品名稱:{{ $product->name }}</h1>
         <button id="reportButton" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded">
         檢舉
         </button>
         </div>
         <div class="flex items-center gap-2">
             <div class="flex items-center gap-0.5">
-            <div><h1 class="font-semibold text-xl">用戶名稱:{{$product->user->name}}</h1></div>
+            <div><h1 class="font-semibold text-xl">用戶名稱:{{ $product->user->name }}</h1></div>
 
             </div>
         </div>
         </div>
         <div class="grid gap-2">
-        <p class="text-2xl font-bold">${{$product->price}}</p>
-        <h1 class="font-semibold">上架時間:{{$product->created_at}}</h1>
-        <p class="text-muted-foreground text-2xl">商品介紹:{{$product->description}}</p>
+        <p class="text-2xl font-bold">${{ $product->price }}</p>
+        <h1 class="font-semibold">上架時間:{{ $product->created_at }}</h1>
+        <p class="text-muted-foreground text-2xl">商品介紹:{{ $product->description }}</p>
         </div>
         <form class="grid gap-4">
         <div class="grid gap-2">
