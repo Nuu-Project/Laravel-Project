@@ -10,13 +10,12 @@ use Spatie\Tags\Tag;
 
 class InfoController extends Controller
 {
-    public function index()
+    public function index(Product $product)
     {
-        $chirps = Auth::user()->chirps()->latest()->get(); // 獲取當前用戶的 chirps
-        $products = Product::with(['media', 'user'])->get(); // 根據需求獲取相關產品
-        return view('user.products.info', compact('chirps', 'products'));
+        $chirps = $product->chirps()->with('user')->latest()->get();
+        
+        return view('user.products.info', compact('product', 'chirps'));
     }
-
     public function create()
     {
         //

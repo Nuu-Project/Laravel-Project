@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/png" href="images/icon.png">
     <title>聯大二手書交易平台</title>
-    <link rel="stylesheet" href="css/tailwind.css">
+    <link rel="stylesheet" href="{{ asset('css/tailwind.css') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -27,7 +27,7 @@
 
             <nav class="flex-wrap lg:flex items-center" x-data="{navbarOpen:false}">
                 <div class="flex items-center mb-10 lg:mb-0">
-                    <img src="images/book-4-fix.png" alt="Logo">
+                    <img src="{{asset('images/book-4-fix.png')}}" alt="Logo">
 
                     <button class="lg:hidden w-10 h-10 ml-auto flex items-center justify-center border border-blue-500 text-blue-500 rounded-md" @click="navbarOpen = !navbarOpen">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
@@ -54,7 +54,7 @@
                     <x-dropdown align="right" width="48">
                         <x-slot name="trigger">
                             <button class="inline-flex items-center px-3 py-2 border border-transparent text-3xl leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
-                            <img width="65" height="65" src="images/account.png" alt="">
+                            <img width="65" height="65" src="{{asset('images/account.png')}}" alt="">
                                     <div>{{ Auth::user()->name }}</div>
 
                                 <div class="ms-1">
@@ -96,13 +96,24 @@
 <div class="grid md:grid-cols-2 gap-6 lg:gap-12 items-start max-w-6xl px-4 mx-auto py-6">
   
     <div class="grid gap-4 md:gap-10 items-start">
-        <img
-        src="images/book-1.jpg"
-        alt="Product Image"
-        width="600"
-        height="600"
-        class="aspect-square object-cover border w-full rounded-lg overflow-hidden"
-        />
+    @if($product->media->isNotEmpty())
+        @php
+            $media = $product->getFirstMedia('images');
+        @endphp
+        @if($media)
+            <img
+                src="{{ $media->getUrl() }}"
+                alt="Product Image"
+                width="600"
+                height="600"
+                class="aspect-square object-cover border w-full rounded-lg overflow-hidden"
+            />
+        @else
+            <div>沒有圖片</div>
+        @endif
+    @else
+        <div>沒有圖片</div>
+    @endif
     </div>
     <div class="grid gap-4 md:gap-10 items-start">
         <div class="grid gap-2">
@@ -237,18 +248,18 @@
                                         </button>
                                     </x-slot>
                                     <x-slot name="content">
-                                        <x-dropdown-link :href="route('products.chirps.edit', $chirp)">
-                                            {{ __('更改') }}
-                                        </x-dropdown-link>
-                                        <form method="POST" action="{{ route('chirps.destroy', $chirp) }}">
-                                            @csrf
-                                            @method('delete')
-                                            <x-dropdown-link :href="route('chirps.destroy', $chirp)" onclick="event.preventDefault(); this.closest('form').submit();">
-                                                {{ __('刪除') }}
-                                            </x-dropdown-link>
-                                        </form>
-                                    </x-slot>
-                                </x-dropdown>
+                            <x-dropdown-link :href="route('products.chirps.edit', ['product' => $product->id, 'chirp' => $chirp->id])">
+                            {{ __('更改') }}
+                            </x-dropdown-link>
+                            <form method="POST" action="{{ route('products.chirps.destroy', ['product' => $product->id, 'chirp' => $chirp->id]) }}">
+                            @csrf
+                            @method('delete')
+                            <x-dropdown-link :href="route('products.chirps.destroy', ['product' => $product->id, 'chirp' => $chirp->id])" onclick="event.preventDefault(); this.closest('form').submit();">
+                            {{ __('刪除') }}
+                            </x-dropdown-link>
+                            </form>
+                            </x-slot>
+                            </x-dropdown>
                             @endif
                         </div>
                         <p class="mt-4 text-lg text-gray-900">{{ $chirp->message }}</p>
