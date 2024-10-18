@@ -13,7 +13,8 @@ class ProductController extends Controller
     {
         // 獲取請求中的標籤 slug
         $tagSlugs = $request->input('tags', []);
-
+        // 新增：獲取搜索關鍵字
+        $search = $request->input('search');
         // 將 slug 轉換為標籤名稱和類型
         $tags = Tag::whereIn('slug->zh', $tagSlugs)->get()->map(function ($tag) {
             return [
@@ -35,10 +36,15 @@ class ProductController extends Controller
             }
         }
 
+         // 新增：如果有搜索關鍵字，則加入搜索條件
+        if ($search) {
+            $productsQuery->where('name', 'like', '%' . $search . '%');
+        }
+
         $products = $productsQuery->paginate(3);
         $allTags = Tag::all();
 
-        return view('guest.Product', compact('products', 'allTags', 'tagSlugs'));
+        return view('guest.Product', compact('products', 'allTags', 'tagSlugs', 'search'));
     }
 
     public function create()

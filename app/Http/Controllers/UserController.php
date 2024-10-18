@@ -43,10 +43,16 @@ class UserController extends Controller
     }
 
     public function destroy($id)
-    {
-        $user = User::findOrFail($id);
-        $user->delete(); // 软删除用户
-        return redirect()->route('users.index')->with('success', '用户已刪除');
-    }
+{
+    $user = User::findOrFail($id);
+
+    // 刪除用戶相關的評論
+    $user->chirps()->delete();
+
+    // 刪除用戶
+    $user->delete();
+
+    return redirect()->route('users.index')->with('success', '用戶及其相關評論已成功刪除');
+}
 }
 
