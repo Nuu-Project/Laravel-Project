@@ -176,16 +176,12 @@
             console.log('找到檢舉按鈕');
             reportButton.addEventListener('click', function() {
                 console.log('檢舉按鈕被點擊');
+                var inputOptions = @json($reports->toArray());
                 try {
                     Swal.fire({
                         title: '檢舉',
                         input: 'select',
-                        inputOptions: {
-                            'report1': 'Report 1',
-                            'report2': 'Report 2',
-                            'report3': 'Report 3',
-                            'report4': 'Report 4'
-                        },
+                        inputOptions: inputOptions,
                         inputPlaceholder: '選擇檢舉原因',
                         showCancelButton: true,
                         confirmButtonText: '送出檢舉',
@@ -197,7 +193,25 @@
                         }
                     }).then((result) => {
                         if (result.isConfirmed) {
-                            Swal.fire('檢舉已送出', '感謝您的回報', 'success')
+                            var reportId = result.value;
+                            var description = '描述信息';  // 替換為實際的描述信息
+
+                            $.ajax({
+                                url: '{{ route("reports.store") }}', // 使用 Blade 生成的路由
+                                method: 'POST',
+                                data: {
+                                    report_id: reportId,
+                                    description: description,
+                                    _token: '{{ csrf_token() }}', // 確保 CSRF 保護
+                                    product: '{{ $product->id }}',
+                                },
+                                success: function(response) {
+                                    Swal.fire('檢舉已送出', response.message, 'success');
+                                },
+                                error: function(xhr) {
+                                    Swal.fire('錯誤', '無法提交檢舉', 'error');
+                                }
+                            });
                         }
                     });
                 } catch (error) {

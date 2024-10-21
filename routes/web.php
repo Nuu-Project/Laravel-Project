@@ -7,6 +7,7 @@ use App\Http\Controllers\Product\EditController;
 use App\Http\Controllers\Product\InfoController;
 use App\Http\Controllers\Product\ProductController;
 use App\Http\Controllers\ChirpController;
+use App\Http\Controllers\Product\ReportController;
 use Illuminate\Support\Facades\Route;
 
 //訪客首頁
@@ -22,6 +23,9 @@ Route::get('/s', function () {
 Route::get('/products', [ProductController::class, 'index'])->name('products.index');
 
 Route::get('/user-product-info/{product}' , [InfoController::class,'index'])->name('products.info');
+
+//商品檢舉
+Route::post('/reports', [ReportController::class, 'store'])->name('reports.store');
 
 //登入: product_create
 Route::get('/products-create', [CreateController::class, 'create'])->name('products.create');

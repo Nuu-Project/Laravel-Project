@@ -6,12 +6,12 @@ use App\Mail\CustomVerifyMail;
 use Carbon\Carbon;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\URL;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -58,7 +58,7 @@ class User extends Authenticatable implements MustVerifyEmail
             Carbon::now()->addMinutes(60),
             ['id' => $this->id, 'hash' => sha1($this->email)]
         );
-        
+
         Mail::to($this->email)->send(new CustomVerifyMail($verificationUrl));
     }
 
@@ -66,5 +66,9 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany(Chirp::class);
     }
-    
+
+    public function reports()
+    {
+        return $this->morphToMany(Report::class, 'reportable');
+    }
 }
