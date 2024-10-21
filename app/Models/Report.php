@@ -23,4 +23,9 @@ class Report extends Model
     {
         return $this->morphedByMany(User::class, 'reportable');
     }
+
+    protected $fillable = [
+        'name',
+        'type',
+    ];
 }
