@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Chirp;
 use App\Models\Product;
+use App\Models\Report;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\Auth;
@@ -25,8 +26,11 @@ class ChirpController extends Controller
         $product = Product::findOrFail($productId);
         
         $chirps = $product->chirps()->with('user')->get();
+        $reports = Report::where('type', '商品')->get()->mapWithKeys(function ($item) {
+            return [$item->id => json_decode($item->name, true)['zh']];
+        });
 
-        return view('user.products.info' , compact('chirps','product'));
+        return view('user.products.info' , compact('chirps','product', 'reports'));
     }
 
     public function adminSearch(Request $request): View
