@@ -33,8 +33,8 @@
                     </div>
                 </div>
                 <div x-show="open" class="pl-4">
-                    <a href="" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">刊登商品</a>
-                    <a href="" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">我的商品</a>
+                    <a href="" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">管理商品</a>
+                    <a href="" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">管理標籤</a>
                 </div>
             </nav>
         </div>
@@ -108,7 +108,7 @@
                                             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                                 <button class="px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700">查看</button>
                                                 <button class="px-3 py-1 bg-red-600 text-white rounded hover:bg-red-700 ml-2">下架</button>
-                                                <button id="reportbutton" class="px-3 py-1 bg-red-600 text-white rounded hover:bg-red-700 ml-2">檢舉詳情</button>
+                                                <a href="" class="px-3 py-1 bg-red-600 text-white rounded hover:bg-red-700 ml-2">檢舉詳情</a>
                                             </td>
                                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">上架中</td>
                                         </tr>

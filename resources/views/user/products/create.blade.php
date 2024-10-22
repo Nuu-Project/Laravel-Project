@@ -85,7 +85,7 @@
                             <p class="text-sm sm:text-base text-muted-foreground">請依照下順序進行填寫，照片上傳張數最多五張。</p>
                             <p class="text-sm sm:text-base text-muted-foreground">圖片最左邊將會是商品首圖。</p>
                         </div>
-                        <form class="grid gap-6" action="{{ route('products.store') }}" method="POST" enctype="multipart/form-data">
+                        <form class="grid gap-6" action="{{ route('products.store') }}" method="POST" enctype="multipart/form-data" id="productForm">
                             @csrf
                             <div class="grid gap-2">
                                 <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70" for="name">
@@ -160,7 +160,7 @@
                                     @endfor
                                 </div>
                             </div>
-                            <button class="inline-flex items-center justify-center whitespace-nowrap rounded-xl text-base sm:text-lg font-semibold ring-offset-background transition-colors ease-in-out duration-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-blue-500 text-white hover:bg-blue-700 h-10 sm:h-11 px-4 sm:px-8" type="submit">
+                            <button class="inline-flex items-center justify-center whitespace-nowrap rounded-xl text-base sm:text-lg font-semibold ring-offset-background transition-colors ease-in-out duration-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-blue-500 text-white hover:bg-blue-700 h-10 sm:h-11 px-4 sm:px-8" type="submit" id="submitButton">
                                 刊登商品
                             </button>
                         </form>
@@ -191,6 +191,30 @@
             label.querySelector('div').classList.remove('hidden');
         }
     }
+
+    document.getElementById('productForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        
+        // 檢查所有必填欄位
+        var requiredFields = ['name', 'price', 'grade', 'semester', 'category', 'description'];
+        var allFieldsFilled = true;
+        
+        for (var i = 0; i < requiredFields.length; i++) {
+            var field = document.getElementById(requiredFields[i]);
+            if (!field.value) {
+                allFieldsFilled = false;
+                break;
+            }
+        }
+        
+        if (!allFieldsFilled) {
+            alert('請填寫所有必填欄位！');
+        } else {
+            // 所有欄位都已填寫，提交表單
+            alert('商品已成功刊登！');
+            this.submit();
+        }
+    });
     </script>
 </body>
 </html>
