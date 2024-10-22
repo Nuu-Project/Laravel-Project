@@ -65,7 +65,14 @@ class TagController extends Controller
      */
     public function edit($id)
     {
-        $tag = Tag::find($id);
+        // 使用 withTrashed() 查找包含已軟刪除的標籤
+        $tag = Tag::withTrashed()->find($id);
+
+        // 如果找不到標籤，返回錯誤消息
+        if (!$tag) {
+            return redirect()->route('tags.index')->with('error', '標籤未找到');
+        }
+
         return view('tags.edit', compact('tag'));
     }
 
@@ -81,7 +88,7 @@ class TagController extends Controller
             'order_column' => 'required|integer',
         ]);
         
-        $tag = Tag::findOrFail($id);
+        $tag = Tag::withTrashed()->findOrFail($id);
         $tag->update($validatedData);
     
         return redirect()->route('tags.index')->with('message', '標籤更新成功！');
