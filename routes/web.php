@@ -68,5 +68,8 @@ Route::get('/dashboard', function () {
     return view('Home');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+Route::get('/products/{productId}', [checkController::class, 'index'])->name('products.info');
+Route::post('/products/{product}/demote', [checkController::class, 'demoteData'])->name('products.demote');
+
 
 require __DIR__.'/auth.php';
