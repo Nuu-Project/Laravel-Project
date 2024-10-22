@@ -42,12 +42,12 @@
         <li class="font-semibold text-gray-900 hover:text-gray-400 transition ease-in-out duration-300 mb-5 lg:mb-0 text-2xl">
             <a href="/products">商品</a>
         </li>
-        <li class="font-semibold text-gray-900 hover:text-gray-400 transition ease-in-out duration-300 mb-5 lg:mb-0 text-2xl">
+        <!-- <li class="font-semibold text-gray-900 hover:text-gray-400 transition ease-in-out duration-300 mb-5 lg:mb-0 text-2xl">
             <a href="/products-create">刊登</a>
         </li>
         <li class="font-semibold text-gray-900 hover:text-gray-400 transition ease-in-out duration-300 mb-5 lg:mb-0 text-2xl">
             <a href="/products-check">我的商品</a>
-        </li>  
+        </li>   -->
     </ul>
     @else
     <ul class="lg:flex flex-col lg:flex-row lg:items-center lg:mx-auto lg:space-x-8 xl:space-x-14" :class="{'hidden':!navbarOpen,'flex':navbarOpen}">
@@ -79,6 +79,10 @@
             <x-slot name="content">
                 <x-dropdown-link :href="route('profile.partials.control')">
                     {{ __('Profile') }}
+                </x-dropdown-link>
+
+                <x-dropdown-link :href="route('products.create')">
+                                {{ __('使用者後台') }}
                 </x-dropdown-link>
 
                 <!-- Authentication -->
