@@ -8,6 +8,7 @@ use App\Http\Controllers\Product\InfoController;
 use App\Http\Controllers\Product\ProductController;
 use App\Http\Controllers\ChirpController;
 use App\Http\Controllers\Product\ReportController;
+use  App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 //訪客首頁
@@ -63,6 +64,11 @@ Route::resource('products.chirps', ChirpController::class)
 Route::delete('/chirps/{chirp}', [ChirpController::class, 'destroy'])
     ->name('chirps.destroy')
     ->middleware(['auth', 'verified']);
+
+// Route::middleware(['auth', 'admin'])->group(function () {
+    Route::get('/admin/user', [UserController::class, 'index'])->name('admin.user.index');
+    Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('ausers.destroy');
+// });
 
 Route::get('/dashboard', function () {
     return view('Home');

@@ -87,15 +87,15 @@
             <!-- 主要內容 -->
             <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-200">
                 <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
-                    <h3 class="text-gray-700 text-3xl font-medium mb-6">Reviews 管理</h3>
+                    <h3 class="text-gray-700 text-3xl font-medium mb-6">用戶管理</h3>
                     
-                    <!-- Reviews 搜索部分 -->
+                    <!-- 用戶搜索部分 -->
                     <div class="mb-8">
                         <div class="flex items-center justify-between mb-4">
-                            <h2 id="reviews-title" class="text-xl font-semibold text-gray-900">Reviews</h2>
+                            <h2 id="users-title" class="text-xl font-semibold text-gray-900">用戶</h2>
                             <div>
-                                <label for="search-reviews" class="sr-only">搜索留言</label>
-                                <input type="text" id="search-reviews" class="w-full rounded-md border border-gray-300 bg-white px-4 py-2 text-sm" placeholder="Search...">
+                                <label for="search-users" class="sr-only">搜索用戶</label>
+                                <input type="text" id="search-users" class="w-full rounded-md border border-gray-300 bg-white px-4 py-2 text-sm" placeholder="Search...">
                             </div>
                         </div>
 
@@ -105,96 +105,71 @@
                                 <table class="min-w-full divide-y divide-gray-200">
                                     <thead class="bg-gray-50">
                                         <tr>
-                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">User</th>
-                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Product</th>
-                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Message</th>
-                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
+                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Position</th>
+                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
                                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody class="bg-white divide-y divide-gray-200">
-                                        @foreach($chirps as $chirp)
-                                        <tr>
-                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ $chirp->user->name }}</td>
-                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $chirp->product->name ?? 'No associated product' }}</td>
-                                            <td class="px-6 py-4 text-sm text-gray-500">{{ $chirp->message }}</td>
-                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $chirp->created_at->format('Y-m-d H:i:s') }}</td>
-                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                                @if($chirp->product)
-                                                    <form action="{{ route('products.chirps.destroy', ['product' => $chirp->product->id, 'chirp' => $chirp->id]) }}" method="POST" class="inline">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="submit" class="text-red-600 hover:text-red-900" onclick="return confirm('{{ __('確定要刪除這條評論嗎？') }}')">Delete</button>
-                                                    </form>
-                                                @else
-                                                    <span class="text-gray-400">No action</span>
-                                                @endif
-                                            </td>
-                                        </tr>
-                                        @endforeach
+                                        <!-- Search results will be dynamically inserted here -->
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                     </div>
 
-                    <!-- All reviews 部分 -->
+                    <!-- All users 部分 -->
                     <div>
-                        <h2 class="text-xl font-semibold text-gray-900 mb-4">All reviews</h2>
-                        <div id="all-reviews-list" class="bg-white shadow overflow-hidden sm:rounded-lg">
+                        <h2 class="text-xl font-semibold text-gray-900 mb-4">所有用戶</h2>
+                        <div id="all-users-list" class="bg-white shadow overflow-hidden sm:rounded-lg">
                             <div class="overflow-x-auto">
                                 <table class="min-w-full divide-y divide-gray-200">
                                     <thead class="bg-gray-50">
                                         <tr>
-                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">User</th>
-                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Product</th>
-                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Message</th>
-                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
-                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody class="bg-white divide-y divide-gray-200">
-                                        @foreach($chirps as $chirp)
-                                        <tr>
+                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">用戶名稱</th>
+                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">檢舉</th>
+                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">權限</th>
+                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">停用</th>
+                                            </tr>
+</thead>
+<tbody class="bg-white divide-y divide-gray-200">
+    <tr>
+        <td class="px-6 py-4 whitespace-nowrap">
+            <div class="flex items-center">
+                <div class="flex-shrink-0 h-10 w-10">
+                    <img class="h-10 w-10 rounded-full" src="{{ asset('images/account.png') }}" alt="Neil Sims">
+                </div>
+                <div class="ml-4">
+                    <div class="text-sm font-medium text-gray-900">456</div>
+                    <div class="text-sm text-gray-500">email</div>
+                </div>
+            </div>
+        </td>
+        <td class="px-6 py-4 whitespace-nowrap">
+            <div class="flex items-center space-x-2">
+                <span class="text-sm text-gray-500">1次</span>
+                <button class="px-3 py-1 bg-red-600 text-white rounded hover:bg-blue-700">檢舉</button>
+            </div>
+        </td>
+                                            
                                             <td class="px-6 py-4 whitespace-nowrap">
-                                                <div class="flex items-center">
-                                                    <div class="flex-shrink-0 h-10 w-10">
-                                                        <img class="h-10 w-10 rounded-full" src="{{ asset('images/account.png') }}" alt="{{ $chirp->user->name }}">
-                                                    </div>
-                                                    <div class="ml-4">
-                                                        <div class="text-sm font-medium text-gray-900">
-                                                            {{ $chirp->user->name }}
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                                {{ $chirp->product->name ?? 'No associated product' }}
-                                            </td>
-                                            <td class="px-6 py-4 text-sm text-gray-500">
-                                                {{ $chirp->message }}
-                                            </td>
-                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                                {{ $chirp->created_at->format('Y-m-d H:i:s') }}
+                                            <select class="bg-gray text-primary-foreground px-4 py-2 rounded-md">
+                                                <option value="">選擇權限...</option>
+                                                <option value="admin">管理者</option>
+                                                <option value="user">使用者</option>
+                                            </select>
                                             </td>
                                             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                                @if($chirp->product)
-                                                    <form action="{{ route('products.chirps.destroy', ['product' => $chirp->product->id, 'chirp' => $chirp->id]) }}" method="POST" class="inline">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="submit" class="text-red-600 hover:text-red-900" onclick="return confirm('{{ __('確定要刪除這條評論嗎？') }}')">Delete</button>
-                                                    </form>
-                                                @else
-                                                    <span class="text-gray-400">No action</span>
-                                                @endif
+                                            <button class="px-3 py-1 bg-red-600 text-white rounded hover:bg-blue-700">停用</button>
                                             </td>
                                         </tr>
-                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                     </div>
+                    
                 </div>
             </main>
         </div>
@@ -202,32 +177,33 @@
 
     <script>
     document.addEventListener('DOMContentLoaded', function() {
-        const searchInput = document.getElementById('search-reviews');
+        const searchInput = document.getElementById('search-users');
         const searchResults = document.getElementById('search-results');
-        const allReviewsList = document.getElementById('all-reviews-list');
-        const reviews = document.querySelectorAll('#all-reviews-list tbody tr');
+        const allUsersList = document.getElementById('all-users-list');
+        const users = document.querySelectorAll('#all-users-list tbody tr');
 
         searchInput.addEventListener('input', function() {
             const searchTerm = this.value.toLowerCase();
 
             if (searchTerm.length > 0) {
                 searchResults.style.display = 'block';
-                allReviewsList.style.display = 'none';
+                allUsersList.style.display = 'none';
 
-                reviews.forEach(review => {
-                    const userName = review.querySelector('td:nth-child(1)').textContent.toLowerCase();
-                    const productName = review.querySelector('td:nth-child(2)').textContent.toLowerCase();
-                    const reviewText = review.querySelector('td:nth-child(3)').textContent.toLowerCase();
+                const resultsBody = searchResults.querySelector('tbody');
+                resultsBody.innerHTML = '';
 
-                    if (userName.includes(searchTerm) || productName.includes(searchTerm) || reviewText.includes(searchTerm)) {
-                        const clonedRow = review.cloneNode(true);
-                        searchResults.querySelector('tbody').appendChild(clonedRow);
+                users.forEach(user => {
+                    const userName = user.querySelector('td:nth-child(1)').textContent.toLowerCase();
+                    const userPosition = user.querySelector('td:nth-child(2)').textContent.toLowerCase();
+
+                    if (userName.includes(searchTerm) || userPosition.includes(searchTerm)) {
+                        const clonedRow = user.cloneNode(true);
+                        resultsBody.appendChild(clonedRow);
                     }
                 });
             } else {
                 searchResults.style.display = 'none';
-                allReviewsList.style.display = 'block';
-                searchResults.querySelector('tbody').innerHTML = '';
+                allUsersList.style.display = 'block';
             }
         });
     });
