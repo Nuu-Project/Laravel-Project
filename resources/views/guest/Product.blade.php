@@ -42,12 +42,12 @@
         <li class="font-semibold text-gray-900 hover:text-gray-400 transition ease-in-out duration-300 mb-5 lg:mb-0 text-2xl">
             <a href="/products">商品</a>
         </li>
-        <li class="font-semibold text-gray-900 hover:text-gray-400 transition ease-in-out duration-300 mb-5 lg:mb-0 text-2xl">
+        <!-- <li class="font-semibold text-gray-900 hover:text-gray-400 transition ease-in-out duration-300 mb-5 lg:mb-0 text-2xl">
             <a href="/products-create">刊登</a>
         </li>
         <li class="font-semibold text-gray-900 hover:text-gray-400 transition ease-in-out duration-300 mb-5 lg:mb-0 text-2xl">
             <a href="/products-check">我的商品</a>
-        </li>  
+        </li>   -->
     </ul>
     @else
     <ul class="lg:flex flex-col lg:flex-row lg:items-center lg:mx-auto lg:space-x-8 xl:space-x-14" :class="{'hidden':!navbarOpen,'flex':navbarOpen}">
@@ -81,6 +81,10 @@
                     {{ __('Profile') }}
                 </x-dropdown-link>
 
+                <x-dropdown-link :href="route('products.create')">
+                                {{ __('使用者後台') }}
+                </x-dropdown-link>
+
                 <!-- Authentication -->
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
@@ -100,7 +104,18 @@
     </nav>
             <!-- </div>
             </section> -->
-
+            <!-- 新增：搜索表單 -->
+            <form action="{{ route('products.index') }}" method="GET" class="mb-4">
+                <div class="flex items-center justify-center gap-2">
+                <input type="text" name="search" placeholder="搜索產品名稱..." value="{{ $search ?? '' }}" class="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition duration-300 ease-in-out">搜索</button>
+            </div>
+    
+    <!-- 保留現有的標籤選擇 -->
+                @foreach($tagSlugs as $tagSlug)
+                <input type="hidden" name="tags[]" value="{{ $tagSlug }}">
+                @endforeach
+            </form>
             <form action="{{ route('products.index') }}" method="GET" class="flex flex-wrap gap-2 justify-center">
                 <select id="subject" name="tags[]" class="bg-gray text-primary-foreground px-4 py-2 rounded-md">
                     <option value="">選擇科目...</option>
@@ -142,10 +157,12 @@
                         @endif
                     @endforeach
                 </select>
+
                 <button class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition ease-in-out duration-300">
                     搜索
                 </button>
             </form>
+            
 
             <div class="flex flex-col w-full min-h-screen">
                 <main class="flex min-h-[calc(100vh_-_theme(spacing.16))] flex-1 flex-col gap-4 p-4 md:gap-8 md:p-10">

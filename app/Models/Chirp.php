@@ -12,14 +12,21 @@ class Chirp extends Model
 
     protected $fillable = [
         'message',
+        'product_id',
     ];
 
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
+
     public function product()
     {
         return $this->belongsTo(Product::class);
+    }
+
+    public function reports()
+    {
+        return $this->morphToMany(Report::class, 'reportable');
     }
 }

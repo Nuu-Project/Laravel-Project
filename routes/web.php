@@ -7,6 +7,7 @@ use App\Http\Controllers\Product\EditController;
 use App\Http\Controllers\Product\InfoController;
 use App\Http\Controllers\Product\ProductController;
 use App\Http\Controllers\ChirpController;
+use App\Http\Controllers\Product\ReportController;
 use Illuminate\Support\Facades\Route;
 
 //訪客首頁
@@ -21,7 +22,10 @@ Route::get('/s', function () {
 
 Route::get('/products', [ProductController::class, 'index'])->name('products.index');
 
-Route::get('/user-product-info' , [InfoController::class,'index'])->name('products.info');
+Route::get('/user-product-info/{product}' , [InfoController::class,'index'])->name('products.info');
+
+//商品檢舉
+Route::post('/reports', [ReportController::class, 'store'])->name('reports.store');
 
 //登入: product_create
 Route::get('/products-create', [CreateController::class, 'create'])->name('products.create');
@@ -39,6 +43,11 @@ Route::put('/user-product-edit/{product}', [EditController::class, 'update'])->n
 
 Route::get('/user-product-edit/{product}', [EditController::class,'edit'])->name('products.edit');
 
+Route::get('/admin/search', [ChirpController::class, 'adminSearch'])->name('admin.search');
+
+Route::delete('/users/{user}', [UserController::class, 'destroy'])
+    ->name('users.destroy')
+    ->middleware('admin');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -51,7 +60,13 @@ Route::resource('products.chirps', ChirpController::class)
     ->only(['index', 'store', 'edit', 'update', 'destroy'])
     ->middleware(['auth', 'verified']);
 
+Route::delete('/chirps/{chirp}', [ChirpController::class, 'destroy'])
+    ->name('chirps.destroy')
+    ->middleware(['auth', 'verified']);
+
 Route::get('/dashboard', function () {
     return view('Home');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+
 require __DIR__.'/auth.php';

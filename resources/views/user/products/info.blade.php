@@ -27,7 +27,7 @@
 
             <nav class="flex-wrap lg:flex items-center" x-data="{navbarOpen:false}">
                 <div class="flex items-center mb-10 lg:mb-0">
-                    <img src="{{ asset('images/book-4-fix.png') }}" alt="Logo">
+                    <img src="{{asset('images/book-4-fix.png')}}" alt="Logo">
 
                     <button class="lg:hidden w-10 h-10 ml-auto flex items-center justify-center border border-blue-500 text-blue-500 rounded-md" @click="navbarOpen = !navbarOpen">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
@@ -41,12 +41,12 @@
                     <li class="font-semibold text-gray-900 hover:text-gray-400 transition ease-in-out duration-300 mb-5 lg:mb-0 text-2xl">
                         <a href="/products">商品</a>
                     </li>
-                    <li class="font-semibold text-gray-900 hover:text-gray-400 transition ease-in-out duration-300 mb-5 lg:mb-0 text-2xl">
+                    <!-- <li class="font-semibold text-gray-900 hover:text-gray-400 transition ease-in-out duration-300 mb-5 lg:mb-0 text-2xl">
                         <a href="/user-product-create">刊登</a>
                     </li>
                     <li class="font-semibold text-gray-900 hover:text-gray-400 transition ease-in-out duration-300 mb-5 lg:mb-0 text-2xl">
                         <a href="/user-product-check">我的商品</a>
-                    </li>
+                    </li> -->
                 </ul>
 
                 <div class="lg:flex flex-col md:flex-row md:items-center text-center md:space-x-6" :class="{'hidden':!navbarOpen,'flex':navbarOpen}">
@@ -54,7 +54,7 @@
                     <x-dropdown align="right" width="48">
                         <x-slot name="trigger">
                             <button class="inline-flex items-center px-3 py-2 border border-transparent text-3xl leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
-                            <img width="65" height="65" src="{{ asset('images/account.png') }}" alt="">
+                            <img width="65" height="65" src="{{asset('images/account.png')}}" alt="">
                                     <div>{{ Auth::user()->name }}</div>
 
                                 <div class="ms-1">
@@ -68,6 +68,10 @@
                         <x-slot name="content">
                             <x-dropdown-link :href="route('profile.edit')">
                                 {{ __('Profile') }}
+                            </x-dropdown-link>
+
+                            <x-dropdown-link :href="route('products.create')">
+                                {{ __('使用者後台') }}
                             </x-dropdown-link>
 
                             <!-- Authentication -->
@@ -94,81 +98,110 @@
 <style>body { font-family: 'Inter', sans-serif; --font-sans-serif: 'Inter'; }
 </style>
     <div class="grid md:grid-cols-2 gap-6 lg:gap-12 items-start max-w-6xl px-4 mx-auto py-6">
-        {{-- 檢查是否有媒體 --}}
-        @if($product->media->isNotEmpty())
-            @php
-                $media = $product->getFirstMedia('images');
-            @endphp
-            {{-- 檢查是否有圖片 --}}
-            @if($media)
-                <img 
-                    src="{{ $media->getUrl() }}" 
-                    alt="Product Image" 
-                    width="600" 
-                    height="600" 
-                    class="aspect-square object-cover border w-full rounded-lg overflow-hidden" 
-                />
+        <div>
+            {{-- 主圖片顯示區域 --}}
+            @if($product->media->isNotEmpty())
+                <div class="relative mb-4">
+                    @foreach($product->getMedia('images') as $index => $media)
+                        <img 
+                            src="{{ $media->getUrl() }}" 
+                            alt="Product Image {{ $index + 1 }}" 
+                            width="1200" 
+                            height="900" 
+                            style="aspect-ratio: 900 / 1200; object-fit: cover;" 
+                            class="w-full rounded-md object-cover {{ $index === 0 ? '' : 'hidden' }}" 
+                            data-index="{{ $index }}"
+                        />
+                    @endforeach
+                    
+                    {{-- 左右箭頭 --}}
+                    <button id="leftArrow" class="absolute left-0 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-r">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-6 h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                        </svg>
+                    </button>
+                    <button id="rightArrow" class="absolute right-0 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-l">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-6 h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                        </svg>
+                    </button>
+                </div>
             @else
-                <div>沒圖片</div>
+                <div>沒有圖片</div>
             @endif
-        @else
-            <div>沒有圖片</div>
-        @endif
-    <div class="grid gap-4 md:gap-10 items-start">
-        <div class="grid gap-2">
-        <div class="flex justify-between items-center">
-        <h1 class="text-3xl font-bold">商品名稱:{{ $product->name }}</h1>
-        <button id="reportButton" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded">
-        檢舉
-        </button>
-        </div>
-        <div class="flex items-center gap-2">
-            <div class="flex items-center gap-0.5">
-            <div><h1 class="font-semibold text-xl">用戶名稱:{{ $product->user->name }}</h1></div>
 
+            {{-- 縮略圖區域 --}}
+            <div class="flex justify-start mt-4 space-x-4">
+                @foreach($product->getMedia('images') as $index => $media)
+                    <div class="w-24 h-24 border-2 border-gray-300 flex items-center justify-center cursor-pointer thumbnail" data-index="{{ $index }}">
+                        <img 
+                            src="{{ $media->getUrl() }}" 
+                            alt="Thumbnail {{ $index + 1 }}" 
+                            class="max-w-full max-h-full object-cover"
+                        />
+                    </div>
+                @endforeach
             </div>
         </div>
-        </div>
-        <div class="grid gap-2">
-        <p class="text-2xl font-bold">${{ $product->price }}</p>
-        <h1 class="font-semibold">上架時間:{{ $product->created_at }}</h1>
-        <p class="text-muted-foreground text-2xl">商品介紹:{{ $product->description }}</p>
-        </div>
-        <form class="grid gap-4">
-        <div class="grid gap-2">
-            <div
-            role="radiogroup"
-            aria-required="false"
-            dir="ltr"
-            class="flex items-center gap-2"
-            id="color"
-            tabindex="0"
-            style="outline: none;"
-            >
-            <!--  -->
-            </div>
-        </div>
-        <div class="grid gap-2">
-            
 
+        {{-- 商品信息 --}}
+        <div class="grid gap-4 md:gap-10 items-start">
+            <!-- 商品名稱和檢舉按鈕 -->
+            <div class="flex items-start justify-between">
+                <div class="flex-grow pr-4">
+                    <h1 class="text-3xl font-bold break-words">商品名稱:{{ $product->name }}</h1>
+                    <div class="mt-2">
+                        <h2 class="font-semibold text-xl">用戶名稱:{{ $product->user->name }}</h2>
+                    </div>
+                </div>
+                <button id="reportButton" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded flex-shrink-0">
+                    檢舉
+                </button>
             </div>
+            <!-- 其他商品信息 -->
+            <p class="text-2xl font-bold">${{ $product->price }}</p>
+            <p>上架時間: {{ $product->created_at->format('Y-m-d H:i:s') }}</p>
+            <p class="text-muted-foreground text-2xl">商品介紹: {{ $product->description }}</p>
         </div>
-        <div class="grid gap-2">
-            
-
-        
-        </div>
-        <div class="flex flex-col gap-2 min-[400px]:flex-row">
-            <button class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-11 rounded-md px-8">
-            Add to cart
-            </button>
-        </div>
-        </form>
     </div>
 
-</div>
-
     <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        let currentIndex = 0;
+        const images = document.querySelectorAll('img[data-index]');
+        const thumbnails = document.querySelectorAll('.thumbnail');
+        const totalImages = images.length;
+
+        function updateDisplay(newIndex) {
+            images[currentIndex].classList.add('hidden');
+            thumbnails[currentIndex].classList.remove('border-blue-500');
+            thumbnails[currentIndex].classList.add('border-gray-300');
+
+            currentIndex = (newIndex + totalImages) % totalImages;
+
+            images[currentIndex].classList.remove('hidden');
+            thumbnails[currentIndex].classList.remove('border-gray-300');
+            thumbnails[currentIndex].classList.add('border-blue-500');
+        }
+
+        function changeImage(direction) {
+            let newIndex = (currentIndex + direction + totalImages) % totalImages;
+            updateDisplay(newIndex);
+        }
+
+        // 為縮略圖添加點擊事件
+        thumbnails.forEach((thumbnail, index) => {
+            thumbnail.addEventListener('click', () => updateDisplay(index));
+        });
+
+        // 為左右箭頭添加點擊事件
+        document.getElementById('leftArrow').addEventListener('click', () => changeImage(-1));
+        document.getElementById('rightArrow').addEventListener('click', () => changeImage(1));
+
+        // 初始化第一張圖片的縮略圖邊框
+        updateDisplay(0);
+    });
+
     window.addEventListener('load', function() {
         console.log('頁面已完全加載');
         var reportButton = document.getElementById('reportButton');
@@ -176,16 +209,12 @@
             console.log('找到檢舉按鈕');
             reportButton.addEventListener('click', function() {
                 console.log('檢舉按鈕被點擊');
+                var inputOptions = @json($reports->toArray());
                 try {
                     Swal.fire({
                         title: '檢舉',
                         input: 'select',
-                        inputOptions: {
-                            'report1': 'Report 1',
-                            'report2': 'Report 2',
-                            'report3': 'Report 3',
-                            'report4': 'Report 4'
-                        },
+                        inputOptions: inputOptions,
                         inputPlaceholder: '選擇檢舉原因',
                         showCancelButton: true,
                         confirmButtonText: '送出檢舉',
@@ -197,7 +226,25 @@
                         }
                     }).then((result) => {
                         if (result.isConfirmed) {
-                            Swal.fire('檢舉已送出', '感謝您的回報', 'success')
+                            var reportId = result.value;
+                            var description = '描述信息';  // 替換為實際的描述信息
+
+                            $.ajax({
+                                url: '{{ route("reports.store") }}', // 使用 Blade 生成的路由
+                                method: 'POST',
+                                data: {
+                                    report_id: reportId,
+                                    description: description,
+                                    _token: '{{ csrf_token() }}', // 確保 CSRF 保護
+                                    product: '{{ $product->id }}',
+                                },
+                                success: function(response) {
+                                    Swal.fire('檢舉已送出', response.message, 'success');
+                                },
+                                error: function(xhr) {
+                                    Swal.fire('錯誤', '無法提交檢舉', 'error');
+                                }
+                            });
                         }
                     });
                 } catch (error) {
@@ -247,18 +294,18 @@
                                         </button>
                                     </x-slot>
                                     <x-slot name="content">
-                                        <x-dropdown-link :href="route('products.chirps.edit', $chirp)">
-                                            {{ __('更改') }}
-                                        </x-dropdown-link>
-                                        <form method="POST" action="{{ route('chirps.destroy', $chirp) }}">
-                                            @csrf
-                                            @method('delete')
-                                            <x-dropdown-link :href="route('chirps.destroy', $chirp)" onclick="event.preventDefault(); this.closest('form').submit();">
-                                                {{ __('刪除') }}
-                                            </x-dropdown-link>
-                                        </form>
-                                    </x-slot>
-                                </x-dropdown>
+                            <x-dropdown-link :href="route('products.chirps.edit', ['product' => $product->id, 'chirp' => $chirp->id])">
+                            {{ __('更改') }}
+                            </x-dropdown-link>
+                            <form method="POST" action="{{ route('products.chirps.destroy', ['product' => $product->id, 'chirp' => $chirp->id]) }}">
+                            @csrf
+                            @method('delete')
+                            <x-dropdown-link :href="route('products.chirps.destroy', ['product' => $product->id, 'chirp' => $chirp->id])" onclick="event.preventDefault(); this.closest('form').submit();">
+                            {{ __('刪除') }}
+                            </x-dropdown-link>
+                            </form>
+                            </x-slot>
+                            </x-dropdown>
                             @endif
                         </div>
                         <p class="mt-4 text-lg text-gray-900">{{ $chirp->message }}</p>
@@ -266,5 +313,6 @@
                 </div>
             @endforeach
         </div>
+    </div>
 </body>
 </html>
