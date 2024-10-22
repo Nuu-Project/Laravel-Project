@@ -6,6 +6,7 @@ use App\Http\Controllers\Product\CreateController;
 use App\Http\Controllers\Product\EditController;
 use App\Http\Controllers\Product\InfoController;
 use App\Http\Controllers\Product\ProductController;
+use App\Http\Controllers\TagController;
 use App\Http\Controllers\ChirpController;
 use App\Http\Controllers\Product\ReportController;
 use Illuminate\Support\Facades\Route;
@@ -19,6 +20,15 @@ Route::get('/', function () {
 Route::get('/s', function () {
     return view('test');
 });
+
+Route::get('/tag-index', [TagController::class, 'index'])->name('tags.index');
+Route::get('/tag-create', [TagController::class, 'create'])->name('tags.create');
+Route::get('/tag-edit/{id}', [TagController::class, 'edit'])->name('tags.edit');
+Route::post('/tag-store', [TagController::class, 'store'])->name('tags.store');
+Route::put('/tag-update/{id}', [TagController::class, 'update'])->name('tags.update');
+Route::delete('/tag-destroy/{id}', [TagController::class, 'destroy'])->name('tags.destroy');
+Route::post('/tag-restore/{id}', [TagController::class, 'restore'])->name('tags.restore');
+
 
 Route::get('/products', [ProductController::class, 'index'])->name('products.index');
 
@@ -39,7 +49,7 @@ Route::put('/user-product-check/{product}', [CheckController::class, 'demoteData
     
 Route::delete('/user-product-check/{product}', [CheckController::class, 'destroy'])->name('products.destroy');
 
-Route::put('/user-product-edit/{product}', [EditController::class, 'update'])->name('products.update');
+Route::put('/user-product-edit/{product}', [CheckController::class, 'update'])->name('products.update');
 
 Route::get('/user-product-edit/{product}', [EditController::class,'edit'])->name('products.edit');
 
