@@ -49,7 +49,7 @@ Route::put('/user-product-check/{product}', [CheckController::class, 'demoteData
     
 Route::delete('/user-product-check/{product}', [CheckController::class, 'destroy'])->name('products.destroy');
 
-Route::put('/user-product-edit/{product}', [EditController::class, 'update'])->name('products.update');
+Route::put('/user-product-edit/{product}', [CheckController::class, 'update'])->name('products.update');
 
 Route::get('/user-product-edit/{product}', [EditController::class,'edit'])->name('products.edit');
 
