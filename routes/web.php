@@ -14,10 +14,10 @@ Route::get('/', function () {
     return view('Home');
 });
 
-
 Route::get('/s', function () {
-    return view('test');
+    return view('tag');
 });
+
 
 Route::get('/products', [ProductController::class, 'index'])->name('products.index');
 

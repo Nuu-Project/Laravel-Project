@@ -41,7 +41,7 @@ class ProductController extends Controller
             $productsQuery->where('name', 'like', '%' . $search . '%');
         }
 
-        $products = $productsQuery->paginate(3);
+        $products = $productsQuery->paginate(6);
         $allTags = Tag::all();
 
         return view('guest.Product', compact('products', 'allTags', 'tagSlugs', 'search'));
