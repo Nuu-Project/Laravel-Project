@@ -65,8 +65,6 @@ class CheckController extends Controller
 
     public function update(Request $request, Product $product)
     {
-        // 移除不必要的查找，因為已經自動綁定了 $product
-
         // 驗證輸入資料
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:50'],
@@ -75,20 +73,21 @@ class CheckController extends Controller
             'grade' => ['required', 'string'],
             'semester' => ['required', 'string'],
             'category' => ['required', 'string'],
-            'image' => ['nullable', 'image'],
+            'images.*' => ['nullable', 'image', 'max:2048'], // 允許多張圖片，每張最大 2MB
         ]);
 
-        // 更新產品資料
-        $product->update($validated);
+        // 更新產品資料（排除 images 欄位）
+        $product->update($request->except('images'));
 
         // 如果有上傳圖片，處理圖片
-        if ($request->hasFile('image')) {
+        if ($request->hasFile('images')) {
             // 刪除舊圖片（如果有）
-            if ($product->hasMedia('images')) {
-                $product->clearMediaCollection('images');
-            }
+            $product->clearMediaCollection('images');
+            
             // 添加新圖片
-            $product->addMedia($request->file('image'))->toMediaCollection('images');
+            foreach ($request->file('images') as $image) {
+                $product->addMedia($image)->toMediaCollection('images');
+            }
         }
 
         // 獲取表單資料中的標籤
