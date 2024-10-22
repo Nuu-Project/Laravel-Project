@@ -14,7 +14,7 @@ class UserController extends Controller
         $users = User::all();
 
         // 返回视图并传递用户数据
-        return view('users.index', compact('users'));
+        return view('admin.user', compact('users'));
     }
 
     public function show($id)
