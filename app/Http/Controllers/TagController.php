@@ -14,14 +14,14 @@ class TagController extends Controller
     {
         $tags = Tag::withTrashed()->get();
         
-        return view('tag.index', compact('tags'));
+        return view('tags.index', compact('tags'));
     }
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
-        return view('tag.create');
+        return view('tags.create');
     }
 
     /**
@@ -49,7 +49,7 @@ class TagController extends Controller
     
     // 返回成功消息
     // return response()->json(['message' => '標籤新增成功！', 'tag' => $tag], 201);
-    return view('tag.index', ['tags' => $tags, 'message' => '標籤新增成功！']);
+    return view('tags.index', ['tags' => $tags, 'message' => '標籤新增成功！']);
 }
 
     /**
@@ -66,7 +66,7 @@ class TagController extends Controller
     public function edit($id)
     {
         $tag = Tag::find($id);
-        return view('tag.edit', compact('tag'));
+        return view('tags.edit', compact('tag'));
     }
 
     /**
