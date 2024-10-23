@@ -8,7 +8,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Spatie\Tags\Tag;
 
-
 class CheckController extends Controller
 {
     public function index()
@@ -105,7 +104,7 @@ class CheckController extends Controller
 
             // 刪除不在新順序中的舊圖片
             foreach ($existingMedia as $media) {
-                if (!in_array($media->id, $newOrder)) {
+                if (! in_array($media->id, $newOrder)) {
                     $media->delete();
                 }
             }
