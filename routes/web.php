@@ -10,6 +10,7 @@ use App\Http\Controllers\Product\ReportController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\PermissionController;
 use Illuminate\Support\Facades\Route;
 
 //訪客首頁

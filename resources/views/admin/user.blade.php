@@ -121,54 +121,55 @@
 
                     <!-- All users 部分 -->
                     <div>
-                        <h2 class="text-xl font-semibold text-gray-900 mb-4">所有用戶</h2>
-                        <div id="all-users-list" class="bg-white shadow overflow-hidden sm:rounded-lg">
-                            <div class="overflow-x-auto">
-                                <table class="min-w-full divide-y divide-gray-200">
-                                    <thead class="bg-gray-50">
-                                        <tr>
-                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">用戶名稱</th>
-                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">檢舉</th>
-                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">權限</th>
-                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">停用</th>
-                                            </tr>
-</thead>
-<tbody class="bg-white divide-y divide-gray-200">
-    <tr>
-        <td class="px-6 py-4 whitespace-nowrap">
-            <div class="flex items-center">
-                <div class="flex-shrink-0 h-10 w-10">
-                    <img class="h-10 w-10 rounded-full" src="{{ asset('images/account.png') }}" alt="Neil Sims">
-                </div>
-                <div class="ml-4">
-                    <div class="text-sm font-medium text-gray-900">456</div>
-                    <div class="text-sm text-gray-500">email</div>
-                </div>
-            </div>
-        </td>
-        <td class="px-6 py-4 whitespace-nowrap">
-            <div class="flex items-center space-x-2">
-                <span class="text-sm text-gray-500">1次</span>
-                <button class="px-3 py-1 bg-red-600 text-white rounded hover:bg-blue-700">檢舉</button>
-            </div>
-        </td>
-                                            
-                                            <td class="px-6 py-4 whitespace-nowrap">
-                                            <select class="bg-gray text-primary-foreground px-4 py-2 rounded-md">
-                                                <option value="">選擇權限...</option>
-                                                <option value="admin">管理者</option>
-                                                <option value="user">使用者</option>
-                                            </select>
-                                            </td>
-                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                            <button class="px-3 py-1 bg-red-600 text-white rounded hover:bg-blue-700">停用</button>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+    <h2 class="text-xl font-semibold text-gray-900 mb-4">所有用戶</h2>
+    <div id="all-users-list" class="bg-white shadow overflow-hidden sm:rounded-lg">
+        <div class="overflow-x-auto">
+            <table class="min-w-full divide-y divide-gray-200">
+                <thead class="bg-gray-50">
+                    <tr>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">用戶名稱</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">檢舉</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">權限</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">停用</th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-200">
+                    @foreach($users as $user)
+                    <tr>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <div class="flex items-center">
+                                <div class="flex-shrink-0 h-10 w-10">
+                                    <img class="h-10 w-10 rounded-full" src="{{ asset('images/account.png') }}" alt="{{ $user->name }}">
+                                </div>
+                                <div class="ml-4">
+                                    <div class="text-sm font-medium text-gray-900">{{ $user->name }}</div>
+                                    <div class="text-sm text-gray-500">{{ $user->email }}</div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <div class="flex items-center space-x-2">
+                                <span class="text-sm text-gray-500">{{ $user->reports_count ?? 0 }}次</span>
+                                <button class="px-3 py-1 bg-red-600 text-white rounded hover:bg-blue-700">檢舉</button>
+                            </div>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <form action="{{ route('admin.update', $user->id) }}" method="POST">
+                                @csrf
+                                <select name="role" class="bg-gray text-primary-foreground px-4 py-2 rounded-md" onchange="this.form.submit()">
+                                    <option value="user" {{ $user->hasRole('user') ? 'selected' : '' }}>使用者</option>
+                                    <option value="admin" {{ $user->hasRole('admin') ? 'selected' : '' }}>管理者</option>
+                                </select>
+                            </form>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                        <button onclick="showSuspendDialog({{ $user->id }}, {{ json_encode($user->name) }})" class="px-3 py-1 bg-red-600 text-white rounded hover:bg-red-700">停用</button>                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
                     
                 </div>
             </main>
@@ -176,6 +177,42 @@
     </div>
 
     <script>
+
+
+function showSuspendDialog(userId, userName) {
+    Swal.fire({
+        html: `
+            ${userName}<br><br>
+            <strong>停用時間</strong><br>
+            <input type="text" id="suspend-reason" class="swal2-input" placeholder="請輸入停用原因">
+        `,
+        input: 'radio',
+        inputOptions: {
+            '60': '60秒',
+            '300': '5分',
+            '600': '10分',
+            '3600': '1小時',
+            '86400': '1天',
+            '604800': '1週'
+        },
+        inputValidator: (value) => {
+            if (!value) {
+                return '請選擇一個選項！'
+            }
+        },
+        showCancelButton: true,
+        confirmButtonText: '停用',
+        cancelButtonText: '取消',
+        showCloseButton: true,
+        footer: '<a href="#">瞭解更多看要不要用規則之類的</a>'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            console.log(`用户 ${userId} (${userName}) 被停用 ${result.value} 秒`);
+            suspendUser(userId, result.value);
+        }
+    });
+}
+
     document.addEventListener('DOMContentLoaded', function() {
         const searchInput = document.getElementById('search-users');
         const searchResults = document.getElementById('search-results');
