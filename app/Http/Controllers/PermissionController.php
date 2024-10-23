@@ -37,24 +37,25 @@ class PermissionController extends Controller
      * Update the specified resource in storage.
      */
     public function update($userId)
-    {
-        // 找到對應的用戶
-        $user = User::findOrFail($userId);
+{
+    $user = User::findOrFail($userId);
 
-        // 確認 'admin' 角色是否存在
-        $adminRole = Role::where('name', 'admin')->first();
+    // 確認 'admin' 角色是否存在
+    $adminRole = Role::where('name', 'admin')->first();
 
-        if ($adminRole) {
-            // 移除 'admin' 角色的權限
-            $adminRole->revokePermissionTo('manage users');
-            $adminRole->revokePermissionTo('edit articles');
+    if ($adminRole && $user->hasRole('admin')) {  // 使用角色名称字符串
+        // 移除 'admin' 角色的權限
+        $user->removeRole('admin');  // 使用角色名称字符串
 
-            // 將 'admin' 角色從該用戶移除
-            $user->removeRole($adminRole);
+        // 確保用戶有 'user' 角色
+        $userRole = Role::firstOrCreate(['name' => 'user']);
+        $user->assignRole('user');  // 使用角色名称字符串
 
-            return redirect()->route('role_permissions.index')->with('success', 'Admin role removed successfully.');
-        } else {
-            return redirect()->route('role_permissions.index')->with('error', 'Admin role does not exist.');
-        }
+        return redirect()->back()->with('success', '管理員權限已成功移除。');
+    } else {
+        // 如果用户不是管理员，则赋予管理员权限
+        $user->assignRole('admin');
+        return redirect()->back()->with('success', '管理員權限已成功添加。');
     }
+}
 }
