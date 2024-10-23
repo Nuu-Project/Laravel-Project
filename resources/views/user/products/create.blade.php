@@ -156,6 +156,9 @@
                                                 </div>
                                                 <img id="preview{{ $i }}" src="#" alt="預覽圖片" class="hidden w-full h-full object-cover absolute inset-0">
                                             </label>
+                                            <button type="button" class="absolute top-0 right-0 bg-red-500 text-white rounded-full p-1 m-1 hidden" id="deleteButton{{ $i }}" onclick="removeImage({{ $i }})">
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                                            </button>
                                         </div>
                                     @endfor
                                 </div>
@@ -174,6 +177,7 @@
     function previewImage(input, number) {
         const preview = document.getElementById('preview' + number);
         const label = preview.parentElement;
+        const deleteButton = document.getElementById('deleteButton' + number);
         const file = input.files[0];
         const reader = new FileReader();
 
@@ -181,6 +185,7 @@
             preview.src = reader.result;
             preview.classList.remove('hidden');
             label.querySelector('div').classList.add('hidden');
+            deleteButton.classList.remove('hidden');
         }
 
         if (file) {
@@ -189,7 +194,21 @@
             preview.src = "";
             preview.classList.add('hidden');
             label.querySelector('div').classList.remove('hidden');
+            deleteButton.classList.add('hidden');
         }
+    }
+
+    function removeImage(number) {
+        const input = document.getElementById('image' + number);
+        const preview = document.getElementById('preview' + number);
+        const label = preview.parentElement;
+        const deleteButton = document.getElementById('deleteButton' + number);
+
+        input.value = '';
+        preview.src = "";
+        preview.classList.add('hidden');
+        label.querySelector('div').classList.remove('hidden');
+        deleteButton.classList.add('hidden');
     }
 
     document.getElementById('productForm').addEventListener('submit', function(event) {

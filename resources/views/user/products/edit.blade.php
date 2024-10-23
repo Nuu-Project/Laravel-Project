@@ -86,6 +86,19 @@
                             <p class="text-sm sm:text-base text-muted-foreground">請依照下順序進行填寫，照片上傳張數最多五張。</p>
                             <p class="text-sm sm:text-base text-muted-foreground">圖片最左邊將會是商品首圖。</p>
                         </div>
+
+                        <!-- 驗證錯誤顯示 -->
+                        @if ($errors->any())
+                            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
+                                <strong class="font-bold">驗證錯誤！</strong>
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+
                         <form class="grid gap-6" action="{{ route('products.update',  ['product' => $product->id])  }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             @method('PUT')
@@ -93,13 +106,15 @@
                                 <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70" for="name">
                                     書名
                                 </label>
-                                <input class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50" id="name" name="name" placeholder="請輸入書名" value="{{ $product->name }}"/>
+                                <input class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50" id="name" name="name" placeholder="請輸入書名" value="{{ old('name', $product->name) }}"/>
+                                <x-input-error :messages="$errors->get('name')" class="mt-2" />
                             </div>
                             <div class="grid gap-2">
                                 <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70" for="price">
                                     價格
                                 </label>
-                                <input class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50" id="price" name="price" placeholder="輸入價格" type="number" value="{{ $product->price }}"/>
+                                <input class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50" id="price" name="price" placeholder="輸入價格" type="number" value="{{ old('price', $product->price) }}"/>
+                                <x-input-error :messages="$errors->get('price')" class="mt-2" />
                             </div>
 
                             <div class="grid gap-2">
@@ -116,6 +131,7 @@
                                         @endif
                                     @endforeach
                                 </select>
+                                <x-input-error :messages="$errors->get('grade')" class="mt-2" />
                             </div>
                             
                             <div class="grid gap-2">
@@ -131,6 +147,7 @@
                                         @endif
                                     @endforeach
                                 </select>
+                                <x-input-error :messages="$errors->get('semester')" class="mt-2" />
                             </div>
                             
                             <div class="grid gap-2">
@@ -146,13 +163,15 @@
                                         @endif
                                     @endforeach
                                 </select>
+                                <x-input-error :messages="$errors->get('category')" class="mt-2" />
                             </div>                        
 
                             <div class="grid gap-2">
                                 <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70" for="description">
                                     商品介紹
                                 </label>
-                                <textarea class="flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50" id="description" name="description" placeholder="請填寫有關該書的書況or使用情況等等~~" rows="4">{{ $product->description }}</textarea>
+                                <textarea class="flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50" id="description" name="description" placeholder="請填寫有關該書的書況or使用情況等等~~" rows="4">{{ old('description', $product->description) }}</textarea>
+                                <x-input-error :messages="$errors->get('description')" class="mt-2" />
                             </div>
                             <div class="grid gap-2">
                                 <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70" for="image">
@@ -163,6 +182,7 @@
                                     @for ($i = 0; $i < 5; $i++)
                                         <div class="relative w-full aspect-square">
                                             <input type="file" name="images[]" id="image{{ $i }}" class="hidden" accept="image/*" onchange="previewImage(this, {{ $i }})">
+                                            <input type="hidden" name="image_ids[]" value="{{ $product->getMedia('images')->sortBy('order_column')->values()->get($i)?->id ?? '' }}">
                                             <label for="image{{ $i }}" class="flex flex-col items-center justify-center w-full h-full border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100 overflow-hidden">
                                                 <div class="flex flex-col items-center justify-center pt-5 pb-6">
                                                     <svg class="w-8 h-8 mb-4 text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
@@ -170,11 +190,17 @@
                                                     </svg>
                                                     <p class="text-sm text-gray-500">新增圖片</p>
                                                 </div>
-                                                <img id="preview{{ $i }}" src="{{ $product->getMedia('images')->get($i)?->getUrl() ?? '#' }}" alt="預覽圖片" class="{{ $product->getMedia('images')->get($i) ? '' : 'hidden' }} w-full h-full object-cover absolute inset-0">
+                                                <img id="preview{{ $i }}" src="{{ $product->getMedia('images')->sortBy('order_column')->values()->get($i)?->getUrl() ?? '#' }}" alt="預覽圖片" class="{{ $product->getMedia('images')->sortBy('order_column')->values()->get($i) ? '' : 'hidden' }} w-full h-full object-cover absolute inset-0">
                                             </label>
+                                            @if($product->getMedia('images')->sortBy('order_column')->values()->get($i))
+                                                <button type="button" class="absolute top-0 right-0 bg-red-500 text-white rounded-full p-1 m-1" onclick="deleteImage({{ $product->id }}, {{ $product->getMedia('images')->sortBy('order_column')->values()->get($i)->id }}, {{ $i }})">
+                                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                                                </button>
+                                            @endif
                                         </div>
                                     @endfor
                                 </div>
+                                <x-input-error :messages="$errors->get('images')" class="mt-2" />
                             </div>                            
                             
                             <script>
@@ -209,6 +235,33 @@
             }
         @endfor
     });
+    // 刪除按鈕(會導致出現填滿預覽圖片的情況)
+    function deleteImage(productId, imageId, index) {
+         fetch(`/products/${productId}/images/${imageId}`, {
+             method: 'DELETE',
+             headers: {
+                 'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                 'Content-Type': 'application/json',
+                 'Accept': 'application/json',
+             },
+         })
+         .then(response => response.json())
+     .then(data => {
+             if (data.success) {
+                 // 刪除成功，更新 UI
+                 document.getElementById(`preview${index}`).src = '#';
+                 document.getElementById(`preview${index}`).classList.add('hidden');
+                 document.getElementById(`image${index}`).value = '';
+                 document.querySelector(`label[for="image${index}"] div`).classList.remove('hidden');
+                 document.querySelector(`button[onclick="deleteImage(${productId}, ${imageId}, ${index})"]`).remove();
+             } else {
+                 console.error('刪除圖片失敗：' + data.message);
+             }
+         })
+         .catch(error => {
+             console.error('Error:', error);
+         });
+     }
     </script>
                             <button class="inline-flex items-center justify-center whitespace-nowrap rounded-xl text-base sm:text-lg font-semibold ring-offset-background transition-colors ease-in-out duration-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-blue-500 text-white hover:bg-blue-700 h-10 sm:h-11 px-4 sm:px-8" type="submit">
                                 儲存修改

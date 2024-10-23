@@ -36,7 +36,7 @@ class CheckController extends Controller
         //
     }
 
-    public function edit(string $id)
+    public function edit(Product $product)
     {
         //
     }
@@ -66,28 +66,54 @@ class CheckController extends Controller
     public function update(Request $request, Product $product)
     {
         // 驗證輸入資料
-        $validated = $request->validate([
+        $request->validate([
             'name' => ['required', 'string', 'max:50'],
             'price' => ['required', 'numeric', 'digits_between:1,10'],
             'description' => ['required', 'string'],
             'grade' => ['required', 'string'],
             'semester' => ['required', 'string'],
             'category' => ['required', 'string'],
-            'images.*' => ['nullable', 'image', 'max:2048'], // 允許多張圖片，每張最大 2MB
+            'images' => ['nullable', 'array', 'max:5'],
+            'images.*' => ['nullable', 'image', 'max:2048'],
+            'image_ids' => ['nullable', 'array', 'max:5'],
         ]);
 
         // 更新產品資料（排除 images 欄位）
-        $product->update($request->except('images'));
+        $product->update($request->except(['images', 'image_ids']));
 
-        // 如果有上傳圖片，處理圖片
-        if ($request->hasFile('images')) {
-            // 刪除舊圖片（如果有）
-            $product->clearMediaCollection('images');
+        // 處理圖片上傳和更新
+        if ($request->hasFile('images') || $request->has('image_ids')) {
+            $existingMedia = $product->getMedia('images')->keyBy('id');
+            $newOrder = [];
 
-            // 添加新圖片
-            foreach ($request->file('images') as $image) {
-                $product->addMedia($image)->toMediaCollection('images');
+            foreach ($request->input('image_ids', []) as $index => $imageId) {
+                if ($request->hasFile("images.$index")) {
+                    // 新上傳的圖片
+                    $newImage = $request->file("images.$index");
+                    $media = $product->addMedia($newImage)
+                        ->withCustomProperties(['order_column' => $index + 1])
+                        ->toMediaCollection('images');
+                    $newOrder[] = $media->id;
+                } elseif ($imageId && $existingMedia->has($imageId)) {
+                    // 保留的舊圖片
+                    $existingMedia[$imageId]->order_column = $index + 1;
+                    $existingMedia[$imageId]->save();
+                    $newOrder[] = $imageId;
+                }
             }
+
+            // 刪除不在新順序中的舊圖片
+            foreach ($existingMedia as $media) {
+                if (! in_array($media->id, $newOrder)) {
+                    $media->delete();
+                }
+            }
+
+            // 重新排序媒體
+            $product->media()->whereIn('id', $newOrder)->each(function ($medium) use ($newOrder) {
+                $medium->order_column = array_search($medium->id, $newOrder) + 1;
+                $medium->save();
+            });
         }
 
         // 獲取表單資料中的標籤
@@ -132,5 +158,26 @@ class CheckController extends Controller
 
         // 重定向到产品列表页面，并带有成功消息
         return redirect()->route('products.index')->with('success', '產品已成功刪除');
+    }
+
+    public function deleteImage(Product $product, $imageId)
+    {
+        $media = $product->getMedia('images')->where('id', $imageId)->first();
+
+        if ($media) {
+            // 刪除媒體文件
+            $media->delete();
+
+            // 重新排序剩餘的媒體
+            $remainingMedia = $product->getMedia('images')->sortBy('order_column')->values();
+            foreach ($remainingMedia as $index => $medium) {
+                $medium->order_column = $index + 1;
+                $medium->save();
+            }
+
+            return response()->json(['success' => true]);
+        }
+
+        return response()->json(['success' => false, 'message' => '找不到指定的圖片']);
     }
 }
