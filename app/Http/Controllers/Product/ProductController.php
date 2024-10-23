@@ -1,10 +1,10 @@
 <?php
 
 namespace App\Http\Controllers\Product;
+
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Spatie\Tags\Tag;
 
 class ProductController extends Controller
@@ -15,7 +15,7 @@ class ProductController extends Controller
         $tagSlugs = $request->input('tags', []);
         // 獲取搜索關鍵字
         $search = $request->input('search');
-        
+
         // 修改：只獲取未被軟刪除的標籤
         $tags = Tag::whereIn('slug->zh', $tagSlugs)
             ->whereNull('deleted_at')
@@ -31,23 +31,23 @@ class ProductController extends Controller
         $productsQuery = Product::with(['media', 'user'])
             ->where('status', 100);
 
-        if (!empty($tags)) {
+        if (! empty($tags)) {
             foreach ($tags as $tag) {
                 $productsQuery->whereHas('tags', function ($query) use ($tag) {
                     $query->where('name->zh', $tag['name'])
-                          ->where('type', $tag['type'])
-                          ->whereNull('deleted_at'); // 確保只使用未被軟刪除的標籤
+                        ->where('type', $tag['type'])
+                        ->whereNull('deleted_at'); // 確保只使用未被軟刪除的標籤
                 });
             }
         }
 
         // 如果有搜索關鍵字，則加入搜索條件
         if ($search) {
-            $productsQuery->where('name', 'like', '%' . $search . '%');
+            $productsQuery->where('name', 'like', '%'.$search.'%');
         }
 
         $products = $productsQuery->paginate(6);
-        
+
         // 修改：只獲取未被軟刪除的所有標籤
         $allTags = Tag::whereNull('deleted_at')->get();
 
@@ -66,7 +66,7 @@ class ProductController extends Controller
 
     public function show(Product $product)
     {
-        // 
+        //
     }
 
     public function edit(string $id)

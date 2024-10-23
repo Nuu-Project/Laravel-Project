@@ -2,10 +2,8 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 use App\Models\Tag;
+use Illuminate\Database\Seeder;
 
 class TagSeeder extends Seeder
 {
@@ -15,7 +13,7 @@ class TagSeeder extends Seeder
     public function run(): void
     {
         $tags = [
-            
+
             //年級
             [
                 'name' => ['en' => 'Freshman', 'zh' => '一年級'],
@@ -107,10 +105,10 @@ class TagSeeder extends Seeder
         foreach ($tags as $tagData) {
             $tag = Tag::updateOrCreate(
                 ['slug->en' => $tagData['slug']['en'],
-                'slug->zh' => $tagData['slug']['zh'],],
+                    'slug->zh' => $tagData['slug']['zh'], ],
                 ['name' => $tagData['name'],
-                'type' => $tagData['type'],
-                'order_column' => $tagData['order_column']],
+                    'type' => $tagData['type'],
+                    'order_column' => $tagData['order_column']],
             );
         }
     }

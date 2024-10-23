@@ -60,7 +60,6 @@ class ProfileController extends Controller
 
     public function control()
     {
-    return view('profile.partials.control');
+        return view('profile.partials.control');
     }
-
 }

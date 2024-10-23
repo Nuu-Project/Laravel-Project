@@ -6,11 +6,9 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
 
-
 class RoleSeeder extends Seeder
 {
-
-    use WithoutModelEvents; #避免觸發模型事件
+    use WithoutModelEvents; //避免觸發模型事件
 
     public function run(): void
     {
@@ -21,4 +19,3 @@ class RoleSeeder extends Seeder
 
     }
 }
-?>

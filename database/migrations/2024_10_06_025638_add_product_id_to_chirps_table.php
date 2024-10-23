@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('chirps', function (Blueprint $table) {
-            $table->foreignId('product_id')->nullable()->after('user_id')->constrained()->cascadeOnDelete(); 
+            $table->foreignId('product_id')->nullable()->after('user_id')->constrained()->cascadeOnDelete();
         });
     }
 
@@ -22,8 +22,8 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('chirps', function (Blueprint $table) {
-            $table->dropForeign(['product_id']); 
-            $table->dropColumn('product_id'); 
+            $table->dropForeign(['product_id']);
+            $table->dropColumn('product_id');
         });
     }
 };
