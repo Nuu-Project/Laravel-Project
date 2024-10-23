@@ -84,6 +84,7 @@ Route::get('/dashboard', function () {
 
 Route::get('/products/{productId}', [checkController::class, 'index'])->name('products.info');
 Route::post('/products/{product}/demote', [checkController::class, 'demoteData'])->name('products.demote');
+Route::delete('/products/{product}/images/{image}', [CheckController::class, 'deleteImage'])->name('products.deleteImage');
 
 Route::post('/admin/{id}/create', [PermissionController::class, 'create'])->name('admin.create');
 Route::post('/admin/{id}/update', [PermissionController::class, 'update'])->name('admin.update');
