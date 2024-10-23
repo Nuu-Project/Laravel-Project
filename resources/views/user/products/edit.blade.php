@@ -236,33 +236,32 @@
         @endfor
     });
     // 刪除按鈕(會導致出現填滿預覽圖片的情況)
-
-    // function deleteImage(productId, imageId, index) {
-    //     fetch(`/products/${productId}/images/${imageId}`, {
-    //         method: 'DELETE',
-    //         headers: {
-    //             'X-CSRF-TOKEN': '{{ csrf_token() }}',
-    //             'Content-Type': 'application/json',
-    //             'Accept': 'application/json',
-    //         },
-    //     })
-    //     .then(response => response.json())
-    //     .then(data => {
-    //         if (data.success) {
-    //             // 刪除成功，更新 UI
-    //             document.getElementById(`preview${index}`).src = '#';
-    //             document.getElementById(`preview${index}`).classList.add('hidden');
-    //             document.getElementById(`image${index}`).value = '';
-    //             document.querySelector(`label[for="image${index}"] div`).classList.remove('hidden');
-    //             document.querySelector(`button[onclick="deleteImage(${productId}, ${imageId}, ${index})"]`).remove();
-    //         } else {
-    //             console.error('刪除圖片失敗：' + data.message);
-    //         }
-    //     })
-    //     .catch(error => {
-    //         console.error('Error:', error);
-    //     });
-    // }
+    function deleteImage(productId, imageId, index) {
+         fetch(`/products/${productId}/images/${imageId}`, {
+             method: 'DELETE',
+             headers: {
+                 'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                 'Content-Type': 'application/json',
+                 'Accept': 'application/json',
+             },
+         })
+         .then(response => response.json())
+     .then(data => {
+             if (data.success) {
+                 // 刪除成功，更新 UI
+                 document.getElementById(`preview${index}`).src = '#';
+                 document.getElementById(`preview${index}`).classList.add('hidden');
+                 document.getElementById(`image${index}`).value = '';
+                 document.querySelector(`label[for="image${index}"] div`).classList.remove('hidden');
+                 document.querySelector(`button[onclick="deleteImage(${productId}, ${imageId}, ${index})"]`).remove();
+             } else {
+                 console.error('刪除圖片失敗：' + data.message);
+             }
+         })
+         .catch(error => {
+             console.error('Error:', error);
+         });
+     }
     </script>
                             <button class="inline-flex items-center justify-center whitespace-nowrap rounded-xl text-base sm:text-lg font-semibold ring-offset-background transition-colors ease-in-out duration-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-blue-500 text-white hover:bg-blue-700 h-10 sm:h-11 px-4 sm:px-8" type="submit">
                                 儲存修改
