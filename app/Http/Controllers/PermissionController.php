@@ -36,26 +36,28 @@ class PermissionController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update($userId)
-{
-    $user = User::findOrFail($userId);
+   public function update($userId)
+    {
+        // 找到對應的用戶
+        $user = User::findOrFail($userId);
 
-    // 確認 'admin' 角色是否存在
-    $adminRole = Role::where('name', 'admin')->first();
+        // 確認 'admin' 角色是否存在
+        $adminRole = Role::where('name', 'admin')->first();
 
-    if ($adminRole && $user->hasRole('admin')) {  // 使用角色名称字符串
-        // 移除 'admin' 角色的權限
-        $user->removeRole('admin');  // 使用角色名称字符串
+        if ($adminRole && $user->hasRole('admin')) {  // 使用角色名称字符串
+            // 移除 'admin' 角色的權限
+            $user->removeRole('admin');  // 使用角色名称字符串
 
-        // 確保用戶有 'user' 角色
-        $userRole = Role::firstOrCreate(['name' => 'user']);
-        $user->assignRole('user');  // 使用角色名称字符串
+            // 確保用戶有 'user' 角色
+            $userRole = Role::firstOrCreate(['name' => 'user']);
+            $user->assignRole('user');  // 使用角色名称字符串
 
-        return redirect()->back()->with('success', '管理員權限已成功移除。');
-    } else {
-        // 如果用户不是管理员，则赋予管理员权限
-        $user->assignRole('admin');
-        return redirect()->back()->with('success', '管理員權限已成功添加。');
+            return redirect()->back()->with('success', '管理員權限已成功移除。');
+        } else {
+            // 如果用户不是管理员，则赋予管理员权限
+            $user->assignRole('admin');
+
+            return redirect()->back()->with('success', '管理員權限已成功添加。');
+        }
     }
-}
 }
