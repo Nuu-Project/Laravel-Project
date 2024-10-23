@@ -2,8 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 
-
-
 //訪客: 首頁
 Route::get('/', function () {
     return view('Home');
@@ -15,12 +13,12 @@ Route::get('/user_home', function () {
 });
 
 //共用: product
-Route::get('/product', function () { 
+Route::get('/product', function () {
     return view('Product');
 });
 
 //共用: product
-Route::get('/user_product', function () { 
+Route::get('/user_product', function () {
     return view('Product_user');
 });
 
@@ -33,4 +31,3 @@ Route::get('/user_product_create', function () {
 Route::get('/user_product_check', function () {
     return view('Product_check');
 });
-

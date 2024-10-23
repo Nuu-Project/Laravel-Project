@@ -13,9 +13,10 @@ class TagController extends Controller
     public function index()
     {
         $tags = Tag::withTrashed()->get();
-        
+
         return view('tags.index', compact('tags'));
     }
+
     /**
      * Show the form for creating a new resource.
      */
@@ -28,29 +29,29 @@ class TagController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-{
-    // 驗證請求資料
-    $validatedData = $request->validate([
-        'name' => 'required|string|max:255',
-        'slug' => 'required|string|max:255',
-        'type' => 'required|string|max:255',
-        'order_column' => 'required|integer',
-    ]);
-    
-    // 新增標籤
-    Tag::create([
-        'name' => $validatedData['name'],
-        'slug' => $validatedData['slug'],
-        'type' => $validatedData['type'],
-        'order_column' => $validatedData['order_column'],
-    ]);
+    {
+        // 驗證請求資料
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'slug' => 'required|string|max:255',
+            'type' => 'required|string|max:255',
+            'order_column' => 'required|integer',
+        ]);
 
-    $tags = Tag::all();
-    
-    // 返回成功消息
-    // return response()->json(['message' => '標籤新增成功！', 'tag' => $tag], 201);
-    return view('tags.index', ['tags' => $tags, 'message' => '標籤新增成功！']);
-}
+        // 新增標籤
+        Tag::create([
+            'name' => $validatedData['name'],
+            'slug' => $validatedData['slug'],
+            'type' => $validatedData['type'],
+            'order_column' => $validatedData['order_column'],
+        ]);
+
+        $tags = Tag::all();
+
+        // 返回成功消息
+        // return response()->json(['message' => '標籤新增成功！', 'tag' => $tag], 201);
+        return view('tags.index', ['tags' => $tags, 'message' => '標籤新增成功！']);
+    }
 
     /**
      * Display the specified resource.
@@ -69,7 +70,7 @@ class TagController extends Controller
         $tag = Tag::withTrashed()->find($id);
 
         // 如果找不到標籤，返回錯誤消息
-        if (!$tag) {
+        if (! $tag) {
             return redirect()->route('tags.index')->with('error', '標籤未找到');
         }
 
@@ -87,12 +88,13 @@ class TagController extends Controller
             'type' => 'required|string|max:255',
             'order_column' => 'required|integer',
         ]);
-        
+
         $tag = Tag::withTrashed()->findOrFail($id);
         $tag->update($validatedData);
-    
+
         return redirect()->route('tags.index')->with('message', '標籤更新成功！');
-}
+    }
+
     /**
      * Remove the specified resource from storage.
      */
@@ -100,18 +102,18 @@ class TagController extends Controller
     {
         $tag = Tag::findOrFail($id);
         $tag->delete();
+
         return redirect()->route('tags.index')->with('success', '標籤已刪除');
     }
 
     public function restore($id)
-{
-    // 使用 withTrashed() 查找包括已刪除的標籤
-    $tag = Tag::withTrashed()->findOrFail($id);
+    {
+        // 使用 withTrashed() 查找包括已刪除的標籤
+        $tag = Tag::withTrashed()->findOrFail($id);
 
-    // 使用 restore() 恢復標籤
-    $tag->restore();
+        // 使用 restore() 恢復標籤
+        $tag->restore();
 
-    return redirect()->route('tags.index')->with('success', '標籤已恢復');
-}
-
+        return redirect()->route('tags.index')->with('success', '標籤已恢復');
+    }
 }

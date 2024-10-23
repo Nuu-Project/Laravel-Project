@@ -83,7 +83,7 @@ class CheckController extends Controller
         if ($request->hasFile('images')) {
             // 刪除舊圖片（如果有）
             $product->clearMediaCollection('images');
-            
+
             // 添加新圖片
             foreach ($request->file('images') as $image) {
                 $product->addMedia($image)->toMediaCollection('images');

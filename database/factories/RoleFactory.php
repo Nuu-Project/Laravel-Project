@@ -17,7 +17,7 @@ class RoleFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => $this->faker->unique()->word(), #生成唯一權限名稱
+            'name' => $this->faker->unique()->word(), //生成唯一權限名稱
             'guard_name' => 'web',
         ];
     }

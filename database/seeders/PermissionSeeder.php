@@ -8,9 +8,8 @@ use Spatie\Permission\Models\Permission;
 
 class PermissionSeeder extends Seeder
 {
-
     use WithoutModelEvents;
-    
+
     public function run(): void
     {
         $permissions = [
@@ -26,8 +25,8 @@ class PermissionSeeder extends Seeder
             'delete_tag',
         ];
 
-        foreach($permissions as $permission){
-            Permission::updateOrCreate(['name' => $permission],['name' => $permission]); //找到對應權限做更新
+        foreach ($permissions as $permission) {
+            Permission::updateOrCreate(['name' => $permission], ['name' => $permission]); //找到對應權限做更新
         }
     }
 }

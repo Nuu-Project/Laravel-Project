@@ -5,12 +5,11 @@ namespace App\Http\Controllers\Product;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Spatie\Tags\Tag;
 
 class CreateController extends Controller
 {
-    public function index() 
+    public function index()
     {
         //
     }

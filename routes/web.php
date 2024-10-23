@@ -6,11 +6,10 @@ use App\Http\Controllers\Product\CreateController;
 use App\Http\Controllers\Product\EditController;
 use App\Http\Controllers\Product\InfoController;
 use App\Http\Controllers\Product\ProductController;
-use App\Http\Controllers\TagController;
-use App\Http\Controllers\ChirpController;
 use App\Http\Controllers\Product\ReportController;
-use  App\Http\Controllers\UserController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\TagController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 //訪客首頁
@@ -29,7 +28,6 @@ Route::post('/tag-store', [TagController::class, 'store'])->name('tags.store');
 Route::put('/tag-update/{id}', [TagController::class, 'update'])->name('tags.update');
 Route::delete('/tag-destroy/{id}', [TagController::class, 'destroy'])->name('tags.destroy');
 Route::post('/tag-restore/{id}', [TagController::class, 'restore'])->name('tags.restore');
-
 
 Route::get('/products', [ProductController::class, 'index'])->name('products.index');
 
@@ -76,8 +74,8 @@ Route::delete('/chirps/{chirp}', [ChirpController::class, 'destroy'])
     ->middleware(['auth', 'verified']);
 
 // Route::middleware(['auth', 'admin'])->group(function () {
-    Route::get('/admin/user', [UserController::class, 'index'])->name('admin.user.index');
-    Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('ausers.destroy');
+Route::get('/admin/user', [UserController::class, 'index'])->name('admin.user.index');
+Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('ausers.destroy');
 // });
 
 Route::get('/dashboard', function () {

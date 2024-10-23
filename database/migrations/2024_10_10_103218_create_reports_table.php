@@ -20,12 +20,12 @@ return new class extends Migration
 
         Schema::create('reportables', function (Blueprint $table) {
             $table->foreignId('report_id')->constrained()->cascadeOnDelete();
-            $table->morphs('reportable'); 
+            $table->morphs('reportable');
             $table->unsignedBigInteger('whistleblower_id')->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->text('description');
             $table->timestamps();
 
-            $table->unique(['report_id', 'reportable_id', 'reportable_type','whistleblower_id'],'reportables_unique_index');
+            $table->unique(['report_id', 'reportable_id', 'reportable_type', 'whistleblower_id'], 'reportables_unique_index');
         });
     }
 

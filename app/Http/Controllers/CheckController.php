@@ -12,14 +12,15 @@ class checkController extends Controller
     public function index($productId): View
     {
         $product = Product::findOrFail($productId);
-        
+
         $chirps = $product->chirps()->with('user')->get();
         $reports = Report::where('type', '商品')->get()->mapWithKeys(function ($item) {
             return [$item->id => json_decode($item->name, true)['zh']];
         });
 
-        return view('user.products.info' , compact('chirps','product', 'reports'));
+        return view('user.products.info', compact('chirps', 'product', 'reports'));
     }
+
     public function demoteData(Request $request, Product $product)
     {
         if ($product->status == 100) {
