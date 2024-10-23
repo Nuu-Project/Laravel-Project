@@ -43,6 +43,11 @@
           <img class="w-12 h-12 mr-2" src="images/sign.png" alt="logo">
           登入   
             </div>
+            @if ($errors->has('message'))
+                <div class="text-sm text-red-600 space-y-1">
+                    {!! $errors->first('message') !!}
+                </div>
+            @endif
         <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
               <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl text-center">
                   Sign in to your account
