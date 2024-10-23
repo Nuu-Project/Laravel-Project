@@ -36,7 +36,7 @@ class PermissionController extends Controller
     /**
      * Update the specified resource in storage.
      */
-   public function update($userId)
+    public function update($userId)
     {
         // 找到對應的用戶
         $user = User::findOrFail($userId);
