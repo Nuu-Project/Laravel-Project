@@ -55,7 +55,7 @@ Route::put('/user-product-edit/{product}', [CheckController::class, 'update'])->
 
 Route::get('/user-product-edit/{product}', [EditController::class, 'edit'])->name('products.edit');
 
-Route::get('/admin/search', [ChirpController::class, 'adminSearch'])->name('admin.search');
+Route::get('/admin/message', [ChirpController::class, 'adminMessage'])->name('admin.message');
 
 Route::delete('/users/{user}', [UserController::class, 'destroy'])
     ->name('users.destroy')
@@ -78,6 +78,7 @@ Route::delete('/chirps/{chirp}', [ChirpController::class, 'destroy'])
 
 // Route::middleware(['auth', 'admin'])->group(function () {
 Route::get('/admin/user', [UserController::class, 'index'])->name('admin.user.index');
+Route::post('/user/suspend', [UserController::class, 'suspend'])->name('user.suspend');
 Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('ausers.destroy');
 // });
 
@@ -87,6 +88,7 @@ Route::get('/dashboard', function () {
 
 Route::get('/admin/product', [ManageableProductsController::class, 'index'])->name('ManageProducts.index');
 Route::put('/products/{product}/demote', [DownShelvesController::class, 'demoteData'])->name('DownShelvesController.demote');
+Route::delete('/products/{product}/images/{image}', [CheckController::class, 'deleteImage'])->name('products.deleteImage');
 
 Route::post('/admin/{id}/create', [PermissionController::class, 'create'])->name('admin.create');
 Route::post('/admin/{id}/update', [PermissionController::class, 'update'])->name('admin.update');
