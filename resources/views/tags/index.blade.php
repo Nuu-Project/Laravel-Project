@@ -34,8 +34,10 @@
                         </div>
                     </div>
                     <div x-show="open" class="pl-4">
-                        <a href="" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">管理商品</a>
-                        <a href="{{route('tags.index')}}" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">管理標籤</a>
+                        <a href="{{route('ManageProducts.index')}}" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">商品管理</a>
+                        <a href="{{route('admin.user.index')}}" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">用戶管理</a>
+                        <a href="{{route('admin.message')}}" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">留言管理</a>
+                        <a href="{{route('tags.index')}}" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">新增標籤與刪除標籤</a>
                     </div>
                 </nav>
             </div>
@@ -118,7 +120,7 @@
                                                         </a>
                                                         <form action="{{ route('tags.restore', $tag->id) }}" method="POST" style="display:inline;">
                                                             @csrf
-                                                            <button class="ml-2 px-4 py-2 font-medium tracking-wide text-white capitalize transition-colors duration-200 transform bg-blue-600 rounded-md hover:bg-blue-500 focus:outline-none focus:bg-blue-500">
+                                                            <button class="px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 mr-2">
                                                                 啟用
                                                             </button>
                                                         </form>

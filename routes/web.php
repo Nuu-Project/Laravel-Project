@@ -20,8 +20,8 @@ Route::get('/', function () {
     return view('Home');
 });
 
-Route::get('/s', function () {
-    return view('test');
+Route::get('/report', function () {
+    return view('admin.report');
 });
 
 Route::get('/tag-index', [TagController::class, 'index'])->name('tags.index');
