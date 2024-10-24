@@ -239,7 +239,16 @@
                                     product: '{{ $product->id }}',
                                 },
                                 success: function(response) {
-                                    Swal.fire('檢舉已送出', response.message, 'success');
+                                    if (response.message === '你已檢舉過了') {
+                                        Swal.fire({
+                                            title: `${response.message}`, 
+                                            html: `檢舉原因已更新：<br>
+                                                  <p style="white-space: pre-wrap;">${response.description}</p>`, 
+                                            icon: 'info'
+                                        });
+                                    } else {
+                                        Swal.fire('檢舉已送出', response.message, 'success');
+                                    }
                                 },
                                 error: function(xhr) {
                                     Swal.fire('錯誤', '無法提交檢舉', 'error');
