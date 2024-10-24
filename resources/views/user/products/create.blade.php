@@ -142,19 +142,23 @@
                                 <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70" for="image">
                                     上傳圖片
                                 </label>
-                            
                                 <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-                                    @for ($i = 1; $i <= 5; $i++)
-                                        <div class="relative w-full aspect-square">
+                                    @for ($i = 0; $i < 5; $i++)
+                                        <div class="relative">
                                             <input type="file" name="images[]" id="image{{ $i }}" class="hidden" accept="image/*" onchange="previewImage(this, {{ $i }})">
+
                                             <label for="image{{ $i }}" class="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100 overflow-hidden">
+
                                                 <div id="placeholder{{ $i }}" class="flex flex-col items-center justify-center pt-5 pb-6">
                                                     <svg class="w-8 h-8 mb-4 text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
                                                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
                                                     </svg>
-                                                    <p class="text-sm text-gray-500">新增圖片 {{ $i }}</p>
+                                                    <p class="mb-2 text-sm text-gray-500"><span class="font-semibold">點擊上傳</span> 或拖放</p>
+                                                    <p class="text-xs text-gray-500">SVG, PNG, JPG or GIF (最大. 800x400px)</p>
                                                 </div>
-                                                <img id="preview{{ $i }}" src="#" alt="預覽圖片" class="hidden w-full h-full object-cover absolute inset-0">
+                                                <div id="preview{{ $i }}" class="absolute inset-0 flex items-center justify-center hidden">
+                                                    <img src="#" alt="預覽圖片" class="max-w-full max-h-full object-contain">
+                                                </div>
                                             </label>
                                             <button type="button" class="absolute top-0 right-0 bg-red-500 text-white rounded-full p-1 m-1 hidden" id="deleteButton{{ $i }}" onclick="removeImage({{ $i }})">
                                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
@@ -177,24 +181,30 @@
     function previewImage(input, number) {
         const preview = document.getElementById('preview' + number);
         const placeholder = document.getElementById('placeholder' + number);
+
         const deleteButton = document.getElementById('deleteButton' + number);
+
         const file = input.files[0];
         const reader = new FileReader();
 
         reader.onloadend = function () {
-            preview.src = reader.result;
+            preview.querySelector('img').src = reader.result;
             preview.classList.remove('hidden');
             placeholder.classList.add('hidden');
+
             deleteButton.classList.remove('hidden');
+
         }
 
         if (file) {
             reader.readAsDataURL(file);
         } else {
-            preview.src = "";
+            preview.querySelector('img').src = '#';
             preview.classList.add('hidden');
             placeholder.classList.remove('hidden');
+
             deleteButton.classList.add('hidden');
+
         }
     }
 
