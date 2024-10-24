@@ -21,26 +21,6 @@ class CheckController extends Controller
         return view('user.products.check', compact('userProducts', 'message'));
     }
 
-    public function create()
-    {
-        //
-    }
-
-    public function store(Request $request)
-    {
-        //
-    }
-
-    public function show(string $id)
-    {
-        //
-    }
-
-    public function edit(Product $product)
-    {
-        //
-    }
-
     public function demoteData(Request $request, Product $product)
     {
         if ($product->status == 100) {

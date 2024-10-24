@@ -8,9 +8,6 @@ use App\Models\User;
 
 class PermissionController extends Controller
 {
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create($userId)
     {
         // 找到對應的用戶
@@ -33,9 +30,6 @@ class PermissionController extends Controller
         return redirect()->route('role_permissions.index')->with('success', 'User has been made an admin.');
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update($userId)
     {
         // 找到對應的用戶

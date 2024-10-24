@@ -15,9 +15,6 @@ class ChirpController extends Controller
 {
     use AuthorizesRequests;
 
-    /**
-     * Display a listing of the resource.
-     */
     public function index($productId): View
     {
         $product = Product::findOrFail($productId);
@@ -55,17 +52,6 @@ class ChirpController extends Controller
         return view('admin.search', compact('chirps'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request, $productId): RedirectResponse
     {
         $validated = $request->validate([
@@ -80,17 +66,6 @@ class ChirpController extends Controller
         return redirect()->route('products.info', ['product' => $productId]);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Chirp $chirp)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit($productId, Chirp $chirp): View
     {
         Gate::authorize('update', $chirp);
