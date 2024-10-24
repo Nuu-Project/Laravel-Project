@@ -9,13 +9,10 @@ class UserController extends Controller
 {
     // 方法示例
     public function index()
-    {
-        // 获取所有用户
-        $users = User::all();
-
-        // 返回视图并传递用户数据
-        return view('admin.user', compact('users'));
-    }
+{
+    $users = User::all();
+    return view('admin.user', compact('users'));
+}
 
     public function show($id)
     {
