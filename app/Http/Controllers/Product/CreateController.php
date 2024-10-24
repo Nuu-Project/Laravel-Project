@@ -9,14 +9,9 @@ use Spatie\Tags\Tag;
 
 class CreateController extends Controller
 {
-    public function index()
-    {
-        //
-    }
-
     public function create()
     {
-        $tags = Tag::all();
+        $tags = Tag::whereNull('deleted_at')->get(); // 修改這行
 
         return view('user.products.create', compact('tags'));
     }
@@ -74,25 +69,5 @@ class CreateController extends Controller
         }
 
         return redirect()->route('products.create')->with('success', '產品已成功創建並附加標籤');
-    }
-
-    public function show(string $id)
-    {
-        //
-    }
-
-    public function edit(string $id)
-    {
-        //
-    }
-
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    public function destroy(string $id)
-    {
-        //
     }
 }

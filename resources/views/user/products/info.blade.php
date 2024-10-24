@@ -83,7 +83,7 @@
                                     {{ __('Log Out') }}
                                 </x-dropdown-link>
                             </form>
-                        </x-slot>
+                        </x-slot>          
                     </x-dropdown>
                     @else
                     <a href="/register" class="px-6 py-4 bg-blue-500 text-white font-semibold text-lg rounded-xl hover:bg-blue-700 transition ease-in-out duration-500 mb-5 md:mb-0">註冊</a>
@@ -239,7 +239,16 @@
                                     product: '{{ $product->id }}',
                                 },
                                 success: function(response) {
-                                    Swal.fire('檢舉已送出', response.message, 'success');
+                                    if (response.message === '你已檢舉過了') {
+                                        Swal.fire({
+                                            title: `${response.message}`, 
+                                            html: `檢舉原因已更新：<br>
+                                                  <p style="white-space: pre-wrap;">${response.description}</p>`, 
+                                            icon: 'info'
+                                        });
+                                    } else {
+                                        Swal.fire('檢舉已送出', response.message, 'success');
+                                    }
                                 },
                                 error: function(xhr) {
                                     Swal.fire('錯誤', '無法提交檢舉', 'error');

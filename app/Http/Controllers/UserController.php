@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use DateTime;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -17,29 +18,23 @@ class UserController extends Controller
         return view('admin.user', compact('users'));
     }
 
-    public function show($id)
+    public function suspend(Request $request)
     {
-        // 显示特定用户的信息
-    }
+        $validated = $request->validate([
+            'user_id' => 'required|exists:users,id',
+            'duration' => 'required|integer',
+            'reason' => 'nullable|string|max:255',
+        ]);
 
-    public function create()
-    {
-        // 显示创建用户的表单
-    }
+        $duration = (int) $request->input('duration');
+        $suspendUntil = new DateTime;
+        $suspendUntil->modify("+{$duration} seconds");
 
-    public function store(Request $request)
-    {
-        // 处理保存新用户的逻辑
-    }
+        $user = User::find($request->input('user_id'));
+        $user->time_limit = $suspendUntil;
+        $user->save();
 
-    public function edit($id)
-    {
-        // 显示编辑用户的表单
-    }
-
-    public function update(Request $request, $id)
-    {
-        // 处理更新用户的逻辑
+        return response()->json(['message' => '用戶已成功暫停']);
     }
 
     public function destroy($id)
