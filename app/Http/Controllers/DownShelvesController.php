@@ -3,22 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
-use App\Models\Report;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 
-class checkController extends Controller
+class DownShelvesController extends Controller
 {
-    public function index($productId): View
+    public function index(): View
     {
-        $product = Product::findOrFail($productId);
+        // 抓取所有商品
+        $products = Product::all();
 
-        $chirps = $product->chirps()->with('user')->get();
-        $reports = Report::where('type', '商品')->get()->mapWithKeys(function ($item) {
-            return [$item->id => json_decode($item->name, true)['zh']];
-        });
-
-        return view('user.products.info', compact('chirps', 'product', 'reports'));
+        // 返回到視圖，並傳遞商品資料
+        return view('admin.check', compact('products'));
     }
 
     public function demoteData(Request $request, Product $product)
