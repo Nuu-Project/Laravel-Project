@@ -76,11 +76,11 @@ Route::delete('/chirps/{chirp}', [ChirpController::class, 'destroy'])
     ->name('chirps.destroy')
     ->middleware(['auth', 'verified']);
 
-// Route::middleware(['auth', 'admin'])->group(function () {
-Route::get('/admin/user', [UserController::class, 'index'])->name('admin.user.index');
+Route::group(['middleware' => ['role:admin']], function () {
+    Route::get('/admin/user', [UserController::class, 'index'])->name('admin.user.index');
+});
 Route::post('/user/suspend', [UserController::class, 'suspend'])->name('user.suspend');
 Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('ausers.destroy');
-// });
 
 Route::get('/dashboard', function () {
     return view('Home');
