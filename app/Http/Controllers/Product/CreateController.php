@@ -16,7 +16,7 @@ class CreateController extends Controller
 
     public function create()
     {
-        $tags = Tag::all();
+        $tags = Tag::whereNull('deleted_at')->get(); // 修改這行
 
         return view('user.products.create', compact('tags'));
     }
