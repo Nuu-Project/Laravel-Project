@@ -27,7 +27,7 @@ class ChirpController extends Controller
         return view('user.products.info', compact('chirps', 'product', 'reports'));
     }
 
-    public function adminSearch(Request $request): View
+    public function adminMessage(Request $request): View
     {
         $query = Chirp::with(['user', 'product'])
             ->select('chirps.*')
@@ -49,7 +49,7 @@ class ChirpController extends Controller
 
         $chirps = $query->paginate(10);
 
-        return view('admin.search', compact('chirps'));
+        return view('admin.message', compact('chirps'));
     }
 
     public function store(Request $request, $productId): RedirectResponse
