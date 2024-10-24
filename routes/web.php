@@ -1,6 +1,9 @@
 <?php
 
 use App\Http\Controllers\ChirpController;
+use App\Http\Controllers\DownShelvesController;
+use App\Http\Controllers\ManageableProductsController;
+use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\Product\CheckController;
 use App\Http\Controllers\Product\CreateController;
 use App\Http\Controllers\Product\EditController;
@@ -10,7 +13,6 @@ use App\Http\Controllers\Product\ReportController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\PermissionController;
 use Illuminate\Support\Facades\Route;
 
 //訪客首頁
@@ -84,8 +86,8 @@ Route::get('/dashboard', function () {
     return view('Home');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('/products/{productId}', [checkController::class, 'index'])->name('products.info');
-Route::post('/products/{product}/demote', [checkController::class, 'demoteData'])->name('products.demote');
+Route::get('/admin/product', [ManageableProductsController::class, 'index'])->name('ManageProducts.index');
+Route::put('/products/{product}/demote', [DownShelvesController::class, 'demoteData'])->name('DownShelvesController.demote');
 Route::delete('/products/{product}/images/{image}', [CheckController::class, 'deleteImage'])->name('products.deleteImage');
 
 Route::post('/admin/{id}/create', [PermissionController::class, 'create'])->name('admin.create');
