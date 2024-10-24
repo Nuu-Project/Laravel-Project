@@ -53,7 +53,7 @@ Route::put('/user-product-edit/{product}', [CheckController::class, 'update'])->
 
 Route::get('/user-product-edit/{product}', [EditController::class, 'edit'])->name('products.edit');
 
-Route::get('/admin/search', [ChirpController::class, 'adminSearch'])->name('admin.search');
+Route::get('/admin/message', [ChirpController::class, 'adminMessage'])->name('admin.message');
 
 Route::delete('/users/{user}', [UserController::class, 'destroy'])
     ->name('users.destroy')

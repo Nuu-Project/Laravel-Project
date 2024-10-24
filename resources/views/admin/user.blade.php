@@ -32,10 +32,9 @@
                     </div>
                 </div>
                 <div x-show="open" class="pl-4">
-                    <a href="/admin-search" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">管理</a>
-                    <a href="#" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">下架商品</a>
+                    <a href="#" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">商品管理</a>
                     <a href="{{route('admin.user.index')}}" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">用戶管理</a>
-                    <a href="#" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">帳號與留言</a>
+                    <a href="{{route('admin.message')}}" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">留言管理</a>
                     <a href="#" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">新增標籤與刪除標籤</a>
                 </div>
             </nav>
@@ -105,10 +104,10 @@
                                 <table class="min-w-full divide-y divide-gray-200">
                                     <thead class="bg-gray-50">
                                         <tr>
-                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
-                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Position</th>
-                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
+                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">用戶名稱</th>
+                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">檢舉</th>
+                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">權限</th>
+                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">停用</th>
                                         </tr>
                                     </thead>
                                     <tbody class="bg-white divide-y divide-gray-200">
@@ -147,21 +146,21 @@
                                 </div>
                             </div>
                         </td>
-                        <td class="px-6 py-4 whitespace-nowrap">
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                             <div class="flex items-center space-x-2">
                                 <span class="text-sm text-gray-500">{{ $user->reports_count ?? 0 }}次</span>
-                                <button class="px-3 py-1 bg-red-600 text-white rounded hover:bg-blue-700">檢舉</button>
+                                <button class="px-3 py-1 bg-red-600 text-white rounded hover:bg-red-700">檢舉</button>
                             </div>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
-                            <form action="{{ route('admin.update', $user->id) }}" method="POST">
-                                @csrf
-                                <select name="role" class="bg-gray text-primary-foreground px-4 py-2 rounded-md" onchange="this.form.submit()">
-                                    <option value="user" {{ $user->hasRole('user') ? 'selected' : '' }}>使用者</option>
-                                    <option value="admin" {{ $user->hasRole('admin') ? 'selected' : '' }}>管理者</option>
-                                </select>
-                            </form>
-                        </td>
+                        <form action="{{ route('admin.update', $user->id) }}" method="POST">
+                        @csrf
+                        <select name="role" class="bg-gray text-primary-foreground px-4 py-2 rounded-md" onchange="this.form.submit()">
+                        <option value="user" {{ $user->hasRole('user') || !$user->hasRole('admin') ? 'selected' : '' }}>使用者</option>
+                        <option value="admin" {{ $user->hasRole('admin') ? 'selected' : '' }}>管理者</option>
+                </select>
+            </form>
+        </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                         <button onclick="showSuspendDialog({{ $user->id }}, {{ json_encode($user->name) }})" class="px-3 py-1 bg-red-600 text-white rounded hover:bg-red-700">停用</button>                    </tr>
                     @endforeach
@@ -229,37 +228,38 @@ function showSuspendDialog(userId, userName) {
     });
 }
 
-    document.addEventListener('DOMContentLoaded', function() {
-        const searchInput = document.getElementById('search-users');
-        const searchResults = document.getElementById('search-results');
-        const allUsersList = document.getElementById('all-users-list');
-        const users = document.querySelectorAll('#all-users-list tbody tr');
+document.addEventListener('DOMContentLoaded', function() {
+    const searchInput = document.getElementById('search-users');
+    const searchResults = document.getElementById('search-results');
+    const allUsersList = document.getElementById('all-users-list');
+    const users = document.querySelectorAll('#all-users-list tbody tr');
+    const searchResultsBody = searchResults.querySelector('tbody');
 
-        searchInput.addEventListener('input', function() {
-            const searchTerm = this.value.toLowerCase();
+    searchInput.addEventListener('input', function() {
+        const searchTerm = this.value.toLowerCase();
 
-            if (searchTerm.length > 0) {
-                searchResults.style.display = 'block';
-                allUsersList.style.display = 'none';
+        // Clear previous search results
+        searchResultsBody.innerHTML = '';
 
-                const resultsBody = searchResults.querySelector('tbody');
-                resultsBody.innerHTML = '';
+        if (searchTerm.length > 0) {
+            searchResults.style.display = 'block';
+            allUsersList.style.display = 'none';
 
-                users.forEach(user => {
-                    const userName = user.querySelector('td:nth-child(1)').textContent.toLowerCase();
-                    const userPosition = user.querySelector('td:nth-child(2)').textContent.toLowerCase();
+            users.forEach(user => {
+                const userName = user.querySelector('td:nth-child(1)').textContent.toLowerCase();
+                const userPosition = user.querySelector('td:nth-child(2)').textContent.toLowerCase();
 
-                    if (userName.includes(searchTerm) || userPosition.includes(searchTerm)) {
-                        const clonedRow = user.cloneNode(true);
-                        resultsBody.appendChild(clonedRow);
-                    }
-                });
-            } else {
-                searchResults.style.display = 'none';
-                allUsersList.style.display = 'block';
-            }
-        });
+                if (userName.includes(searchTerm) || userPosition.includes(searchTerm)) {
+                    const clonedRow = user.cloneNode(true);
+                    searchResultsBody.appendChild(clonedRow);
+                }
+            });
+        } else {
+            searchResults.style.display = 'none';
+            allUsersList.style.display = 'block';
+        }
     });
+});
     </script>
 </body>
 </html>
