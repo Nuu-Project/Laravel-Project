@@ -207,8 +207,24 @@ function showSuspendDialog(userId, userName) {
         footer: '<a href="#">瞭解更多看要不要用規則之類的</a>'
     }).then((result) => {
         if (result.isConfirmed) {
-            console.log(`用户 ${userId} (${userName}) 被停用 ${result.value} 秒`);
-            suspendUser(userId, result.value);
+            var suspendReason = document.getElementById('suspend-reason').value;
+            var duration = parseInt(result.value); // 將 duration 轉為整數
+            $.ajax({
+                url: '{{ route("user.suspend") }}', // 確保這裡的路由正確
+                method: 'POST',
+                data: {
+                    user_id: userId,
+                    duration: duration, // 停用的時間（秒）
+                    reason: suspendReason, // 停用原因
+                    _token: '{{ csrf_token() }}' // 確保 CSRF 保護
+                },
+                success: function(response) {
+                    Swal.fire('用戶已被停用', response.message, 'success');
+                },
+                error: function(xhr) {
+                    Swal.fire('錯誤', '無法暫停用戶', 'error');
+                }
+            });
         }
     });
 }
