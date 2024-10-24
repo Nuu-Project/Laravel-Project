@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/png" href="images/icon.png">
     <title>聯大二手書交易平台</title>
-    <link rel="stylesheet" href="css/tailwind.css"> 
+    <link rel="stylesheet" href="{{ asset('css/tailwind.css') }}"> 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -32,8 +32,9 @@
                     </div>
                 </div>
                 <div x-show="open" class="pl-4">
-                    <a href="" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">刊登商品</a>
-                    <a href="" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">我的商品</a>
+                    <a href="" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">管理商品</a>
+                    <a href="" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">管理標籤</a>
+                    <a href="{{route('report.index')}}" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">檢舉詳情</a>
                 </div>
             </nav>
         </div>

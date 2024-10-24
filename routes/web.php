@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\Report\ReportDetailController;
 use App\Http\Controllers\ChirpController;
 use App\Http\Controllers\DownShelvesController;
 use App\Http\Controllers\ManageableProductsController;
@@ -89,6 +90,8 @@ Route::get('/dashboard', function () {
 Route::get('/admin/product', [ManageableProductsController::class, 'index'])->name('ManageProducts.index');
 Route::put('/products/{product}/demote', [DownShelvesController::class, 'demoteData'])->name('DownShelvesController.demote');
 Route::delete('/products/{product}/images/{image}', [CheckController::class, 'deleteImage'])->name('products.deleteImage');
+
+Route::get('/admin/report', [ReportDetailController::class, 'index'])->name('report.index');
 
 Route::post('/admin/{id}/create', [PermissionController::class, 'create'])->name('admin.create');
 Route::post('/admin/{id}/update', [PermissionController::class, 'update'])->name('admin.update');

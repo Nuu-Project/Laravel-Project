@@ -35,6 +35,7 @@
                 <div x-show="open" class="pl-4">
                     <a href="" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">管理商品</a>
                     <a href="" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">管理標籤</a>
+                    <a href="{{route('report.index')}}" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">檢舉詳情</a>
                 </div>
             </nav>
         </div>
