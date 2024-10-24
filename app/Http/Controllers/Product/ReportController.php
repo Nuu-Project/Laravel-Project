@@ -17,13 +17,24 @@ class ReportController extends Controller
             'product' => 'required|exists:products,id',
         ]);
 
-        Reportable::create([
-            'report_id' => $request->input('report_id'),
-            'reportable_id' => $request->input('product'), // 關聯的 Product ID
-            'reportable_type' => Product::class, // 關聯的模型類型
-            'whistleblower_id' => Auth::id(),
-            'description' => $request->input('description'),
-        ]);
+        $reportable = Reportable::updateOrCreate(
+            [
+                'report_id' => $request->input('report_id'),
+                'reportable_id' => $request->input('product'), // 關聯的 Product ID
+                'reportable_type' => Product::class, // 關聯的模型類型
+                'whistleblower_id' => Auth::id(),
+            ],
+            [
+                'description' => $request->input('description'),
+            ]
+        );
+
+        if (! $reportable->wasRecentlyCreated) {
+            return response()->json([
+                'message' => '你已檢舉過了',
+                'description' => $reportable->description,
+            ], 200);
+        }
 
         return response()->json(['message' => '檢舉已成功提交']);
     }
