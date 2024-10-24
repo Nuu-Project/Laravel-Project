@@ -149,7 +149,7 @@
                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                             <div class="flex items-center space-x-2">
                                 <span class="text-sm text-gray-500">{{ $user->reports_count ?? 0 }}次</span>
-                                <button class="px-3 py-1 bg-red-600 text-white rounded hover:bg-red-700">檢舉</button>
+                                <button class="px-3 py-1 bg-red-600 text-white rounded hover:bg-red-700">檢舉詳情</button>
                             </div>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
