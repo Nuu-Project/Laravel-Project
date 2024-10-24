@@ -7,7 +7,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="icon" type="image/png" href="images/icon.png">
         <title>聯大二手書交易平台</title>
-        <link rel="stylesheet" href="css/tailwind.css"> 
+        <link rel="stylesheet" href="{{ asset('css/tailwind.css') }}"> 
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -99,19 +99,37 @@
                                         </tr>
                                     </thead>
                                     <tbody class="bg-white divide-y divide-gray-200">
+                                        @foreach($products as $product)
                                         <tr>
-                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">範例商品名稱</td>
-                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">範例刊登者</td>
-                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">2023-05-20 14:30</td>
-                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">2023-05-25 14:30</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ $product->name }}</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $product->user->name }}</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $product->created_at->format('Y/m/d') }}</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $product->updated_at->format('Y/m/d') }}</td>
                                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">3</td>
                                             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                                <button class="px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700">查看</button>
-                                                <button class="px-3 py-1 bg-red-600 text-white rounded hover:bg-red-700 ml-2">下架</button>
-                                                <a href="" class="px-3 py-1 bg-red-600 text-white rounded hover:bg-red-700 ml-2">檢舉詳情</a>
+                                                <a href="{{ route('products.chirps.index', ['product' => $product->id]) }}"><button class="px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700">查看</button></a>
+                                                <form action="{{ route('DownShelvesController.demote', ['product' => $product->id])  }}" method="POST">
+                                                @csrf
+                                                @method('PUT')
+                                                <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                                <input type="hidden" name="status" value="200"> 
+                                                <button class="px-3 py-1 bg-red-600 text-white rounded hover:bg-red-700 ml-2">
+                                                    下架
+                                                </button>
+                                                </form>
+                                                <button class="px-3 py-1 bg-red-600 text-white rounded hover:bg-red-700 ml-2 report-button">檢舉詳情</button>
                                             </td>
-                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">上架中</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                                @if($product->status == 100)
+                                                    上架中
+                                                @elseif($product->status == 200)
+                                                    已下架
+                                                @else
+                                                    未知
+                                                @endif
+                                            </td>
                                         </tr>
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>

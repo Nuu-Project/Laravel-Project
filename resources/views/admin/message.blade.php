@@ -32,10 +32,9 @@
                     </div>
                 </div>
                 <div x-show="open" class="pl-4">
-                    <a href="/admin-search" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">管理</a>
-                    <a href="#" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">下架商品</a>
+                    <a href="#" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">商品管理</a>
                     <a href="{{route('admin.user.index')}}" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">用戶管理</a>
-                    <a href="#" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">帳號與留言</a>
+                    <a href="{{route('admin.message')}}" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">留言管理</a>
                     <a href="#" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">新增標籤與刪除標籤</a>
                 </div>
             </nav>
@@ -87,7 +86,7 @@
             <!-- 主要內容 -->
             <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-200">
                 <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
-                    <h3 class="text-gray-700 text-3xl font-medium mb-6">Reviews 管理</h3>
+                    <h3 class="text-gray-700 text-3xl font-medium mb-6">留言管理</h3>
                     
                     <!-- Reviews 搜索部分 -->
                     <div class="mb-8">
@@ -105,31 +104,32 @@
                                 <table class="min-w-full divide-y divide-gray-200">
                                     <thead class="bg-gray-50">
                                         <tr>
-                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">User</th>
-                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Product</th>
-                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Message</th>
-                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
-                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
+                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">用戶名稱</th>
+                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">商品</th>
+                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">留言</th>
+                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">留言日期</th>
+                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">刪除</th>
                                         </tr>
                                     </thead>
                                     <tbody class="bg-white divide-y divide-gray-200">
                                         @foreach($chirps as $chirp)
                                         <tr>
-                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ $chirp->user->name }}</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ $chirp->user->name }}
+                                        </td>
                                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $chirp->product->name ?? 'No associated product' }}</td>
                                             <td class="px-6 py-4 text-sm text-gray-500">{{ $chirp->message }}</td>
                                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $chirp->created_at->format('Y-m-d H:i:s') }}</td>
                                             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                                @if($chirp->product)
-                                                    <form action="{{ route('products.chirps.destroy', ['product' => $chirp->product->id, 'chirp' => $chirp->id]) }}" method="POST" class="inline">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="submit" class="text-red-600 hover:text-red-900" onclick="return confirm('{{ __('確定要刪除這條評論嗎？') }}')">Delete</button>
-                                                    </form>
+                                        @if($chirp->product)
+                                        <form action="{{ route('products.chirps.destroy', ['product' => $chirp->product->id, 'chirp' => $chirp->id]) }}" method="POST" class="inline">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="text-red-600 hover:text-red-900" onclick="return confirm('{{ __('確定要刪除這條評論嗎？') }}')">Delete</button>
+                                        </form>
                                                 @else
                                                     <span class="text-gray-400">No action</span>
                                                 @endif
-                                            </td>
+                                        </td>
                                         </tr>
                                         @endforeach
                                     </tbody>
@@ -146,11 +146,11 @@
                                 <table class="min-w-full divide-y divide-gray-200">
                                     <thead class="bg-gray-50">
                                         <tr>
-                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">User</th>
-                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Product</th>
-                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Message</th>
-                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
-                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
+                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">用戶名稱</th>
+                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">商品</th>
+                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">留言</th>
+                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">留言日期</th>
+                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">刪除</th>
                                         </tr>
                                     </thead>
                                     <tbody class="bg-white divide-y divide-gray-200">
@@ -202,35 +202,38 @@
 
     <script>
     document.addEventListener('DOMContentLoaded', function() {
-        const searchInput = document.getElementById('search-reviews');
-        const searchResults = document.getElementById('search-results');
-        const allReviewsList = document.getElementById('all-reviews-list');
-        const reviews = document.querySelectorAll('#all-reviews-list tbody tr');
+    const searchInput = document.getElementById('search-reviews');
+    const searchResults = document.getElementById('search-results');
+    const allReviewsList = document.getElementById('all-reviews-list');
+    const reviews = document.querySelectorAll('#all-reviews-list tbody tr');
 
-        searchInput.addEventListener('input', function() {
-            const searchTerm = this.value.toLowerCase();
+    searchInput.addEventListener('input', function() {
+        const searchTerm = this.value.toLowerCase();
+        const searchResultsBody = searchResults.querySelector('tbody');
 
-            if (searchTerm.length > 0) {
-                searchResults.style.display = 'block';
-                allReviewsList.style.display = 'none';
+        // Clear previous search results
+        searchResultsBody.innerHTML = '';
 
-                reviews.forEach(review => {
-                    const userName = review.querySelector('td:nth-child(1)').textContent.toLowerCase();
-                    const productName = review.querySelector('td:nth-child(2)').textContent.toLowerCase();
-                    const reviewText = review.querySelector('td:nth-child(3)').textContent.toLowerCase();
+        if (searchTerm.length > 0) {
+            searchResults.style.display = 'block';
+            allReviewsList.style.display = 'none';
 
-                    if (userName.includes(searchTerm) || productName.includes(searchTerm) || reviewText.includes(searchTerm)) {
-                        const clonedRow = review.cloneNode(true);
-                        searchResults.querySelector('tbody').appendChild(clonedRow);
-                    }
-                });
-            } else {
-                searchResults.style.display = 'none';
-                allReviewsList.style.display = 'block';
-                searchResults.querySelector('tbody').innerHTML = '';
-            }
-        });
+            reviews.forEach(review => {
+                const userName = review.querySelector('td:nth-child(1)').textContent.toLowerCase();
+                const productName = review.querySelector('td:nth-child(2)').textContent.toLowerCase();
+                const reviewText = review.querySelector('td:nth-child(3)').textContent.toLowerCase();
+
+                if (userName.includes(searchTerm) || productName.includes(searchTerm) || reviewText.includes(searchTerm)) {
+                    const clonedRow = review.cloneNode(true);
+                    searchResultsBody.appendChild(clonedRow);
+                }
+            });
+        } else {
+            searchResults.style.display = 'none';
+            allReviewsList.style.display = 'block';
+        }
     });
+});
     </script>
 </body>
 </html>
