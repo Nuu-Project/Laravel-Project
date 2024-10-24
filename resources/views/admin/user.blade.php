@@ -32,10 +32,9 @@
                     </div>
                 </div>
                 <div x-show="open" class="pl-4">
-                    <a href="/admin-search" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">管理</a>
-                    <a href="#" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">下架商品</a>
+                    <a href="#" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">商品管理</a>
                     <a href="{{route('admin.user.index')}}" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">用戶管理</a>
-                    <a href="#" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">帳號與留言</a>
+                    <a href="{{route('admin.message')}}" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">留言管理</a>
                     <a href="#" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">新增標籤與刪除標籤</a>
                 </div>
             </nav>
