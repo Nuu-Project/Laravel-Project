@@ -10,10 +10,10 @@ class UserController extends Controller
 {
     // 方法示例
     public function index()
-{
+    {
     $users = User::all();
     return view('admin.user', compact('users'));
-}
+    }
 
     public function suspend(Request $request)
     {
