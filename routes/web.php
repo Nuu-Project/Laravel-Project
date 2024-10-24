@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\Report\ReportDetailController;
 use App\Http\Controllers\ChirpController;
 use App\Http\Controllers\DownShelvesController;
 use App\Http\Controllers\ManageableProductsController;
@@ -76,11 +77,11 @@ Route::delete('/chirps/{chirp}', [ChirpController::class, 'destroy'])
     ->name('chirps.destroy')
     ->middleware(['auth', 'verified']);
 
-// Route::middleware(['auth', 'admin'])->group(function () {
-Route::get('/admin/user', [UserController::class, 'index'])->name('admin.user.index');
+Route::group(['middleware' => ['role:admin']], function () {
+    Route::get('/admin/user', [UserController::class, 'index'])->name('admin.user.index');
+});
 Route::post('/user/suspend', [UserController::class, 'suspend'])->name('user.suspend');
 Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('ausers.destroy');
-// });
 
 Route::get('/dashboard', function () {
     return view('Home');
@@ -89,6 +90,8 @@ Route::get('/dashboard', function () {
 Route::get('/admin/product', [ManageableProductsController::class, 'index'])->name('ManageProducts.index');
 Route::put('/products/{product}/demote', [DownShelvesController::class, 'demoteData'])->name('DownShelvesController.demote');
 Route::delete('/products/{product}/images/{image}', [CheckController::class, 'deleteImage'])->name('products.deleteImage');
+
+Route::get('/admin/report', [ReportDetailController::class, 'index'])->name('report.index');
 
 Route::post('/admin/{id}/create', [PermissionController::class, 'create'])->name('admin.create');
 Route::post('/admin/{id}/update', [PermissionController::class, 'update'])->name('admin.update');
