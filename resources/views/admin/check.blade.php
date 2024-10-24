@@ -33,10 +33,10 @@
                     </div>
                 </div>
                 <div x-show="open" class="pl-4">
-                    <a href="#" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">商品管理</a>
+                    <a href="{{route('ManageProducts.index')}}" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">商品管理</a>
                     <a href="{{route('admin.user.index')}}" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">用戶管理</a>
                     <a href="{{route('admin.message')}}" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">留言管理</a>
-                    <a href="#" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">新增標籤與刪除標籤</a>
+                    <a href="{{route('tags.index')}}" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">新增標籤與刪除標籤</a>
                     <a href="{{route('report.index')}}" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">檢舉詳情</a>
                 </div>
             </nav>
@@ -109,18 +109,20 @@
                                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $product->created_at->format('Y/m/d') }}</td>
                                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $product->updated_at->format('Y/m/d') }}</td>
                                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">3</td>
-                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                                <a href="{{ route('products.chirps.index', ['product' => $product->id]) }}"><button class="px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700">查看</button></a>
-                                                <form action="{{ route('DownShelvesController.demote', ['product' => $product->id])  }}" method="POST">
-                                                @csrf
-                                                @method('PUT')
-                                                <input type="hidden" name="product_id" value="{{ $product->id }}">
-                                                <input type="hidden" name="status" value="200"> 
-                                                <button class="px-3 py-1 bg-red-600 text-white rounded hover:bg-red-700 ml-2">
-                                                    下架
-                                                </button>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium flex flex-row items-center space-x-2">
+                                                <a href="{{ route('products.chirps.index', ['product' => $product->id]) }}">
+                                                    <button class="px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700">查看</button>
+                                                </a>
+                                                <form action="{{ route('DownShelvesController.demote', ['product' => $product->id])  }}" method="POST" class="inline">
+                                                    @csrf
+                                                    @method('PUT')
+                                                    <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                                    <input type="hidden" name="status" value="200"> 
+                                                    <button class="px-3 py-1 bg-red-600 text-white rounded hover:bg-red-700">
+                                                        下架
+                                                    </button>
                                                 </form>
-                                                <button class="px-3 py-1 bg-red-600 text-white rounded hover:bg-red-700 ml-2 report-button">檢舉詳情</button>
+                                                <a href="/report"><button class="px-3 py-1 bg-red-600 text-white rounded hover:bg-red-700 report-button">檢舉詳情</button></a>
                                             </td>
                                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                                 @if($product->status == 100)
