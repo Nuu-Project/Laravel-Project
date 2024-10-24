@@ -20,13 +20,7 @@
             <a href="/">首頁</a>
         </li>
         <li class="font-semibold text-gray-900 hover:text-gray-400 transition ease-in-out duration-300 mb-5 lg:mb-0 text-2xl">
-            <a href="/user-product">商品</a>
-        </li>
-        <!-- <li class="font-semibold text-gray-900 hover:text-gray-400 transition ease-in-out duration-300 mb-5 lg:mb-0 text-2xl">
-            <a href="/user-product-create">刊登</a>
-        </li>
-        <li class="font-semibold text-gray-900 hover:text-gray-400 transition ease-in-out duration-300 mb-5 lg:mb-0 text-2xl">
-            <a href="/user-product-check">我的商品</a> -->
+            <a href="{{route('products.index')}}">商品</a>
         </li>
     </ul>
 
@@ -65,7 +59,7 @@
 
                     <x-dropdown-link :href="route('logout')" onclick="event.preventDefault();
                                         this.closest('form').submit();">
-                        {{ __('logout') }}
+                        {{ __('Log Out') }}
                     </x-dropdown-link>
                 </form>
             </x-slot>
