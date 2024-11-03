@@ -5,9 +5,9 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="icon" type="image/png" href="images/icon.png">
+        <link rel="icon" type="image/png" href="{{ asset('images/icon.png') }}">
         <title>聯大二手書交易平台</title>
-        <link rel="stylesheet" href="css/tailwind.css"> 
+        <link rel="stylesheet" href="{{ asset('css/tailwind.css') }}">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -15,8 +15,6 @@
         <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-        
-
     </head>
 
     <body class="font-body">
@@ -37,7 +35,7 @@
                         <a href="{{route('ManageProducts.index')}}" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">商品管理</a>
                         <a href="{{route('admin.user.index')}}" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">用戶管理</a>
                         <a href="{{route('admin.message')}}" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">留言管理</a>
-                        <a href="{{route('tags.index')}}" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">新增標籤與刪除標籤</a>
+                        <a href="{{route('admin.tags.index')}}" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">新增標籤與刪除標籤</a>
                         <a href="{{route('report.index')}}" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">檢舉詳情</a>
                     </div>
                 </nav>
@@ -65,10 +63,6 @@
                                     {{ __('Profile') }}
                                 </x-dropdown-link>
 
-                                <!-- <x-dropdown-link :href="route('products.create')">
-                                    {{ __('使用者後台') }}
-                                </x-dropdown-link> -->
-
                                 <!-- Authentication -->
                                 <form method="POST" action="{{ route('logout') }}">
                                     @csrf
@@ -88,7 +82,7 @@
                         <div class="max-w-7xl mx-auto">
                         <h3 class="text-gray-700 text-3xl font-medium mb-6">標籤管理</h3>                
                         <div class="p-4">
-                            <a href="{{route('tags.create')}}"><button class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">新增標籤</button></a>
+                            <a href="{{route('admin.tags.create')}}"><button class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">新增標籤</button></a>
                         </div>
                         <div class="overflow-x-auto">
                             <table class="min-w-full divide-y divide-gray-200">
@@ -114,18 +108,18 @@
                                                         <div class="text-sm leading-5 text-gray-900">{{ $tag->updated_at }}</div>
                                                     </td>
                                                     <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 font-medium">
-                                                        <a href="{{ route('tags.edit', $tag->id) }}">
+                                                        <a href="{{ route('admin.tags.edit', $tag->id) }}">
                                                             <button class="px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 mr-2">
                                                                 編輯
                                                             </button>
                                                         </a>
-                                                        <form action="{{ route('tags.restore', $tag->id) }}" method="POST" style="display:inline;">
+                                                        <form action="{{ route('admin.tags.restore', $tag->id) }}" method="POST" style="display:inline;">
                                                             @csrf
                                                             <button class="px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 mr-2">
                                                                 啟用
                                                             </button>
                                                         </form>
-                                                        <form action="{{ route('tags.destroy', $tag->id) }}" method="POST" style="display:inline;">
+                                                        <form action="{{ route('admin.tags.destroy', $tag->id) }}" method="POST" style="display:inline;">
                                                             @csrf
                                                             @method('DELETE')
                                                             <button class="px-3 py-1 bg-red-600 text-white rounded hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50">

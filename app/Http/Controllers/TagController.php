@@ -10,7 +10,6 @@ class TagController extends Controller
     public function index()
     {
         $tags = Tag::withTrashed()->get();
-
         return view('tags.index', compact('tags'));
     }
 
@@ -40,7 +39,7 @@ class TagController extends Controller
         $tags = Tag::all();
 
         // 返回成功消息
-        return view('tags.index', ['tags' => $tags, 'message' => '標籤新增成功！']);
+        return redirect()->route('admin.tags.index')->with('message', '標籤新增成功！');
     }
 
     public function edit($id)
@@ -50,7 +49,7 @@ class TagController extends Controller
 
         // 如果找不到標籤，返回錯誤消息
         if (! $tag) {
-            return redirect()->route('tags.index')->with('error', '標籤未找到');
+            return redirect()->route('admin.tags.index')->with('error', '標籤未找到');
         }
 
         return view('tags.edit', compact('tag'));
@@ -68,7 +67,7 @@ class TagController extends Controller
         $tag = Tag::withTrashed()->findOrFail($id);
         $tag->update($validatedData);
 
-        return redirect()->route('tags.index')->with('message', '標籤更新成功！');
+        return redirect()->route('admin.tags.index')->with('message', '標籤更新成功！');
     }
 
     public function destroy($id)
@@ -76,7 +75,7 @@ class TagController extends Controller
         $tag = Tag::findOrFail($id);
         $tag->delete();
 
-        return redirect()->route('tags.index')->with('success', '標籤已刪除');
+        return redirect()->route('admin.tags.index')->with('success', '標籤已刪除');
     }
 
     public function restore($id)
@@ -87,6 +86,6 @@ class TagController extends Controller
         // 使用 restore() 恢復標籤
         $tag->restore();
 
-        return redirect()->route('tags.index')->with('success', '標籤已恢復');
+        return redirect()->route('admin.tags.index')->with('success', '標籤已恢復');
     }
 }

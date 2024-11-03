@@ -15,6 +15,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
+use Monolog\Handler\RotatingFileHandler;
 
 //訪客首頁
 Route::get('/', function () {
@@ -24,14 +25,6 @@ Route::get('/', function () {
 Route::get('/s', function () {
     return view('test');
 });
-
-Route::get('/tag-index', [TagController::class, 'index'])->name('tags.index');
-Route::get('/tag-create', [TagController::class, 'create'])->name('tags.create');
-Route::get('/tag-edit/{id}', [TagController::class, 'edit'])->name('tags.edit');
-Route::post('/tag-store', [TagController::class, 'store'])->name('tags.store');
-Route::put('/tag-update/{id}', [TagController::class, 'update'])->name('tags.update');
-Route::delete('/tag-destroy/{id}', [TagController::class, 'destroy'])->name('tags.destroy');
-Route::post('/tag-restore/{id}', [TagController::class, 'restore'])->name('tags.restore');
 
 Route::get('/products', [ProductController::class, 'index'])->name('products.index');
 
@@ -96,3 +89,4 @@ Route::get('/admin/report', [ReportDetailController::class, 'index'])->name('rep
 Route::post('/admin/{id}/create', [PermissionController::class, 'create'])->name('admin.create');
 Route::post('/admin/{id}/update', [PermissionController::class, 'update'])->name('admin.update');
 require __DIR__.'/auth.php';
+require __DIR__.'/admin.php';
