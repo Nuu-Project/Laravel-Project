@@ -26,6 +26,16 @@ Route::get('/s', function () {
     return view('test');
 });
 
+Route::get('/products', [ProductController::class, 'index'])->name('products.index');
+
+Route::get('/user-product-info/{product}', [InfoController::class, 'index'])->name('products.info');
+
+//商品檢舉
+Route::post('/reports', [ReportController::class, 'store'])->name('reports.store');
+
+//登入: product_create
+Route::get('/products-create', [CreateController::class, 'create'])->name('products.create');
+
 //送出表單: product_create
 Route::post('/user-product-create', [CreateController::class, 'store'])->name('products.store');
 
