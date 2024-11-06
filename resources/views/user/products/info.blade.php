@@ -68,8 +68,7 @@
                         <h2 class="font-semibold text-xl">用戶名稱：{{ $product->user->name }}</h2>
                     </div>
                 </div>
-                <button id="reportButton" 
-                        class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded flex-shrink-0 transition-colors">
+                <button id="reportButton" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded flex-shrink-0">
                     檢舉
                 </button>
             </div>
