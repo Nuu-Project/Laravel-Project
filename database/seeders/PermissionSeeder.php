@@ -30,9 +30,9 @@ class PermissionSeeder extends Seeder
 
         $adminRole = Role::firstOrCreate(['name' => 'admin']);
         $adminUser = User::firstOrCreate(
-            ['email' => 'u1133100@o365.nuu.edu.tw'],
+            ['email' => 'u000001@o365.nuu.edu.tw'],
             ['name' => 'Admin User',
-                'password' => Hash::make('12345678'),
+                'password' => Hash::make('password123'),
                 'email_verified_at' => now()]
         );
         $adminUser->assignRole($adminRole);
