@@ -76,7 +76,6 @@
                                                 </div>
                                             </td>
                                             <td class="px-6 py-4 whitespace-nowrap">
-                                                <form action="{{ route('admin.update', $user->id) }}" method="POST" class="flex items-center space-x-4">
                                                     @csrf
                                                     <div class="flex items-center space-x-6">
                                                         <!-- 管理者權限 -->
