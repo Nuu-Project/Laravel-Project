@@ -36,17 +36,4 @@ class UserController extends Controller
 
         return response()->json(['message' => '用戶已成功暫停']);
     }
-
-    public function destroy($id)
-    {
-        $user = User::findOrFail($id);
-
-        // 刪除用戶相關的評論
-        $user->chirps()->delete();
-
-        // 刪除用戶
-        $user->delete();
-
-        return redirect()->route('users.index')->with('success', '用戶及其相關評論已成功刪除');
-    }
 }
