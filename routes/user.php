@@ -3,7 +3,6 @@
 use App\Http\Controllers\Product\CheckController;
 use App\Http\Controllers\Product\CreateController;
 use App\Http\Controllers\Product\EditController;
-use App\Http\Controllers\RoleController;
 use Illuminate\Support\Facades\Route;
 
 // 
