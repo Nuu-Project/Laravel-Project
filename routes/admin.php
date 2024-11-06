@@ -7,6 +7,7 @@ use App\Http\Controllers\ManageableProductsController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\RoleController;
 
 //
 // 商品管理頁
@@ -44,3 +45,12 @@ Route::middleware(['auth'])->group(function () {
 //
 // 檢舉詳情頁
 Route::get('/admin/report', [ReportDetailController::class, 'index'])->name('report.index');
+
+// 角色管理路由
+Route::prefix('admin')->group(function () {
+    Route::get('/role', [RoleController::class, 'createRole'])->name('admin.role');
+    Route::post('/roles', [RoleController::class, 'create'])->name('roles.store');
+    Route::get('/roles/{id}/edit', [RoleController::class, 'editRole'])->name('roles.edit');
+    Route::put('/roles/{id}', [RoleController::class, 'updateRole'])->name('roles.update');
+    Route::delete('/roles/{id}', [RoleController::class, 'delete'])->name('roles.delete');
+});
