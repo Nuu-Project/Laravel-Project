@@ -4,14 +4,16 @@ use App\Http\Controllers\Admin\Report\ReportDetailController;
 use App\Http\Controllers\ChirpController;
 use App\Http\Controllers\DownShelvesController;
 use App\Http\Controllers\ManageableProductsController;
+use App\Http\Controllers\RoleController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\RoleController;
 
 //
 // 商品管理頁
-Route::get('/admin/product', [ManageableProductsController::class, 'index'])->name('ManageProducts.index');
+Route::get('/admin/product', [ManageableProductsController::class, 'index'])
+    ->name('ManageProducts.index')
+    ->middleware('permission:edit_product_description');
 
 // 商品管理下架
 Route::put('/products/{product}/demote', [DownShelvesController::class, 'demoteData'])->name('DownShelvesController.demote');
@@ -49,7 +51,7 @@ Route::get('/admin/report', [ReportDetailController::class, 'index'])->name('rep
 // 角色管理路由
 Route::prefix('admin')->group(function () {
     Route::get('/role', [RoleController::class, 'createRole'])->name('admin.role');
-    Route::post('/roles', [RoleController::class, 'create'])->name('roles.store');
+    Route::post('/role/store', [RoleController::class, 'create'])->name('roles.store'); // 修改這行
     Route::get('/roles/{id}/edit', [RoleController::class, 'editRole'])->name('roles.edit');
     Route::put('/roles/{id}', [RoleController::class, 'updateRole'])->name('roles.update');
     Route::delete('/roles/{id}', [RoleController::class, 'delete'])->name('roles.delete');
