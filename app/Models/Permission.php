@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Permission\Traits\HasRoles;
 
 class Permission extends Model
 {
-    use HasFactory;
+    use HasFactory, HasRoles;
 
     protected $fillable = ['name'];
 
@@ -19,5 +20,10 @@ class Permission extends Model
     public function model()
     {
         return $this->belongsToMany(Model::class);
+    }
+
+    public function users()
+    {
+        return $this->morphedByMany(User::class, 'model', 'model_has_permissions');
     }
 }

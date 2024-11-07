@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Permission;
 use App\Models\Role;
 use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Container\Attributes\DB;
+use Illuminate\Http\Request;
 
 class RoleController extends Controller
 {
@@ -21,7 +21,8 @@ class RoleController extends Controller
     {
         $permissions = Permission::all();
         $users = User::select('name', 'id')->get();
-        $roles = Role::all(); 
+        $roles = Role::all();
+
         return view('admin.role', compact('permissions', 'users'));
     }
 
@@ -36,7 +37,7 @@ class RoleController extends Controller
 
         foreach ($request->users as $user) {
             $user = User::find($user);
-            $user->assignRole($role->name);
+            $user->givePermissionTo($role->name);
         }
 
         return redirect()->route('admin.role')->with('roles', Role::with('permissions', 'users')->get());
