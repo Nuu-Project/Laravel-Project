@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Permission;
 use App\Models\Role;
 use App\Models\User;
-use DragonCode\Contracts\Cashier\Http\Request;
 use Illuminate\Container\Attributes\DB;
+use Illuminate\Http\Request;
 
 class RoleController extends Controller
 {
@@ -21,6 +21,7 @@ class RoleController extends Controller
     {
         $permissions = Permission::all();
         $users = User::select('name', 'id')->get();
+        $roles = Role::all();
 
         return view('admin.role', compact('permissions', 'users'));
     }
@@ -29,16 +30,17 @@ class RoleController extends Controller
     {
         $role = Role::create(['name' => $request->name]);
 
-        foreach ($request->permission as $permission) {
+        $permissions = $request->input('permission', []);
+        foreach ($permissions as $permission) {
             $role->givePermissionTo($permission);
         }
 
         foreach ($request->users as $user) {
             $user = User::find($user);
-            $user->assignRole($role->name);
+            $user->givePermissionTo($role->name);
         }
 
-        return redirect()->route('roles.index');
+        return redirect()->route('admin.role')->with('roles', Role::with('permissions', 'users')->get());
     }
 
     public function editRole($id)
@@ -67,13 +69,13 @@ class RoleController extends Controller
             $user->assignRole($role->name);
         }
 
-        return redirect()->route('roles.index');
+        return redirect()->route('admin.role');
     }
 
     public function delete($id)
     {
         Role::where('id', $id)->delete();
 
-        return redirect()->route('roles.index');
+        return redirect()->route('admin.role');
     }
 }
