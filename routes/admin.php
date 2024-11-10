@@ -50,6 +50,6 @@ Route::get('/admin/report', [ReportDetailController::class, 'index'])->name('rep
 
 // 角色管理路由
 Route::prefix('admin')->group(function () {
-    Route::get('/roles/show', [RoleController::class, 'show'])->name('admin.role.show');
+    Route::get('/roles/index', [RoleController::class, 'index'])->name('admin.role.index');
     Route::post('/roles/store', [RoleController::class, 'store'])->name('admin.role.store');
 });

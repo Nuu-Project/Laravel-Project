@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 
 class RoleController extends Controller
 {
-    public function show()
+    public function index()
     {
         $users = User::select('name', 'id')->get();
         $roles = Role::whereIn('id', [1, 2, 3])
