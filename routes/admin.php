@@ -50,9 +50,6 @@ Route::get('/admin/report', [ReportDetailController::class, 'index'])->name('rep
 
 // 角色管理路由
 Route::prefix('admin')->group(function () {
-    Route::get('/role', [RoleController::class, 'createRole'])->name('admin.role');
-    Route::post('/role/store', [RoleController::class, 'create'])->name('roles.store'); // 修改這行
-    Route::get('/roles/{id}/edit', [RoleController::class, 'editRole'])->name('roles.edit');
-    Route::put('/roles/{id}', [RoleController::class, 'updateRole'])->name('roles.update');
-    Route::delete('/roles/{id}', [RoleController::class, 'delete'])->name('roles.delete');
+    Route::get('/roles/index', [RoleController::class, 'index'])->name('admin.role.index');
+    Route::post('/roles/store', [RoleController::class, 'store'])->name('admin.role.store');
 });
