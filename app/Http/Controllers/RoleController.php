@@ -8,13 +8,6 @@ use Illuminate\Http\Request;
 
 class RoleController extends Controller
 {
-    public function index()
-    {
-        $roles = Role::with('users')->get;
-
-        return view('admin.role', compact('roles'));
-    }
-
     public function show()
     {
         $users = User::select('name', 'id')->get();
@@ -25,7 +18,7 @@ class RoleController extends Controller
         return view('admin.role', compact('users', 'roles'));
     }
 
-    public function create(Request $request)
+    public function store(Request $request)
     {
         // 根據角色名稱查找現有角色
         $role = Role::where('name', $request['role_name'])->first();
