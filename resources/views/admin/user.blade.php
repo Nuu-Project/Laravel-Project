@@ -155,7 +155,7 @@
                 var suspendReason = document.getElementById('suspend-reason').value;
                 var duration = parseInt(result.value);
                 $.ajax({
-                    url: '{{ route("user.suspend") }}',
+                    url: '{{ route("admin.user.suspend") }}',
                     method: 'POST',
                     data: {
                         user_id: userId,

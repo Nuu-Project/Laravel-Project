@@ -16,12 +16,12 @@
             </div>
         </div>
         <div x-show="open" class="pl-4">
-            <a href="{{route('ManageProducts.index')}}" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">商品管理</a>
+            <a href="{{route('admin.products.index')}}" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">商品管理</a>
             <a href="{{route('admin.user.index')}}" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">用戶管理</a>
-            <a href="{{route('admin.message')}}" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">留言管理</a>
-            <a href="{{route('admin.role')}}" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">權限管理</a>
+            <a href="{{route('admin.message.index')}}" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">留言管理</a>
+            <a href="{{route('admin.role.index')}}" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">權限管理</a>
             <a href="{{route('admin.tags.index')}}" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">新增標籤與刪除標籤</a>
-            <a href="{{route('report.index')}}" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">檢舉詳情</a>
+            <a href="{{route('admin.report.index')}}" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">檢舉詳情</a>
         </div>
     </nav>
 </div>

@@ -59,7 +59,7 @@
         <h3 class="text-gray-700 text-3xl font-medium mb-6">權限管理</h3>
         <!-- 角色新增表單 -->
         <div class="bg-white rounded-lg shadow-md p-6 mb-6">
-        <form method="POST" action="{{ route('roles.store') }}">
+        <form method="POST" action="{{ route('admin.roles.store') }}">
             @csrf
             <div class="mb-4">
                 <label class="block text-gray-700 text-sm font-bold mb-2" for="name">
