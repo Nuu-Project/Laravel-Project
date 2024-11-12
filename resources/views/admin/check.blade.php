@@ -57,7 +57,10 @@
                                                 <form action="{{ route('DownShelvesController.demote', ['product' => $product->id]) }}" method="POST" class="inline">
                                                     @csrf
                                                     @method('PUT')
-                                                    <button class="px-3 py-1 bg-red-600 text-white rounded hover:bg-red-700">
+                                                    <button class="px-3 py-1 {{ $product->status === ProductStatus::Active 
+                                                        ? 'bg-red-600 hover:bg-red-700'
+                                                        : 'bg-blue-600 hover:bg-blue-700'
+                                                    }} text-white rounded">
                                                         {{ $product->status === ProductStatus::Active ? '下架' : '上架' }}
                                                     </button>
                                                 </form>
