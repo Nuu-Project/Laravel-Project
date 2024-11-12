@@ -2,80 +2,44 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Permission;
 use App\Models\Role;
 use App\Models\User;
-use Illuminate\Container\Attributes\DB;
 use Illuminate\Http\Request;
 
 class RoleController extends Controller
 {
-    public function show()
+    public function index()
     {
-        $roles = Role::all();
-
-        return view('admin.role', compact('roles'));
-    }
-
-    public function createRole()
-    {
-        $permissions = Permission::all();
         $users = User::select('name', 'id')->get();
-        $roles = Role::all();
+        $roles = Role::whereIn('id', [1, 2, 3])
+            ->select('id', 'name')
+            ->get();
 
-        return view('admin.role', compact('permissions', 'users'));
+        return view('admin.role', compact('users', 'roles'));
     }
 
-    public function create(Request $request)
+    public function store(Request $request)
     {
-        $role = Role::create(['name' => $request->name]);
+        // 根據角色名稱查找現有角色
+        $role = Role::where('name', $request['role_name'])->first();
 
-        $permissions = $request->input('permission', []);
-        foreach ($permissions as $permission) {
-            $role->givePermissionTo($permission);
+        // 如果角色不存在，則返回錯誤
+        if (! $role) {
+            return redirect()->route('admin.role')->with('error', '指定的角色不存在');
         }
 
-        foreach ($request->users as $user) {
-            $user = User::find($user);
-            $user->givePermissionTo($role->name);
+        // 為每個選中的用戶分配該角色
+        foreach ($request['users'] as $userId) {
+            $user = User::find($userId);  // 查找用戶
+            if ($user) {
+                // 分配角色給該用戶
+                $user->assignRole($role->name);
+            }
         }
 
-        return redirect()->route('admin.role')->with('roles', Role::with('permissions', 'users')->get());
-    }
+        // 返回角色頁面，並預加載用戶資料
+        $roles = Role::with('users')->get();  // 只預加載 users 關聯資料
 
-    public function editRole($id)
-    {
-        $role = Role::where('id', $id)
-            ->with('permissions', 'users')
-            ->first();
-        $permissions = Permission::all();
-        $users = User::select('name', 'id')->get();
-
-        return view('admin.role', compact('role', 'permissions', 'users'));
-    }
-
-    public function updateRole(Request $request)
-    {
-        $role = Role::where('id', $request->id)->first();
-        $role->name = $request->name;
-        $role->update();
-
-        $role->syncPermissions($request->permission);
-
-        DB::table('model_has_roles')->where('role_id', $request->id)->delete();
-
-        foreach ($request->users as $user) {
-            $user = User::find($user);
-            $user->assignRole($role->name);
-        }
-
-        return redirect()->route('admin.role');
-    }
-
-    public function delete($id)
-    {
-        Role::where('id', $id)->delete();
-
-        return redirect()->route('admin.role');
+        return redirect()->route('admin.role')->with('roles', $roles)->with('success', '角色已成功分配給用戶');
     }
 }

@@ -27,28 +27,30 @@
                                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">商品名稱</th>
                                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">檢舉原因</th>
                                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">自定義原因</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">檢舉人</th>
                                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">檢舉日期</th>
                                     </tr>
                                 </thead>
                                 <tbody class="bg-white divide-y divide-gray-200">
-                                    <tr>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">範例商品名稱</td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">不當內容</td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">名稱極度不雅</td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">2023-05-20</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">範例商品名稱</td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">侵犯版權</td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">名稱觸犯到版權了</td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">2023-05-21</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">範例商品名稱</td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">虛假資訊</td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">商品描述與實體不符</td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">2023-05-22</td>
-                                    </tr>
+                                    @foreach($reportables as $reportable)
+                                        <tr>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                                                {{ $reportable->reportable->name }}
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                                {{ json_decode($reportable->report->name, true)['zh'] }}
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                                {{ $reportable->description }}
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                                {{ $reportable->whistleblower->email }}
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                                {{ $reportable->updated_at->format('Y-m-d') }}
+                                            </td>
+                                        </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>

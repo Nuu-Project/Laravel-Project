@@ -15,6 +15,7 @@ class CheckController extends Controller
         $userId = Auth::user()->id;
         $userProducts = Product::with(['media', 'user'])
             ->where('user_id', $userId)
+            ->orderBy('updated_at', 'desc')
             ->paginate(3);
         $message = $userProducts->isEmpty() ? '您目前沒有任何商品，趕緊刊登一個吧!' : null;
 
@@ -36,11 +37,8 @@ class CheckController extends Controller
             'status' => $newStatus,
         ]);
 
-        // 返回更新成功的響應和相應的消息
-        return response()->json([
-            'message' => $message,
-            'new_status' => $newStatus,
-        ], 200);
+        // 使用 redirect 返回視圖並帶上成功消息
+        return redirect()->route('products.check')->with('success', $message);
     }
 
     public function update(Request $request, Product $product)
@@ -137,7 +135,7 @@ class CheckController extends Controller
         $product->delete();
 
         // 重定向到产品列表页面，并带有成功消息
-        return redirect()->route('products.index')->with('success', '產品已成功刪除');
+        return redirect()->route('products.check')->with('success', '產品已成功刪除');
     }
 
     public function deleteImage(Product $product, $imageId)

@@ -17,4 +17,9 @@ class Reportable extends Model
     {
         return $this->morphTo();
     }
+
+    public function whistleblower()
+    {
+        return $this->belongsTo(User::class, 'whistleblower_id');
+    }
 }
