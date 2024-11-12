@@ -9,47 +9,42 @@ use App\Http\Controllers\TagController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
-//
-// 商品管理頁
-Route::get('/admin/products', [ManageableProductsController::class, 'index'])
-    ->name('ManageProducts.index')
-    ->middleware('permission:edit_product_description');
+Route::prefix('admin')->name('admin.')->middleware(['auth', 'role:admin'])->group(function () {
+    // 商品管理頁 上架按鈕的字顯示錯誤
+    Route::get('/products', [ManageableProductsController::class, 'index'])
+        ->name('products.index');
+    // 商品管理下架 未返回畫面
+    Route::put('/products/{product}/demote', [DownShelvesController::class, 'demoteData'])
+        ->name('DownShelvesController.demote');
 
-// 商品管理下架
-Route::put('/products/{product}/demote', [DownShelvesController::class, 'demoteData'])->name('DownShelvesController.demote');
+    // 用戶管理頁
+    Route::get('/user', [UserController::class, 'index'])
+        ->name('user.index');
+    // 用戶停用
+    Route::post('/user/suspend', [UserController::class, 'suspend'])
+        ->name('user.suspend');
 
-//
-// 用戶管理頁
-Route::group(['middleware' => ['role:admin']], function () {
-    Route::get('/admin/user', [UserController::class, 'index'])->name('admin.user.index');
-});
+    // 留言管理頁 controller要改
+    Route::get('/message', [ChirpController::class, 'adminMessage'])
+        ->name('message.index');
 
-// 用戶停用
-Route::post('/user/suspend', [UserController::class, 'suspend'])->name('user.suspend');
+    // 角色管理路由
+    Route::get('/roles', [RoleController::class, 'index'])
+        ->name('role.index');
+    // ??
+    Route::post('/roles/store', [RoleController::class, 'store'])
+        ->name('roles.store');
 
-//
-// 留言管理頁 controller要改
-Route::get('/admin/message', [ChirpController::class, 'adminMessage'])->name('admin.message');
+    // 標籤 頁面,新增,修改,刪除
+    Route::resource('tags', TagController::class)
+        ->except(['show'])
+        ->withTrashed();
+    // 標籤 啟用
+    Route::post('/tags/{tag}/restore', [TagController::class, 'restore'])
+        ->name('tags.restore')
+        ->withTrashed();
 
-//
-// 標籤管理
-Route::middleware(['auth'])->group(function () {
-    Route::prefix('admin')->name('admin.')->group(function () {
-        Route::post('/tags/{tag}/restore', [TagController::class, 'restore'])
-            ->name('tags.restore')
-            ->withTrashed();
-        Route::resource('tags', TagController::class)
-            ->except(['show'])
-            ->withTrashed();
-    });
-});
-
-//
-// 檢舉詳情頁
-Route::get('/admin/report', [ReportDetailController::class, 'index'])->name('report.index');
-
-// 角色管理路由
-Route::prefix('admin')->group(function () {
-    Route::get('/roles/index', [RoleController::class, 'index'])->name('admin.role.index');
-    Route::post('/roles/store', [RoleController::class, 'store'])->name('admin.role.store');
+    // 檢舉詳情頁
+    Route::get('/report', [ReportDetailController::class, 'index'])
+        ->name('report.index');
 });
