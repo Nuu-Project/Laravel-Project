@@ -1,3 +1,7 @@
+@php
+    use App\Enums\ProductStatus;
+@endphp
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -49,19 +53,11 @@
                                             <div>
                                                 <h1 class="font-semibold text-sm">用戶名稱:{{ $product->user->name }}</h1>
                                             </div>
-                                            @if ($product->status == 100)
-                                                <div>
-                                                    <h1 class="font-semibold text-sm">目前狀態:上架中</h1>
-                                                </div>
-                                            @elseif($product->status == 200)
-                                                <div>
-                                                    <h1 class="font-semibold text-sm">目前狀態:已下架</h1>
-                                                </div>
-                                            @else
-                                                <div>
-                                                    <h1 class="font-semibold text-sm">目前狀態:未知</h1>
-                                                </div>
-                                            @endif
+                                            <div>
+                                                <h1 class="font-semibold text-sm">
+                                                    目前狀態: {{ $product->status->label() }}
+                                                </h1>
+                                            </div>
                                         </div>
                                         <div class="mt-4">
                                             <div class="text-2xl font-bold">${{ $product->price }}</div>
@@ -112,10 +108,9 @@
                                                 @csrf
                                                 @method('PUT')
                                                 <input type="hidden" name="product_id" value="{{ $product->id }}">
-                                                <input type="hidden" name="status" value="200">
                                                 <button type="submit"
                                                     class="px-4 py-2 bg-blue-600 text-white text-sm font-semibold rounded-xl hover:bg-blue-700 transition ease-in-out duration-500">
-                                                    下架
+                                                    {{ $product->status === ProductStatus::Active ? '下架' : '上架' }}
                                                 </button>
                                             </form>
                                             <a href="{{ route('products.edit', $product->id) }}"
