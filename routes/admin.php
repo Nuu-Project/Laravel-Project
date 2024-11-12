@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Route;
 
 //
 // 商品管理頁
-Route::get('/admin/product', [ManageableProductsController::class, 'index'])
+Route::get('/admin/products', [ManageableProductsController::class, 'index'])
     ->name('ManageProducts.index')
     ->middleware('permission:edit_product_description');
 
