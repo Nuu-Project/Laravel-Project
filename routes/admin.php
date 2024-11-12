@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::prefix('admin')->name('admin.')->middleware(['auth', 'role:admin'])->group(function () {
     // 商品管理頁 上架按鈕的字顯示錯誤
-    Route::get('/product', [ManageableProductsController::class, 'index'])
+    Route::get('/products', [ManageableProductsController::class, 'index'])
         ->name('products.index');
     // 商品管理下架 未返回畫面
     Route::put('/products/{product}/demote', [DownShelvesController::class, 'demoteData'])

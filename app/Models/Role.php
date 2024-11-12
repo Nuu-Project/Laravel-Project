@@ -11,7 +11,7 @@ use Spatie\Permission\Traits\HasRoles;
 
 class Role extends SpatieRole implements RoleContract
 {
-    use HasFactory, HasRoles;
+    use HasFactory,HasRoles;
 
     public function permissions(): BelongsToMany
     {
