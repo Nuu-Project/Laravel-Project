@@ -57,21 +57,21 @@
                 </div>
             </header>
 
-           <!-- 主要內容 -->
-<main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-200">
-    <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <h3 class="text-gray-700 text-3xl font-medium mb-6">權限管理</h3>
-        <!-- 角色新增表單 -->
-        <div class="bg-white rounded-lg shadow-md p-6 mb-6">
-        <form method="POST" action="{{ route('admin.roles.store') }}">
-            @csrf
-            <div class="mb-4">
-                <label class="block text-gray-700 text-sm font-bold mb-2" for="name">
-                    角色名稱
-                </label>
-                <input type="text" name="name" id="name" required
-                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-            </div>
+            <!-- 主要內容 -->
+            <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-200">
+                <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+                    <h3 class="text-gray-700 text-3xl font-medium mb-6">權限管理</h3>
+                    <!-- 角色新增表單 -->
+                    <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+                        <form method="POST" action="{{ route('admin.roles.store') }}">
+                            @csrf
+                            <div class="mb-4">
+                                <label class="block text-gray-700 text-sm font-bold mb-2" for="name">
+                                    角色名稱
+                                </label>
+                                <input type="text" name="name" id="name" required
+                                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                            </div>
 
                             <div class="grid grid-cols-2 gap-6">
                                 <!-- 權限設定 -->
