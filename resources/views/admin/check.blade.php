@@ -36,7 +36,7 @@
                                                 <a href="{{ route('products.chirps.index', ['product' => $product->id]) }}">
                                                     <button class="px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700">查看</button>
                                                 </a>
-                                                <form action="{{ route('DownShelvesController.demote', ['product' => $product->id])  }}" method="POST" class="inline">
+                                                <form action="{{ route('admin.DownShelvesController.demote', ['product' => $product->id])  }}" method="POST" class="inline">
                                                     @csrf
                                                     @method('PUT')
                                                     <input type="hidden" name="product_id" value="{{ $product->id }}">
@@ -45,7 +45,7 @@
                                                         下架
                                                     </button>
                                                 </form>
-                                                <a href="{{route('report.index')}}"><button class="px-3 py-1 bg-red-600 text-white rounded hover:bg-red-700 report-button">檢舉詳情</button></a>
+                                                <a href="{{route('admin.report.index')}}"><button class="px-3 py-1 bg-red-600 text-white rounded hover:bg-red-700 report-button">檢舉詳情</button></a>
                                             </td>
                                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                                 @if($product->status == 100)
