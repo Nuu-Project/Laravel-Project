@@ -7,6 +7,7 @@ use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Spatie\Tags\Tag;
+use App\Enums\ProductStatus;
 
 class CheckController extends Controller
 {
@@ -22,22 +23,20 @@ class CheckController extends Controller
         return view('user.products.check', compact('userProducts', 'message'));
     }
 
-    public function demoteData(Request $request, Product $product)
+    public function demoteData(Product $product)
     {
-        if ($product->status == 100) {
-            $newStatus = 200;
-            $message = '商品已下架！';  // 當前狀態是 100（上架），切換為 200（下架）
-        } else {
-            $newStatus = 100;
-            $message = '商品已上架！';  // 當前狀態是 200（下架），切換為 100（上架）
-        }
+        // 根據當前狀態切換到相反的狀態
+        $newStatus = $product->status === ProductStatus::Active
+            ? ProductStatus::Inactive
+            : ProductStatus::Active;
 
         // 更新商品的狀態
         $product->update([
             'status' => $newStatus,
         ]);
 
-        // 使用 redirect 返回視圖並帶上成功消息
+        $message = "商品{$newStatus->label()}！";
+
         return redirect()->route('products.check')->with('success', $message);
     }
 

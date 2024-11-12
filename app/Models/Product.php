@@ -9,6 +9,7 @@ use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\Tags\HasTags;
 use Spatie\Tags\Tag;
+use App\Enums\ProductStatus;
 
 class Product extends Model implements HasMedia
 {
@@ -46,5 +47,9 @@ class Product extends Model implements HasMedia
         'status',
         'description',
         'user_id',
+    ];
+
+    protected $casts = [
+        'status' => ProductStatus::class,
     ];
 }
