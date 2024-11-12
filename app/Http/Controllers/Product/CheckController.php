@@ -23,7 +23,7 @@ class CheckController extends Controller
         return view('user.products.check', compact('userProducts', 'message'));
     }
 
-    public function demoteData(Request $request, Product $product)
+    public function demoteData(Product $product)
     {
         // 根據當前狀態切換到相反的狀態
         $newStatus = $product->status === ProductStatus::Active
@@ -35,7 +35,7 @@ class CheckController extends Controller
             'status' => $newStatus,
         ]);
 
-        $message = "商品已{$newStatus->label()}！";
+        $message = "商品{$newStatus->label()}！";
 
         return redirect()->route('products.check')->with('success', $message);
     }

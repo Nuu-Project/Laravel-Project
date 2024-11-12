@@ -1,3 +1,6 @@
+@php
+    use App\Enums\ProductStatus;
+@endphp
 <!DOCTYPE html>
 <html lang="en">
 
@@ -17,6 +20,21 @@
                 <!-- 主要內容 -->
                 <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-200">
                     <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+                        {{-- 添加提示訊息顯示 --}}
+                        @if (session('success'))
+                            <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4"
+                                role="alert">
+                                <span class="block sm:inline">{{ session('success') }}</span>
+                            </div>
+                        @endif
+
+                        @if (session('error'))
+                            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4"
+                                role="alert">
+                                <span class="block sm:inline">{{ session('error') }}</span>
+                            </div>
+                        @endif
+
                         <h3 class="text-gray-700 text-3xl font-medium mb-6">商品管理</h3>
                         
                         <div class="bg-white shadow overflow-hidden sm:rounded-lg">
@@ -36,25 +54,19 @@
                                                 <a href="{{ route('products.chirps.index', ['product' => $product->id]) }}">
                                                     <button class="px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700">查看</button>
                                                 </a>
-                                                <form action="{{ route('DownShelvesController.demote', ['product' => $product->id])  }}" method="POST" class="inline">
+                                                <form action="{{ route('DownShelvesController.demote', ['product' => $product->id]) }}" method="POST" class="inline">
                                                     @csrf
                                                     @method('PUT')
-                                                    <input type="hidden" name="product_id" value="{{ $product->id }}">
-                                                    <input type="hidden" name="status" value="200"> 
                                                     <button class="px-3 py-1 bg-red-600 text-white rounded hover:bg-red-700">
-                                                        下架
+                                                        {{ $product->status === ProductStatus::Active ? '下架' : '上架' }}
                                                     </button>
                                                 </form>
-                                                <a href="{{route('report.index')}}"><button class="px-3 py-1 bg-red-600 text-white rounded hover:bg-red-700 report-button">檢舉詳情</button></a>
+                                                <a href="{{route('report.index')}}">
+                                                    <button class="px-3 py-1 bg-red-600 text-white rounded hover:bg-red-700 report-button">檢舉詳情</button>
+                                                </a>
                                             </td>
                                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                                @if($product->status == 100)
-                                                    上架中
-                                                @elseif($product->status == 200)
-                                                    已下架
-                                                @else
-                                                    未知
-                                                @endif
+                                                {{ $product->status->label() }}
                                             </td>
                                         </tr>
                                         @endforeach
