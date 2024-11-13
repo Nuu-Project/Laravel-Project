@@ -21,7 +21,7 @@
                     {{ __('Profile') }}
                 </x-dropdown-link>
 
-                <!-- <x-dropdown-link :href="route('products.create')">
+                <!-- <x-dropdown-link :href="route('user.products.index')">
                     {{ __('使用者後台') }}
                 </x-dropdown-link> -->
 

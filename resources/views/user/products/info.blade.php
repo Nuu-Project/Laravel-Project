@@ -84,13 +84,13 @@
                                     {{ __('Profile') }}
                                 </x-dropdown-link>
 
-                                <x-dropdown-link :href="route('products.create')">
-                                    {{ __('使用者後台') }}
-                                </x-dropdown-link>
+                            <x-dropdown-link :href="route('user.products.index')">
+                                {{ __('使用者後台') }}
+                            </x-dropdown-link>
 
-                                <x-dropdown-link :href="route('admin.message')">
-                                    {{ __('管理者後台') }}
-                                </x-dropdown-link>
+                            <x-dropdown-link :href="route('admin.message.index')">
+                            {{ __('管理者後台') }}
+                            </x-dropdown-link>
 
                                 <!-- Authentication -->
                                 <form method="POST" action="{{ route('logout') }}">
