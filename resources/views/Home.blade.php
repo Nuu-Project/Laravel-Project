@@ -17,7 +17,8 @@
 
             <p class="font-black text-gray-500 text-lg md:text-xl text-center uppercase mb-6">平台理念</p>
 
-            <h1 class="font-semibold text-gray-900 text-xl md:text-4xl text-center leading-normal mb-10">讓社恐和I人<br> 都能有個安靜的空間買書</h1>
+            <h1 class="font-semibold text-gray-900 text-xl md:text-4xl text-center leading-normal mb-10">讓社恐和I人<br>
+                都能有個安靜的空間買書</h1>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-20">
                 <div class="text-center">
