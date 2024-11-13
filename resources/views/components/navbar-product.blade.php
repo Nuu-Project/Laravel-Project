@@ -78,7 +78,7 @@
                     {{ __('使用者後台') }}
                 </x-dropdown-link>
 
-                <x-dropdown-link :href="route('admin.message.index')">
+                <x-dropdown-link :href="route('admin.messages.index')">
                     {{ __('管理者後台') }}
                 </x-dropdown-link>
 
