@@ -21,7 +21,7 @@
                             <p class="text-sm sm:text-base text-muted-foreground">請依照下順序進行填寫，照片上傳張數最多五張。</p>
                             <p class="text-sm sm:text-base text-muted-foreground">圖片最左邊將會是商品首圖。</p>
                         </div>
-                        <form class="grid gap-6" action="{{ route('products.store') }}" method="POST" enctype="multipart/form-data" id="productForm">
+                        <form class="grid gap-6" action="{{ route('user.products.store') }}" method="POST" enctype="multipart/form-data" id="productForm">
                             @csrf
                             <div class="grid gap-2">
                                 <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70" for="name">

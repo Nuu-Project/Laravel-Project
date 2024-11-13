@@ -35,7 +35,7 @@
                             </div>
                         @endif
 
-                        <form class="grid gap-6" action="{{ route('products.update',  ['product' => $product->id])  }}" method="POST" enctype="multipart/form-data">
+                        <form class="grid gap-6" action="{{ route('user.products.update',  ['product' => $product->id])  }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             @method('PUT')
                             <div class="grid gap-2">
@@ -185,7 +185,7 @@
             removeImage(index);
         } else {
             // 如果是已存在的圖片，發送 AJAX 請求刪除
-            fetch(`/products/${productId}/images/${imageId}`, {
+            fetch(`/user/products/${productId}/images/${imageId}`, {
                 method: 'DELETE',
                 headers: {
                     'X-CSRF-TOKEN': '{{ csrf_token() }}',

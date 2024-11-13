@@ -103,7 +103,7 @@
                                             </div>
                                         </div>
                                         <div class="flex justify-center space-x-4 mt-6">
-                                            <form action="{{ route('products.demoteData', $product->id) }}"
+                                            <form action="{{ route('user.products.demoteData', $product->id) }}"
                                                 method="POST">
                                                 @csrf
                                                 @method('PUT')
@@ -113,11 +113,11 @@
                                                     {{ $product->status === ProductStatus::Active ? '下架' : '上架' }}
                                                 </button>
                                             </form>
-                                            <a href="{{ route('products.edit', $product->id) }}"
+                                            <a href="{{ route('user.products.edit', $product->id) }}"
                                                 class="px-4 py-2 bg-blue-600 text-white text-sm font-semibold rounded-xl hover:bg-blue-700 transition ease-in-out duration-500">
                                                 編輯
                                             </a>
-                                            <form action="{{ route('products.destroy', $product->id) }}" method="POST"
+                                            <form action="{{ route('user.products.destroy', $product->id) }}" method="POST"
                                                 onsubmit="return confirm('確定要刪除這個商品嗎？');">
                                                 @csrf
                                                 @method('DELETE')
