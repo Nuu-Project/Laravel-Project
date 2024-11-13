@@ -14,8 +14,10 @@
             </div>
         </div>
         <div x-show="open" class="pl-4">
-            <a href="{{route('user.products.create')}}" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">刊登商品</a>
-            <a href="{{route('user.products.index')}}" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">我的商品</a>
+            <a href="{{ route('user.products.create') }}"
+                class="block py-2 px-4 text-gray-700 hover:bg-gray-200">刊登商品</a>
+            <a href="{{ route('user.products.index') }}"
+                class="block py-2 px-4 text-gray-700 hover:bg-gray-200">我的商品</a>
         </div>
     </nav>
 </div>
