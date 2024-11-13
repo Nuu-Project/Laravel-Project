@@ -2,12 +2,12 @@
 <html lang="en">
 
 <head>
-    <x-head />
+    <x-head-layout />
 </head>
 
 <body class="font-body">
 
-    <x-navbar-home />
+    <x-navbar />
 
 
     <!-- feature section -->

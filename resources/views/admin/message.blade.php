@@ -2,13 +2,13 @@
 <html lang="en">
 
 <head>
-    <x-head />
+    <x-head-layout />
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body class="font-body">
     <div class="flex flex-col md:flex-row h-screen bg-gray-100">
-        <x-admin-link />
+        <x-side-bar />
 
         <!-- 主要內容區 -->
         <div class="flex-1 flex flex-col overflow-hidden">
@@ -32,8 +32,7 @@
                         </div>
 
                         <!-- Reviews 列表 -->
-                        <div class="bg-white shadow overflow-hidden sm:rounded-lg" id="reviews-table"
-                            style="display: none;">
+                        <div class="bg-white shadow overflow-hidden sm:rounded-lg" id="reviews-table">
                             <div class="overflow-x-auto">
                                 <table class="min-w-full divide-y divide-gray-200">
                                     <x-message-table />
@@ -56,7 +55,23 @@
                                                 </td>
                                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                                     {{ $chirp->product->name ?? 'No associated product' }}</td>
-                                                <td class="px-6 py-4 text-sm text-gray-500">{{ $chirp->message }}</td>
+                                                <td
+                                                    class="px-6 py-4 text-sm text-gray-500 max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg">
+                                                    <div class="message-container">
+                                                        <span class="message-content">{{ $chirp->message }}</span>
+                                                        @if (mb_strlen($chirp->message) > 15)
+                                                            <button
+                                                                class="expand-btn ml-2 text-blue-500 hover:text-blue-700">
+                                                                <svg class="w-4 h-4 inline-block transform transition-transform duration-200"
+                                                                    fill="none" stroke="currentColor"
+                                                                    viewBox="0 0 24 24">
+                                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                                        stroke-width="2" d="M19 9l-7 7-7-7" />
+                                                                </svg>
+                                                            </button>
+                                                        @endif
+                                                    </div>
+                                                </td>
                                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                                     {{ $chirp->created_at->format('Y-m-d H:i:s') }}</td>
                                                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
@@ -79,6 +94,11 @@
                                     </tbody>
                                 </table>
                             </div>
+
+                            <!-- 分頁導航 -->
+                            <div class="px-6 py-4 border-t border-gray-200">
+                                {{ $chirps->links() }}
+                            </div>
                         </div>
 
                         <!-- 無搜尋結果時顯示 -->
@@ -99,21 +119,17 @@
             const reviewsList = document.querySelector('.overflow-x-auto tbody');
             const rows = reviewsList.querySelectorAll('tr');
 
+            // 頁面載入時直接顯示表格
+            reviewsTable.style.display = 'block';
+            noResults.classList.add('hidden');
+
             searchInput.addEventListener('input', function() {
                 const searchTerm = this.value.toLowerCase().trim();
                 let hasResults = false;
 
-                // 如果搜尋欄是空的，隱藏所有內容
-                if (searchTerm === '') {
-                    reviewsTable.style.display = 'none';
-                    noResults.classList.add('hidden');
-                    return;
-                }
-
                 rows.forEach(row => {
                     const userName = row.querySelector('td:nth-child(1)').textContent.toLowerCase();
 
-                    // 只檢查用戶名稱是否符合
                     if (userName.includes(searchTerm)) {
                         row.style.display = '';
                         hasResults = true;
@@ -122,21 +138,166 @@
                     }
                 });
 
-                // 根據搜尋結果顯示對應內容
                 if (hasResults) {
                     reviewsTable.style.display = 'block';
                     noResults.classList.add('hidden');
                 } else {
-                    reviewsTable.style.display = 'none';
+                    reviewsTable.style.display = 'block';
                     noResults.classList.remove('hidden');
                 }
             });
 
-            // 初始狀態：隱藏表格
-            reviewsTable.style.display = 'none';
-            noResults.classList.add('hidden');
+            // 更新留言展開/收合功能
+            function truncateText(text, length) {
+                const characters = Array.from(text);
+                if (characters.length <= length) return text;
+
+                let count = 0;
+                let result = '';
+
+                for (let char of characters) {
+                    const charWidth = /[a-zA-Z0-9]/.test(char) ? 1 : 2;
+                    if (count + charWidth > length) break;
+                    count += charWidth;
+                    result += char;
+                }
+
+                return result;
+            }
+
+            document.querySelectorAll('.message-container').forEach(container => {
+                const content = container.querySelector('.message-content');
+                const expandBtn = container.querySelector('.expand-btn');
+                const fullText = content.textContent;
+
+                if (expandBtn) {
+                    content.textContent = truncateText(fullText, 15);
+
+                    expandBtn.addEventListener('click', function(e) {
+                        e.preventDefault(); // 防止事件冒泡
+                        const isExpanded = this.classList.contains('expanded');
+
+                        if (isExpanded) {
+                            content.textContent = truncateText(fullText, 15);
+                            content.classList.remove('expanded');
+                            this.querySelector('svg').classList.remove('rotate-180');
+                        } else {
+                            content.textContent = fullText;
+                            content.classList.add('expanded');
+                            this.querySelector('svg').classList.add('rotate-180');
+                        }
+
+                        this.classList.toggle('expanded');
+                    });
+                }
+            });
+
+            // 監聽視窗大小變化，確保響應式效果
+            window.addEventListener('resize', function() {
+                document.querySelectorAll('.message-content').forEach(content => {
+                    if (!content.classList.contains('expanded')) {
+                        const fullText = content.getAttribute('data-full-text') || content
+                            .textContent;
+                        content.textContent = truncateText(fullText, 15);
+                    }
+                });
+            });
         });
     </script>
+
+    <style>
+        .message-container {
+            position: relative;
+            display: inline-flex;
+            align-items: start;
+            width: 100%;
+            max-width: 100%;
+        }
+
+        .message-content {
+            white-space: pre-wrap;
+            word-break: break-word;
+            overflow-wrap: break-word;
+            flex: 1;
+            min-width: 0;
+            /* 防止文字溢出 */
+        }
+
+        .expand-btn {
+            background: none;
+            border: none;
+            padding: 0;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            flex-shrink: 0;
+            /* 防止按鈕被壓縮 */
+        }
+
+        /* RWD 調整 */
+        @media (max-width: 640px) {
+            .message-container {
+                flex-direction: row;
+                align-items: flex-start;
+            }
+
+            .message-content {
+                font-size: 0.875rem;
+                /* 14px */
+                line-height: 1.25rem;
+                /* 20px */
+            }
+
+            .expand-btn {
+                padding-top: 2px;
+                /* 微調按鈕位置 */
+            }
+        }
+
+        /* 表格響應式調整 */
+        @media (max-width: 768px) {
+            .overflow-x-auto {
+                margin: 0 -1rem;
+                /* 負邊距防止水平滾動條 */
+            }
+
+            table {
+                width: 100%;
+                min-width: 100%;
+            }
+
+            td,
+            th {
+                min-width: auto;
+                max-width: none;
+            }
+
+            /* 留言欄位特殊處理 */
+            td:nth-child(3) {
+                max-width: 200px;
+                /* 手機版最大寬度 */
+                min-width: 150px;
+                /* 手機版最小寬度 */
+            }
+        }
+
+        /* 確保展開後的內容不會破壞版面 */
+        .message-content.expanded {
+            max-height: none;
+            overflow: visible;
+        }
+
+        /* 優化分頁在手機版的顯示 */
+        @media (max-width: 640px) {
+            .pagination {
+                @apply flex-wrap justify-center gap-2;
+            }
+
+            .pagination>* {
+                @apply text-xs px-2 py-1;
+            }
+        }
+    </style>
 </body>
 
 </html>

@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <x-head />
+    <x-head-layout />
 </head>
 
 <body class="font-body">

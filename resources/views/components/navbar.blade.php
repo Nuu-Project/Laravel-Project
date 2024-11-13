@@ -1,4 +1,3 @@
-<div>
     <!-- home section -->
     <section class="bg-white py-10 md:mb-10">
 
@@ -6,7 +5,7 @@
 
             <nav class="flex-wrap lg:flex items-center" x-data="{ navbarOpen: false }">
                 <div class="flex items-center mb-10 lg:mb-0">
-                    <img src="{{ asset('images/book-4-fix.png') }}" alt="Logo">
+                    <img src="images/book-4-fix.png" alt="Logo">
 
                     <button
                         class="lg:hidden w-10 h-10 ml-auto flex items-center justify-center border border-blue-500 text-blue-500 rounded-md"
@@ -17,12 +16,13 @@
                             <line x1="3" y1="12" x2="21" y2="12"></line>
                             <line x1="3" y1="6" x2="21" y2="6"></line>
                             <line x1="3" y1="18" x2="21" y2="18"></line>
-                        </svg>
+                        </svg><i data-feather="menu"></i>
                     </button>
                 </div>
 
-                @auth
 
+
+                @auth
                     <ul class="lg:flex flex-col lg:flex-row lg:items-center lg:mx-auto lg:space-x-8 xl:space-x-14"
                         :class="{ 'hidden': !navbarOpen, 'flex': navbarOpen }">
                         <li
@@ -55,8 +55,7 @@
                             <x-slot name="trigger">
                                 <button
                                     class="inline-flex items-center px-3 py-2 border border-transparent text-3xl leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
-                                    <img width="65" height="65" src="{{ asset('images/account.png') }}"
-                                        alt="">
+                                    <img width="65" height="65" src="images/account.png" alt="">
                                     <div>{{ Auth::user()->name }}</div>
 
                                     <div class="ms-1">
@@ -75,13 +74,13 @@
                                     {{ __('Profile') }}
                                 </x-dropdown-link>
 
-                <x-dropdown-link :href="route('user.products.index')">
-                    {{ __('使用者後台') }}
-                </x-dropdown-link>
+                                <x-dropdown-link :href="route('user.products.index')">
+                                    {{ __('使用者後台') }}
+                                </x-dropdown-link>
 
-                <x-dropdown-link :href="route('admin.messages.index')">
-                    {{ __('管理者後台') }}
-                </x-dropdown-link>
+                                <x-dropdown-link :href="route('admin.messages.index')">
+                                    {{ __('管理者後台') }}
+                                </x-dropdown-link>
 
                                 <!-- Authentication -->
                                 <form method="POST" action="{{ route('logout') }}">
@@ -103,6 +102,3 @@
                     @endauth
                 </div>
             </nav>
-        </div>
-    </section>
-</div>
