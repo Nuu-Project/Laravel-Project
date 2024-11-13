@@ -36,8 +36,9 @@
                             </div>
                         @endif
 
-                        <form class="grid gap-6" action="{{ route('user.products.update', ['product' => $product->id]) }}"
-                            method="POST" enctype="multipart/form-data">
+                        <form class="grid gap-6"
+                            action="{{ route('user.products.update', ['product' => $product->id]) }}" method="POST"
+                            enctype="multipart/form-data">
                             @csrf
                             @method('PUT')
                             <div class="grid gap-2">
@@ -212,7 +213,7 @@
                                         const preview{{ $i }} = document.getElementById('preview{{ $i }}');
                                         const placeholder{{ $i }} = document.getElementById('placeholder{{ $i }}');
                                         const deleteButton{{ $i }} = document.getElementById(
-                                        'deleteButton{{ $i }}');
+                                            'deleteButton{{ $i }}');
                                         if (preview{{ $i }}.querySelector('img')?.src && preview{{ $i }}
                                             .querySelector('img').src !== window.location.href + '#') {
                                             preview{{ $i }}.classList.remove('hidden');
@@ -222,33 +223,33 @@
                                     @endfor
                                 });
 
-    function deleteImage(productId, imageId, index) {
-        if (imageId === null) {
-            // 如果是新上傳的圖片，直接從 UI 中移除
-            removeImage(index);
-        } else {
-            // 如果是已存在的圖片，發送 AJAX 請求刪除
-            fetch(`/user/products/${productId}/images/${imageId}`, {
-                method: 'DELETE',
-                headers: {
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json',
-                },
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    removeImage(index);
-                } else {
-                    console.error('刪除圖片失敗：' + data.message);
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
-        }
-    }
+                                function deleteImage(productId, imageId, index) {
+                                    if (imageId === null) {
+                                        // 如果是新上傳的圖片，直接從 UI 中移除
+                                        removeImage(index);
+                                    } else {
+                                        // 如果是已存在的圖片，發送 AJAX 請求刪除
+                                        fetch(`/user/products/${productId}/images/${imageId}`, {
+                                                method: 'DELETE',
+                                                headers: {
+                                                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                                                    'Content-Type': 'application/json',
+                                                    'Accept': 'application/json',
+                                                },
+                                            })
+                                            .then(response => response.json())
+                                            .then(data => {
+                                                if (data.success) {
+                                                    removeImage(index);
+                                                } else {
+                                                    console.error('刪除圖片失敗：' + data.message);
+                                                }
+                                            })
+                                            .catch(error => {
+                                                console.error('Error:', error);
+                                            });
+                                    }
+                                }
 
                                 function removeImage(index) {
                                     const preview = document.getElementById(`preview${index}`);

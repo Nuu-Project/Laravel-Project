@@ -117,8 +117,8 @@
                                                 class="px-4 py-2 bg-blue-600 text-white text-sm font-semibold rounded-xl hover:bg-blue-700 transition ease-in-out duration-500">
                                                 編輯
                                             </a>
-                                            <form action="{{ route('user.products.destroy', $product->id) }}" method="POST"
-                                                onsubmit="return confirm('確定要刪除這個商品嗎？');">
+                                            <form action="{{ route('user.products.destroy', $product->id) }}"
+                                                method="POST" onsubmit="return confirm('確定要刪除這個商品嗎？');">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit"
