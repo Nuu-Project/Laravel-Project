@@ -63,7 +63,7 @@
                                                         class="px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700">查看</button>
                                                 </a>
                                                 <form
-                                                    action="{{ route('admin.DownShelvesController.demote', ['product' => $product->id]) }}"
+                                                    action="{{ route('admin.products.demote', ['product' => $product->id]) }}"
                                                     method="POST" class="inline">
                                                     @csrf
                                                     @method('PUT')
@@ -74,7 +74,7 @@
                                                         {{ $product->status === ProductStatus::Active ? '下架' : '上架' }}
                                                     </button>
                                                 </form>
-                                                <a href="{{ route('admin.report.index') }}"><button
+                                                <a href="{{ route('admin.reports.index') }}"><button
                                                         class="px-3 py-1 bg-red-600 text-white rounded hover:bg-red-700 report-button">檢舉詳情</button></a>
                                             </td>
                                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">

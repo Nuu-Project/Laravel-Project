@@ -31,6 +31,6 @@ class DownShelvesController extends Controller
 
         $message = "商品{$newStatus->label()}！";
 
-        return redirect()->route('ManageProducts.index')->with('success', $message);
+        return redirect()->route('admin.products.index')->with('success', $message);
     }
 }
