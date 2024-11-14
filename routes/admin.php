@@ -30,10 +30,10 @@ Route::prefix('/admin')->name('admin.')->middleware(['auth', 'role:admin'])->gro
         ->name('messages.index');
 
     // 角色管理路由
-    Route::get('/roles', [RoleController::class, 'index'])
+    Route::get('/role', [RoleController::class, 'index'])
         ->name('roles.index');
     // ??
-    Route::post('/roles', [RoleController::class, 'store'])
+        Route::post('/role', [RoleController::class, 'store'])
         ->name('roles.store');
 
     // 標籤 頁面,新增,修改,刪除
