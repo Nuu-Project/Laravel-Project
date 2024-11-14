@@ -68,6 +68,6 @@ class CreateController extends Controller
             $product->attachTag($categoryTag);
         }
 
-        return redirect()->route('products.create')->with('success', '產品已成功創建並附加標籤');
+        return redirect()->route('user.products.create')->with('success', '產品已成功創建並附加標籤');
     }
 }

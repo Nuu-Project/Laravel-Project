@@ -37,7 +37,7 @@ class CheckController extends Controller
 
         $message = "商品{$newStatus->label()}！";
 
-        return redirect()->route('products.check')->with('success', $message);
+        return redirect()->route('user.products.index')->with('success', $message);
     }
 
     public function update(Request $request, Product $product)
@@ -125,7 +125,7 @@ class CheckController extends Controller
         $product->save();
 
         // 重定向並返回成功消息
-        return redirect()->route('products.check')->with('success', '商品更新成功！');
+        return redirect()->route('user.products.index')->with('success', '商品更新成功！');
     }
 
     public function destroy(Product $product)
@@ -134,7 +134,7 @@ class CheckController extends Controller
         $product->delete();
 
         // 重定向到产品列表页面，并带有成功消息
-        return redirect()->route('products.check')->with('success', '產品已成功刪除');
+        return redirect()->route('user.products.index')->with('success', '產品已成功刪除');
     }
 
     public function deleteImage(Product $product, $imageId)

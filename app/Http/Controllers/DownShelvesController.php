@@ -6,6 +6,7 @@ use App\Models\Product;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use App\Enums\ProductStatus;
+
 class DownShelvesController extends Controller
 {
     public function index(): View
@@ -31,6 +32,6 @@ class DownShelvesController extends Controller
 
         $message = "商品{$newStatus->label()}！";
 
-        return redirect()->route('ManageProducts.index')->with('success', $message);
+        return redirect()->route('admin.products.index')->with('success', $message);
     }
 }

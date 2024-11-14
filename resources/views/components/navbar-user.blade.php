@@ -21,12 +21,12 @@
                     {{ __('Profile') }}
                 </x-dropdown-link>
 
-                <x-dropdown-link :href="route('products.create')">
+                <x-dropdown-link :href="route('user.products.index')">
                     {{ __('使用者後台') }}
                 </x-dropdown-link>
 
-                <x-dropdown-link :href="route('admin.message.index')">
-                {{ __('管理者後台') }}
+                <x-dropdown-link :href="route('admin.messages.index')">
+                    {{ __('管理者後台') }}
                 </x-dropdown-link>
 
                 <!-- Authentication -->

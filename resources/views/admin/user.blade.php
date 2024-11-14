@@ -2,13 +2,13 @@
 <html lang="en">
 
 <head>
-    <x-head />
+    <x-head-layout />
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body class="font-body">
     <div class="flex flex-col md:flex-row h-screen bg-gray-100">
-        <x-admin-link />
+        <x-side-bar />
 
         <!-- 主要內容區 -->
         <div class="flex-1 flex flex-col overflow-hidden">
@@ -171,7 +171,7 @@
                     var suspendReason = document.getElementById('suspend-reason').value;
                     var duration = parseInt(result.value);
                     $.ajax({
-                        url: '{{ route('admin.user.suspend') }}',
+                        url: '{{ route('admin.users.suspend') }}',
                         method: 'POST',
                         data: {
                             user_id: userId,
