@@ -35,9 +35,9 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'role:admin'])->grou
     Route::post('/roles/store', [RoleController::class, 'store'])
         ->name('roles.store');
     // 角色編輯
-    Route::get('/roles/{roleId}/edit', [RoleController::class, 'edit'])
+    Route::get('/roles/{role}/edit', [RoleController::class, 'edit'])
         ->name('roles.edit');
-    Route::put('/roles/{roleId}', [RoleController::class, 'update'])
+    Route::put('/roles/{role}', [RoleController::class, 'update'])
         ->name('roles.update');
     // 標籤 頁面,新增,修改,刪除
     Route::resource('tags', TagController::class)

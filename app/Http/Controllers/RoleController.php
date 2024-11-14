@@ -40,10 +40,10 @@ class RoleController extends Controller
         return redirect()->route('admin.role.index');
     }
 
-    public function edit($roleId)
+    public function edit($role)
     {
         // 獲取角色資料
-        $role = Role::with('users')->findOrFail($roleId);
+        $role = Role::with('users')->findOrFail($role);
 
         // 獲取所有用戶
         $users = User::select('name', 'id')->get();
@@ -52,10 +52,10 @@ class RoleController extends Controller
         return view('admin.role_edit', compact('role', 'users'));
     }
 
-    public function update(Request $request, $roleId)
+    public function update(Request $request, $role)
     {
         // 根據角色 ID 查找角色
-        $role = Role::findOrFail($roleId);
+        $role = Role::findOrFail($role);
 
         // 獲取目前與該角色相關聯的所有用戶
         $currentUsers = $role->users()->pluck('id')->toArray();
