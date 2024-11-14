@@ -49,7 +49,7 @@ class RoleController extends Controller
         $users = User::select('name', 'id')->get();
 
         // 返回編輯視圖，並傳遞角色和所有用戶資料
-        return view('admin.role.edit', compact('role', 'users'));
+        return view('admin.roles.edit', compact('role', 'users'));
     }
 
     public function update(Request $request, $role)

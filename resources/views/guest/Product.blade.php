@@ -7,7 +7,7 @@
 
 <body class="font-body">
 
-    <x-navbar />
+    <x-navbar-product />
     <!-- 新增：搜索表單 -->
     <form action="{{ route('products.index') }}" method="GET" class="mb-4">
         <div class="flex items-center justify-center gap-2">
