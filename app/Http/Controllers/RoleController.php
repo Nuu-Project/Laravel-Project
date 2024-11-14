@@ -25,7 +25,7 @@ class RoleController extends Controller
 
         // 如果角色不存在，則返回錯誤
         if (! $role) {
-            return redirect()->route('admin.role')->with('error', '指定的角色不存在');
+            return redirect()->route('admin.role.index');
         }
 
         // 為每個選中的用戶分配該角色
@@ -37,9 +37,48 @@ class RoleController extends Controller
             }
         }
 
-        // 返回角色頁面，並預加載用戶資料
-        $roles = Role::with('users')->get();  // 只預加載 users 關聯資料
+        return redirect()->route('admin.role.index');
+    }
 
-        return redirect()->route('admin.role')->with('roles', $roles)->with('success', '角色已成功分配給用戶');
+    public function edit($roleId)
+    {
+        // 獲取角色資料
+        $role = Role::with('users')->findOrFail($roleId);
+
+        // 獲取所有用戶
+        $users = User::select('name', 'id')->get();
+
+        // 返回編輯視圖，並傳遞角色和所有用戶資料
+        return view('admin.role_edit', compact('role', 'users'));
+    }
+
+    public function update(Request $request, $roleId)
+    {
+        // 根據角色 ID 查找角色
+        $role = Role::findOrFail($roleId);
+
+        // 獲取目前與該角色相關聯的所有用戶
+        $currentUsers = $role->users()->pluck('id')->toArray();
+
+        // 從表單獲取選中的用戶 ID
+        $selectedUserIds = $request->input('users', []);
+
+        // 1. 找出那些在當前關聯中，但不在新選擇中的用戶，並移除與角色的關聯
+        $usersToDetach = array_diff($currentUsers, $selectedUserIds);
+        if (!empty($usersToDetach)) {
+            $role->users()->detach($usersToDetach);  // 移除這些用戶的角色關聯
+        }
+
+        // 2. 重新分配角色給表單中選中的用戶
+        foreach ($selectedUserIds as $userId) {
+            $user = User::find($userId);
+            if ($user) {
+                // 為用戶重新分配角色
+                $user->assignRole($role->name);
+            }
+        }
+
+        // 返回角色頁面並顯示成功消息
+        return redirect()->route('admin.role.index');
     }
 }
