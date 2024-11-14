@@ -6,6 +6,7 @@ use App\Models\Product;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use App\Enums\ProductStatus;
+
 class DownShelvesController extends Controller
 {
     public function index(): View

@@ -9,9 +9,8 @@ use App\Http\Controllers\TagController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
-
 Route::prefix('/admin')->name('admin.')->middleware(['auth', 'role:admin'])->group(function () {
-    // 商品管理頁
+    // 商品管理頁 上架按鈕的字顯示錯誤
     Route::get('/products', [ManageableProductsController::class, 'index'])
         ->name('products.index');
     // 商品管理下架 未返回畫面
@@ -35,7 +34,11 @@ Route::prefix('/admin')->name('admin.')->middleware(['auth', 'role:admin'])->gro
     // ??
     Route::post('/roles', [RoleController::class, 'store'])
         ->name('roles.store');
-
+    // 角色編輯
+    Route::get('/roles/{role}/edit', [RoleController::class, 'edit'])
+        ->name('roles.edit');
+    Route::put('/roles/{role}', [RoleController::class, 'update'])
+        ->name('roles.update');
     // 標籤 頁面,新增,修改,刪除
     Route::resource('/tags', TagController::class)
         ->except(['show'])
