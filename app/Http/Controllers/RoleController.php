@@ -25,7 +25,7 @@ class RoleController extends Controller
 
         // 如果角色不存在，則返回錯誤
         if (! $role) {
-            return redirect()->route('admin.roles.index')->with('error', '指定的角色不存在');
+            return redirect()->route('admin.roles')->with('error', '指定的角色不存在');
         }
 
         // 為每個選中的用戶分配該角色
@@ -40,6 +40,6 @@ class RoleController extends Controller
         // 返回角色頁面，並預加載用戶資料
         $roles = Role::with('users')->get();  // 只預加載 users 關聯資料
 
-        return redirect()->route('admin.roles.index')->with('roles', $roles)->with('success', '角色已成功分配給用戶');
+        return redirect()->route('admin.role')->with('roles', $roles)->with('success', '角色已成功分配給用戶');
     }
 }
