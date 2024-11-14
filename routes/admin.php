@@ -33,7 +33,7 @@ Route::prefix('/admin')->name('admin.')->middleware(['auth', 'role:admin'])->gro
     Route::get('/roles', [RoleController::class, 'index'])
         ->name('roles.index');
     // ??
-        Route::post('/roles', [RoleController::class, 'store'])
+    Route::post('/roles', [RoleController::class, 'store'])
         ->name('roles.store');
 
     // 標籤 頁面,新增,修改,刪除
