@@ -32,7 +32,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'role:admin'])->grou
     Route::get('/roles', [RoleController::class, 'index'])
         ->name('role.index');
     // ??
-    Route::post('/roles/store', [RoleController::class, 'store'])
+    Route::post('/roles', [RoleController::class, 'store'])
         ->name('roles.store');
     // 角色編輯
     Route::get('/roles/{role}/edit', [RoleController::class, 'edit'])

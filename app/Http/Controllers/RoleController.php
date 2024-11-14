@@ -25,7 +25,7 @@ class RoleController extends Controller
 
         // 如果角色不存在，則返回錯誤
         if (! $role) {
-            return redirect()->route('admin.role.index');
+            return redirect()->route('admin.roles.index');
         }
 
         // 為每個選中的用戶分配該角色
@@ -37,7 +37,7 @@ class RoleController extends Controller
             }
         }
 
-        return redirect()->route('admin.role.index');
+        return redirect()->route('admin.roles.index');
     }
 
     public function edit($role)
@@ -49,7 +49,7 @@ class RoleController extends Controller
         $users = User::select('name', 'id')->get();
 
         // 返回編輯視圖，並傳遞角色和所有用戶資料
-        return view('admin.role_edit', compact('role', 'users'));
+        return view('admin.role.edit', compact('role', 'users'));
     }
 
     public function update(Request $request, $role)
@@ -79,6 +79,6 @@ class RoleController extends Controller
         }
 
         // 返回角色頁面並顯示成功消息
-        return redirect()->route('admin.role.index');
+        return redirect()->route('admin.roles.index');
     }
 }
