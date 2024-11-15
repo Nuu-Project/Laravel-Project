@@ -47,9 +47,9 @@
                             </div>
                             <div class="grid gap-2">
                                 <label class="text-sm font-medium leading-none" for="grade">年級</label>
-                                <select id="grade" name="grade"
+                                <select id="grade" name="grade" required
                                     class="w-full h-10 rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
-                                    <option selected>選擇適用的年級...</option>
+                                    <option value="">選擇適用的年級...</option>
                                     @foreach ($tags as $tag)
                                         @if ($tag->type === '年級')
                                             <option value="{{ $tag->getTranslation('slug', 'zh') }}">
@@ -60,9 +60,9 @@
                             </div>
                             <div class="grid gap-2">
                                 <label class="text-sm font-medium leading-none" for="semester">學期</label>
-                                <select id="semester" name="semester"
+                                <select id="semester" name="semester" required
                                     class="w-full h-10 rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
-                                    <option selected>選擇學期...</option>
+                                    <option value="">選擇學期...</option>
                                     @foreach ($tags as $tag)
                                         @if ($tag->type === '學期')
                                             <option value="{{ $tag->getTranslation('slug', 'zh') }}">
@@ -73,9 +73,9 @@
                             </div>
                             <div class="grid gap-2">
                                 <label class="text-sm font-medium leading-none" for="category">課程類別</label>
-                                <select id="category" name="category"
+                                <select id="category" name="category" required
                                     class="w-full h-10 rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
-                                    <option selected>選擇課程類別...</option>
+                                    <option value="">選擇課程類別...</option>
                                     @foreach ($tags as $tag)
                                         @if ($tag->type === '課程')
                                             <option value="{{ $tag->getTranslation('slug', 'zh') }}">
@@ -204,9 +204,11 @@
             event.preventDefault();
 
             // 檢查所有必填欄位
-            var requiredFields = ['name', 'price', 'grade', 'semester', 'category', 'description'];
+            var requiredFields = ['name', 'price', 'description'];
+            var requiredSelects = ['grade', 'semester', 'category'];
             var allFieldsFilled = true;
 
+            // 檢查一般輸入欄位
             for (var i = 0; i < requiredFields.length; i++) {
                 var field = document.getElementById(requiredFields[i]);
                 if (!field.value) {
@@ -215,8 +217,22 @@
                 }
             }
 
+            // 檢查下拉選單
+            for (var i = 0; i < requiredSelects.length; i++) {
+                var select = document.getElementById(requiredSelects[i]);
+                if (!select.value || select.value === "") {
+                    allFieldsFilled = false;
+                    break;
+                }
+            }
+
+            // 檢查第一張圖片是否已上傳
+            var firstImage = document.getElementById('image0').files.length > 0;
+
             if (!allFieldsFilled) {
                 alert('請填寫所有必填欄位！');
+            } else if (!firstImage) {
+                alert('請上傳第一張圖片！');
             } else {
                 // 所有欄位都已填寫，提交表單
                 alert('商品已成功刊登！');

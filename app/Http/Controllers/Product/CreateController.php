@@ -22,10 +22,13 @@ class CreateController extends Controller
             'name' => ['required', 'string', 'max:50'],
             'price' => ['required', 'numeric', 'digits_between:1,10'],
             'description' => ['required', 'string'],
-            'grade' => ['required', 'string'],
-            'semester' => ['required', 'string'],
-            'category' => ['required', 'string'],
-            'image' => ['nullable', 'image'],
+            'grade' => ['required', 'string', 'not_in:選擇適用的年級...'],
+            'semester' => ['required', 'string', 'not_in:選擇學期...'],
+            'category' => ['required', 'string', 'not_in:選擇課程類別...'],
+            'images' => ['nullable', 'array', 'max:5'],
+            'images.*' => ['nullable', 'image', 'max:2048'],
+            'image_ids' => ['nullable', 'array', 'max:5'],
+            'images.0' => ['required', 'image'],
         ]);
 
         $product = Product::create($validated + [
