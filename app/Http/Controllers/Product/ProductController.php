@@ -8,6 +8,7 @@ use App\Models\Report;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Spatie\Tags\Tag;
+use App\Enums\ProductStatus;
 
 class ProductController extends Controller
 {
@@ -31,7 +32,7 @@ class ProductController extends Controller
 
         // 根據所有標籤篩選商品
         $productsQuery = Product::with(['media', 'user'])
-            ->where('status', 100);
+            ->where('status', ProductStatus::Active->value);
 
         if (! empty($tags)) {
             foreach ($tags as $tag) {

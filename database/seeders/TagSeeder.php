@@ -59,6 +59,12 @@ class TagSeeder extends Seeder
                 'type' => '學期',
                 'order_column' => 2,
             ],
+            [
+                'name' => ['en' => 'other', 'zh' => '其他'],
+                'slug' => ['en' => 'other', 'zh' => 'other'],
+                'type' => '學期',
+                'order_column' => 3,
+            ],
 
             //課程
             [
