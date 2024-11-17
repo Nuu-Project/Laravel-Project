@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Product;
 
 use App\Http\Controllers\Controller;
 use App\Models\Product;
+use App\Models\Report;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 use Spatie\Tags\Tag;
 use App\Enums\ProductStatus;
 
@@ -53,5 +55,17 @@ class ProductController extends Controller
         $allTags = Tag::whereNull('deleted_at')->get();
 
         return view('guest.Product', compact('products', 'allTags', 'tagSlugs', 'search'));
+    }
+
+    public function show($productId): View
+    {
+        $product = Product::findOrFail($productId);
+
+        $chirps = $product->chirps()->with('user')->get();
+        $reports = Report::where('type', '商品')->get()->mapWithKeys(function ($item) {
+            return [$item->id => json_decode($item->name, true)['zh']];
+        });
+
+        return view('user.products.info', compact('chirps', 'product', 'reports'));
     }
 }
