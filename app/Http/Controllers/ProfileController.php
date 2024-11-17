@@ -48,9 +48,4 @@ class ProfileController extends Controller
 
         return Redirect::to('/');
     }
-
-    public function control()
-    {
-        return view('profile.partials.control');
-    }
 }

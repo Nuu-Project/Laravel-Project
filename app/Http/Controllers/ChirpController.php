@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Chirp;
-use App\Models\Product;
-use App\Models\Report;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -14,18 +12,6 @@ use Illuminate\View\View;
 class ChirpController extends Controller
 {
     use AuthorizesRequests;
-
-    public function index($productId): View
-    {
-        $product = Product::findOrFail($productId);
-
-        $chirps = $product->chirps()->with('user')->get();
-        $reports = Report::where('type', '商品')->get()->mapWithKeys(function ($item) {
-            return [$item->id => json_decode($item->name, true)['zh']];
-        });
-
-        return view('user.products.info', compact('chirps', 'product', 'reports'));
-    }
 
     public function adminMessage(Request $request): View
     {
@@ -63,7 +49,7 @@ class ChirpController extends Controller
             'product_id' => $productId,
         ]);
 
-        return redirect()->route('products.info', ['product' => $productId]);
+        return redirect()->route('products.show', ['product' => $productId]);
     }
 
     public function edit($productId, Chirp $chirp): View
@@ -84,7 +70,7 @@ class ChirpController extends Controller
         ]);
         $chirp->update($validated);
 
-        return redirect()->route('products.info', ['product' => $productId]);
+        return redirect()->route('products.show', ['product' => $productId]);
     }
 
     public function destroy($productId, Chirp $chirp)
@@ -96,7 +82,7 @@ class ChirpController extends Controller
             return redirect()->route('admin.search')->with('success', 'Review deleted successfully.');
         }
 
-        return redirect()->route('products.info', ['product' => $productId])
+        return redirect()->route('products.show', ['product' => $productId])
             ->with('success', 'Review deleted successfully.');
     }
 }

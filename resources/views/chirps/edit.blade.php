@@ -8,7 +8,7 @@
             <x-input-error :messages="$errors->get('message')" class="mt-2" />
             <div class="mt-4 space-x-2">
                 <x-primary-button>{{ __('儲存') }}</x-primary-button>
-                <a href="{{ route('products.info', ['product' => $productId]) }}">
+                <a href="{{ route('products.show', ['product' => $productId]) }}">
                     <x-primary-button type="button">{{ __('取消') }}</x-primary-button>
                 </a>
             </div>
