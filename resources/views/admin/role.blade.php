@@ -10,137 +10,104 @@
     <div class="flex flex-col md:flex-row h-screen bg-gray-100">
         <x-side-bar />
 
-        <!-- 主要內容區 -->
-        <div class="flex-1 flex flex-col overflow-hidden">
-            <!-- 頂部導航欄 -->
-            <header class="bg-white shadow">
-                <div class="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8 flex justify-end">
-                    @auth
-                        <x-dropdown align="right" width="48">
-                            <x-slot name="trigger">
-                                <button
-                                    class="inline-flex items-center px-3 py-2 border border-transparent text-2xl leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
-                                    <div>{{ Auth::user()->name }}</div>
-                                    <div class="ml-1">
-                                        <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg"
-                                            viewBox="0 0 20 20">
-                                            <path fill-rule="evenodd"
-                                                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                                                clip-rule="evenodd" />
-                                        </svg>
-                                    </div>
-                                </button>
-                            </x-slot>
+        <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-200">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+                <h3 class="text-gray-700 text-3xl font-medium mb-6">角色管理</h3>
 
-                            <x-slot name="content">
-                                <x-dropdown-link :href="route('profile.edit')">
-                                    {{ __('Profile') }}
-                                </x-dropdown-link>
 
-                                <!-- Authentication -->
-                                <form method="POST" action="{{ route('logout') }}">
-                                    @csrf
-                                    <x-dropdown-link :href="route('logout')"
-                                        onclick="event.preventDefault();
-                                                    this.closest('form').submit();">
-                                        {{ __('Log Out') }}
-                                    </x-dropdown-link>
-                                </form>
-                            </x-slot>
-                        </x-dropdown>
-                    @else
-                        <a href="{{ route('login') }}" class="text-sm text-gray-700 underline">登入</a>
-                        @if (Route::has('register'))
-                            <a href="{{ route('register') }}" class="ml-4 text-sm text-gray-700 underline">註冊</a>
-                        @endif
-                    @endauth
-                </div>
-            </header>
-
-            <!-- 主要內容 -->
-            <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-200">
-                <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
-                    <h3 class="text-gray-700 text-3xl font-medium mb-6">權限管理</h3>
-                    <!-- 角色新增表單 -->
-                    <div class="bg-white rounded-lg shadow-md p-6 mb-6">
-                        <form method="POST" action="{{ route('admin.roles.store') }}" id="roleForm">
-                            @csrf
-                            <div class="mb-4">
-                                <label class="block text-gray-700 text-sm font-bold mb-2" for="role_name">
-                                    權限種類
-                                </label>
-                                <select name="role_name" id="role_name" required
-                                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                                    @foreach ($roles as $role)
-                                        <option value="{{ $role->name }}">{{ $role->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-
-                            <div class="grid grid-cols-2 gap-6">
-                                <!-- 使用者選擇 -->
-                                <div class="mb-4">
-                                    <h4 class="text-gray-700 text-lg font-medium mb-4">選擇使用者</h4>
-                                    <select name="users[]" multiple
-                                        class="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                        size="10" required>
-                                        @foreach ($users as $user)
-                                            <option value="{{ $user->id }}">{{ $user->name }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="flex justify-end mt-6">
-                                <button type="submit"
-                                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-                                    新增角色
-                                </button>
-                            </div>
-                        </form>
+                <!-- Admin 表格 -->
+                <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+                    <div class="flex justify-between items-center mb-4">
+                        <h4 class="text-gray-700 text-xl font-medium">管理員列表</h4>
+                        <div class="flex gap-2">
+                            <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                                新增
+                            </button>
+                            <button id="adminModifyBtn"
+                                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded hidden">
+                                修改
+                            </button>
+                        </div>
                     </div>
-
-                    <!-- 角色列表 -->
-                    <div class="bg-white rounded-lg shadow-md p-6">
-                        <h4 class="text-gray-700 text-xl font-medium mb-4">現有角色</h4>
-                        <table class="min-w-full divide-y divide-gray-200">
-                            <thead>
-                                <tr>
-                                    <th
-                                        class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        角色名稱</th>
-                                    <th
-                                        class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        操作</th>
-                                </tr>
-                            </thead>
-                            <tbody id="roleList" class="bg-white divide-y divide-gray-200">
-                                <!-- JavaScript 將在這裡添加角色 -->
-                            </tbody>
-                        </table>
-                    </div>
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead>
+                            <tr>
+                                <th
+                                    class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    選擇
+                                </th>
+                                <!-- ... 其他表頭 ... -->
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <input type="checkbox" class="admin-checkbox form-checkbox h-4 w-4 text-blue-600">
+                                </td>
+                                <!-- ... 其他欄位 ... -->
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
-            </main>
 
-            <script>
-                function addRole() {
-                    const roleName = document.getElementById('name').value;
-                    if (!roleName) return;
+                <!-- User 表格 -->
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <div class="flex justify-between items-center mb-4">
+                        <h4 class="text-gray-700 text-xl font-medium">使用者列表</h4>
+                        <div class="flex gap-2">
+                            <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                                新增
+                            </button>
+                            <button id="userModifyBtn"
+                                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded hidden">
+                                修改
+                            </button>
+                        </div>
+                    </div>
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead>
+                            <tr>
+                                <th
+                                    class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    選擇
+                                </th>
+                                <!-- ... 其他表頭 ... -->
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <input type="checkbox" class="user-checkbox form-checkbox h-4 w-4 text-blue-600">
+                                </td>
+                                <!-- ... 其他欄位 ... -->
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
 
-                    const roleList = document.getElementById('roleList');
-                    const newRow = document.createElement('tr');
+                <!-- 添加 JavaScript -->
+                <script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        // 管理員表格的checkbox控制
+                        const adminCheckboxes = document.querySelectorAll('.admin-checkbox');
+                        const adminModifyBtn = document.getElementById('adminModifyBtn');
 
-                    newRow.innerHTML = `
-        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-            ${roleName}
-        </td>
-        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-            <button class="text-blue-600 hover:text-blue-900 mr-3">編輯</button>
-            <button class="text-red-600 hover:text-red-900">刪除</button>
-        </td>
-    `;
+                        adminCheckboxes.forEach(checkbox => {
+                            checkbox.addEventListener('change', function() {
+                                const hasChecked = Array.from(adminCheckboxes).some(cb => cb.checked);
+                                adminModifyBtn.classList.toggle('hidden', !hasChecked);
+                            });
+                        });
 
-                    roleList.appendChild(newRow);
-                    document.getElementById('name').value = ''; // 清空輸入框
-                }
-            </script>
+                        // 使用者表格的checkbox控制
+                        const userCheckboxes = document.querySelectorAll('.user-checkbox');
+                        const userModifyBtn = document.getElementById('userModifyBtn');
+
+                        userCheckboxes.forEach(checkbox => {
+                            checkbox.addEventListener('change', function() {
+                                const hasChecked = Array.from(userCheckboxes).some(cb => cb.checked);
+                                userModifyBtn.classList.toggle('hidden', !hasChecked);
+                            });
+                        });
+                    });
+                </script>
