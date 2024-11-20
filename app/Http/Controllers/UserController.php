@@ -12,7 +12,7 @@ class UserController extends Controller
     public function index()
     {
         // 获取所有用户
-        $users = User::all();
+        $users = User::paginate(10);
 
         // 返回视图并传递用户数据
         return view('admin.user', compact('users'));
