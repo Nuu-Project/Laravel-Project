@@ -1,6 +1,11 @@
 <!-- 左側邊欄 -->
 <div class="w-full md:w-64 bg-white shadow-md">
-    <div class="p-4 text-2xl font-bold">使用者後台</div>
+    <div class="p-4 text-2xl font-bold flex items-center">
+        <a href="/"> <class="flex items-center">
+            <img src="{{ asset('images/book-4-fix.png') }}" alt="Logo" class="w-8 h-8 mr-2">
+        </a>
+        使用者後台
+    </div>
     <nav class="mt-4" x-data="{ open: false }">
         <div @click="open = !open" class="block py-2 px-4 text-gray-700 hover:bg-gray-200 cursor-pointer">
             <div class="flex justify-between items-center">

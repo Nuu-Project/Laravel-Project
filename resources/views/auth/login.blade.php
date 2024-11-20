@@ -1,3 +1,6 @@
+<head>
+    <x-head-layout />
+</head>
 <body class="font-body">
         <!-- home section -->
         <section class="bg-white py-10 md:mb-10">
@@ -14,7 +17,7 @@
                             <a href="/">首頁</a>
                         </li>
                         <li class="font-semibold text-gray-900 hover:text-gray-400 transition ease-in-out duration-300 mb-5 lg:mb-0 text-2xl">
-                            <a href="/product">商品</a>
+                            <a href="{{ route('products.index') }}">商品</a>
                         </li>
                     </ul>
                     <div class="lg:flex flex-col md:flex-row md:items-center text-center md:space-x-6" :class="{'hidden':!navbarOpen,'flex':navbarOpen}">
@@ -23,7 +26,7 @@
                         @endif
                         @if (Route::has('login'))
                         @auth
-                            <a href="{{ url('/dashboard') }}" class="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none 
+                            <a href="{{ url('/dashboard') }}" class="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none
                             focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white">Dashboard</a>
                         @else
                             <a href="/login" class="px-6 py-4 border-2 border-blue-500 text-blue-500 font-semibold text-lg rounded-xl hover:bg-blue-700 hover:text-white transition ease-linear duration-500">登入</a>
@@ -33,7 +36,7 @@
                 </nav>
             </div>
         </section>
-        
+
 <x-guest-layout>
     <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
@@ -41,7 +44,7 @@
     <div class="flex flex-col container max-w-screen-xl mx-auto px-4">
         <div class="flex items-center justify-center mb-6 text-2xl font-semibold text-gray-900 text-center">
           <img class="w-12 h-12 mr-2" src="images/sign.png" alt="logo">
-          登入   
+          登入
             </div>
             @if ($errors->has('message'))
                 <div class="text-sm text-red-600 space-y-1">
@@ -90,15 +93,15 @@
                     <input id="remember_me" type="checkbox" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500" name="remember">
                     <span class="ms-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
                 </label>
-         
+
 
         <!-- Forgot your password -->
                 @if (Route::has('password.request'))
                 <a class="underline-none text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('password.request') }}">
                     {{ __('Forgot your password?') }}
-                </a>    
+                </a>
             @endif
-            </div>  
+            </div>
         </div>
     </form>
   </div>
