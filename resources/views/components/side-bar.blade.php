@@ -24,10 +24,11 @@
             <a href="{{ route('admin.users.index') }}" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">用戶管理</a>
             <a href="{{ route('admin.messages.index') }}"
                 class="block py-2 px-4 text-gray-700 hover:bg-gray-200">留言管理</a>
-            <a href="{{ route('admin.roles.index') }}" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">權限管理</a>
+            <a href="{{ route('admin.roles.index') }}" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">角色管理</a>
             <a href="{{ route('admin.tags.index') }}"
                 class="block py-2 px-4 text-gray-700 hover:bg-gray-200">新增標籤與刪除標籤</a>
-            <a href="{{ route('admin.reports.index') }}" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">檢舉詳情</a>
+            <a href="{{ route('admin.reports.index') }}"
+                class="block py-2 px-4 text-gray-700 hover:bg-gray-200">檢舉詳情</a>
         </div>
     </nav>
 </div>

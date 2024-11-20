@@ -15,7 +15,7 @@ class RoleController extends Controller
             ->select('id', 'name')
             ->get();
 
-        return view('admin.role', compact('users', 'roles'));
+        return view('admin.roles.index', compact('users', 'roles'));
     }
 
     public function store(Request $request)
