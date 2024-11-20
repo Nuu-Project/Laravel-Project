@@ -58,9 +58,9 @@
                                             <td
                                                 class="px-6 py-4 whitespace-nowrap text-sm font-medium flex flex-row items-center space-x-2">
                                                 <a
-                                                    href="{{ route('products.chirps.index', ['product' => $product->id]) }}">
+                                                    href="{{ route('products.show', ['product' => $product->id]) }}">
                                                     <button
-                                                        class="px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700">查看</button>
+                                                        class="px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700">前往</button>
                                                 </a>
                                                 <form
                                                     action="{{ route('admin.products.demote', ['product' => $product->id]) }}"
