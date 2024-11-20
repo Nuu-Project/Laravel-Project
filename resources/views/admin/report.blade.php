@@ -1,10 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
+<x-head-layout />
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-<head>
-    <x-head-layout />
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-</head>
 
 <body class="font-body">
     <div class="flex flex-col md:flex-row h-screen bg-gray-100">
@@ -69,6 +65,4 @@
             </main>
         </div>
     </div>
-</body>
-
-</html>
+</x-head-layout>
