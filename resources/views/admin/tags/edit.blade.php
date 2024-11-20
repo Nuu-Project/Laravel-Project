@@ -35,7 +35,7 @@
                                 {{ __('Profile') }}
                             </x-dropdown-link>
 
-                            <!-- <x-dropdown-link :href="route('admin.tags.create')">
+                            <!-- <x-dropdown-link :href="route('user.products.index')">
                                     {{ __('使用者後台') }}
                                 </x-dropdown-link> -->
 
