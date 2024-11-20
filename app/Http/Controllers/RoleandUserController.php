@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Illuminate\Container\Attributes\Log;
 use Illuminate\Http\Request;
 
 class RoleandUserController extends Controller
@@ -16,11 +17,11 @@ class RoleandUserController extends Controller
     public function create(Request $request)
     {
         // 獲取未分配角色的用戶
-        $users = User::whereDoesntHave('roles')->get();
-        
+        $users = User::whereDoesntHave('roles')->paginate(10);
+
         // 獲取要分配的角色類型（admin 或 user）
         $type = $request->query('type');
-        
+
         return view('admin.roles.create', compact('users', 'type'));
     }
 
@@ -32,38 +33,37 @@ class RoleandUserController extends Controller
             'role_type' => 'required|in:admin,user'
         ]);
 
+        // 获取选中的用户
         $users = User::whereIn('id', $request->user_ids)->get();
-        
+
+        // 为每个用户分配角色
         foreach ($users as $user) {
             $user->assignRole($request->role_type);
         }
 
-        return response()->json([
-            'message' => '角色分配成功',
-            'redirect' => route('admin.roles.index')
-        ]);
+        // 返回成功消息和重定向
+        return redirect()->route('admin.roles.index')->with('success', '角色分配成功');
     }
 
-    public function edit($id)
+    // 更新角色的方法
+    public function update(Request $request, $role)
     {
-        $user = User::findOrFail($id);
-        return view('admin.roles.edit', compact('user'));
-    }
-
-    public function update(Request $request, $id)
-    {
+        // 驗證選中的角色
         $request->validate([
-            'role' => 'required|in:admin,user'
+            'selected_ids' => 'required|array',
+            'selected_ids.*' => 'exists:users,id', // 確保用戶 ID 存在
         ]);
 
-        $user = User::findOrFail($id);
-        
-        // 移除現有角色並分配新角色
-        $user->syncRoles([$request->role]);
+        // 迭代選中的用戶 ID 並解除角色
+        $users = User::whereIn('id', $request->selected_ids)->get();
+        foreach ($users as $user) {
+            // 檢查用戶是否有這個角色，並移除該角色
+            if ($user->hasRole($role)) {
+                $user->removeRole($role); // 移除角色
+            }
+        }
 
-        return response()->json([
-            'message' => '角色更新成功',
-            'redirect' => route('admin.roles.index')
-        ]);
+        // 成功後重定向並顯示訊息
+        return redirect()->route('admin.roles.index')->with('success', '角色已成功移除');
     }
 }
