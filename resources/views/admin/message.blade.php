@@ -1,4 +1,4 @@
-<x-head-layout />
+<x-head-layout>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 

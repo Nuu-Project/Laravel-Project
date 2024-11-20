@@ -13,6 +13,7 @@
     <!-- Styles -->
     <link rel="stylesheet" href="{{ asset('css/tailwind.css') }}">
     <link rel="stylesheet" href="{{ asset('css/message.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/info.css') }}">
     {{ $styles ?? '' }}
 
     <!-- Fonts -->
