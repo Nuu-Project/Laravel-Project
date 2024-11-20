@@ -133,6 +133,10 @@
                                 </table>
                             </div>
                         </div>
+                        <div class="mt-4">
+                            <!-- 添加 Laravel 分页链接 -->
+                            {{ $users->links() }}
+                        </div>
                     </div>
                 </div>
             </main>
