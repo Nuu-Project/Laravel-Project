@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use Illuminate\Container\Attributes\Log;
 use Illuminate\Http\Request;
 
 class RoleandUserController extends Controller
@@ -11,6 +10,7 @@ class RoleandUserController extends Controller
     public function index()
     {
         $users = User::role(['admin', 'user'])->paginate(10);
+
         return view('admin.roles.index', compact('users'));
     }
 
@@ -30,7 +30,7 @@ class RoleandUserController extends Controller
         $request->validate([
             'user_ids' => 'required|array',
             'user_ids.*' => 'exists:users,id',
-            'role_type' => 'required|in:admin,user'
+            'role_type' => 'required|in:admin,user',
         ]);
 
         // 获取选中的用户
