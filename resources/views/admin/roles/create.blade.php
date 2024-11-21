@@ -1,14 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <x-head-layout />
+<x-head-layout>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-</head>
 
-<body class="font-body">
+
     <div class="flex flex-col md:flex-row h-screen bg-gray-100">
         <x-side-bar />
+
+        <!-- 主要內容區 -->
+        <div class="flex-1 flex flex-col overflow-hidden">
+
+            <!-- 頂部導航欄 -->
+            <x-navbar-admin />
 
         <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-200">
             <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -85,6 +86,6 @@
             </div>
         </main>
     </div>
-</body>
+</div>
+</x-head-layout>
 
-</html>
