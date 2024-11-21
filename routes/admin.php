@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\Report\ReportDetailController;
 use App\Http\Controllers\ChirpController;
 use App\Http\Controllers\DownShelvesController;
 use App\Http\Controllers\ManageableProductsController;
+use App\Http\Controllers\RoleandUserController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\UserController;
@@ -29,8 +30,8 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'role:admin'])->grou
         ->name('messages.index');
 
     // 角色管理路由
-    Route::resource('roles', RoleController::class)
-        ->only(['index', 'store', 'edit', 'update']);
+    Route::resource('roles', RoleandUserController::class)
+        ->only(['index', 'store', 'edit', 'update', 'create']);
 
     // 標籤 頁面,新增,修改,刪除
     Route::resource('tags', TagController::class)
