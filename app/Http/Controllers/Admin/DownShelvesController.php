@@ -1,23 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
-use App\Models\Product;
-use Illuminate\Contracts\View\View;
-use Illuminate\Http\Request;
 use App\Enums\ProductStatus;
+use App\Http\Controllers\Controller;
+use App\Models\Product;
 
 class DownShelvesController extends Controller
 {
-    public function index(): View
-    {
-        // 抓取所有商品
-        $products = Product::all();
-
-        // 返回到視圖，並傳遞商品資料
-        return view('admin.check', compact('products'));
-    }
-
     public function demoteData(Product $product)
     {
         // 根據當前狀態切換到相反的狀態
