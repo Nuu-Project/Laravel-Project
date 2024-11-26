@@ -113,54 +113,7 @@
                 </div>
             </nav>
 
-            <style>
-                :root {
-                    --background: 0 0% 100%;
-                    --foreground: 240 10% 3.9%;
-                    --card: 0 0% 100%;
-                    --card-foreground: 240 10% 3.9%;
-                    --popover: 0 0% 100%;
-                    --popover-foreground: 240 10% 3.9%;
-                    --primary: 240 5.9% 10%;
-                    --primary-foreground: 0 0% 98%;
-                    --secondary: 240 4.8% 95.9%;
-                    --secondary-foreground: 240 5.9% 10%;
-                    --muted: 240 4.8% 95.9%;
-                    --muted-foreground: 240 3.8% 45%;
-                    --accent: 240 4.8% 95.9%;
-                    --accent-foreground: 240 5.9% 10%;
-                    --destructive: 0 72% 51%;
-                    --destructive-foreground: 0 0% 98%;
-                    --border: 240 5.9% 90%;
-                    --input: 240 5.9% 90%;
-                    --ring: 240 5.9% 10%;
-                    --chart-1: 173 58% 39%;
-                    --chart-2: 12 76% 61%;
-                    --chart-3: 197 37% 24%;
-                    --chart-4: 43 74% 66%;
 
-                    --chart-5:27 87% 67%;--radius:0.5rem;}img[src="/placeholder.svg"],
-                    img[src="/placeholder-user.jpg"] {
-                        filter: sepia(.3) hue-rotate(-60deg) saturate(.5) opacity(0.8)
-                    }
-            </style>
-            <style>
-                h1,
-                h2,
-                h3,
-                h4,
-                h5,
-                h6 {
-                    font-family: 'Inter', sans-serif;
-                    --font-sans-serif: 'Inter';
-                }
-            </style>
-            <style>
-                body {
-                    font-family: 'Inter', sans-serif;
-                    --font-sans-serif: 'Inter';
-                }
-            </style>
             <div class="grid md:grid-cols-2 gap-6 lg:gap-12 items-start max-w-6xl px-4 mx-auto py-6">
                 <div>
                     {{-- 主圖片顯示區域 --}}
@@ -277,21 +230,28 @@
                             try {
                                 Swal.fire({
                                     title: '檢舉',
-                                    input: 'select',
-                                    inputOptions: inputOptions,
-                                    inputPlaceholder: '選擇檢舉原因',
+                                    html: `
+                                        <select id="reportReason" class="swal2-input">
+                                            <option value="" disabled selected>選擇檢舉原因</option>
+                                            ${Object.entries(inputOptions).map(([key, value]) => `<option value="${key}">${value}</option>`).join('')}
+                                        </select>
+                                        <textarea id="customReason" class="swal2-textarea" placeholder="輸入自定義原因" style="width: 80%; height: 80px; resize: none; margin: 1rem auto 0; display: block; overflow-x: hidden; padding: 0.75rem; box-sizing: border-box;"></textarea>
+                                    `,
                                     showCancelButton: true,
                                     confirmButtonText: '送出檢舉',
                                     cancelButtonText: '取消',
-                                    inputValidator: (value) => {
-                                        if (!value) {
-                                            return '請選擇一個選項'
+                                    preConfirm: () => {
+                                        const reportId = document.getElementById('reportReason').value;
+                                        const customReason = document.getElementById('customReason').value;
+                                        if (!reportId && !customReason) {
+                                            Swal.showValidationMessage('請選擇一個選項或輸入自定義原因');
                                         }
+                                        return { reportId, customReason };
                                     }
                                 }).then((result) => {
                                     if (result.isConfirmed) {
-                                        var reportId = result.value;
-                                        var description = '描述信息'; // 替換為實際的描述信息
+                                        const { reportId, customReason } = result.value;
+                                        const description = customReason || '描述信息'; // 替換為實際的描述信息
 
                                         $.ajax({
                                             url: '{{ route('reports.store') }}', // 使用 Blade 生成的路由

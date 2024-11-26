@@ -1,15 +1,12 @@
 @php
     use App\Enums\ProductStatus;
 @endphp
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-    <x-head-layout />
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-</head>
+<x-head-layout>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-<body class="font-body">
+
+
     <div class="flex flex-col md:flex-row h-screen bg-gray-100">
         <x-side-bar />
 
@@ -140,7 +137,4 @@
             }
         });
     </script>
-
-</body>
-
-</html>
+</x-head-layout>

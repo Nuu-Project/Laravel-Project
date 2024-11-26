@@ -1,11 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
+<x-head-layout>
 
-<head>
-    <x-head-layout />
-</head>
-
-<body class="font-body">
     <div class="flex flex-col md:flex-row h-screen bg-gray-100">
         <x-user-link />
 
@@ -296,6 +290,5 @@
             alert('{{ session('success') }}');
         </script>
     @endif
-</body>
+</x-head-layout>
 
-</html>
