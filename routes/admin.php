@@ -1,13 +1,12 @@
 <?php
 
-use App\Http\Controllers\Admin\Report\ReportDetailController;
-use App\Http\Controllers\ChirpController;
-use App\Http\Controllers\DownShelvesController;
-use App\Http\Controllers\ManageableProductsController;
-use App\Http\Controllers\RoleandUserController;
-use App\Http\Controllers\RoleController;
-use App\Http\Controllers\TagController;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\Admin\ChirpController;
+use App\Http\Controllers\Admin\DownShelvesController;
+use App\Http\Controllers\Admin\ManageableProductsController;
+use App\Http\Controllers\Admin\ReportDetailController;
+use App\Http\Controllers\Admin\RoleandUserController;
+use App\Http\Controllers\Admin\TagController;
+use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('admin')->name('admin.')->middleware(['auth', 'role:admin'])->group(function () {
