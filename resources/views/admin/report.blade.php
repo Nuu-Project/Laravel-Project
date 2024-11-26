@@ -28,7 +28,7 @@
                                     <label for="filter[reportable_id]" class="sr-only">搜索留言</label>
                                     <input type="text" id="filter[reportable_id]" name="filter[reportable_id]"
                                         class="w-full rounded-md border border-gray-300 bg-white px-4 py-2 text-sm"
-                                        placeholder="請輸入查詢ID...">
+                                        placeholder="請輸入查詢ID..." value="{{ request('filter.reportable_id') }}">
                                 </div>
                             </div>
                         </form>
