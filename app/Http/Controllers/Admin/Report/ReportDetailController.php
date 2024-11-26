@@ -14,7 +14,6 @@ class ReportDetailController extends Controller
 
         $reportables = QueryBuilder::for(Reportable::class)
             ->allowedFilters([
-                AllowedFilter::exact('reportable_type'),
                 AllowedFilter::exact('reportable_id'),
             ])
             ->with('report')
