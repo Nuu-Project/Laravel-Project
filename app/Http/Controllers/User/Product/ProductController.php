@@ -49,13 +49,17 @@ class ProductController extends Controller
             'grade' => ['required', 'string'],
             'semester' => ['required', 'string'],
             'category' => ['required', 'string'],
-            'images' => ['nullable', 'array', 'max:5'],
+            'images' => ['required', 'array', 'max:5'],
             'images.*' => ['nullable', 'image', 'max:2048'],
             'image_ids' => ['nullable', 'array', 'max:5'],
         ]);
 
-        // 更新產品資料（排除 images 欄位）
-        $product->update($request->except(['images', 'image_ids']));
+        // 更新產品資料（只更新基本資料）
+        $product->update($request->only([
+            'name',
+            'price',
+            'description'
+        ]));
 
         // 處理圖片上傳和更新
         if ($request->hasFile('images') || $request->has('image_ids')) {
@@ -92,32 +96,24 @@ class ProductController extends Controller
             });
         }
 
-        // 獲取表單資料中的標籤
-        $gradeSlug = $request->input('grade');
-        $semesterSlug = $request->input('semester');
-        $categorySlug = $request->input('category');
+        // 處理標籤
+        $product->tags()->detach(); // 先清除所有標籤
 
-        // 根據年級查找對應的年級標籤
-        $gradeTag = Tag::where('slug->zh', $gradeSlug)->where('type', '年級')->first();
-        // 根據學期查找對應的學期標籤
-        $semesterTag = Tag::where('slug->zh', $semesterSlug)->where('type', '學期')->first();
-        // 根據課程類別查找對應的課程標籤
-        $categoryTag = Tag::where('slug->zh', $categorySlug)->where('type', '課程')->first();
+        // 獲取並附加新的標籤
+        $tagTypes = [
+            ['type' => '年級', 'slug' => $request->input('grade')],
+            ['type' => '學期', 'slug' => $request->input('semester')],
+            ['type' => '課程', 'slug' => $request->input('category')]
+        ];
 
-        // 先清除所有的標籤
-        $product->tags()->detach();
+        foreach ($tagTypes as $tagType) {
+            $tag = Tag::where('slug->zh', $tagType['slug'])
+                      ->where('type', $tagType['type'])
+                      ->first();
 
-        // 附加年級標籤到產品
-        if ($gradeTag) {
-            $product->attachTag($gradeTag);
-        }
-        // 附加學期標籤到產品
-        if ($semesterTag) {
-            $product->attachTag($semesterTag);
-        }
-        // 附加課程標籤到產品
-        if ($categoryTag) {
-            $product->attachTag($categoryTag);
+            if ($tag) {
+                $product->attachTag($tag);
+            }
         }
 
         // 保存更新後的產品資料
