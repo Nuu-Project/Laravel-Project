@@ -14,7 +14,7 @@ class ProductController extends Controller
     public function index()
     {
         $userId = Auth::user()->id;
-        $userProducts = Product::with(['media', 'user'])
+        $userProducts = Product::with(['media', 'user', 'tags'])
             ->where('user_id', $userId)
             ->orderBy('updated_at', 'desc')
             ->paginate(3);
