@@ -2,8 +2,7 @@
     use App\Enums\ProductStatus;
 @endphp
 
-<x-head-layout>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<x-template-layout>
 
 
 
@@ -137,4 +136,4 @@
             }
         });
     </script>
-</x-head-layout>
+</x-template-layout>

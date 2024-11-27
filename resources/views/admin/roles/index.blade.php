@@ -1,4 +1,4 @@
-<x-head-layout>
+<x-template-layout>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 
@@ -167,4 +167,4 @@
             });
         });
     </script>
-</x-head-layout>
+</x-template-layout>
