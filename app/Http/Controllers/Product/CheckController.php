@@ -45,7 +45,6 @@ class CheckController extends Controller
         // 驗證輸入資料
         $request->validate([
             'name' => ['required', 'string', 'max:50'],
-            'price' => ['required', 'numeric', 'digits_between:1,10'],
             'description' => ['required', 'string'],
             'grade' => ['required', 'string'],
             'semester' => ['required', 'string'],
