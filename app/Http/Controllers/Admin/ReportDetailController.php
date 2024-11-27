@@ -16,7 +16,7 @@ class ReportDetailController extends Controller
             ->allowedFilters([
                 AllowedFilter::exact('reportable_id'),
             ])
-            ->with('report')
+            ->with('report', 'reportable', 'whistleblower')
             ->paginate(5);
 
         return view('admin.report', compact('reportables'));
