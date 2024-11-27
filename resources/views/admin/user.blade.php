@@ -45,13 +45,17 @@
                                 <table class="min-w-full divide-y divide-gray-200">
                                     <thead class="bg-gray-50">
                                         <tr>
-                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            <th
+                                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                                 用戶名稱</th>
-                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            <th
+                                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                                 檢舉</th>
-                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            <th
+                                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                                 權限</th>
-                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            <th
+                                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                                 停用</th>
                                         </tr>
                                     </thead>
@@ -74,13 +78,15 @@
                                                 </td>
                                                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                                     <div class="flex items-center space-x-2">
-                                                        <span class="text-sm text-gray-500">{{ $user->reports_count ?? 0 }}次</span>
-                                                        <button class="px-3 py-1 bg-red-600 text-white rounded hover:bg-red-700">檢舉詳情</button>
+                                                        <span
+                                                            class="text-sm text-gray-500">{{ $user->reports_count ?? 0 }}次</span>
+                                                        <button
+                                                            class="px-3 py-1 bg-red-600 text-white rounded hover:bg-red-700">檢舉詳情</button>
                                                     </div>
                                                 </td>
                                                 <td class="px-6 py-4 whitespace-nowrap">
                                                     <div class="text-sm text-gray-900">
-                                                        @if($user->hasRole('admin'))
+                                                        @if ($user->hasRole('admin'))
                                                             管理者
                                                         @else
                                                             使用者
@@ -175,8 +181,10 @@
                     allUsersList.style.display = 'none';
 
                     users.forEach(user => {
-                        const userName = user.querySelector('td:nth-child(1)').textContent.toLowerCase();
-                        const userPosition = user.querySelector('td:nth-child(2)').textContent.toLowerCase();
+                        const userName = user.querySelector('td:nth-child(1)').textContent
+                            .toLowerCase();
+                        const userPosition = user.querySelector('td:nth-child(2)').textContent
+                            .toLowerCase();
 
                         if (userName.includes(searchTerm) || userPosition.includes(searchTerm)) {
                             const clonedRow = user.cloneNode(true);
