@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\guest;
 
+use App\Enums\ProductStatus;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Models\Report;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Spatie\Tags\Tag;
-use App\Enums\ProductStatus;
 
 class ProductController extends Controller
 {

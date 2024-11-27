@@ -1,8 +1,8 @@
 <?php
 
-use App\Http\Controllers\User\Product\ProductController;
 use App\Http\Controllers\User\Product\CreateController;
 use App\Http\Controllers\User\Product\EditController;
+use App\Http\Controllers\User\Product\ProductController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('user')->name('user.')->middleware(['auth'])->group(function () {
