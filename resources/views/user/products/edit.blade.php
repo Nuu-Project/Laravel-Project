@@ -1,4 +1,4 @@
-<x-head-layout>
+<x-template-layout>
 
     <div class="flex flex-col md:flex-row h-screen bg-gray-100">
         <x-user-link />
@@ -290,5 +290,5 @@
             alert('{{ session('success') }}');
         </script>
     @endif
-</x-head-layout>
+</x-template-layout>
 

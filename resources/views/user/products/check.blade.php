@@ -2,7 +2,7 @@
     use App\Enums\ProductStatus;
 @endphp
 
-<x-head-layout>
+<x-template-layout>
 
 
     <div class="flex flex-col md:flex-row h-screen bg-gray-100">
@@ -135,5 +135,5 @@
             </main>
         </div>
     </div>
-</x-head-layout>
+</x-template-layout>
 

@@ -1,4 +1,4 @@
-<x-head-layout>
+<x-template-layout>
 
     <x-navbar />
 
@@ -74,4 +74,4 @@
     <script>
         feather.replace()
     </script>
-</x-head-layout>
+</x-template-layout>

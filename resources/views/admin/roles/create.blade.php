@@ -1,4 +1,4 @@
-<x-head-layout>
+<x-template-layout>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 
@@ -87,5 +87,5 @@
         </main>
     </div>
 </div>
-</x-head-layout>
+</x-template-layout>
 
