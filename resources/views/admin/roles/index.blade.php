@@ -8,12 +8,6 @@
         <div class="flex-1 flex flex-col overflow-hidden">
             <x-navbar-admin />
 
-        <!-- 主要內容區 -->
-        <div class="flex-1 flex flex-col overflow-hidden">
-
-            <!-- 頂部導航欄 -->
-            <x-navbar-admin />
-
         <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-200">
             <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
                 <h3 class="text-gray-700 text-3xl font-medium mb-6">角色管理</h3>
