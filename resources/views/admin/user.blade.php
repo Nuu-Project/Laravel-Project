@@ -1,7 +1,4 @@
 <x-template-layout>
-
-
-
     <div class="flex flex-col md:flex-row h-screen bg-gray-100">
         <x-side-bar />
 
@@ -39,6 +36,7 @@
                             </div>
                         </div>
                     </div>
+
                     <!-- All users 部分 -->
                     <div>
                         <h2 class="text-xl font-semibold text-gray-900 mb-4">所有用戶</h2>
@@ -47,17 +45,13 @@
                                 <table class="min-w-full divide-y divide-gray-200">
                                     <thead class="bg-gray-50">
                                         <tr>
-                                            <th
-                                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                                 用戶名稱</th>
-                                            <th
-                                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                                 檢舉</th>
-                                            <th
-                                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                                 權限</th>
-                                            <th
-                                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                                 停用</th>
                                         </tr>
                                     </thead>
@@ -80,14 +74,18 @@
                                                 </td>
                                                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                                     <div class="flex items-center space-x-2">
-                                                        <span
-                                                            class="text-sm text-gray-500">{{ $user->reports_count ?? 0 }}次</span>
-                                                        <button
-                                                            class="px-3 py-1 bg-red-600 text-white rounded hover:bg-red-700">檢舉詳情</button>
+                                                        <span class="text-sm text-gray-500">{{ $user->reports_count ?? 0 }}次</span>
+                                                        <button class="px-3 py-1 bg-red-600 text-white rounded hover:bg-red-700">檢舉詳情</button>
                                                     </div>
                                                 </td>
                                                 <td class="px-6 py-4 whitespace-nowrap">
-                                                    <!-- 權限欄位的內容已被移除 -->
+                                                    <div class="text-sm text-gray-900">
+                                                        @if($user->hasRole('admin'))
+                                                            管理者
+                                                        @else
+                                                            使用者
+                                                        @endif
+                                                    </div>
                                                 </td>
                                                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                                     <button
@@ -101,7 +99,6 @@
                             </div>
                         </div>
                         <div class="mt-4">
-                            <!-- 添加 Laravel 分页链接 -->
                             {{ $users->links() }}
                         </div>
                     </div>
@@ -178,10 +175,8 @@
                     allUsersList.style.display = 'none';
 
                     users.forEach(user => {
-                        const userName = user.querySelector('td:nth-child(1)').textContent
-                            .toLowerCase();
-                        const userPosition = user.querySelector('td:nth-child(2)').textContent
-                            .toLowerCase();
+                        const userName = user.querySelector('td:nth-child(1)').textContent.toLowerCase();
+                        const userPosition = user.querySelector('td:nth-child(2)').textContent.toLowerCase();
 
                         if (userName.includes(searchTerm) || userPosition.includes(searchTerm)) {
                             const clonedRow = user.cloneNode(true);

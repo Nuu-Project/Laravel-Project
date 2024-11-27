@@ -291,4 +291,3 @@
         </script>
     @endif
 </x-template-layout>
-
