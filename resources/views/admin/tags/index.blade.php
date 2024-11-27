@@ -1,5 +1,4 @@
-<x-head-layout>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<x-template-layout>
 
         <div class="flex flex-col md:flex-row h-screen bg-gray-100">
         <x-side-bar />
@@ -75,5 +74,5 @@
                 </main>
             </div>
         </div>
-</x-head-layout>
+</x-template-layout>
 

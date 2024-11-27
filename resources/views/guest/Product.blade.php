@@ -1,4 +1,4 @@
-<x-head-layout>
+<x-template-layout>
 
 <body class="font-body">
 
@@ -142,4 +142,4 @@
             </div>
         </main>
     </div>
-</x-head-layout>
+</x-template-layout>

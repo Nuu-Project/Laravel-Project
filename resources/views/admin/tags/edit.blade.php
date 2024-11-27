@@ -1,4 +1,4 @@
-<x-head-layout>
+<x-template-layout>
 
 
         <div class="flex h-screen bg-gray-100">
@@ -85,5 +85,5 @@
                 </main>
             </div>
         </div>
-</x-head-layout>
+</x-template-layout>
 

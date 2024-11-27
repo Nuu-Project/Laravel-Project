@@ -5,13 +5,13 @@ namespace App\View\Components;
 use Illuminate\View\Component;
 use Illuminate\View\View;
 
-class HeadLayout extends Component
+class TemplateLayout extends Component
 {
     /**
      * Get the view / contents that represents the component.
      */
     public function render(): View
     {
-        return view('layouts.head');
+        return view('layouts.template');
     }
 }
