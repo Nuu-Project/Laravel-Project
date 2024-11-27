@@ -1,7 +1,6 @@
-<head>
-    <x-head-layout />
-</head>
-<body class="font-body">
+<x-template-layout>
+
+
         <!-- home section -->
         <section class="bg-white py-10 md:mb-10">
             <div class="container max-w-screen-xl mx-auto px-4">
@@ -108,3 +107,5 @@
  </div>
 </section>
 </x-guest-layout>
+</x-template-layout>
+
