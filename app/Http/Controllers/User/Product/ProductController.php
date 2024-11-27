@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Spatie\Tags\Tag;
 
-class CheckController extends Controller
+class ProductController extends Controller
 {
     public function index()
     {

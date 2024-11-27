@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Product;
 use Illuminate\Contracts\View\View;
 
-class ManageableProductsController extends Controller
+class ProductController extends Controller
 {
     public function index(): View
     {

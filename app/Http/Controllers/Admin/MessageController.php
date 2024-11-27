@@ -8,11 +8,11 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
-class ChirpController extends Controller
+class MessageController extends Controller
 {
     use AuthorizesRequests;
 
-    public function adminMessage(Request $request): View
+    public function index(Request $request): View
     {
         $query = Chirp::with(['user', 'product'])
             ->select('chirps.*')

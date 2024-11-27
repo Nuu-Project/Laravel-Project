@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\login;
+namespace App\Http\Controllers\login\Product;
 
 use App\Http\Controllers\Controller;
 use App\Models\Chirp;
@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
 
-class ChirpController extends Controller
+class MessageController extends Controller
 {
     use AuthorizesRequests;
 

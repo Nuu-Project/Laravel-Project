@@ -1,12 +1,12 @@
 <?php
 
-use App\Http\Controllers\login\ChirpController;
-use App\Http\Controllers\login\ReportController;
+use App\Http\Controllers\login\Product\MessageController;
+use App\Http\Controllers\login\Product\ReportController;
 use App\Http\Controllers\login\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 // 留言 建立,編輯頁,更新留言,刪除
-Route::resource('products.chirps', ChirpController::class)
+Route::resource('products.chirps', MessageController::class)
     ->only(['store', 'edit', 'update', 'destroy'])
     ->middleware(['auth', 'verified']);
 
