@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\login\Product;
+namespace App\Http\Controllers\Login\Product;
 
 use App\Http\Controllers\Controller;
 use App\Models\Chirp;

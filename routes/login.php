@@ -1,8 +1,8 @@
 <?php
 
-use App\Http\Controllers\login\Product\MessageController;
-use App\Http\Controllers\login\Product\ReportController;
-use App\Http\Controllers\login\ProfileController;
+use App\Http\Controllers\Login\Product\MessageController;
+use App\Http\Controllers\Login\Product\ReportController;
+use App\Http\Controllers\Login\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 // 留言 建立,編輯頁,更新留言,刪除
