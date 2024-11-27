@@ -43,6 +43,16 @@
                         完成交易</p>
                 </div>
 
+                <div class="text-center lg:text-left space-y-7 mb-10 lg:mb-0">
+                    <h4 class="font-semibold text-gray-900 text-lg md:text-2xl">支持我們</h4>
+
+                    <a class="block font-black text-gray-800 text-sm md:text-lg hover:text-gray-1000 transition ease-in-out duration-300"
+                        href="https://docs.google.com/forms/d/e/1FAIpQLSfJP4fi8V-8nQ0UgMyFncuDxUhzdtvfWmI050Z6F5y73ndhug/viewform?embedded=true">
+                        <p>
+                            回饋表單</p>
+                    </a>
+                </div>
+
             </div>
         </div> <!-- container.// -->
     </footer>

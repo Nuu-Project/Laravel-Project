@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Product;
+namespace App\Http\Controllers\login\Product;
 
 use App\Http\Controllers\Controller;
-use App\Models\Reportable;
 use App\Models\Product;
+use App\Models\Reportable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 

@@ -1,14 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <x-head-layout />
-</head>
-
-<body class="font-body">
+<x-template-layout>
 
     <x-navbar />
-
 
     <!-- feature section -->
     <section class="bg-white py-1 md:mt-10">
@@ -82,7 +74,4 @@
     <script>
         feather.replace()
     </script>
-
-</body>
-
-</html>
+</x-template-layout>

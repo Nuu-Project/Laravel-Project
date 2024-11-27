@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin\Report;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Reportable;
@@ -14,10 +14,9 @@ class ReportDetailController extends Controller
 
         $reportables = QueryBuilder::for(Reportable::class)
             ->allowedFilters([
-                AllowedFilter::exact('reportable_type'),
                 AllowedFilter::exact('reportable_id'),
             ])
-            ->with('report')
+            ->with('report', 'reportable', 'whistleblower')
             ->paginate(5);
 
         return view('admin.report', compact('reportables'));

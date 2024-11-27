@@ -1,21 +1,22 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <x-head-layout />
+<x-template-layout>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-</head>
 
-<body class="font-body">
+
     <div class="flex flex-col md:flex-row h-screen bg-gray-100">
         <x-side-bar />
         <!-- 主要內容區 -->
         <div class="flex-1 flex flex-col overflow-hidden">
             <x-navbar-admin />
 
-            <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-200">
-                <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
-                    <h3 class="text-gray-700 text-3xl font-medium mb-6">角色管理</h3>
+        <!-- 主要內容區 -->
+        <div class="flex-1 flex flex-col overflow-hidden">
+
+            <!-- 頂部導航欄 -->
+            <x-navbar-admin />
+
+        <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-200">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+                <h3 class="text-gray-700 text-3xl font-medium mb-6">角色管理</h3>
 
                     <!-- Admin 表格 -->
                     <div class="bg-white rounded-lg shadow-md p-6 mb-6">
@@ -98,11 +99,9 @@
                     document.getElementById('adminForm').submit();
                 });
 
-                modifyUserBtn?.addEventListener('click', function() {
-                    document.getElementById('userForm').submit();
-                });
+            modifyUserBtn?.addEventListener('click', function() {
+                document.getElementById('userForm').submit();
             });
-        </script>
-</body>
-
-</html>
+        });
+    </script>
+</x-template-layout>

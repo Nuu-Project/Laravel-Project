@@ -1,10 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
+<x-template-layout>
 
-<head>
-    <x-head-layout />
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-</head>
 
 <body class="font-body">
     <div class="flex flex-col md:flex-row h-screen bg-gray-100">
@@ -28,7 +23,7 @@
                                     <label for="filter[reportable_id]" class="sr-only">搜索留言</label>
                                     <input type="text" id="filter[reportable_id]" name="filter[reportable_id]"
                                         class="w-full rounded-md border border-gray-300 bg-white px-4 py-2 text-sm"
-                                        placeholder="請輸入查詢ID...">
+                                        placeholder="請輸入查詢ID..." value="{{ request('filter.reportable_id') }}">
                                 </div>
                             </div>
                         </form>
@@ -90,6 +85,4 @@
             </main>
         </div>
     </div>
-</body>
-
-</html>
+</x-template-layout>

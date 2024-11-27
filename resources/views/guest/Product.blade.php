@@ -1,9 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <x-head-layout />
-</head>
+<x-template-layout>
 
 <body class="font-body">
 
@@ -147,6 +142,4 @@
             </div>
         </main>
     </div>
-</body>
-
-</html>
+</x-template-layout>

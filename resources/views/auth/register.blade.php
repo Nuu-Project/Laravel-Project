@@ -1,6 +1,6 @@
-<head>
-    <x-head-layout />
-</head>
+<x-template-layout>
+
+
 <body class="font-body">
     <!-- home section -->
     <section class="bg-white py-10 md:mb-10">
@@ -131,3 +131,5 @@
                     </form>
         </section>
     </x-guest-layout>
+</x-template-layout>
+
