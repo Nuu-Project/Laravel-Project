@@ -87,35 +87,7 @@
                                                     </div>
                                                 </td>
                                                 <td class="px-6 py-4 whitespace-nowrap">
-                                                    @csrf
-                                                    <div class="flex items-center space-x-6">
-                                                        <!-- 管理者權限 -->
-                                                        <div class="flex items-center">
-                                                            <input type="checkbox" name="role[]" value="admin"
-                                                                id="admin-role-{{ $user->id }}"
-                                                                class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-                                                                {{ $user->hasRole('admin') ? 'checked' : '' }}
-                                                                onchange="this.form.submit()">
-                                                            <label for="admin-role-{{ $user->id }}"
-                                                                class="ml-2 text-sm text-gray-700">
-                                                                管理者
-                                                            </label>
-                                                        </div>
-
-                                                        <!-- 使用者權限 -->
-                                                        <div class="flex items-center">
-                                                            <input type="checkbox" name="role[]" value="user"
-                                                                id="user-role-{{ $user->id }}"
-                                                                class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-                                                                {{ $user->hasRole('user') ? 'checked' : '' }}
-                                                                onchange="this.form.submit()">
-                                                            <label for="user-role-{{ $user->id }}"
-                                                                class="ml-2 text-sm text-gray-700">
-                                                                使用者
-                                                            </label>
-                                                        </div>
-                                                    </div>
-                                                    </form>
+                                                    <!-- 權限欄位的內容已被移除 -->
                                                 </td>
                                                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                                     <button
