@@ -31,7 +31,7 @@ class ProductController extends Controller
             })->toArray();
 
         // 根據所有標籤篩選商品
-        $productsQuery = Product::with(['media', 'user'])
+        $productsQuery = Product::with(['media', 'user', 'tags'])
             ->where('status', ProductStatus::Active->value);
 
         if (! empty($tags)) {
@@ -59,7 +59,7 @@ class ProductController extends Controller
 
     public function show($productId): View
     {
-        $product = Product::findOrFail($productId);
+        $product = Product::with('tags')->findOrFail($productId);
 
         $chirps = $product->chirps()->with('user')->get();
         $reports = Report::where('type', '商品')->get()->mapWithKeys(function ($item) {
