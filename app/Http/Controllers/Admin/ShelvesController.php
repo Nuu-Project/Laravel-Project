@@ -6,7 +6,7 @@ use App\Enums\ProductStatus;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 
-class DownShelvesController extends Controller
+class ShelvesController extends Controller
 {
     public function demoteData(Product $product)
     {

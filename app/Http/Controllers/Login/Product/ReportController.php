@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\login;
+namespace App\Http\Controllers\login\Product;
 
 use App\Http\Controllers\Controller;
 use App\Models\Reportable;
