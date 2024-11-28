@@ -36,6 +36,7 @@
                             @csrf
                             @method('PUT')
                             <input type="hidden" name="imageOrder" id="imageOrder">
+                            <input type="hidden" name="deleted_image_ids" id="deletedImageIds" value="[]">
                             <div class="grid gap-2">
                                 <label
                                     class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
@@ -153,12 +154,12 @@
                                                     <p class="mb-2 text-sm text-gray-500"><span
                                                             class="font-semibold">點擊上傳</span> 或拖放</p>
                                                     <p class="text-xs text-gray-500">SVG, PNG, JPG or GIF (最大.
-                                                        800x400px)</p>
+                                                        3200x3200px)</p>
                                                 </div>
                                                 <div id="preview{{ $i }}"
                                                     class="absolute inset-0 flex items-center justify-center {{ $product->getMedia('images')->sortBy('order_column')->values()->get($i) ? '' : 'hidden' }}">
                                                     <img src="{{ $product->getMedia('images')->sortBy('order_column')->values()->get($i)?->getUrl() ?? '#' }}"
-                                                        alt="預覽圖片" class="max-w-full max-h-full object-contain">
+                                                        alt="檔案過大或格式有誤" class="max-w-full max-h-full object-contain">
                                                 </div>
                                             </label>
                                             <button type="button"
@@ -182,8 +183,20 @@
                                     const preview = document.getElementById('preview' + number);
                                     const placeholder = document.getElementById('placeholder' + number);
                                     const deleteButton = document.getElementById('deleteButton' + number);
+                                    const imageIdInput = input.parentNode.querySelector('input[name="image_ids[]"]');
                                     const file = input.files[0];
                                     const reader = new FileReader();
+
+                                    // 只有當有新文件被選擇，且原來有圖片ID時，才標記原圖為刪除
+                                    if (file && imageIdInput.value) {
+                                        const deletedImageIds = JSON.parse(document.getElementById('deletedImageIds').value);
+                                        if (!deletedImageIds.includes(imageIdInput.value)) {
+                                            deletedImageIds.push(imageIdInput.value);
+                                            document.getElementById('deletedImageIds').value = JSON.stringify(deletedImageIds);
+                                        }
+                                        // 清除原來的圖片ID，因為我們現在有了新圖片
+                                        imageIdInput.value = '';
+                                    }
 
                                     reader.onloadend = function() {
                                         preview.querySelector('img').src = reader.result;
@@ -219,31 +232,16 @@
                                 });
 
                                 function deleteImage(productId, imageId, index) {
-                                    if (imageId === null) {
-                                        // 如果是新上傳的圖片，直接從 UI 中移除
-                                        removeImage(index);
-                                    } else {
-                                        // 如果是已存在的圖片，發送 AJAX 請求刪除
-                                        fetch(`/user/products/${productId}/images/${imageId}`, {
-                                                method: 'DELETE',
-                                                headers: {
-                                                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                                                    'Content-Type': 'application/json',
-                                                    'Accept': 'application/json',
-                                                },
-                                            })
-                                            .then(response => response.json())
-                                            .then(data => {
-                                                if (data.success) {
-                                                    removeImage(index);
-                                                } else {
-                                                    console.error('刪除圖片失敗：' + data.message);
-                                                }
-                                            })
-                                            .catch(error => {
-                                                console.error('Error:', error);
-                                            });
+                                    // 標記圖片為已刪除
+                                    const deletedImageIds = JSON.parse(document.getElementById('deletedImageIds').value);
+                                    if (imageId && !deletedImageIds.includes(imageId)) {
+                                        deletedImageIds.push(imageId);
+                                        document.getElementById('deletedImageIds').value = JSON.stringify(deletedImageIds);
                                     }
+
+                                    // 更新 UI
+                                    removeImage(index);
+                                    updatePositions();
                                 }
 
                                 function removeImage(index) {
@@ -264,12 +262,6 @@
 
                                     // 隱藏刪除按鈕
                                     deleteButton.classList.add('hidden');
-
-                                    // 清除隱藏的 image_id 輸入
-                                    const imageIdInput = document.querySelector(`input[name="image_ids[]"]:nth-of-type(${index + 1})`);
-                                    if (imageIdInput) {
-                                        imageIdInput.value = '';
-                                    }
                                 }
                                 // 修改表單提交處理邏輯
                                 document.querySelector('form').addEventListener('submit', function(event) {
