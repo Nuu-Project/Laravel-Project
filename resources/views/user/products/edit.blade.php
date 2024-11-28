@@ -132,7 +132,8 @@
                                     上傳圖片
                                 </label>
 
-                                <div id="imageContainer" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+                                <div id="imageContainer"
+                                    class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
                                     @for ($i = 0; $i < 5; $i++)
                                         <div class="relative">
                                             <input type="file" name="images[]" id="image{{ $i }}"
@@ -290,9 +291,9 @@
 
                                         if ((imageInput.files.length > 0) ||
                                             (imageIdInput.value &&
-                                             !preview.classList.contains('hidden') &&
-                                             preview.querySelector('img')?.src &&
-                                             preview.querySelector('img').src !== '#')) {
+                                                !preview.classList.contains('hidden') &&
+                                                preview.querySelector('img')?.src &&
+                                                preview.querySelector('img').src !== '#')) {
                                             hasValidImage = true;
                                             break;
                                         }
@@ -401,4 +402,3 @@
         </script>
     @endif
 </x-template-layout>
-
