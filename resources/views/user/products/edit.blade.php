@@ -1,4 +1,6 @@
 <x-template-layout>
+    <script src="{{ asset('js/profile/edit.js') }}"></script>
+
 
     <div class="flex flex-col md:flex-row h-screen bg-gray-100">
         <x-user-link />
@@ -176,7 +178,7 @@
                                 <x-input-error :messages="$errors->get('images')" class="mt-2" />
                             </div>
 
-                            <script>
+                            {{-- <script>
                                 function previewImage(input, number) {
                                     const preview = document.getElementById('preview' + number);
                                     const placeholder = document.getElementById('placeholder' + number);
@@ -270,7 +272,7 @@
                                         imageIdInput.value = '';
                                     }
                                 }
-                            </script>
+                            </script> --}}
                             <button
                                 class="inline-flex items-center justify-center whitespace-nowrap rounded-xl text-base sm:text-lg font-semibold ring-offset-background transition-colors ease-in-out duration-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-blue-500 text-white hover:bg-blue-700 h-10 sm:h-11 px-4 sm:px-8"
                                 type="submit">
@@ -291,4 +293,3 @@
         </script>
     @endif
 </x-template-layout>
-
