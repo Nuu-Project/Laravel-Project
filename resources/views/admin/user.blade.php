@@ -1,7 +1,4 @@
 <x-template-layout>
-
-
-
     <div class="flex flex-col md:flex-row h-screen bg-gray-100">
         <x-side-bar />
 
@@ -39,6 +36,7 @@
                             </div>
                         </div>
                     </div>
+
                     <!-- All users 部分 -->
                     <div>
                         <h2 class="text-xl font-semibold text-gray-900 mb-4">所有用戶</h2>
@@ -87,7 +85,13 @@
                                                     </div>
                                                 </td>
                                                 <td class="px-6 py-4 whitespace-nowrap">
-                                                    <!-- 權限欄位的內容已被移除 -->
+                                                    <div class="text-sm text-gray-900">
+                                                        @if ($user->hasRole('admin'))
+                                                            管理者
+                                                        @else
+                                                            使用者
+                                                        @endif
+                                                    </div>
                                                 </td>
                                                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                                     <button
@@ -101,7 +105,6 @@
                             </div>
                         </div>
                         <div class="mt-4">
-                            <!-- 添加 Laravel 分页链接 -->
                             {{ $users->links() }}
                         </div>
                     </div>
