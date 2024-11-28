@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class MessageTable extends Component
+class TableUser extends Component
 {
     /**
      * Create a new component instance.
@@ -21,6 +21,6 @@ class MessageTable extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.message-table');
+        return view('components.table-user');
     }
 }

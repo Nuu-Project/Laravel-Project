@@ -68,7 +68,7 @@
 
     <!-- donation section -->
     <x-product-card />
-    <x-last-page />
+    <x-page-last />
 
 
     <script>

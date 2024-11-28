@@ -30,9 +30,8 @@
                         <!-- Reviews 列表 -->
                         <div class="bg-white shadow overflow-hidden sm:rounded-lg" id="reviews-table">
                             <div class="overflow-x-auto">
-
-                                <x-message-table :chirps="$chirps->items()">
-                                </x-message-table>
+                                <x-table-message :chirps="$chirps->items()">
+                                </x-table-message>
                             </div>
 
                             <!-- 分頁導航 -->

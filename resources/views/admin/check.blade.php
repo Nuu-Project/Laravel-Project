@@ -87,6 +87,4 @@
             </main>
         </div>
     </div>
-
-
 </x-template-layout>
