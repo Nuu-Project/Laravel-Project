@@ -42,27 +42,74 @@ class ProductController extends Controller
 
     public function update(Request $request, Product $product)
     {
-        // 驗證輸入資料
-        $request->validate([
+        // 基本驗證規則
+        $rules = [
             'name' => ['required', 'string', 'max:50'],
             'description' => ['required', 'string'],
-            'grade' => ['required', 'string'],
-            'semester' => ['required', 'string'],
-            'category' => ['required', 'string'],
+            'grade' => ['required', 'string', 'not_in:選擇適用的年級...'],
+            'semester' => ['required', 'string', 'not_in:選擇學期...'],
+            'category' => ['required', 'string', 'not_in:選擇課程類別...'],
             'images' => ['nullable', 'array', 'max:5'],
-            'images.*' => ['nullable', 'image', 'max:2048'],
+            'images.*' => [
+                'nullable',
+                'image',
+                'mimes:svg,png,jpg,jpeg,gif',
+                'max:2048',
+                'dimensions:max_width=3200,max_height=3200'
+            ],
             'image_ids' => ['nullable', 'array', 'max:5'],
-        ]);
+            'deleted_image_ids' => ['nullable', 'string'],
+        ];
 
-        // 更新產品資料（排除 images 欄位）
-        $product->update($request->except(['images', 'image_ids']));
+        $messages = [
+            'grade.not_in' => '請選擇適用的年級',
+            'semester.not_in' => '請選擇學期',
+            'category.not_in' => '請選擇課程類別',
+            'images.max' => '最多只能上傳 5 張圖片',
+            'images.*.dimensions' => '圖片尺寸不可超過 3200x3200 像素',
+            'images.*.max' => '圖片大小不可超過 2MB',
+            'images.*.mimes' => '只接受 SVG、PNG、JPG 或 GIF 格式的圖片'
+        ];
 
-        // 處理圖片上傳和更新
+        // 獲取要刪除的圖片 ID
+        $deletedImageIds = json_decode($request->input('deleted_image_ids', '[]'), true);
+
+        // 修改檢查圖片邏輯，更精確地判斷圖片狀態
+        $existingImages = $product->getMedia('images');
+        $remainingImages = $existingImages->whereNotIn('id', $deletedImageIds);
+
+        // 檢查是否有新上傳的圖片
+        $newImages = collect($request->file('images', []));
+        $validNewImages = $newImages->filter()->isNotEmpty();
+
+        // 計算最終的圖片數量（保留的現有圖片 + 新上傳的有效圖片）
+        $totalImagesAfterUpdate = $remainingImages->count() + ($validNewImages ? $newImages->count() : 0);
+
+        // 如果沒有任何圖片（包括現有的和新上傳的），則添加必填驗證
+        if ($totalImagesAfterUpdate === 0) {
+            $rules['images'] = ['required', 'array', 'min:1'];
+            $messages['images.required'] = '請至少上傳一張商品圖片';
+            $messages['images.min'] = '請至少上傳一張商品圖片';
+        }
+
+        // 驗證
+        $request->validate($rules, $messages);
+
+        // 更新產品資料
+        $product->update($request->only(['name', 'price', 'description']));
+
+        // 處理圖片
         if ($request->hasFile('images') || $request->has('image_ids')) {
             $existingMedia = $product->getMedia('images')->keyBy('id');
             $newOrder = [];
 
+            // 處理新的圖片順序和刪除標記的圖片
             foreach ($request->input('image_ids', []) as $index => $imageId) {
+                // 如果圖片被標記為刪除，跳過它
+                if (in_array($imageId, $deletedImageIds)) {
+                    continue;
+                }
+
                 if ($request->hasFile("images.$index")) {
                     // 新上傳的圖片
                     $newImage = $request->file("images.$index");
@@ -78,46 +125,38 @@ class ProductController extends Controller
                 }
             }
 
-            // 刪除不在新順序中的舊圖片
-            foreach ($existingMedia as $media) {
-                if (! in_array($media->id, $newOrder)) {
-                    $media->delete();
+            // 刪除標記為刪除的圖片
+            foreach ($deletedImageIds as $imageId) {
+                if ($existingMedia->has($imageId)) {
+                    $existingMedia[$imageId]->delete();
                 }
             }
 
-            // 重新排序媒體
+            // 重新排序剩餘的媒體
             $product->media()->whereIn('id', $newOrder)->each(function ($medium) use ($newOrder) {
                 $medium->order_column = array_search($medium->id, $newOrder) + 1;
                 $medium->save();
             });
         }
 
-        // 獲取表單資料中的標籤
-        $gradeSlug = $request->input('grade');
-        $semesterSlug = $request->input('semester');
-        $categorySlug = $request->input('category');
+        // 處理標籤
+        $product->tags()->detach(); // 先清除所有標籤
 
-        // 根據年級查找對應的年級標籤
-        $gradeTag = Tag::where('slug->zh', $gradeSlug)->where('type', '年級')->first();
-        // 根據學期查找對應的學期標籤
-        $semesterTag = Tag::where('slug->zh', $semesterSlug)->where('type', '學期')->first();
-        // 根據課程類別查找對應的課程標籤
-        $categoryTag = Tag::where('slug->zh', $categorySlug)->where('type', '課程')->first();
+        // 獲取並附加新的標籤
+        $tagTypes = [
+            ['type' => '年級', 'slug' => $request->input('grade')],
+            ['type' => '學期', 'slug' => $request->input('semester')],
+            ['type' => '課程', 'slug' => $request->input('category')]
+        ];
 
-        // 先清除所有的標籤
-        $product->tags()->detach();
+        foreach ($tagTypes as $tagType) {
+            $tag = Tag::where('slug->zh', $tagType['slug'])
+                      ->where('type', $tagType['type'])
+                      ->first();
 
-        // 附加年級標籤到產品
-        if ($gradeTag) {
-            $product->attachTag($gradeTag);
-        }
-        // 附加學期標籤到產品
-        if ($semesterTag) {
-            $product->attachTag($semesterTag);
-        }
-        // 附加課程標籤到產品
-        if ($categoryTag) {
-            $product->attachTag($categoryTag);
+            if ($tag) {
+                $product->attachTag($tag);
+            }
         }
 
         // 保存更新後的產品資料
