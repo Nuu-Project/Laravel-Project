@@ -106,51 +106,51 @@
                                             <label for="image{{ $i }}"
                                                 class="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100 overflow-hidden">
 
-                                                <div id="placeholder{{ $i }}"
-                                                    class="flex flex-col items-center justify-center pt-5 pb-6">
-                                                    <svg class="w-8 h-8 mb-4 text-gray-500" aria-hidden="true"
-                                                        xmlns="http://www.w3.org/2000/svg" fill="none"
-                                                        viewBox="0 0 20 16">
-                                                        <path stroke="currentColor" stroke-linecap="round"
-                                                            stroke-linejoin="round" stroke-width="2"
-                                                            d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2" />
-                                                    </svg>
-                                                    <p class="mb-2 text-sm text-gray-500"><span
-                                                            class="font-semibold">點擊上傳</span> 或拖放</p>
-                                                    <p class="text-xs text-gray-500">SVG, PNG, JPG or GIF (最大.
-                                                        800x400px)</p>
-                                                </div>
-                                                <div id="preview{{ $i }}"
-                                                    class="absolute inset-0 flex items-center justify-center hidden">
-                                                    <img src="#" alt="預覽圖片"
-                                                        class="max-w-full max-h-full object-contain">
-                                                </div>
-                                            </label>
-                                            <button type="button"
-                                                class="absolute top-0 right-0 bg-red-500 text-white rounded-full p-1 m-1 hidden"
-                                                id="deleteButton{{ $i }}"
-                                                onclick="removeImage({{ $i }})">
-                                                <svg class="w-4 h-4" fill="none" stroke="currentColor"
-                                                    viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                                        stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                            <div id="placeholder{{ $i }}"
+                                                class="flex flex-col items-center justify-center pt-5 pb-6">
+                                                <svg class="w-8 h-8 mb-4 text-gray-500" aria-hidden="true"
+                                                    xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                    viewBox="0 0 20 16">
+                                                    <path stroke="currentColor" stroke-linecap="round"
+                                                        stroke-linejoin="round" stroke-width="2"
+                                                        d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2" />
                                                 </svg>
-                                            </button>
-                                        </div>
-                                    @endfor
-                                </div>
+                                                <p class="mb-2 text-sm text-gray-500"><span
+                                                        class="font-semibold">點擊上傳</span> 或拖放</p>
+                                                <p class="text-xs text-gray-500">SVG, PNG, JPG or GIF (最大.
+                                                    3200x3200px)</p>
+                                            </div>
+                                            <div id="preview{{ $i }}"
+                                                class="absolute inset-0 flex items-center justify-center hidden">
+                                                <img src="#" alt="檔案過大或格式有誤"
+                                                    class="max-w-full max-h-full object-contain">
+                                            </div>
+                                        </label>
+                                        <button type="button"
+                                            class="absolute top-0 right-0 bg-red-500 text-white rounded-full p-1 m-1 hidden"
+                                            id="deleteButton{{ $i }}"
+                                            onclick="removeImage({{ $i }})">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor"
+                                                viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M6 18L18 6M6 6l12 12"></path>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                @endfor
                             </div>
-                            <button
-                                class="inline-flex items-center justify-center whitespace-nowrap rounded-xl text-base sm:text-lg font-semibold ring-offset-background transition-colors ease-in-out duration-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-blue-500 text-white hover:bg-blue-700 h-10 sm:h-11 px-4 sm:px-8"
-                                type="submit" id="submitButton">
-                                刊登商品
-                            </button>
-                        </form>
-                    </div>
+                        </div>
+                        <button
+                            class="inline-flex items-center justify-center whitespace-nowrap rounded-xl text-base sm:text-lg font-semibold ring-offset-background transition-colors ease-in-out duration-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-blue-500 text-white hover:bg-blue-700 h-10 sm:h-11 px-4 sm:px-8"
+                            type="submit" id="submitButton">
+                            刊登商品
+                        </button>
+                    </form>
                 </div>
-            </main>
-        </div>
+            </div>
+        </main>
     </div>
+</div>
 
     {{-- <script>
     function previewImage(input, number) {

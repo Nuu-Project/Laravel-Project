@@ -41,7 +41,8 @@
                                 <tbody class="bg-white divide-y divide-gray-200">
                                     @foreach ($products as $product)
                                         <tr>
-                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">ID
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                                                {{ $product->id }}
                                             </td>
                                             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                                                 {{ $product->name }}</td>
@@ -51,7 +52,8 @@
                                                 {{ $product->created_at->format('Y/m/d') }}</td>
                                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                                 {{ $product->updated_at->format('Y/m/d') }}</td>
-                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">3</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                                {{ $product->reportables_count }}</td>
                                             <td
                                                 class="px-6 py-4 whitespace-nowrap text-sm font-medium flex flex-row items-center space-x-2">
                                                 <a href="{{ route('products.show', ['product' => $product->id]) }}">
@@ -68,7 +70,8 @@
                                                         {{ $product->status === ProductStatus::Active ? '下架' : '上架' }}
                                                     </button>
                                                 </form>
-                                                <a href="{{ route('admin.reports.index') }}"><button
+                                                <a
+                                                    href="{{ route('admin.reports.index', ['filter[reportable_id]' => $product->id]) }}"><button
                                                         class="px-3 py-1 bg-red-600 text-white rounded hover:bg-red-700 report-button">檢舉詳情</button></a>
                                             </td>
                                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">

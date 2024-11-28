@@ -242,15 +242,22 @@
                                     cancelButtonText: '取消',
                                     preConfirm: () => {
                                         const reportId = document.getElementById('reportReason').value;
-                                        const customReason = document.getElementById('customReason').value;
+                                        const customReason = document.getElementById('customReason')
+                                            .value;
                                         if (!reportId && !customReason) {
                                             Swal.showValidationMessage('請選擇一個選項或輸入自定義原因');
                                         }
-                                        return { reportId, customReason };
+                                        return {
+                                            reportId,
+                                            customReason
+                                        };
                                     }
                                 }).then((result) => {
                                     if (result.isConfirmed) {
-                                        const { reportId, customReason } = result.value;
+                                        const {
+                                            reportId,
+                                            customReason
+                                        } = result.value;
                                         const description = customReason || '描述信息'; // 替換為實際的描述信息
 
                                         $.ajax({

@@ -1,5 +1,5 @@
 <x-template-layout>
-    <script src="{{ asset('js/profile/edit.js') }}"></script>
+    {{-- <script src="{{ asset('js/profile/edit.js') }}"></script> --}}
 
 
     <div class="flex flex-col md:flex-row h-screen bg-gray-100">
@@ -37,6 +37,8 @@
                             enctype="multipart/form-data">
                             @csrf
                             @method('PUT')
+                            <input type="hidden" name="imageOrder" id="imageOrder">
+                            <input type="hidden" name="deleted_image_ids" id="deletedImageIds" value="[]">
                             <div class="grid gap-2">
                                 <label
                                     class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
@@ -57,7 +59,7 @@
                                 <input
                                     class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                                     id="price" name="price" placeholder="輸入價格" type="number"
-                                    value="{{ $product->price }}" />
+                                    value="{{ $product->price }}" disabled readonly />
                                 <x-input-error :messages="$errors->get('price')" class="mt-2" />
                             </div>
 
@@ -132,7 +134,7 @@
                                     上傳圖片
                                 </label>
 
-                                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+                                <div id="imageContainer" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
                                     @for ($i = 0; $i < 5; $i++)
                                         <div class="relative">
                                             <input type="file" name="images[]" id="image{{ $i }}"
@@ -154,12 +156,12 @@
                                                     <p class="mb-2 text-sm text-gray-500"><span
                                                             class="font-semibold">點擊上傳</span> 或拖放</p>
                                                     <p class="text-xs text-gray-500">SVG, PNG, JPG or GIF (最大.
-                                                        800x400px)</p>
+                                                        3200x3200px)</p>
                                                 </div>
                                                 <div id="preview{{ $i }}"
                                                     class="absolute inset-0 flex items-center justify-center {{ $product->getMedia('images')->sortBy('order_column')->values()->get($i) ? '' : 'hidden' }}">
                                                     <img src="{{ $product->getMedia('images')->sortBy('order_column')->values()->get($i)?->getUrl() ?? '#' }}"
-                                                        alt="預覽圖片" class="max-w-full max-h-full object-contain">
+                                                        alt="檔案過大或格式有誤" class="max-w-full max-h-full object-contain">
                                                 </div>
                                             </label>
                                             <button type="button"
@@ -178,13 +180,25 @@
                                 <x-input-error :messages="$errors->get('images')" class="mt-2" />
                             </div>
 
-                            {{-- <script>
+                            <script>
                                 function previewImage(input, number) {
                                     const preview = document.getElementById('preview' + number);
                                     const placeholder = document.getElementById('placeholder' + number);
                                     const deleteButton = document.getElementById('deleteButton' + number);
+                                    const imageIdInput = input.parentNode.querySelector('input[name="image_ids[]"]');
                                     const file = input.files[0];
                                     const reader = new FileReader();
+
+                                    // 只有當有新文件被選擇，且原來有圖片ID時，才標記原圖為刪除
+                                    if (file && imageIdInput.value) {
+                                        const deletedImageIds = JSON.parse(document.getElementById('deletedImageIds').value);
+                                        if (!deletedImageIds.includes(imageIdInput.value)) {
+                                            deletedImageIds.push(imageIdInput.value);
+                                            document.getElementById('deletedImageIds').value = JSON.stringify(deletedImageIds);
+                                        }
+                                        // 清除原來的圖片ID，因為我們現在有了新圖片
+                                        imageIdInput.value = '';
+                                    }
 
                                     reader.onloadend = function() {
                                         preview.querySelector('img').src = reader.result;
@@ -220,31 +234,16 @@
                                 });
 
                                 function deleteImage(productId, imageId, index) {
-                                    if (imageId === null) {
-                                        // 如果是新上傳的圖片，直接從 UI 中移除
-                                        removeImage(index);
-                                    } else {
-                                        // 如果是已存在的圖片，發送 AJAX 請求刪除
-                                        fetch(`/user/products/${productId}/images/${imageId}`, {
-                                                method: 'DELETE',
-                                                headers: {
-                                                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                                                    'Content-Type': 'application/json',
-                                                    'Accept': 'application/json',
-                                                },
-                                            })
-                                            .then(response => response.json())
-                                            .then(data => {
-                                                if (data.success) {
-                                                    removeImage(index);
-                                                } else {
-                                                    console.error('刪除圖片失敗：' + data.message);
-                                                }
-                                            })
-                                            .catch(error => {
-                                                console.error('Error:', error);
-                                            });
+                                    // 標記圖片為已刪除
+                                    const deletedImageIds = JSON.parse(document.getElementById('deletedImageIds').value);
+                                    if (imageId && !deletedImageIds.includes(imageId)) {
+                                        deletedImageIds.push(imageId);
+                                        document.getElementById('deletedImageIds').value = JSON.stringify(deletedImageIds);
                                     }
+
+                                    // 更新 UI
+                                    removeImage(index);
+                                    updatePositions();
                                 }
 
                                 function removeImage(index) {
@@ -265,14 +264,125 @@
 
                                     // 隱藏刪除按鈕
                                     deleteButton.classList.add('hidden');
-
-                                    // 清除隱藏的 image_id 輸入
-                                    const imageIdInput = document.querySelector(`input[name="image_ids[]"]:nth-of-type(${index + 1})`);
-                                    if (imageIdInput) {
-                                        imageIdInput.value = '';
-                                    }
                                 }
-                            </script> --}}
+                                // 修改表單提交處理邏輯
+                                document.querySelector('form').addEventListener('submit', function(event) {
+                                    event.preventDefault();
+
+                                    // 檢查必填欄位
+                                    const requiredFields = ['name', 'description', 'grade', 'semester', 'category'];
+                                    let allFieldsFilled = true;
+
+                                    for (const fieldId of requiredFields) {
+                                        const field = document.getElementById(fieldId);
+                                        if (!field.value) {
+                                            allFieldsFilled = false;
+                                            break;
+                                        }
+                                    }
+
+                                    // 檢查圖片
+                                    let hasValidImage = false;
+                                    const imageContainers = document.querySelectorAll('#imageContainer .relative');
+
+                                    for (const container of imageContainers) {
+                                        const preview = container.querySelector('[id^="preview"]');
+                                        const imageInput = container.querySelector('input[type="file"]');
+                                        const imageIdInput = container.querySelector('input[name="image_ids[]"]');
+
+                                        if ((imageInput.files.length > 0) ||
+                                            (imageIdInput.value &&
+                                             !preview.classList.contains('hidden') &&
+                                             preview.querySelector('img')?.src &&
+                                             preview.querySelector('img').src !== '#')) {
+                                            hasValidImage = true;
+                                            break;
+                                        }
+                                    }
+
+                                    if (!allFieldsFilled || !hasValidImage) {
+                                        alert('請確保所有必填欄位都已填寫，且至少上傳一張商品圖片');
+                                        return;
+                                    }
+
+                                    // 更新圖片順序
+                                    updatePositions();
+
+                                    // 提交表單
+                                    this.submit();
+                                });
+
+                                // 拖曳功能
+                                function initializeDragAndDrop() {
+                                    const imageContainer = document.getElementById('imageContainer');
+                                    if (!imageContainer) return;
+
+                                    const items = imageContainer.getElementsByClassName('relative');
+                                    let draggedItem = null;
+
+                                    Array.from(items).forEach(item => {
+                                        item.setAttribute('draggable', 'true');
+
+                                        item.addEventListener('dragstart', function(e) {
+                                            draggedItem = this;
+                                            e.dataTransfer.effectAllowed = 'move';
+                                            this.classList.add('opacity-50');
+                                        });
+
+                                        item.addEventListener('dragover', function(e) {
+                                            e.preventDefault();
+                                            e.dataTransfer.dropEffect = 'move';
+                                        });
+
+                                        item.addEventListener('drop', function(e) {
+                                            e.preventDefault();
+                                            if (this !== draggedItem) {
+                                                const parent = this.parentNode;
+                                                const allItems = [...parent.children];
+                                                const draggedIndex = allItems.indexOf(draggedItem);
+                                                const droppedIndex = allItems.indexOf(this);
+
+                                                if (draggedIndex < droppedIndex) {
+                                                    this.parentNode.insertBefore(draggedItem, this.nextSibling);
+                                                } else {
+                                                    this.parentNode.insertBefore(draggedItem, this);
+                                                }
+
+                                                updatePositions();
+                                            }
+                                        });
+
+                                        item.addEventListener('dragend', function() {
+                                            this.classList.remove('opacity-50');
+                                            draggedItem = null;
+                                        });
+                                    });
+                                }
+
+                                function updatePositions() {
+                                    const imageContainer = document.getElementById('imageContainer');
+                                    const items = imageContainer.getElementsByClassName('relative');
+
+                                    const orderData = Array.from(items).map((item, index) => {
+                                        const imageIdInput = item.querySelector('input[name="image_ids[]"]');
+                                        const imageInput = item.querySelector('input[type="file"]');
+
+                                        return {
+                                            id: imageIdInput.value || (imageInput.files.length > 0 ? `new_${index}` : ''),
+                                            position: index,
+                                            isNew: imageInput.files.length > 0
+                                        };
+                                    }).filter(item => item.id !== '');
+
+                                    document.getElementById('imageOrder').value = JSON.stringify(orderData);
+                                }
+
+                                // 頁面載入時初始化
+                                document.addEventListener('DOMContentLoaded', function() {
+                                    initializeDragAndDrop();
+                                    updatePositions();
+                                });
+                            </script>
                             <button
                                 class="inline-flex items-center justify-center whitespace-nowrap rounded-xl text-base sm:text-lg font-semibold ring-offset-background transition-colors ease-in-out duration-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-blue-500 text-white hover:bg-blue-700 h-10 sm:h-11 px-4 sm:px-8"
                                 type="submit">
