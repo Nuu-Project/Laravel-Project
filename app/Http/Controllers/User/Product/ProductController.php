@@ -55,7 +55,7 @@ class ProductController extends Controller
                 'image',
                 'mimes:svg,png,jpg,jpeg,gif',
                 'max:2048',
-                'dimensions:max_width=800,max_height=400'
+                'dimensions:max_width=3200,max_height=3200'
             ],
             'image_ids' => ['nullable', 'array', 'max:5'],
             'deleted_image_ids' => ['nullable', 'string'],
@@ -66,7 +66,7 @@ class ProductController extends Controller
             'semester.not_in' => '請選擇學期',
             'category.not_in' => '請選擇課程類別',
             'images.max' => '最多只能上傳 5 張圖片',
-            'images.*.dimensions' => '圖片尺寸不可超過 800x400 像素',
+            'images.*.dimensions' => '圖片尺寸不可超過 3200x3200 像素',
             'images.*.max' => '圖片大小不可超過 2MB',
             'images.*.mimes' => '只接受 SVG、PNG、JPG 或 GIF 格式的圖片'
         ];
