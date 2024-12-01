@@ -165,24 +165,4 @@ class ProductController extends Controller
         return redirect()->route('user.products.index')->with('success', '產品已成功刪除');
     }
 
-    public function deleteImage(Product $product, $imageId)
-    {
-        $media = $product->getMedia('images')->where('id', $imageId)->first();
-
-        if ($media) {
-            // 刪除媒體文件
-            $media->delete();
-
-            // 重新排序剩餘的媒體
-            $remainingMedia = $product->getMedia('images')->sortBy('order_column')->values();
-            foreach ($remainingMedia as $index => $medium) {
-                $medium->order_column = $index + 1;
-                $medium->save();
-            }
-
-            return response()->json(['success' => true]);
-        }
-
-        return response()->json(['success' => false, 'message' => '找不到指定的圖片']);
-    }
 }
