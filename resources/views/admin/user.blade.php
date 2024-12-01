@@ -1,10 +1,7 @@
 <x-template-layout>
-    <script src="{{ asset('js/admin/user.js') }}"></script>
-
-
     <div class="flex flex-col md:flex-row h-screen bg-gray-100">
         <x-side-bar />
-
+        
         <!-- 主要內容區 -->
         <div class="flex-1 flex flex-col overflow-hidden">
             <x-navbar-admin />
@@ -31,7 +28,7 @@
                             style="display: none;">
                             <div class="overflow-x-auto">
                                 <table class="min-w-full divide-y divide-gray-200">
-                                    <x-user-table />
+                                    <x-table-user />
                                     <tbody class="bg-white divide-y divide-gray-200">
                                         <!-- Search results will be dynamically inserted here -->
                                     </tbody>
@@ -39,6 +36,7 @@
                             </div>
                         </div>
                     </div>
+
                     <!-- All users 部分 -->
                     <div>
                         <h2 class="text-xl font-semibold text-gray-900 mb-4">所有用戶</h2>
@@ -87,35 +85,13 @@
                                                     </div>
                                                 </td>
                                                 <td class="px-6 py-4 whitespace-nowrap">
-                                                    @csrf
-                                                    <div class="flex items-center space-x-6">
-                                                        <!-- 管理者權限 -->
-                                                        <div class="flex items-center">
-                                                            <input type="checkbox" name="role[]" value="admin"
-                                                                id="admin-role-{{ $user->id }}"
-                                                                class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-                                                                {{ $user->hasRole('admin') ? 'checked' : '' }}
-                                                                onchange="this.form.submit()">
-                                                            <label for="admin-role-{{ $user->id }}"
-                                                                class="ml-2 text-sm text-gray-700">
-                                                                管理者
-                                                            </label>
-                                                        </div>
-
-                                                        <!-- 使用者權限 -->
-                                                        <div class="flex items-center">
-                                                            <input type="checkbox" name="role[]" value="user"
-                                                                id="user-role-{{ $user->id }}"
-                                                                class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-                                                                {{ $user->hasRole('user') ? 'checked' : '' }}
-                                                                onchange="this.form.submit()">
-                                                            <label for="user-role-{{ $user->id }}"
-                                                                class="ml-2 text-sm text-gray-700">
-                                                                使用者
-                                                            </label>
-                                                        </div>
+                                                    <div class="text-sm text-gray-900">
+                                                        @if ($user->hasRole('admin'))
+                                                            管理者
+                                                        @else
+                                                            使用者
+                                                        @endif
                                                     </div>
-                                                    </form>
                                                 </td>
                                                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                                     <button
@@ -129,7 +105,6 @@
                             </div>
                         </div>
                         <div class="mt-4">
-                            <!-- 添加 Laravel 分页链接 -->
                             {{ $users->links() }}
                         </div>
                     </div>
@@ -137,6 +112,4 @@
             </main>
         </div>
     </div>
-
-
 </x-template-layout>

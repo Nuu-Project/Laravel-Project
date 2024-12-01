@@ -16,9 +16,9 @@
                         <h3 class="text-gray-700 text-3xl font-medium mb-6">新增角色</h3>
 
                         <div class="bg-white rounded-lg shadow-md p-6">
-                            <!-- 表单开始 -->
+                            <!-- 表單開始 -->
                             <form action="{{ route('admin.roles.store') }}" method="POST">
-                                @csrf <!-- CSRF 保护 -->
+                                @csrf <!-- CSRF 保護 -->
                                 <table class="min-w-full divide-y divide-gray-200">
                                     <thead>
                                         <tr>
@@ -38,7 +38,7 @@
                                             @if (!$user->hasRole('admin') && !$user->hasRole('user'))
                                                 <tr>
                                                     <td class="px-6 py-4 whitespace-nowrap">
-                                                        <!-- 勾选框，传递每个用户的 ID -->
+                                                        <!-- 勾選框，傳遞每個用戶的ID -->
                                                         <input type="checkbox" name="user_ids[]" value="{{ $user->id }}"
                                                             class="form-checkbox h-4 w-4 text-blue-600">
                                                     </td>

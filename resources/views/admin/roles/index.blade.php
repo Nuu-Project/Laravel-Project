@@ -1,7 +1,4 @@
 <x-template-layout>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-
     <div class="flex flex-col md:flex-row h-screen bg-gray-100">
         <x-side-bar />
         <!-- 主要內容區 -->

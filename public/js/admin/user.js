@@ -1,3 +1,9 @@
+// 設置 AJAX 的默認 headers
+$.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+});
 
 function showSuspendDialog(userId, userName) {
     Swal.fire({
@@ -35,8 +41,7 @@ function showSuspendDialog(userId, userName) {
                 data: {
                     user_id: userId,
                     duration: duration,
-                    reason: suspendReason,
-                    _token: '{{ csrf_token() }}'
+                    reason: suspendReason
                 },
                 success: function (response) {
                     Swal.fire('用戶已被停用', response.message, 'success');
@@ -82,4 +87,3 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 });
-
