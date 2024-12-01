@@ -45,7 +45,8 @@
                                 </label>
                                 <input
                                     class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                                    id="name" name="name" placeholder="請輸入書名" value="{{ $product->name }}" />
+                                    id="name" name="name" placeholder="請輸入書名" value="{{ $product->name }}"
+                                    maxlength="50" />
                                 <x-input-error :messages="$errors->get('name')" class="mt-2" />
                             </div>
                             <div class="grid gap-2">
@@ -341,10 +342,15 @@
                                                 const draggedIndex = allItems.indexOf(draggedItem);
                                                 const droppedIndex = allItems.indexOf(this);
 
-                                                if (draggedIndex < droppedIndex) {
-                                                    this.parentNode.insertBefore(draggedItem, this.nextSibling);
-                                                } else {
-                                                    this.parentNode.insertBefore(draggedItem, this);
+                                                // 直接交換兩個元素的位置
+                                                if (draggedIndex !== droppedIndex) {
+                                                    // 創建一個臨時的佔位元素
+                                                    const placeholder = document.createElement('div');
+
+                                                    // 交換元素位置
+                                                    parent.replaceChild(placeholder, draggedItem);
+                                                    parent.replaceChild(draggedItem, this);
+                                                    parent.replaceChild(this, placeholder);
                                                 }
 
                                                 updatePositions();
