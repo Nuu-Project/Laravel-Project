@@ -18,9 +18,7 @@ Route::prefix('user')->name('user.')->middleware(['auth'])->group(function () {
     // 商品>修改 資料
     Route::put('/products/{product}', [ProductController::class, 'update'])
         ->name('products.update');
-    // 商品>修改 圖片刪除
-    Route::delete('/products/{product}/images/{image}', [ProductController::class, 'deleteImage'])
-        ->name('products.deleteImage');
+
     // 商品刪除
     Route::delete('/products/{product}', [ProductController::class, 'destroy'])
         ->name('products.destroy');

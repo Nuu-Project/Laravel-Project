@@ -49,7 +49,7 @@ class ProductController extends Controller
             'grade' => ['required', 'string', 'not_in:選擇適用的年級...'],
             'semester' => ['required', 'string', 'not_in:選擇學期...'],
             'category' => ['required', 'string', 'not_in:選擇課程類別...'],
-            'images' => ['nullable', 'array', 'max:5'],
+            'images' => ['nullable', 'array', 'min:1', 'max:5'],
             'images.*' => [
                 'nullable',
                 'image',
@@ -59,16 +59,6 @@ class ProductController extends Controller
             ],
             'image_ids' => ['nullable', 'array', 'max:5'],
             'deleted_image_ids' => ['nullable', 'string'],
-        ];
-
-        $messages = [
-            'grade.not_in' => '請選擇適用的年級',
-            'semester.not_in' => '請選擇學期',
-            'category.not_in' => '請選擇課程類別',
-            'images.max' => '最多只能上傳 5 張圖片',
-            'images.*.dimensions' => '圖片尺寸不可超過 3200x3200 像素',
-            'images.*.max' => '圖片大小不可超過 2MB',
-            'images.*.mimes' => '只接受 SVG、PNG、JPG 或 GIF 格式的圖片'
         ];
 
         // 獲取要刪除的圖片 ID
@@ -93,7 +83,7 @@ class ProductController extends Controller
         }
 
         // 驗證
-        $request->validate($rules, $messages);
+        $request->validate($rules);
 
         // 更新產品資料
         $product->update($request->only(['name', 'price', 'description']));
@@ -168,31 +158,11 @@ class ProductController extends Controller
 
     public function destroy(Product $product)
     {
-        // 软删除产品，保留记录但标记为已删除
+        // 軟刪除產品，保留記錄但標記為已刪除
         $product->delete();
 
-        // 重定向到产品列表页面，并带有成功消息
+        // 重新導向到產品清單頁面，並標註成功訊息
         return redirect()->route('user.products.index')->with('success', '產品已成功刪除');
     }
 
-    public function deleteImage(Product $product, $imageId)
-    {
-        $media = $product->getMedia('images')->where('id', $imageId)->first();
-
-        if ($media) {
-            // 刪除媒體文件
-            $media->delete();
-
-            // 重新排序剩餘的媒體
-            $remainingMedia = $product->getMedia('images')->sortBy('order_column')->values();
-            foreach ($remainingMedia as $index => $medium) {
-                $medium->order_column = $index + 1;
-                $medium->save();
-            }
-
-            return response()->json(['success' => true]);
-        }
-
-        return response()->json(['success' => false, 'message' => '找不到指定的圖片']);
-    }
 }
