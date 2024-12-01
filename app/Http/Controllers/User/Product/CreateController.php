@@ -21,7 +21,7 @@ class CreateController extends Controller
         // 基本驗證規則
         $rules = [
             'name' => ['required', 'string', 'max:50'],
-            'price' => ['required', 'numeric', 'digits_between:1,4'],
+            'price' => ['required', 'numeric', 'min:0','max:9999'],
             'description' => ['required', 'string'],
             'grade' => ['required', 'string', 'not_in:選擇適用的年級...'],
             'semester' => ['required', 'string', 'not_in:選擇學期...'],
@@ -36,27 +36,9 @@ class CreateController extends Controller
             ],
         ];
 
-        $messages = [
-            'name.required' => '請輸入書名',
-            'name.max' => '書名不可超過 50 個字',
-            'price.required' => '請輸入價格',
-            'price.numeric' => '價格必須為數字',
-            'price.digits_between' => '價格不能超過 4 位數',
-            'description.required' => '請輸入商品介紹',
-            'grade.required' => '請選擇適用的年級',
-            'semester.required' => '請選擇學期',
-            'category.required' => '請選擇課程類別',
-            'images.required' => '請上傳商品圖片',
-            'images.min' => '請至少上傳一張商品圖片',
-            'images.*.required' => '請上傳有效的圖片',
-            'images.*.dimensions' => '圖片尺寸不可超過 3200x3200 像素',
-            'images.*.max' => '圖片大小不可超過 2MB',
-            'images.*.mimes' => '只接受 SVG、PNG、JPG 或 GIF 格式的圖片'
-        ];
-
         try {
             // 驗證
-            $validated = $request->validate($rules, $messages);
+            $validated = $request->validate($rules);
 
             $product = Product::create([
                 'name' => $validated['name'],

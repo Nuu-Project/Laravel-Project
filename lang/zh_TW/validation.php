@@ -3,6 +3,45 @@
 declare(strict_types=1);
 
 return [
+    'custom' => [
+    'name' => [
+        'required' => '請輸入書名',
+        'max' => '書名不可超過 50 個字',
+    ],
+    'price' => [
+        'required' => '請輸入價格',
+        'numeric' => '價格必須為數字',
+        'min' => '價格不能小於 0',
+        'max' => '價格不能大於 9999',
+    ],
+    'description' => [
+        'required' => '請輸入商品介紹',
+    ],
+    'grade' => [
+        'required' => '請選擇適用的年級',
+        'not_in' => '請選擇適用的年級',
+    ],
+    'semester' => [
+        'required' => '請選擇學期',
+        'not_in' => '請選擇學期',
+    ],
+    'category' => [
+        'required' => '請選擇課程類別',
+        'not_in' => '請選擇課程類別',
+    ],
+    'images' => [
+        'required' => '請至少上傳一張商品圖片',
+        'min' => '請至少上傳一張商品圖片',
+        'max' => '最多只能上傳 5 張圖片',
+    ],
+    'images.*' => [
+        'image' => '請上傳有效的圖片',
+        'dimensions' => '圖片尺寸不可超過 3200x3200 像素',
+        'max' => '圖片大小不可超過 2MB',
+        'mimes' => '只接受 SVG、PNG、JPG 或 GIF 格式的圖片',
+    ],
+],
+
     'accepted' => '必須接受 :attribute。',
     'accepted_if' => '當 :other 為 :value 時，:attribute 必須接受。',
     'active_url' => ':Attribute 不是有效的網址。',
@@ -213,7 +252,7 @@ return [
         'minute' => '分',
         'mobile' => '手機',
         'month' => '月',
-        'name' => '名稱',
+        'name' => '書名',
         'national_code' => '國家代碼',
         'number' => '數字',
         'password' => '密碼',
