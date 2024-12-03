@@ -25,8 +25,14 @@
                     {{ __('使用者後台') }}
                 </x-dropdown-link>
 
-                <x-dropdown-link :href="route('admin.messages.index')">
-                    {{ __('管理者後台') }}
+                @role('admin')
+                    <x-dropdown-link :href="route('admin.messages.index')">
+                        {{ __('管理者後台') }}
+                    </x-dropdown-link>
+                @endrole
+
+                <x-dropdown-link :href="route('home')">
+                    {{ __('首頁') }}
                 </x-dropdown-link>
 
                 <!-- Authentication -->

@@ -36,9 +36,9 @@
                         </div>
                     </div>
 
-                    <h4 class="font-semibold text-lg md:text-2xl text-gray-900 mb-6">專為資管系服務的平台</h4>
+                    <h4 class="font-semibold text-lg md:text-2xl text-gray-900 mb-6">專為聯大服務的平台</h4>
 
-                    <p class="font-black text-gray-500 text-md md:text-xl mb-6">在這裡刊登二手書的商品，都是資管系可能或必須用到的書</p>
+                    <p class="font-black text-gray-500 text-md md:text-xl mb-6">在這裡刊登二手書的商品，都是可能或必須用到的書</p>
 
                     <div class="flex justify-center">
                     </div>

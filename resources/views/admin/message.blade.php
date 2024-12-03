@@ -1,4 +1,6 @@
 <x-template-layout>
+    <script src="{{ asset('js/message.js') }}"></script>
+
     <div class="flex flex-col md:flex-row h-screen bg-gray-100">
         <x-side-bar />
 

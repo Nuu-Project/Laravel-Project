@@ -1,5 +1,5 @@
 <x-template-layout>
-    <script src="{{ asset('js/user/edit.js') }}"></script>
+    {{-- <script src="{{ asset('js/user/edit.js') }}"></script> --}}
 
 
     <div class="flex flex-col md:flex-row h-screen bg-gray-100">
@@ -47,7 +47,8 @@
                                 </label>
                                 <input
                                     class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                                    id="name" name="name" placeholder="請輸入書名" value="{{ $product->name }}" />
+                                    id="name" name="name" placeholder="請輸入書名" value="{{ $product->name }}"
+                                    maxlength="50" />
                                 <x-input-error :messages="$errors->get('name')" class="mt-2" />
                             </div>
                             <div class="grid gap-2">
@@ -181,6 +182,214 @@
                                 <x-input-error :messages="$errors->get('images')" class="mt-2" />
                             </div>
 
+                            <script>
+                                function previewImage(input, number) {
+                                    const preview = document.getElementById('preview' + number);
+                                    const placeholder = document.getElementById('placeholder' + number);
+                                    const deleteButton = document.getElementById('deleteButton' + number);
+                                    const imageIdInput = input.parentNode.querySelector('input[name="image_ids[]"]');
+                                    const file = input.files[0];
+                                    const reader = new FileReader();
+
+                                    // 只有當有新文件被選擇，且原來有圖片ID時，才標記原圖為刪除
+                                    if (file && imageIdInput.value) {
+                                        const deletedImageIds = JSON.parse(document.getElementById('deletedImageIds').value);
+                                        if (!deletedImageIds.includes(imageIdInput.value)) {
+                                            deletedImageIds.push(imageIdInput.value);
+                                            document.getElementById('deletedImageIds').value = JSON.stringify(deletedImageIds);
+                                        }
+                                        // 清除原來的圖片ID，因為我們現在有了新圖片
+                                        imageIdInput.value = '';
+                                    }
+
+                                    reader.onloadend = function() {
+                                        preview.querySelector('img').src = reader.result;
+                                        preview.classList.remove('hidden');
+                                        placeholder.classList.add('hidden');
+                                        deleteButton.classList.remove('hidden');
+                                    }
+
+                                    if (file) {
+                                        reader.readAsDataURL(file);
+                                    } else {
+                                        preview.querySelector('img').src = '#';
+                                        preview.classList.add('hidden');
+                                        placeholder.classList.remove('hidden');
+                                        deleteButton.classList.add('hidden');
+                                    }
+                                }
+
+                                // 頁面加載時初始化預覽
+                                document.addEventListener('DOMContentLoaded', function() {
+                                    @for ($i = 0; $i < 5; $i++)
+                                        const preview{{ $i }} = document.getElementById('preview{{ $i }}');
+                                        const placeholder{{ $i }} = document.getElementById('placeholder{{ $i }}');
+                                        const deleteButton{{ $i }} = document.getElementById(
+                                            'deleteButton{{ $i }}');
+                                        if (preview{{ $i }}.querySelector('img')?.src && preview{{ $i }}
+                                            .querySelector('img').src !== window.location.href + '#') {
+                                            preview{{ $i }}.classList.remove('hidden');
+                                            placeholder{{ $i }}.classList.add('hidden');
+                                            deleteButton{{ $i }}.classList.remove('hidden');
+                                        }
+                                    @endfor
+                                });
+
+                                function deleteImage(productId, imageId, index) {
+                                    // 標記圖片為已刪除
+                                    const deletedImageIds = JSON.parse(document.getElementById('deletedImageIds').value);
+                                    if (imageId && !deletedImageIds.includes(imageId)) {
+                                        deletedImageIds.push(imageId);
+                                        document.getElementById('deletedImageIds').value = JSON.stringify(deletedImageIds);
+                                    }
+
+                                    // 更新 UI
+                                    removeImage(index);
+                                    updatePositions();
+                                }
+
+                                function removeImage(index) {
+                                    const preview = document.getElementById(`preview${index}`);
+                                    const placeholder = document.getElementById(`placeholder${index}`);
+                                    const imageInput = document.getElementById(`image${index}`);
+                                    const deleteButton = document.getElementById(`deleteButton${index}`);
+
+                                    // 重置預覽圖
+                                    preview.querySelector('img').src = '#';
+                                    preview.classList.add('hidden');
+
+                                    // 顯示佔位符
+                                    placeholder.classList.remove('hidden');
+
+                                    // 清空文件輸入
+                                    imageInput.value = '';
+
+                                    // 隱藏刪除按鈕
+                                    deleteButton.classList.add('hidden');
+                                }
+                                // 修改表單提交處理邏輯
+                                document.querySelector('form').addEventListener('submit', function(event) {
+                                    event.preventDefault();
+
+                                    // 檢查必填欄位
+                                    const requiredFields = ['name', 'description', 'grade', 'semester', 'category'];
+                                    let allFieldsFilled = true;
+
+                                    for (const fieldId of requiredFields) {
+                                        const field = document.getElementById(fieldId);
+                                        if (!field.value) {
+                                            allFieldsFilled = false;
+                                            break;
+                                        }
+                                    }
+
+                                    // 檢查圖片
+                                    let hasValidImage = false;
+                                    const imageContainers = document.querySelectorAll('#imageContainer .relative');
+
+                                    for (const container of imageContainers) {
+                                        const preview = container.querySelector('[id^="preview"]');
+                                        const imageInput = container.querySelector('input[type="file"]');
+                                        const imageIdInput = container.querySelector('input[name="image_ids[]"]');
+
+                                        if ((imageInput.files.length > 0) ||
+                                            (imageIdInput.value &&
+                                                !preview.classList.contains('hidden') &&
+                                                preview.querySelector('img')?.src &&
+                                                preview.querySelector('img').src !== '#')) {
+                                            hasValidImage = true;
+                                            break;
+                                        }
+                                    }
+
+                                    if (!allFieldsFilled || !hasValidImage) {
+                                        alert('請確保所有必填欄位都已填寫，且至少上傳一張商品圖片');
+                                        return;
+                                    }
+
+                                    // 更新圖片順序
+                                    updatePositions();
+
+                                    // 提交表單
+                                    this.submit();
+                                });
+
+                                // 拖曳功能
+                                function initializeDragAndDrop() {
+                                    const imageContainer = document.getElementById('imageContainer');
+                                    if (!imageContainer) return;
+
+                                    const items = imageContainer.getElementsByClassName('relative');
+                                    let draggedItem = null;
+
+                                    Array.from(items).forEach(item => {
+                                        item.setAttribute('draggable', 'true');
+
+                                        item.addEventListener('dragstart', function(e) {
+                                            draggedItem = this;
+                                            e.dataTransfer.effectAllowed = 'move';
+                                            this.classList.add('opacity-50');
+                                        });
+
+                                        item.addEventListener('dragover', function(e) {
+                                            e.preventDefault();
+                                            e.dataTransfer.dropEffect = 'move';
+                                        });
+
+                                        item.addEventListener('drop', function(e) {
+                                            e.preventDefault();
+                                            if (this !== draggedItem) {
+                                                const parent = this.parentNode;
+                                                const allItems = [...parent.children];
+                                                const draggedIndex = allItems.indexOf(draggedItem);
+                                                const droppedIndex = allItems.indexOf(this);
+
+                                                // 直接交換兩個元素的位置
+                                                if (draggedIndex !== droppedIndex) {
+                                                    // 創建一個臨時的佔位元素
+                                                    const placeholder = document.createElement('div');
+
+                                                    // 交換元素位置
+                                                    parent.replaceChild(placeholder, draggedItem);
+                                                    parent.replaceChild(draggedItem, this);
+                                                    parent.replaceChild(this, placeholder);
+                                                }
+
+                                                updatePositions();
+                                            }
+                                        });
+
+                                        item.addEventListener('dragend', function() {
+                                            this.classList.remove('opacity-50');
+                                            draggedItem = null;
+                                        });
+                                    });
+                                }
+
+                                function updatePositions() {
+                                    const imageContainer = document.getElementById('imageContainer');
+                                    const items = imageContainer.getElementsByClassName('relative');
+
+                                    const orderData = Array.from(items).map((item, index) => {
+                                        const imageIdInput = item.querySelector('input[name="image_ids[]"]');
+                                        const imageInput = item.querySelector('input[type="file"]');
+
+                                        return {
+                                            id: imageIdInput.value || (imageInput.files.length > 0 ? `new_${index}` : ''),
+                                            position: index,
+                                            isNew: imageInput.files.length > 0
+                                        };
+                                    }).filter(item => item.id !== '');
+
+                                    document.getElementById('imageOrder').value = JSON.stringify(orderData);
+                                }
+
+                                // 頁面載入時初始化
+                                document.addEventListener('DOMContentLoaded', function() {
+                                    initializeDragAndDrop();
+                                    updatePositions();
+                                });
+                            </script>
                             <button
                                 class="inline-flex items-center justify-center whitespace-nowrap rounded-xl text-base sm:text-lg font-semibold ring-offset-background transition-colors ease-in-out duration-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-blue-500 text-white hover:bg-blue-700 h-10 sm:h-11 px-4 sm:px-8"
                                 type="submit">
