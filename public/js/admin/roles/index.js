@@ -1,8 +1,8 @@
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', function() {
     const checkboxes = document.querySelectorAll('.role-checkbox');
 
     checkboxes.forEach(checkbox => {
-        checkbox.addEventListener('change', function () {
+        checkbox.addEventListener('change', function() {
             const role = this.dataset.role;
             const checkedBoxes = document.querySelectorAll(
                 `.role-checkbox[data-role="${role}"]:checked`);
@@ -19,11 +19,11 @@ document.addEventListener('DOMContentLoaded', function () {
     const modifyAdminBtn = document.getElementById('modifyAdminBtn');
     const modifyUserBtn = document.getElementById('modifyUserBtn');
 
-    modifyAdminBtn?.addEventListener('click', function () {
+    modifyAdminBtn?.addEventListener('click', function() {
         document.getElementById('adminForm').submit();
     });
 
-    modifyUserBtn?.addEventListener('click', function () {
+    modifyUserBtn?.addEventListener('click', function() {
         document.getElementById('userForm').submit();
     });
 });

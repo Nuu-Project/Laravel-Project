@@ -1,7 +1,6 @@
 <x-template-layout>
-
-<div class="flex flex-col md:flex-row h-screen bg-gray-100">
-    <x-link-user />
+    <div class="flex flex-col md:flex-row h-screen bg-gray-100">
+        <x-link-user />
 
         <!-- 主要內容區 -->
         <div class="flex-1 flex flex-col overflow-hidden">
@@ -33,6 +32,7 @@
                         <form class="grid gap-6" action="{{ route('user.products.store') }}" method="POST"
                             enctype="multipart/form-data" id="productForm">
                             @csrf
+                            <input type="hidden" name="imageOrder" id="imageOrder">
                             <div class="grid gap-2">
                                 <label
                                     class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
@@ -41,9 +41,7 @@
                                 </label>
                                 <input
                                     class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                                    id="name" name="name" placeholder="請輸入書名" maxlength="50" 
-                                    />
-                                    
+                                    id="name" name="name" placeholder="請輸入書名" maxlength="50" />
                                 <x-input-error :messages="$errors->get('name')" class="mt-2" />
                             </div>
                             <div class="grid gap-2">
@@ -124,7 +122,7 @@
                                                 class="hidden" accept="image/*"
                                                 onchange="previewImage(this, {{ $i }})">
                                             <label for="image{{ $i }}"
-                                                class="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100 overflow-hidden">
+                                                class="flex flex-col items-center justify-center w-full h-40 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
                                                 <div id="placeholder{{ $i }}"
                                                     class="flex flex-col items-center justify-center pt-5 pb-6">
                                                     <svg class="w-8 h-8 mb-4 text-gray-500" aria-hidden="true"
@@ -185,9 +183,6 @@
                 preview.classList.remove('hidden');
                 placeholder.classList.add('hidden');
                 deleteButton.classList.remove('hidden');
-
-                // 重新初始化拖曳功能
-                initializeDragAndDrop();
             }
 
             if (file) {
@@ -200,19 +195,29 @@
             }
         }
 
-        function removeImage(number) {
-            const input = document.getElementById('image' + number);
-            const preview = document.getElementById('preview' + number);
-            const placeholder = document.getElementById('placeholder' + number);
-            const deleteButton = document.getElementById('deleteButton' + number);
+        function removeImage(index) {
+            const preview = document.getElementById(`preview${index}`);
+            const placeholder = document.getElementById(`placeholder${index}`);
+            const imageInput = document.getElementById(`image${index}`);
+            const deleteButton = document.getElementById(`deleteButton${index}`);
 
-            input.value = '';
+            // 重置預覽圖
             preview.querySelector('img').src = '#';
             preview.classList.add('hidden');
+
+            // 顯示佔位符
             placeholder.classList.remove('hidden');
+
+            // 清空文件輸入
+            imageInput.value = '';
+
+            // 隱藏刪除按鈕
             deleteButton.classList.add('hidden');
+
+            updatePositions();
         }
 
+        // 拖曳功能
         function initializeDragAndDrop() {
             const imageContainer = document.getElementById('imageContainer');
             if (!imageContainer) return;
@@ -242,11 +247,18 @@
                         const draggedIndex = allItems.indexOf(draggedItem);
                         const droppedIndex = allItems.indexOf(this);
 
-                        if (draggedIndex < droppedIndex) {
-                            this.parentNode.insertBefore(draggedItem, this.nextSibling);
-                        } else {
-                            this.parentNode.insertBefore(draggedItem, this);
+                        // 直接交換兩個元素的位置
+                        if (draggedIndex !== droppedIndex) {
+                            // 創建一個臨時的佔位元素
+                            const placeholder = document.createElement('div');
+
+                            // 交換元素位置
+                            parent.replaceChild(placeholder, draggedItem);
+                            parent.replaceChild(draggedItem, this);
+                            parent.replaceChild(this, placeholder);
                         }
+
+                        updatePositions();
                     }
                 });
 
@@ -257,6 +269,23 @@
             });
         }
 
+        function updatePositions() {
+            const imageContainer = document.getElementById('imageContainer');
+            const items = imageContainer.getElementsByClassName('relative');
+
+            const orderData = Array.from(items).map((item, index) => {
+                const imageInput = item.querySelector('input[type="file"]');
+                return {
+                    id: imageInput.files.length > 0 ? `new_${index}` : '',
+                    position: index,
+                    isNew: imageInput.files.length > 0
+                };
+            }).filter(item => item.id !== '');
+
+            document.getElementById('imageOrder').value = JSON.stringify(orderData);
+        }
+
+        // 修改表單提交處理邏輯
         document.querySelector('form').addEventListener('submit', function(event) {
             event.preventDefault();
 
@@ -291,13 +320,17 @@
                 return;
             }
 
+            // 更新圖片順序
+            updatePositions();
+
             // 提交表單
             this.submit();
         });
 
-        // 在頁面加載時初始化拖曳功能
+        // 頁面載入時初始化
         document.addEventListener('DOMContentLoaded', function() {
             initializeDragAndDrop();
+            updatePositions();
         });
     </script>
 

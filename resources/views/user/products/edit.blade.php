@@ -1,6 +1,4 @@
 <x-template-layout>
-    {{-- <script src="{{ asset('js/user/edit.js') }}"></script> --}}
-
 
     <div class="flex flex-col md:flex-row h-screen bg-gray-100">
         <x-link-user />
