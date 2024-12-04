@@ -1,7 +1,7 @@
 <x-template-layout>
 
     <div class="flex flex-col md:flex-row h-screen bg-gray-100">
-        <x-user-link />
+        <x-link-user />
 
         <!-- 主要內容區 -->
         <div class="flex-1 flex flex-col overflow-hidden">
@@ -96,6 +96,23 @@
                                     @endforeach
                                 </select>
                                 <x-input-error :messages="$errors->get('semester')" class="mt-2" />
+                            </div>
+
+                            <div class="grid gap-2">
+                                <label class="text-sm font-medium leading-none" for="subject">科目</label>
+                                <select id="subject" name="subject"
+                                    class="w-full h-10 rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
+                                    <option selected>選擇科目...</option>
+                                    @foreach ($tags as $tag)
+                                        @if ($tag->type === '科目')
+                                            <option value="{{ $tag->getTranslation('slug', 'zh') }}"
+                                                @if ($subjectTag && $tag->getTranslation('slug', 'zh') == $subjectTag->getTranslation('slug', 'zh')) selected @endif>
+                                                {{ $tag->getTranslation('name', 'zh') }}
+                                            </option>
+                                        @endif
+                                    @endforeach
+                                </select>
+                                <x-input-error :messages="$errors->get('subject')" class="mt-2" />
                             </div>
 
                             <div class="grid gap-2">

@@ -39,6 +39,7 @@ class ProductController extends Controller
             'description' => ['required', 'string'],
             'grade' => ['required', 'string', 'not_in:選擇適用的年級...'],
             'semester' => ['required', 'string', 'not_in:選擇學期...'],
+            'subject' => ['required', 'string', 'not_in:選擇科目...'],
             'category' => ['required', 'string', 'not_in:選擇課程類別...'],
             'images' => ['required', 'array', 'min:1', 'max:5'],
             'images.*' => [
@@ -73,6 +74,7 @@ class ProductController extends Controller
             $tagTypes = [
                 ['type' => '年級', 'slug' => $request->input('grade')],
                 ['type' => '學期', 'slug' => $request->input('semester')],
+                ['type' => '科目', 'slug' => $request->input('subject')],
                 ['type' => '課程', 'slug' => $request->input('category')]
             ];
 
@@ -98,6 +100,7 @@ class ProductController extends Controller
     {
         $gradeTag = $product->tags->firstWhere('type', '年級');
         $semesterTag = $product->tags->firstWhere('type', '學期');
+        $subjectTag = $product->tags->firstWhere('type', '科目');
         $categoryTag = $product->tags->firstWhere('type', '課程');
         $tags = Tag::whereNull('deleted_at')->get();
 
@@ -119,7 +122,7 @@ class ProductController extends Controller
             }
         }
 
-        return view('user.products.edit', compact('product', 'tags', 'gradeTag', 'semesterTag', 'categoryTag'));
+        return view('user.products.edit', compact('product', 'tags', 'gradeTag', 'semesterTag', 'categoryTag', 'subjectTag'));
     }
 
     public function update(Request $request, Product $product)
@@ -130,6 +133,7 @@ class ProductController extends Controller
             'description' => ['required', 'string'],
             'grade' => ['required', 'string', 'not_in:選擇適用的年級...'],
             'semester' => ['required', 'string', 'not_in:選擇學期...'],
+            'subject' => ['required', 'string', 'not_in:選擇科目...'],
             'category' => ['required', 'string', 'not_in:選擇課程類別...'],
             'images' => ['nullable', 'array', 'min:1', 'max:5'],
             'images.*' => [
@@ -218,6 +222,7 @@ class ProductController extends Controller
         $tagTypes = [
             ['type' => '年級', 'slug' => $request->input('grade')],
             ['type' => '學期', 'slug' => $request->input('semester')],
+            ['type' => '科目', 'slug' => $request->input('subject')],
             ['type' => '課程', 'slug' => $request->input('category')]
         ];
 

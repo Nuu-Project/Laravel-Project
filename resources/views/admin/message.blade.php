@@ -1,5 +1,5 @@
 <x-template-layout>
-    <script src="{{ asset('js/message.js') }}"></script>
+    <script src="{{ asset('js/admin/message/message.js') }}"></script>
 
     <div class="flex flex-col md:flex-row h-screen bg-gray-100">
         <x-side-bar />
@@ -28,9 +28,8 @@
                         <!-- Reviews 列表 -->
                         <div class="bg-white shadow overflow-hidden sm:rounded-lg" id="reviews-table">
                             <div class="overflow-x-auto">
-
-                                <x-message-table :chirps="$chirps->items()">
-                                </x-message-table>
+                                <x-table-message :chirps="$chirps->items()">
+                                </x-table-message>
                             </div>
 
                             <!-- 分頁導航 -->

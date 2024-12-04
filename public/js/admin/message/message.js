@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     // 搜索功能
     function initializeSearch() {
         const searchInput = document.getElementById('search-reviews');
@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function() {
         reviewsTable.style.display = 'block';
         noResults.classList.add('hidden');
 
-        searchInput.addEventListener('input', function() {
+        searchInput.addEventListener('input', function () {
             const searchTerm = this.value.toLowerCase().trim();
             let hasResults = false;
 
@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if (expandBtn) {
                 content.textContent = truncateText(fullText, 15);
 
-                expandBtn.addEventListener('click', function(e) {
+                expandBtn.addEventListener('click', function (e) {
                     e.preventDefault();
                     const isExpanded = this.classList.contains('expanded');
 
