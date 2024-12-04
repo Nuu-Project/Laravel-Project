@@ -79,9 +79,11 @@
                                     {{ __('使用者後台') }}
                                 </x-dropdown-link>
 
-                                <x-dropdown-link :href="route('admin.messages.index')">
-                                    {{ __('管理者後台') }}
-                                </x-dropdown-link>
+                                @role('admin')
+                                    <x-dropdown-link :href="route('admin.messages.index')">
+                                        {{ __('管理者後台') }}
+                                    </x-dropdown-link>
+                                @endrole
 
                                 <!-- Authentication -->
                                 <form method="POST" action="{{ route('logout') }}">

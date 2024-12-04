@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class UserLink extends Component
+class TableMessage extends Component
 {
     /**
      * Create a new component instance.
@@ -21,6 +21,6 @@ class UserLink extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.user-link');
+        return view('components.table-message');
     }
 }

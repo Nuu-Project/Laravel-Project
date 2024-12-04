@@ -1,6 +1,5 @@
 <x-template-layout>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
+    <script src="{{ asset('js/roles/index.js') }}"></script>
 
     <div class="flex flex-col md:flex-row h-screen bg-gray-100">
         <x-side-bar />
@@ -8,9 +7,9 @@
         <div class="flex-1 flex flex-col overflow-hidden">
             <x-navbar-admin />
 
-        <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-200">
-            <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
-                <h3 class="text-gray-700 text-3xl font-medium mb-6">角色管理</h3>
+            <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-200">
+                <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+                    <h3 class="text-gray-700 text-3xl font-medium mb-6">角色管理</h3>
 
                     <!-- Admin 表格 -->
                     <div class="bg-white rounded-lg shadow-md p-6 mb-6">
@@ -67,35 +66,35 @@
                                         @endif
                                     @endforeach
                                 </tbody>
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                const checkboxes = document.querySelectorAll('.role-checkbox');
+                                <script>
+                                    document.addEventListener('DOMContentLoaded', function() {
+                                        const checkboxes = document.querySelectorAll('.role-checkbox');
 
-                checkboxes.forEach(checkbox => {
-                    checkbox.addEventListener('change', function() {
-                        const role = this.dataset.role;
-                        const checkedBoxes = document.querySelectorAll(
-                            `.role-checkbox[data-role="${role}"]:checked`);
+                                        checkboxes.forEach(checkbox => {
+                                            checkbox.addEventListener('change', function() {
+                                                const role = this.dataset.role;
+                                                const checkedBoxes = document.querySelectorAll(
+                                                    `.role-checkbox[data-role="${role}"]:checked`);
 
-                        const modifyBtn = document.querySelector(
-                            `#modify${role.charAt(0).toUpperCase() + role.slice(1)}Btn`);
+                                                const modifyBtn = document.querySelector(
+                                                    `#modify${role.charAt(0).toUpperCase() + role.slice(1)}Btn`);
 
-                        // 顯示或隱藏按鈕
-                        modifyBtn.classList.toggle('hidden', checkedBoxes.length === 0);
-                    });
-                });
+                                                // 顯示或隱藏按鈕
+                                                modifyBtn.classList.toggle('hidden', checkedBoxes.length === 0);
+                                            });
+                                        });
 
-                // 當修改按鈕被點擊時提交表單
-                const modifyAdminBtn = document.getElementById('modifyAdminBtn');
-                const modifyUserBtn = document.getElementById('modifyUserBtn');
+                                        // 當修改按鈕被點擊時提交表單
+                                        const modifyAdminBtn = document.getElementById('modifyAdminBtn');
+                                        const modifyUserBtn = document.getElementById('modifyUserBtn');
 
-                modifyAdminBtn?.addEventListener('click', function() {
-                    document.getElementById('adminForm').submit();
-                });
+                                        modifyAdminBtn?.addEventListener('click', function() {
+                                            document.getElementById('adminForm').submit();
+                                        });
 
-            modifyUserBtn?.addEventListener('click', function() {
-                document.getElementById('userForm').submit();
-            });
-        });
-    </script>
+                                        modifyUserBtn?.addEventListener('click', function() {
+                                            document.getElementById('userForm').submit();
+                                        });
+                                    });
+                                </script>
 </x-template-layout>

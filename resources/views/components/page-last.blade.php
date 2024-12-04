@@ -54,6 +54,6 @@
                 </div>
 
             </div>
-        </div> <!-- container.// -->
+        </div>
     </footer>
 </div>

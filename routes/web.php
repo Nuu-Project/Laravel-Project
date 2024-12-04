@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Route;
 // 訪客首頁?
 Route::get('/', function () {
     return view('Home');
-});
+})->name('home');
 
 // 登入後的首頁?
 Route::get('/dashboard', function () {
