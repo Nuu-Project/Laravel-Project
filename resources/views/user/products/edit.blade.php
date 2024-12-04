@@ -257,7 +257,6 @@
                                         deletedImageIds.push(imageId);
                                         document.getElementById('deletedImageIds').value = JSON.stringify(deletedImageIds);
                                     }
-
                                     // 更新 UI
                                     removeImage(index);
                                     updatePositions();
