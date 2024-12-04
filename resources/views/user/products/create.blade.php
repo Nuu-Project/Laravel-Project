@@ -2,12 +2,9 @@
     <div class="flex flex-col md:flex-row h-screen bg-gray-100">
         <x-link-user />
 
-<div class="flex flex-col md:flex-row h-screen bg-gray-100">
-    <x-user-link />
-
-    <!-- 主要內容區 -->
-    <div class="flex-1 flex flex-col overflow-hidden">
-        <x-navbar-user />
+        <!-- 主要內容區 -->
+        <div class="flex-1 flex flex-col overflow-hidden">
+            <x-navbar-user />
 
             <!-- 主要內容 -->
             <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-200">
@@ -187,15 +184,13 @@
         </div>
     </div>
 
-<script>
-    function previewImage(input, number) {
-        const preview = document.getElementById('preview' + number);
-        const placeholder = document.getElementById('placeholder' + number);
-
-        const deleteButton = document.getElementById('deleteButton' + number);
-
-        const file = input.files[0];
-        const reader = new FileReader();
+    <script>
+        function previewImage(input, number) {
+            const preview = document.getElementById('preview' + number);
+            const placeholder = document.getElementById('placeholder' + number);
+            const deleteButton = document.getElementById('deleteButton' + number);
+            const file = input.files[0];
+            const reader = new FileReader();
 
             reader.onloadend = function() {
                 preview.querySelector('img').src = reader.result;
@@ -214,23 +209,12 @@
             }
         }
 
-    function removeImage(number) {
-        const input = document.getElementById('image' + number);
-        const preview = document.getElementById('preview' + number);
-        const placeholder = document.getElementById('placeholder' + number);
-        const deleteButton = document.getElementById('deleteButton' + number);
         function removeImage(index) {
             const preview = document.getElementById(`preview${index}`);
             const placeholder = document.getElementById(`placeholder${index}`);
             const imageInput = document.getElementById(`image${index}`);
             const deleteButton = document.getElementById(`deleteButton${index}`);
 
-        input.value = '';
-        preview.src = "";
-        preview.classList.add('hidden');
-        placeholder.classList.remove('hidden');
-        deleteButton.classList.add('hidden');
-    }
             // 重置預覽圖
             preview.querySelector('img').src = '#';
             preview.classList.add('hidden');

@@ -170,7 +170,7 @@
                                                     <p class="mb-2 text-sm text-gray-500"><span
                                                             class="font-semibold">點擊上傳</span> 或拖放</p>
                                                     <p class="text-xs text-gray-500">SVG, PNG, JPG or GIF (最大.
-                                                        800x400px)</p>
+                                                        3200x3200px)</p>
                                                 </div>
                                                 <div id="preview{{ $i }}"
                                                     class="absolute inset-0 flex items-center justify-center {{ $product->getMedia('images')->sortBy('order_column')->values()->get($i) ? '' : 'hidden' }}">
