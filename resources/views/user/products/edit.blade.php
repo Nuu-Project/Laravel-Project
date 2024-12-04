@@ -257,10 +257,12 @@
                                         deletedImageIds.push(imageId);
                                         document.getElementById('deletedImageIds').value = JSON.stringify(deletedImageIds);
                                     }
+
                                     // 更新 UI
                                     removeImage(index);
                                     updatePositions();
                                 }
+                                
                                 function removeImage(index) {
                                     const preview = document.getElementById(`preview${index}`);
                                     const placeholder = document.getElementById(`placeholder${index}`);
