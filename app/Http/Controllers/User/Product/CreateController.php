@@ -25,6 +25,7 @@ class CreateController extends Controller
             'description' => ['required', 'string'],
             'grade' => ['required', 'string', 'not_in:選擇適用的年級...'],
             'semester' => ['required', 'string', 'not_in:選擇學期...'],
+            'subject' => ['required', 'string', 'not_in:選擇科目...'],
             'category' => ['required', 'string', 'not_in:選擇課程類別...'],
             'images' => ['required', 'array', 'min:1', 'max:5'],
             'images.*' => [
@@ -59,6 +60,7 @@ class CreateController extends Controller
             $tagTypes = [
                 ['type' => '年級', 'slug' => $request->input('grade')],
                 ['type' => '學期', 'slug' => $request->input('semester')],
+                ['type' => '科目', 'slug' => $request->input('subject')],
                 ['type' => '課程', 'slug' => $request->input('category')]
             ];
 

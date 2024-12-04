@@ -13,6 +13,7 @@ class EditController extends Controller
     {
         $gradeTag = $product->tags->firstWhere('type', '年級');
         $semesterTag = $product->tags->firstWhere('type', '學期');
+        $subjectTag = $product->tags->firstWhere('type', '科目');
         $categoryTag = $product->tags->firstWhere('type', '課程');
         $tags = Tag::whereNull('deleted_at')->get();
 
@@ -34,6 +35,6 @@ class EditController extends Controller
             }
         }
 
-        return view('user.products.edit', compact('product', 'tags', 'gradeTag', 'semesterTag', 'categoryTag'));
+        return view('user.products.edit', compact('product', 'tags', 'gradeTag', 'semesterTag', 'categoryTag', 'subjectTag'));
     }
 }

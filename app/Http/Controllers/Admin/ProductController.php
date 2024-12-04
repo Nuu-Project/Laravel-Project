@@ -17,6 +17,6 @@ class ProductController extends Controller
             ->get();
 
         // 返回到視圖，並傳遞商品資料
-        return view('admin.check', compact('products'));
+        return view('admin.products', compact('products'));
     }
 }
