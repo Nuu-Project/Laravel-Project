@@ -22,4 +22,3 @@ Route::resource('products', ProductController::class)
 require __DIR__.'/auth.php';
 require __DIR__.'/admin.php';
 require __DIR__.'/user.php';
-require __DIR__.'/login.php';
