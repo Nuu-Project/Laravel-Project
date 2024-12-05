@@ -14,18 +14,18 @@ class ProductController extends Controller
 {
     public function index(Request $request)
     {
-        // 獲取請求中的標籤 slug
-        $tagSlugs = $request->input('tags', []);
+        // 獲取請求中的標籤 id
+        $tagIds = $request->input('tags', []);
         // 獲取搜索關鍵字
         $search = $request->input('search');
 
         // 修改：只獲取未被軟刪除的標籤
-        $tags = Tag::whereIn('slug->zh', $tagSlugs)
+        $tags = Tag::whereIn('id', $tagIds)
             ->whereNull('deleted_at')
             ->get()
             ->map(function ($tag) {
                 return [
-                    'name' => $tag->getTranslation('name', 'zh'),
+                    'name' => $tag->name,
                     'type' => $tag->type,
                 ];
             })->toArray();
@@ -37,7 +37,7 @@ class ProductController extends Controller
         if (! empty($tags)) {
             foreach ($tags as $tag) {
                 $productsQuery->whereHas('tags', function ($query) use ($tag) {
-                    $query->where('name->zh', $tag['name'])
+                    $query->where('name->zh_TW', $tag['name'])
                         ->where('type', $tag['type'])
                         ->whereNull('deleted_at'); // 確保只使用未被軟刪除的標籤
                 });
@@ -54,7 +54,7 @@ class ProductController extends Controller
         // 修改：只獲取未被軟刪除的所有標籤
         $allTags = Tag::whereNull('deleted_at')->get();
 
-        return view('guest.Product', compact('products', 'allTags', 'tagSlugs', 'search'));
+        return view('guest.Product', compact('products', 'allTags', 'tagIds', 'search'));
     }
 
     public function show($productId): View
@@ -63,7 +63,7 @@ class ProductController extends Controller
 
         $chirps = $product->chirps()->with('user')->get();
         $reports = Report::where('type', '商品')->get()->mapWithKeys(function ($item) {
-            return [$item->id => json_decode($item->name, true)['zh']];
+            return [$item->id => json_decode($item->name, true)['zh_TW']];
         });
 
         return view('user.products.info', compact('chirps', 'product', 'reports'));

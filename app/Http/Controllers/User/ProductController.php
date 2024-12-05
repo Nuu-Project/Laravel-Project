@@ -79,7 +79,7 @@ class ProductController extends Controller
             ];
 
             foreach ($tagTypes as $tagType) {
-                $tag = Tag::where('slug->zh', $tagType['slug'])
+                $tag = Tag::where('slug->zh_TW', $tagType['slug'])
                          ->where('type', $tagType['type'])
                          ->first();
 
@@ -227,7 +227,7 @@ class ProductController extends Controller
         ];
 
         foreach ($tagTypes as $tagType) {
-            $tag = Tag::where('slug->zh', $tagType['slug'])
+            $tag = Tag::where('slug->zh_TW', $tagType['slug'])
                       ->where('type', $tagType['type'])
                       ->first();
 

@@ -33,9 +33,9 @@ class Tag extends Model
         if (! $tag) {
             $tag = new static;
             $tag->setTranslation('name', 'en', $name['en']);
-            $tag->setTranslation('name', 'zh', $name['zh']);
+            $tag->setTranslation('name', 'zh_TW', $name['zh_TW']);
             $tag->setTranslation('slug', 'en', $slug['en']);
-            $tag->setTranslation('slug', 'zh', $slug['zh']);
+            $tag->setTranslation('slug', 'zh_TW', $slug['zh_TW']);
             $tag->type = $type;
             $tag->order_column = $orderColumn;
             $tag->save();

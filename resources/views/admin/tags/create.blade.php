@@ -23,7 +23,7 @@
                         <div class="grid gap-2">
                             <label
                                 class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                                for="name[zh]">
+                                for="name[zh_TW]">
                                 Name :
                             </label>
                             <input
@@ -35,7 +35,7 @@
                         <div class="grid gap-2">
                             <label
                                 class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                                for="slug[zh]">
+                                for="slug[zh_TW]">
                                 Slug :
                             </label>
                             <input
