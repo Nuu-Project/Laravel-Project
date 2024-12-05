@@ -6,7 +6,7 @@
 
 
     <div class="flex flex-col md:flex-row h-screen bg-gray-100">
-        <x-user-link />
+        <x-link-user />
 
         <!-- 主要內容區 -->
         <div class="flex-1 flex flex-col overflow-hidden">

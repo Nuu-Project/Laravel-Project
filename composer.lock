@@ -1988,16 +1988,16 @@
         },
         {
             "name": "laravel-lang/lang",
-            "version": "15.9.5",
+            "version": "15.9.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Laravel-Lang/lang.git",
-                "reference": "97824140231c9f316dd97ffe187e2653fdf8deee"
+                "reference": "671dc13aaa78bed9237ef1ee73303e0039fed709"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Laravel-Lang/lang/zipball/97824140231c9f316dd97ffe187e2653fdf8deee",
-                "reference": "97824140231c9f316dd97ffe187e2653fdf8deee",
+                "url": "https://api.github.com/repos/Laravel-Lang/lang/zipball/671dc13aaa78bed9237ef1ee73303e0039fed709",
+                "reference": "671dc13aaa78bed9237ef1ee73303e0039fed709",
                 "shasum": ""
             },
             "require": {
@@ -2047,7 +2047,7 @@
                 "issues": "https://github.com/Laravel-Lang/lang/issues",
                 "source": "https://github.com/Laravel-Lang/lang"
             },
-            "time": "2024-11-26T14:36:48+00:00"
+            "time": "2024-12-02T14:31:02+00:00"
         },
         {
             "name": "laravel-lang/locale-list",
@@ -6660,20 +6660,21 @@
         },
         {
             "name": "symfony/http-foundation",
-            "version": "v7.1.9",
+            "version": "v7.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/http-foundation.git",
-                "reference": "82765842fb599c7ed839b650214680c7ee5779be"
+                "reference": "e88a66c3997859532bc2ddd6dd8f35aba2711744"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/http-foundation/zipball/82765842fb599c7ed839b650214680c7ee5779be",
-                "reference": "82765842fb599c7ed839b650214680c7ee5779be",
+                "url": "https://api.github.com/repos/symfony/http-foundation/zipball/e88a66c3997859532bc2ddd6dd8f35aba2711744",
+                "reference": "e88a66c3997859532bc2ddd6dd8f35aba2711744",
                 "shasum": ""
             },
             "require": {
                 "php": ">=8.2",
+                "symfony/deprecation-contracts": "^2.5|^3.0",
                 "symfony/polyfill-mbstring": "~1.1",
                 "symfony/polyfill-php83": "^1.27"
             },
@@ -6717,7 +6718,7 @@
             "description": "Defines an object-oriented layer for the HTTP specification",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/http-foundation/tree/v7.1.9"
+                "source": "https://github.com/symfony/http-foundation/tree/v7.2.0"
             },
             "funding": [
                 {
@@ -6733,7 +6734,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-11-13T18:58:36+00:00"
+            "time": "2024-11-13T18:58:46+00:00"
         },
         {
             "name": "symfony/http-kernel",
@@ -7801,16 +7802,16 @@
         },
         {
             "name": "symfony/process",
-            "version": "v7.1.8",
+            "version": "v7.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/process.git",
-                "reference": "42783370fda6e538771f7c7a36e9fa2ee3a84892"
+                "reference": "d34b22ba9390ec19d2dd966c40aa9e8462f27a7e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/process/zipball/42783370fda6e538771f7c7a36e9fa2ee3a84892",
-                "reference": "42783370fda6e538771f7c7a36e9fa2ee3a84892",
+                "url": "https://api.github.com/repos/symfony/process/zipball/d34b22ba9390ec19d2dd966c40aa9e8462f27a7e",
+                "reference": "d34b22ba9390ec19d2dd966c40aa9e8462f27a7e",
                 "shasum": ""
             },
             "require": {
@@ -7842,7 +7843,7 @@
             "description": "Executes commands in sub-processes",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/process/tree/v7.1.8"
+                "source": "https://github.com/symfony/process/tree/v7.2.0"
             },
             "funding": [
                 {
@@ -7858,7 +7859,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-11-06T14:23:19+00:00"
+            "time": "2024-11-06T14:24:19+00:00"
         },
         {
             "name": "symfony/routing",
@@ -10913,12 +10914,12 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {},
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
         "php": "^8.2"
     },
-    "platform-dev": [],
+    "platform-dev": {},
     "plugin-api-version": "2.6.0"
 }

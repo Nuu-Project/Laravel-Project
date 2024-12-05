@@ -21,9 +21,19 @@
                     {{ __('Profile') }}
                 </x-dropdown-link>
 
-                <!-- <x-dropdown-link :href="route('user.products.index')">
+                <x-dropdown-link :href="route('user.products.index')">
                     {{ __('使用者後台') }}
-                </x-dropdown-link> -->
+                </x-dropdown-link>
+
+                @role('admin')
+                    <x-dropdown-link :href="route('admin.messages.index')">
+                        {{ __('管理者後台') }}
+                    </x-dropdown-link>
+                @endrole
+
+                <x-dropdown-link :href="route('home')">
+                    {{ __('首頁') }}
+                </x-dropdown-link>
 
                 <!-- Authentication -->
                 <form method="POST" action="{{ route('logout') }}">

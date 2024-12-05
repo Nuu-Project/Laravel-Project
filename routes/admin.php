@@ -14,7 +14,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'role:admin'])->grou
     Route::get('/products', [ProductController::class, 'index'])
         ->name('products.index');
     // 商品管理下架 未返回畫面
-    Route::put('/products/{product}/demote', [ShelvesController::class, 'demoteData'])
+    Route::put('/products/{product}/inactive', [ProductController::class, 'demoteData'])
         ->name('products.demote');
 
     // 用戶管理頁

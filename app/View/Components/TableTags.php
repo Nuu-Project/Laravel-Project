@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class TagsTable extends Component
+class TableTags extends Component
 {
     /**
      * Create a new component instance.
@@ -21,6 +21,6 @@ class TagsTable extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.tags-table');
+        return view('components.table-tags');
     }
 }
