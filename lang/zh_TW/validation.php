@@ -40,6 +40,10 @@ return [
         'max' => '圖片大小不可超過 2MB',
         'mimes' => '只接受 SVG、PNG、JPG 或 GIF 格式的圖片',
     ],
+    'subject' => [
+        'required' => '請選擇科目',
+        'not_in' => '請選擇科目',
+    ],
 ],
 
     'accepted' => '必須接受 :attribute。',
