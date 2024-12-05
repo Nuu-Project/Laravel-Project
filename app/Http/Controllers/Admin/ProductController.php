@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Enums\ProductStatus;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use Illuminate\Contracts\View\View;
-use App\Enums\ProductStatus;
 
 class ProductController extends Controller
 {
