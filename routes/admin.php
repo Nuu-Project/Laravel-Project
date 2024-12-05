@@ -4,7 +4,6 @@ use App\Http\Controllers\Admin\MessageController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\ReportDetailController;
 use App\Http\Controllers\Admin\RoleController;
-use App\Http\Controllers\Admin\ShelvesController;
 use App\Http\Controllers\Admin\TagController;
 use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Route;

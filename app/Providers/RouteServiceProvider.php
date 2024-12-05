@@ -17,4 +17,4 @@ class RouteServiceProvider extends ServiceProvider
                 ->group(base_path('routes/admin.php'));
         });
     }
-} 
+}

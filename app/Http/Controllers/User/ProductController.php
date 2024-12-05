@@ -8,7 +8,6 @@ use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Spatie\Tags\Tag;
-use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -27,6 +26,7 @@ class ProductController extends Controller
     public function create()
     {
         $tags = Tag::whereNull('deleted_at')->get();
+
         return view('user.products.create', compact('tags'));
     }
 
@@ -35,7 +35,7 @@ class ProductController extends Controller
         // 基本驗證規則
         $rules = [
             'name' => ['required', 'string', 'max:50'],
-            'price' => ['required', 'numeric', 'min:0','max:9999'],
+            'price' => ['required', 'numeric', 'min:0', 'max:9999'],
             'description' => ['required', 'string'],
             'grade' => ['required', 'string', 'not_in:選擇適用的年級...'],
             'semester' => ['required', 'string', 'not_in:選擇學期...'],
@@ -47,7 +47,7 @@ class ProductController extends Controller
                 'image',
                 'mimes:svg,png,jpg,jpeg,gif',
                 'max:2048',
-                'dimensions:max_width=3200,max_height=3200'
+                'dimensions:max_width=3200,max_height=3200',
             ],
         ];
 
@@ -65,7 +65,9 @@ class ProductController extends Controller
             // 處理圖片上傳
             if ($request->hasFile('images')) {
                 foreach ($request->file('images') as $index => $image) {
-                    if ($index >= 5) break;
+                    if ($index >= 5) {
+                        break;
+                    }
                     $product->addMedia($image)->toMediaCollection('images');
                 }
             }
@@ -75,13 +77,13 @@ class ProductController extends Controller
                 ['type' => '年級', 'slug' => $request->input('grade')],
                 ['type' => '學期', 'slug' => $request->input('semester')],
                 ['type' => '科目', 'slug' => $request->input('subject')],
-                ['type' => '課程', 'slug' => $request->input('category')]
+                ['type' => '課程', 'slug' => $request->input('category')],
             ];
 
             foreach ($tagTypes as $tagType) {
                 $tag = Tag::where('slug->zh_TW', $tagType['slug'])
-                         ->where('type', $tagType['type'])
-                         ->first();
+                    ->where('type', $tagType['type'])
+                    ->first();
 
                 if ($tag) {
                     $product->attachTag($tag);
@@ -141,7 +143,7 @@ class ProductController extends Controller
                 'image',
                 'mimes:svg,png,jpg,jpeg,gif',
                 'max:2048',
-                'dimensions:max_width=3200,max_height=3200'
+                'dimensions:max_width=3200,max_height=3200',
             ],
             'image_ids' => ['nullable', 'array', 'max:5'],
             'deleted_image_ids' => ['nullable', 'string'],
@@ -223,13 +225,13 @@ class ProductController extends Controller
             ['type' => '年級', 'slug' => $request->input('grade')],
             ['type' => '學期', 'slug' => $request->input('semester')],
             ['type' => '科目', 'slug' => $request->input('subject')],
-            ['type' => '課程', 'slug' => $request->input('category')]
+            ['type' => '課程', 'slug' => $request->input('category')],
         ];
 
         foreach ($tagTypes as $tagType) {
             $tag = Tag::where('slug->zh_TW', $tagType['slug'])
-                      ->where('type', $tagType['type'])
-                      ->first();
+                ->where('type', $tagType['type'])
+                ->first();
 
             if ($tag) {
                 $product->attachTag($tag);
@@ -256,7 +258,7 @@ class ProductController extends Controller
     {
         $request->validate([
             'image' => 'required|image|max:2048',
-            'position' => 'required|integer|min:0|max:4'
+            'position' => 'required|integer|min:0|max:4',
         ]);
 
         try {
@@ -266,12 +268,12 @@ class ProductController extends Controller
             return response()->json([
                 'success' => true,
                 'path' => $path,
-                'position' => $request->position
+                'position' => $request->position,
             ]);
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
-                'message' => '上傳圖片時發生錯誤'
+                'message' => '上傳圖片時發生錯誤',
             ]);
         }
     }
@@ -292,7 +294,4 @@ class ProductController extends Controller
 
         return redirect()->route('user.products.index')->with('success', $message);
     }
-
-
-
 }

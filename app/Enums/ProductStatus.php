@@ -9,9 +9,9 @@ enum ProductStatus: int
 
     public function label(): string
     {
-        return match($this) {
+        return match ($this) {
             self::Active => '上架中',
             self::Inactive => '已下架',
         };
     }
-} 
+}
