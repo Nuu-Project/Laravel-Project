@@ -16,36 +16,43 @@ class ReportSeeder extends Seeder
 
             //商品
             [
-                'name' => ['zh' => '圖片盜用'],
+                'name' => ['zh_TW' => '圖片盜用'],
                 'type' => '商品',
+                'order_column' => 1,
             ],
             [
-                'name' => ['zh' => '違法商品'],
+                'name' => ['zh_TW' => '違法商品'],
                 'type' => '商品',
+                'order_column' => 2,
             ],
             [
-                'name' => ['zh' => '其他'],
+                'name' => ['zh_TW' => '其他'],
                 'type' => '商品',
+                'order_column' => 3,
             ],
 
             //留言
             [
-                'name' => ['zh' => '辱罵或騷擾'],
+                'name' => ['zh_TW' => '辱罵或騷擾'],
                 'type' => '留言',
+                'order_column' => 1,
             ],
             [
-                'name' => ['zh' => '重複留言'],
+                'name' => ['zh_TW' => '重複留言'],
                 'type' => '留言',
+                'order_column' => 2,
             ],
 
             //用戶
             [
-                'name' => ['zh' => '帳號冒用'],
+                'name' => ['zh_TW' => '帳號冒用'],
                 'type' => '用戶',
+                'order_column' => 1,
             ],
             [
-                'name' => ['zh' => '用戶名稱'],
+                'name' => ['zh_TW' => '用戶名稱'],
                 'type' => '用戶',
+                'order_column' => 2,
             ],
 
         ];
@@ -53,9 +60,12 @@ class ReportSeeder extends Seeder
         foreach ($reports as $reportData) {
             Report::updateOrCreate(
                 [
-                    'name->zh' => $reportData['name']['zh'],
                     'type' => $reportData['type'],
+                    'order_column' => $reportData['order_column'],
                 ],
+                [
+                    'name' => json_encode($reportData['name']),
+                ]
             );
         }
     }

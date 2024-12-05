@@ -56,7 +56,7 @@
                                                         {{ $reportable->reportable->name }}
                                                     </td>
                                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                                        {{ json_decode($reportable->report->name, true)['zh'] }}
+                                                        {{ json_decode($reportable->report->name, true)['zh_TW'] }}
                                                     </td>
                                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                                         {{ $reportable->description }}

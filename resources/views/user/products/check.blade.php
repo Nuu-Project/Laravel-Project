@@ -83,8 +83,8 @@
                                                             $gradeTag = $product->tags->firstWhere('type', '年級');
                                                             $semesterTag = $product->tags->firstWhere('type', '學期');
                                                         @endphp
-                                                        {{ $gradeTag ? $gradeTag->getTranslation('name', 'zh') : '無' }}
-                                                        {{ $semesterTag ? $semesterTag->getTranslation('name', 'zh') : '學期:無' }}
+                                                        {{ $gradeTag ? $gradeTag->name : '無' }}
+                                                        {{ $semesterTag ? $semesterTag->name : '學期:無' }}
                                                     </span>
                                                 </h6>
                                                 <h6 class="font-black text-gray-600 text-sm md:text-lg">課程 :
@@ -92,7 +92,7 @@
                                                         @php
                                                             $categoryTag = $product->tags->firstWhere('type', '課程');
                                                         @endphp
-                                                        {{ $categoryTag ? $categoryTag->getTranslation('name', 'zh') : '無' }}
+                                                        {{ $categoryTag ? $categoryTag->name : '無' }}
                                                     </span>
                                                 </h6>
                                             </div>

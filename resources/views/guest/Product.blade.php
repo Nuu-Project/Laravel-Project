@@ -13,8 +13,8 @@
         </div>
 
         <!-- 保留現有的標籤選擇 -->
-        @foreach ($tagSlugs as $tagSlug)
-            <input type="hidden" name="tags[]" value="{{ $tagSlug }}">
+        @foreach ($tagIds as $tagId)
+            <input type="hidden" name="tags[]" value="{{ $tagId }}">
         @endforeach
     </form>
     <form action="{{ route('products.index') }}" method="GET" class="flex flex-wrap gap-2 justify-center">
@@ -22,9 +22,9 @@
             <option value="">選擇科目...</option>
             @foreach ($allTags as $tag)
                 @if ($tag->type === '科目')
-                    <option value="{{ $tag->getTranslation('slug', 'zh') }}"
-                        {{ in_array($tag->getTranslation('slug', 'zh'), $tagSlugs) ? 'selected' : '' }}>
-                        {{ $tag->getTranslation('name', 'zh') }}
+                    <option value="{{ $tag->id }}"
+                        {{ in_array($tag->id, $tagIds) ? 'selected' : '' }}>
+                        {{ $tag->name }}
                     </option>
                 @endif
             @endforeach
@@ -33,9 +33,9 @@
             <option value="">選擇課程...</option>
             @foreach ($allTags as $tag)
                 @if ($tag->type === '課程')
-                    <option value="{{ $tag->getTranslation('slug', 'zh') }}"
-                        {{ in_array($tag->getTranslation('slug', 'zh'), $tagSlugs) ? 'selected' : '' }}>
-                        {{ $tag->getTranslation('name', 'zh') }}
+                    <option value="{{ $tag->id }}"
+                        {{ in_array($tag->id, $tagIds) ? 'selected' : '' }}>
+                        {{ $tag->name }}
                     </option>
                 @endif
             @endforeach
@@ -44,9 +44,9 @@
             <option value="">選擇年級...</option>
             @foreach ($allTags as $tag)
                 @if ($tag->type === '年級')
-                    <option value="{{ $tag->getTranslation('slug', 'zh') }}"
-                        {{ in_array($tag->getTranslation('slug', 'zh'), $tagSlugs) ? 'selected' : '' }}>
-                        {{ $tag->getTranslation('name', 'zh') }}
+                    <option value="{{ $tag->id }}"
+                        {{ in_array($tag->id, $tagIds) ? 'selected' : '' }}>
+                        {{ $tag->name }}
                     </option>
                 @endif
             @endforeach
@@ -55,9 +55,9 @@
             <option value="">選擇學期...</option>
             @foreach ($allTags as $tag)
                 @if ($tag->type === '學期')
-                    <option value="{{ $tag->getTranslation('slug', 'zh') }}"
-                        {{ in_array($tag->getTranslation('slug', 'zh'), $tagSlugs) ? 'selected' : '' }}>
-                        {{ $tag->getTranslation('name', 'zh') }}
+                    <option value="{{ $tag->id }}"
+                        {{ in_array($tag->id, $tagIds) ? 'selected' : '' }}>
+                        {{ $tag->name }}
                     </option>
                 @endif
             @endforeach
@@ -108,8 +108,8 @@
                                             $gradeTag = $product->tags->firstWhere('type', '年級');
                                             $semesterTag = $product->tags->firstWhere('type', '學期');
                                         @endphp
-                                        {{ $gradeTag ? $gradeTag->getTranslation('name', 'zh') : '無' }}
-                                        {{ $semesterTag ? $semesterTag->getTranslation('name', 'zh') : '學期:無' }}
+                                        {{ $gradeTag ? $gradeTag->name : '無' }}
+                                        {{ $semesterTag ? $semesterTag->name : '學期:無' }}
                                     </span>
                                 </h6>
                                 <h6 class="font-black text-gray-600 text-sm md:text-lg">課程 :
@@ -117,7 +117,7 @@
                                         @php
                                             $categoryTag = $product->tags->firstWhere('type', '課程');
                                         @endphp
-                                        {{ $categoryTag ? $categoryTag->getTranslation('name', 'zh') : '無' }}
+                                        {{ $categoryTag ? $categoryTag->name : '無' }}
                                     </span>
                                 </h6>
                             </div>
