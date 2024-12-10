@@ -37,10 +37,10 @@ class ProductController extends Controller
             'name' => ['required', 'string', 'max:50'],
             'price' => ['required', 'numeric', 'min:0', 'max:9999'],
             'description' => ['required', 'string'],
-            'grade' => ['required', 'exists:tags,id', 'not_in:選擇適用的年級...'],
-            'semester' => ['required', 'exists:tags,id', 'not_in:選擇學期...'],
-            'subject' => ['required', 'exists:tags,id', 'not_in:選擇科目...'],
-            'category' => ['required', 'exists:tags,id', 'not_in:選擇課程類別...'],
+            'grade' => ['required', 'string', 'not_in:選擇適用的年級...'],
+            'semester' => ['required', 'string', 'not_in:選擇學期...'],
+            'subject' => ['required', 'string', 'not_in:選擇科目...'],
+            'category' => ['required', 'string', 'not_in:選擇課程類別...'],
             'images' => ['required', 'array', 'min:1', 'max:5'],
             'images.*' => [
                 'required',
@@ -68,24 +68,25 @@ class ProductController extends Controller
                     if ($index >= 5) {
                         break;
                     }
-                    $product->addMedia($image)->toMediaCollection('images');
+                    $product->uploadCompressedImage($image, $product);
                 }
             }
 
-            // 獲取並附加新的標籤
-            $tagIds = [
-                $request->input('grade'),
-                $request->input('semester'),
-                $request->input('subject'),
-                $request->input('category'),
+            // 處理標籤
+            $tagTypes = [
+                ['type' => '年級', 'slug' => $request->input('grade')],
+                ['type' => '學期', 'slug' => $request->input('semester')],
+                ['type' => '科目', 'slug' => $request->input('subject')],
+                ['type' => '課程', 'slug' => $request->input('category')],
             ];
 
-            foreach ($tagIds as $tagId) {
-                if ($tagId) {
-                    $tag = Tag::find($tagId);
-                    if ($tag) {
-                        $product->attachTag($tag);
-                    }
+            foreach ($tagTypes as $tagType) {
+                $tag = Tag::where('slug->zh_TW', $tagType['slug'])
+                    ->where('type', $tagType['type'])
+                    ->first();
+
+                if ($tag) {
+                    $product->attachTag($tag);
                 }
             }
 
@@ -119,7 +120,7 @@ class ProductController extends Controller
                 }
 
                 // 上傳新的圖片
-                $product->addMedia($image)->toMediaCollection('images');
+                $product->uploadCompressedImage($image, $product);
             }
         }
 
@@ -132,10 +133,10 @@ class ProductController extends Controller
         $rules = [
             'name' => ['required', 'string', 'max:50'],
             'description' => ['required', 'string'],
-            'grade' => ['required', 'exists:tags,id', 'not_in:選擇適用的年級...'],
-            'semester' => ['required', 'exists:tags,id', 'not_in:選擇學期...'],
-            'subject' => ['required', 'exists:tags,id', 'not_in:選擇科目...'],
-            'category' => ['required', 'exists:tags,id', 'not_in:選擇課程類別...'],
+            'grade' => ['required', 'string', 'not_in:選擇適用的年級...'],
+            'semester' => ['required', 'string', 'not_in:選擇學期...'],
+            'subject' => ['required', 'string', 'not_in:選擇科目...'],
+            'category' => ['required', 'string', 'not_in:選擇課程類別...'],
             'images' => ['nullable', 'array', 'min:1', 'max:5'],
             'images.*' => [
                 'nullable',
@@ -175,64 +176,74 @@ class ProductController extends Controller
         // 更新產品資料
         $product->update($request->only(['name', 'price', 'description']));
 
-        // 處理圖片
         if ($request->hasFile('images') || $request->has('image_ids')) {
             $existingMedia = $product->getMedia('images')->keyBy('id');
-            $newOrder = [];
 
-            // 處理新的圖片順序和刪除標記的圖片
-            foreach ($request->input('image_ids', []) as $index => $imageId) {
-                // 如果圖片被標記為刪除，跳過它
-                if (in_array($imageId, $deletedImageIds)) {
-                    continue;
-                }
-
-                if ($request->hasFile("images.$index")) {
-                    // 新上傳的圖片
-                    $newImage = $request->file("images.$index");
-                    $media = $product->addMedia($newImage)
-                        ->withCustomProperties(['order_column' => $index + 1])
-                        ->toMediaCollection('images');
-                    $newOrder[] = $media->id;
-                } elseif ($imageId && $existingMedia->has($imageId)) {
-                    // 保留的舊圖片
-                    $existingMedia[$imageId]->order_column = $index + 1;
-                    $existingMedia[$imageId]->save();
-                    $newOrder[] = $imageId;
-                }
-            }
-
-            // 刪除標記為刪除的圖片
+            // 1. 先刪除被标记为删除的图片
             foreach ($deletedImageIds as $imageId) {
                 if ($existingMedia->has($imageId)) {
                     $existingMedia[$imageId]->delete();
                 }
             }
 
-            // 重新排序剩餘的媒體
-            $product->media()->whereIn('id', $newOrder)->each(function ($medium) use ($newOrder) {
-                $medium->order_column = array_search($medium->id, $newOrder) + 1;
-                $medium->save();
-            });
+            // 2. 處理圖片順序和新圖片
+            foreach ($request->input('image_ids', []) as $index => $imageId) {
+                // 如果圖片被標記為刪除，跳過
+                if (in_array($imageId, $deletedImageIds)) {
+                    continue;
+                }
+
+                if ($request->hasFile("images.$index")) {
+                    // 上傳並壓縮新圖片
+                    try {
+                        $newImageFile = $request->file("images.$index");
+
+                        // 壓縮圖片
+                        $compressedImagePath = $product->uploadCompressedImage($newImageFile, $product);
+
+                        // 確保壓縮文件存在
+                        if (! file_exists($compressedImagePath)) {
+                            throw new \Exception("壓縮後的文件不存在：$compressedImagePath");
+                        }
+
+                        // 添加壓縮後的圖片到媒體集合
+                        $product->addMedia($compressedImagePath)
+                            ->withCustomProperties(['order_column' => $index + 1])
+                            ->toMediaCollection('images');
+
+                        // 刪除壓縮後的臨時文件
+                        unlink($compressedImagePath);
+                    } catch (\Exception $e) {
+                        \Log::error('圖片壓縮或上傳失敗：'.$e->getMessage());
+
+                        continue;
+                    }
+                } elseif ($imageId && $existingMedia->has($imageId)) {
+                    // 更新現有圖片的順序
+                    $existingMedia[$imageId]->order_column = $index + 1;
+                    $existingMedia[$imageId]->save();
+                }
+            }
         }
 
         // 處理標籤
         $product->tags()->detach(); // 先清除所有標籤
 
         // 獲取並附加新的標籤
-        $tagIds = [
-            $request->input('grade'),
-            $request->input('semester'),
-            $request->input('subject'),
-            $request->input('category'),
+        $tagTypes = [
+            ['type' => '年級', 'slug' => $request->input('grade')],
+            ['type' => '學期', 'slug' => $request->input('semester')],
+            ['type' => '科目', 'slug' => $request->input('subject')],
+            ['type' => '課程', 'slug' => $request->input('category')],
         ];
 
-        foreach ($tagIds as $tagId) {
-            if ($tagId) {
-                $tag = Tag::find($tagId);
-                if ($tag) {
-                    $product->attachTag($tag);
-                }
+        foreach ($tagTypes as $tagType) {
+            $tag = Tag::where('slug->zh_TW', $tagType['slug'])
+                ->where('type', $tagType['type'])
+                ->first();
+
+            if ($tag) {
+                $product->attachTag($tag);
             }
         }
 
