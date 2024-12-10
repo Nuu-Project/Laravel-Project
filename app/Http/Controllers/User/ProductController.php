@@ -37,10 +37,10 @@ class ProductController extends Controller
             'name' => ['required', 'string', 'max:50'],
             'price' => ['required', 'numeric', 'min:0', 'max:9999'],
             'description' => ['required', 'string'],
-            'grade' => ['required', 'string', 'not_in:選擇適用的年級...'],
-            'semester' => ['required', 'string', 'not_in:選擇學期...'],
-            'subject' => ['required', 'string', 'not_in:選擇科目...'],
-            'category' => ['required', 'string', 'not_in:選擇課程類別...'],
+            'grade' => ['required', 'exists:tags,id', 'not_in:選擇適用的年級...'],
+            'semester' => ['required', 'exists:tags,id', 'not_in:選擇學期...'],
+            'subject' => ['required', 'exists:tags,id', 'not_in:選擇科目...'],
+            'category' => ['required', 'exists:tags,id', 'not_in:選擇課程類別...'],
             'images' => ['required', 'array', 'min:1', 'max:5'],
             'images.*' => [
                 'required',
@@ -72,21 +72,20 @@ class ProductController extends Controller
                 }
             }
 
-            // 處理標籤
-            $tagTypes = [
-                ['type' => '年級', 'slug' => $request->input('grade')],
-                ['type' => '學期', 'slug' => $request->input('semester')],
-                ['type' => '科目', 'slug' => $request->input('subject')],
-                ['type' => '課程', 'slug' => $request->input('category')],
+            // 獲取並附加新的標籤
+            $tagIds = [
+                $request->input('grade'),
+                $request->input('semester'),
+                $request->input('subject'),
+                $request->input('category'),
             ];
 
-            foreach ($tagTypes as $tagType) {
-                $tag = Tag::where('slug->zh_TW', $tagType['slug'])
-                    ->where('type', $tagType['type'])
-                    ->first();
-
-                if ($tag) {
-                    $product->attachTag($tag);
+            foreach ($tagIds as $tagId) {
+                if ($tagId) {
+                    $tag = Tag::find($tagId);
+                    if ($tag) {
+                        $product->attachTag($tag);
+                    }
                 }
             }
 
@@ -133,10 +132,10 @@ class ProductController extends Controller
         $rules = [
             'name' => ['required', 'string', 'max:50'],
             'description' => ['required', 'string'],
-            'grade' => ['required', 'string', 'not_in:選擇適用的年級...'],
-            'semester' => ['required', 'string', 'not_in:選擇學期...'],
-            'subject' => ['required', 'string', 'not_in:選擇科目...'],
-            'category' => ['required', 'string', 'not_in:選擇課程類別...'],
+            'grade' => ['required', 'exists:tags,id', 'not_in:選擇適用的年級...'],
+            'semester' => ['required', 'exists:tags,id', 'not_in:選擇學期...'],
+            'subject' => ['required', 'exists:tags,id', 'not_in:選擇科目...'],
+            'category' => ['required', 'exists:tags,id', 'not_in:選擇課程類別...'],
             'images' => ['nullable', 'array', 'min:1', 'max:5'],
             'images.*' => [
                 'nullable',
@@ -230,20 +229,19 @@ class ProductController extends Controller
         $product->tags()->detach(); // 先清除所有標籤
 
         // 獲取並附加新的標籤
-        $tagTypes = [
-            ['type' => '年級', 'slug' => $request->input('grade')],
-            ['type' => '學期', 'slug' => $request->input('semester')],
-            ['type' => '科目', 'slug' => $request->input('subject')],
-            ['type' => '課程', 'slug' => $request->input('category')],
+        $tagIds = [
+            $request->input('grade'),
+            $request->input('semester'),
+            $request->input('subject'),
+            $request->input('category'),
         ];
 
-        foreach ($tagTypes as $tagType) {
-            $tag = Tag::where('slug->zh_TW', $tagType['slug'])
-                ->where('type', $tagType['type'])
-                ->first();
-
-            if ($tag) {
-                $product->attachTag($tag);
+        foreach ($tagIds as $tagId) {
+            if ($tagId) {
+                $tag = Tag::find($tagId);
+                if ($tag) {
+                    $product->attachTag($tag);
+                }
             }
         }
 
