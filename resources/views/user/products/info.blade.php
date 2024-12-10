@@ -59,7 +59,7 @@
                 </div>
                 <button id="reportButton"
                     class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded flex-shrink-0"
-                    data-reports='@json($reports->toArray())' data-store-url="{{ route('reports.store') }}"
+                    data-reports='@json($reports->toArray())' data-store-url="{{ route('user.reports.store') }}"
                     data-product-id="{{ $product->id }}">
                     檢舉
                 </button>
@@ -73,7 +73,7 @@
 
 
     <div class="max-w-2xl mx-auto p-4 sm:p-6 lg:p-8">
-        <form method="POST" action="{{ route('products.chirps.store', ['product' => $product->id]) }}">
+        <form method="POST" action="{{ route('user.products.messages.store', ['product' => $product->id]) }}">
             @csrf
             <textarea name="message" placeholder="{{ __('今天想留點什麼足跡?') }}"
                 class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm">{{ old('message') }}</textarea>
@@ -111,17 +111,17 @@
                                         </button>
                                     </x-slot>
                                     <x-slot name="content">
-                                        <x-dropdown-link :href="route('products.chirps.edit', [
+                                        <x-dropdown-link :href="route('user.products.messages.edit', [
                                             'product' => $product->id,
                                             'chirp' => $chirp->id,
                                         ])">
                                             {{ __('更改') }}
                                         </x-dropdown-link>
                                         <form method="POST"
-                                            action="{{ route('products.chirps.destroy', ['product' => $product->id, 'chirp' => $chirp->id]) }}">
+                                            action="{{ route('user.products.messages.destroy', ['product' => $product->id, 'chirp' => $chirp->id]) }}">
                                             @csrf
                                             @method('delete')
-                                            <x-dropdown-link :href="route('products.chirps.destroy', [
+                                            <x-dropdown-link :href="route('user.products.messages.destroy', [
                                                 'product' => $product->id,
                                                 'chirp' => $chirp->id,
                                             ])"

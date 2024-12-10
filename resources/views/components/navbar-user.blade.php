@@ -31,7 +31,7 @@
                     </x-dropdown-link>
                 @endrole
 
-                <x-dropdown-link :href="route('home')">
+                <x-dropdown-link :href="route('dashboard')">
                     {{ __('首頁') }}
                 </x-dropdown-link>
 

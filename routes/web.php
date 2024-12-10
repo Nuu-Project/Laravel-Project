@@ -4,15 +4,10 @@ use App\Http\Controllers\Guest\ProductController;
 use Illuminate\Support\Facades\Route;
 
 //
-// 訪客首頁?
+// 首頁
 Route::get('/', function () {
     return view('Home');
-})->name('home');
-
-// 登入後的首頁?
-Route::get('/dashboard', function () {
-    return view('Home');
-})->middleware(['auth', 'verified'])->name('dashboard');
+})->name('dashboard');
 
 //
 // 商品 瀏覽頁,洽談頁

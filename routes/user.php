@@ -6,7 +6,7 @@ use App\Http\Controllers\User\ProfileController;
 use App\Http\Controllers\User\ReportController;
 use Illuminate\Support\Facades\Route;
 
-Route::prefix('user')->name('user.')->middleware(['auth'])->group(function () {
+Route::prefix('user')->name('user.')->middleware(['auth', 'verified'])->group(function () {
     // 我的商品頁面
     Route::get('/products', [ProductController::class, 'index'])
         ->name('products.index');
@@ -31,15 +31,14 @@ Route::prefix('user')->name('user.')->middleware(['auth'])->group(function () {
     Route::post('/products', [ProductController::class, 'store'])
         ->name('products.store');
 
+    // 留言 建立,編輯頁,更新留言,刪除
+    Route::resource('products.messages', MessageController::class)
+        ->only(['store', 'edit', 'update', 'destroy']);
+
+    // 商品檢舉
+    Route::post('/reports', [ReportController::class, 'store'])->name('reports.store');
+
 });
-
-// 留言 建立,編輯頁,更新留言,刪除
-Route::resource('products.chirps', MessageController::class)
-    ->only(['store', 'edit', 'update', 'destroy'])
-    ->middleware(['auth', 'verified']);
-
-// 商品檢舉
-Route::post('/reports', [ReportController::class, 'store'])->name('reports.store');
 
 //
 // 個人資料 頁面,修改密碼,刪除帳號
