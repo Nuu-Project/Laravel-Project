@@ -1,5 +1,6 @@
 <x-template-layout>
 
+
     <x-navbar />
     <!-- 新增：搜索表單 -->
     <form action="{{ route('products.index') }}" method="GET" class="mb-4">
@@ -21,7 +22,8 @@
             <option value="">選擇科目...</option>
             @foreach ($allTags as $tag)
                 @if ($tag->type === '科目')
-                    <option value="{{ $tag->id }}" {{ in_array($tag->id, $tagIds) ? 'selected' : '' }}>
+                    <option value="{{ $tag->id }}"
+                        {{ in_array($tag->id, $tagIds) ? 'selected' : '' }}>
                         {{ $tag->name }}
                     </option>
                 @endif
@@ -31,7 +33,8 @@
             <option value="">選擇課程...</option>
             @foreach ($allTags as $tag)
                 @if ($tag->type === '課程')
-                    <option value="{{ $tag->id }}" {{ in_array($tag->id, $tagIds) ? 'selected' : '' }}>
+                    <option value="{{ $tag->id }}"
+                        {{ in_array($tag->id, $tagIds) ? 'selected' : '' }}>
                         {{ $tag->name }}
                     </option>
                 @endif
@@ -41,7 +44,8 @@
             <option value="">選擇年級...</option>
             @foreach ($allTags as $tag)
                 @if ($tag->type === '年級')
-                    <option value="{{ $tag->id }}" {{ in_array($tag->id, $tagIds) ? 'selected' : '' }}>
+                    <option value="{{ $tag->id }}"
+                        {{ in_array($tag->id, $tagIds) ? 'selected' : '' }}>
                         {{ $tag->name }}
                     </option>
                 @endif
@@ -51,7 +55,8 @@
             <option value="">選擇學期...</option>
             @foreach ($allTags as $tag)
                 @if ($tag->type === '學期')
-                    <option value="{{ $tag->id }}" {{ in_array($tag->id, $tagIds) ? 'selected' : '' }}>
+                    <option value="{{ $tag->id }}"
+                        {{ in_array($tag->id, $tagIds) ? 'selected' : '' }}>
                         {{ $tag->name }}
                     </option>
                 @endif
@@ -119,7 +124,7 @@
                         <div class="flex items-center p-6">
                             <a href= "{{ route('products.show', ['product' => $product->id]) }}">
                                 <x-button-blue-short>
-                                    洽談
+                                洽談
                                 </x-button-blue-short>
                             </a>
                         </div>
