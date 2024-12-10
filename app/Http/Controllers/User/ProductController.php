@@ -73,21 +73,21 @@ class ProductController extends Controller
             }
 
             // 獲取並附加新的標籤
-        $tagIds = [
-            $request->input('grade'),
-            $request->input('semester'),
-            $request->input('subject'),
-            $request->input('category'),
-        ];
+            $tagIds = [
+                $request->input('grade'),
+                $request->input('semester'),
+                $request->input('subject'),
+                $request->input('category'),
+            ];
 
-        foreach ($tagIds as $tagId) {
-            if ($tagId) {
-                $tag = Tag::find($tagId);
-                if ($tag) {
-                    $product->attachTag($tag);
+            foreach ($tagIds as $tagId) {
+                if ($tagId) {
+                    $tag = Tag::find($tagId);
+                    if ($tag) {
+                        $product->attachTag($tag);
+                    }
                 }
             }
-        }
 
             return redirect()->route('user.products.create')->with('success', '產品已成功創建！');
         } catch (\Illuminate\Validation\ValidationException $e) {
