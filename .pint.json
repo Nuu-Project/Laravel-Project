@@ -1,9 +1,0 @@
-{
-    "preset": "laravel",
-    "exclude": [
-        "vendor"
-    ],
-    "files": [
-        "**/*.php"
-    ]
-}
