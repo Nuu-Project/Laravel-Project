@@ -6,67 +6,36 @@
     <!-- 新增：搜索表單 -->
     <form action="{{ route('products.index') }}" method="GET" class="mb-4">
         <div class="flex items-center justify-center gap-2">
-            <input type="text" name="search" placeholder="搜索產品名稱..." value="{{ $search ?? '' }}"
+            <input type="text" name="filter[name]" placeholder="搜索產品名稱..." value="{{ request('filter.name') ?? '' }}"
                 class="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
             <button type="submit"
                 class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition duration-300 ease-in-out">搜索</button>
         </div>
 
         <!-- 保留現有的標籤選擇 -->
-        @foreach ($tagIds as $tagId)
-            <input type="hidden" name="tags[]" value="{{ $tagId }}">
+        @foreach (request('filter.tags', []) as $tagId)
+            <input type="hidden" name="filter[tags][]" value="{{ $tagId }}">
         @endforeach
     </form>
     <form action="{{ route('products.index') }}" method="GET" class="flex flex-wrap gap-2 justify-center">
-        <select id="subject" name="tags[]" class="bg-gray text-primary-foreground px-4 py-2 rounded-md">
-            <option value="">選擇科目...</option>
-            @foreach ($allTags as $tag)
-                @if ($tag->type === '科目')
-                    <option value="{{ $tag->id }}"
-                        {{ in_array($tag->id, $tagIds) ? 'selected' : '' }}>
-                        {{ $tag->name }}
-                    </option>
-                @endif
-            @endforeach
-        </select>
-        <select id="category" name="tags[]" class="bg-gray text-primary-foreground px-4 py-2 rounded-md">
-            <option value="">選擇課程...</option>
-            @foreach ($allTags as $tag)
-                @if ($tag->type === '課程')
-                    <option value="{{ $tag->id }}"
-                        {{ in_array($tag->id, $tagIds) ? 'selected' : '' }}>
-                        {{ $tag->name }}
-                    </option>
-                @endif
-            @endforeach
-        </select>
-        <select id="grade" name="tags[]" class="bg-gray text-primary-foreground px-4 py-2 rounded-md">
-            <option value="">選擇年級...</option>
-            @foreach ($allTags as $tag)
-                @if ($tag->type === '年級')
-                    <option value="{{ $tag->id }}"
-                        {{ in_array($tag->id, $tagIds) ? 'selected' : '' }}>
-                        {{ $tag->name }}
-                    </option>
-                @endif
-            @endforeach
-        </select>
-        <select id="semester" name="tags[]" class="bg-gray text-primary-foreground px-4 py-2 rounded-md">
-            <option value="">選擇學期...</option>
-            @foreach ($allTags as $tag)
-                @if ($tag->type === '學期')
-                    <option value="{{ $tag->id }}"
-                        {{ in_array($tag->id, $tagIds) ? 'selected' : '' }}>
-                        {{ $tag->name }}
-                    </option>
-                @endif
-            @endforeach
-        </select>
-
-        <button
-            class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition ease-in-out duration-300">
+        @foreach (['科目', '課程', '年級', '學期'] as $type)
+            <select name="filter[tags][]" class="bg-gray text-primary-foreground px-4 py-2 rounded-md">
+                <option value="">選擇{{ $type }}...</option>
+                @foreach ($allTags as $tag)
+                    @if ($tag->type === $type)
+                        <option value="{{ $tag->id }}" {{ in_array($tag->id, request('filter.tags', [])) ? 'selected' : '' }}>
+                            {{ $tag->name }}
+                        </option>
+                    @endif
+                @endforeach
+            </select>
+        @endforeach
+        <button class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition ease-in-out duration-300">
             搜索
         </button>
+
+        <!-- 保留現有的名稱搜尋 -->
+        <input type="hidden" name="filter[name]" value="{{ request('filter.name') }}">
     </form>
 
 

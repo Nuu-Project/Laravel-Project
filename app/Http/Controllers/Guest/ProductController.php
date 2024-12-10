@@ -8,53 +8,35 @@ use App\Models\Product;
 use App\Models\Report;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
+use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\QueryBuilder;
 use Spatie\Tags\Tag;
 
 class ProductController extends Controller
 {
     public function index(Request $request)
     {
-        // 獲取請求中的標籤 id
-        $tagIds = $request->input('tags', []);
-        // 獲取搜索關鍵字
-        $search = $request->input('search');
+        $tagIds = array_filter($request->input('filter.tags', [])); // 過濾掉 null 值
 
-        // 修改：只獲取未被軟刪除的標籤
-        $tags = Tag::whereIn('id', $tagIds)
-            ->whereNull('deleted_at')
-            ->get()
-            ->map(function ($tag) {
-                return [
-                    'name' => $tag->name,
-                    'type' => $tag->type,
-                ];
-            })->toArray();
-
-        // 根據所有標籤篩選商品
-        $productsQuery = Product::with(['media', 'user', 'tags'])
+        $products = QueryBuilder::for(Product::class)
+            ->allowedFilters([
+                'name',
+                AllowedFilter::callback('tags', function ($query) use ($tagIds) {
+                    if (! empty($tagIds)) {
+                        $query->whereHas('tags', function ($query) use ($tagIds) {
+                            $query->whereIn('tags.id', $tagIds);
+                        }, '=', count($tagIds));
+                    }
+                }),
+            ])
+            ->with(['media', 'user', 'tags'])
             ->where('status', ProductStatus::Active->value);
 
-        if (! empty($tags)) {
-            foreach ($tags as $tag) {
-                $productsQuery->whereHas('tags', function ($query) use ($tag) {
-                    $query->where('name->zh_TW', $tag['name'])
-                        ->where('type', $tag['type'])
-                        ->whereNull('deleted_at'); // 確保只使用未被軟刪除的標籤
-                });
-            }
-        }
+        $products = $products->paginate(6);
 
-        // 如果有搜索關鍵字，則加入搜索條件
-        if ($search) {
-            $productsQuery->where('name', 'like', '%'.$search.'%');
-        }
-
-        $products = $productsQuery->paginate(6);
-
-        // 修改：只獲取未被軟刪除的所有標籤
         $allTags = Tag::whereNull('deleted_at')->get();
 
-        return view('guest.Product', compact('products', 'allTags', 'tagIds', 'search'));
+        return view('guest.Product', compact('products', 'allTags'));
     }
 
     public function show($productId): View
