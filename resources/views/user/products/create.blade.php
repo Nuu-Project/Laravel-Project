@@ -63,6 +63,8 @@
                                     <option value="">選擇適用的年級...</option>
                                     @foreach ($tags as $tag)
                                         @if ($tag->type === '年級')
+                                            <option value="{{ $tag->id }}">
+                                                {{ $tag->name }}</option>
                                             <option value="{{ $tag->getTranslation('slug', 'zh_TW') }}"
                                             {{ old('grade') == $tag->getTranslation('slug', 'zh_TW') ? 'selected' : '' }}>
                                             {{ $tag->name }}
@@ -79,6 +81,8 @@
                                     <option value="">選擇學期...</option>
                                     @foreach ($tags as $tag)
                                         @if ($tag->type === '學期')
+                                            <option value="{{ $tag->id }}">
+                                                {{ $tag->name }}</option>
                                             <option value="{{ $tag->getTranslation('slug', 'zh_TW') }}"
                                             {{ old('semester') == $tag->getTranslation('slug', 'zh_TW') ? 'selected' : '' }}>
                                             {{ $tag->name }}
@@ -95,7 +99,7 @@
                                     <option value="">選擇科目...</option>
                                     @foreach ($tags as $tag)
                                         @if ($tag->type === '科目')
-                                            <option value="{{ $tag->getTranslation('slug', 'zh_TW') }}"
+                                            <option value="{{ $tag->id }}"
                                             {{ old('subject') == $tag->getTranslation('slug', 'zh_TW') ? 'selected' : '' }}>
                                             {{ $tag->name }}
                                             </option>
@@ -115,6 +119,8 @@
                                             {{ old('category') == $tag->getTranslation('slug', 'zh_TW') ? 'selected' : '' }}>
                                             {{ $tag->name }}
                                             </option>
+                                            <option value="{{ $tag->id }}">
+                                                {{ $tag->name }}</option>
                                         @endif
                                     @endforeach
                                 </select>
@@ -181,11 +187,9 @@
                                 </div>
                                 <x-input-error :messages="$errors->get('images')" class="mt-2" />
                             </div>
-                            <button
-                                class="inline-flex items-center justify-center whitespace-nowrap rounded-xl text-base sm:text-lg font-semibold ring-offset-background transition-colors ease-in-out duration-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-blue-500 text-white hover:bg-blue-700 h-10 sm:h-11 px-4 sm:px-8"
-                                type="submit">
+                            <x-button-create-edit>
                                 刊登商品
-                            </button>
+                            </x-button-create-edit>
                         </form>
                     </div>
                 </div>

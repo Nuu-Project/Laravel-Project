@@ -53,23 +53,27 @@
                                             <td
                                                 class="px-6 py-4 whitespace-nowrap text-sm font-medium flex flex-row items-center space-x-2">
                                                 <a href="{{ route('products.show', ['product' => $product->id]) }}">
-                                                    <button
-                                                        class="px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700">前往</button>
+                                                    <x-button-blue-short>
+                                                        前往
+                                                    </x-button-blue-short>
                                                 </a>
+
                                                 <form
                                                     action="{{ route('admin.products.demote', ['product' => $product->id]) }}"
                                                     method="POST" class="inline">
                                                     @csrf
                                                     @method('PUT')
-                                                    <button
-                                                        class="px-3 py-1 {{ $product->status === ProductStatus::Active ? 'bg-red-600 hover:bg-red-700' : 'bg-blue-600 hover:bg-blue-700' }} text-white rounded">
-                                                        {{ $product->status === ProductStatus::Active ? '下架' : '上架' }}
-                                                    </button>
+                                                    <x-button-status :status="$product->status" />
                                                 </form>
+
                                                 <a
-                                                    href="{{ route('admin.reports.index', ['filter[reportable_id]' => $product->id]) }}"><button
-                                                        class="px-3 py-1 bg-red-600 text-white rounded hover:bg-red-700 report-button">檢舉詳情</button></a>
+                                                    href="{{ route('admin.reports.index', ['filter[reportable_id]' => $product->id]) }}">
+                                                    <x-button-red-short>
+                                                        檢舉詳情
+                                                    </x-button-red-short>
+                                                </a>
                                             </td>
+
                                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                                 {{ $product->status->label() }}
                                             </td>

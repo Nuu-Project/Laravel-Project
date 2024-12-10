@@ -71,8 +71,8 @@
 
                                     @foreach ($tags as $tag)
                                         @if ($tag->type === '年級')
-                                            <option value="{{ $tag->getTranslation('slug', 'zh_TW') }}"
-                                                @if ($gradeTag && $tag->getTranslation('slug', 'zh_TW') == $gradeTag->getTranslation('slug', 'zh_TW')) selected @endif>
+                                            <option value="{{ $tag->id }}"
+                                                @if ($gradeTag && $tag->id == $gradeTag->id) selected @endif>
                                                 {{ $tag->name }}
                                             </option>
                                         @endif
@@ -88,8 +88,8 @@
                                     <option selected>選擇學期...</option>
                                     @foreach ($tags as $tag)
                                         @if ($tag->type === '學期')
-                                            <option value="{{ $tag->getTranslation('slug', 'zh_TW') }}"
-                                                @if ($semesterTag && $tag->getTranslation('slug', 'zh_TW') == $semesterTag->getTranslation('slug', 'zh_TW')) selected @endif>
+                                            <option value="{{ $tag->id }}"
+                                                @if ($semesterTag && $tag->id == $semesterTag->id) selected @endif>
                                                 {{ $tag->name }}
                                             </option>
                                         @endif
@@ -105,8 +105,8 @@
                                     <option selected>選擇科目...</option>
                                     @foreach ($tags as $tag)
                                         @if ($tag->type === '科目')
-                                            <option value="{{ $tag->getTranslation('slug', 'zh_TW') }}"
-                                                @if ($subjectTag && $tag->getTranslation('slug', 'zh_TW') == $subjectTag->getTranslation('slug', 'zh_TW')) selected @endif>
+                                            <option value="{{ $tag->id }}"
+                                                @if ($subjectTag && $tag->id == $subjectTag->id) selected @endif>
                                                 {{ $tag->name }}
                                             </option>
                                         @endif
@@ -122,8 +122,8 @@
                                     <option selected>選擇課程類別...</option>
                                     @foreach ($tags as $tag)
                                         @if ($tag->type === '課程')
-                                            <option value="{{ $tag->getTranslation('slug', 'zh_TW') }}"
-                                                @if ($categoryTag && $tag->getTranslation('slug', 'zh_TW') == $categoryTag->getTranslation('slug', 'zh_TW')) selected @endif>
+                                            <option value="{{ $tag->id }}"
+                                                @if ($categoryTag && $tag->id == $categoryTag->id) selected @endif>
                                                 {{ $tag->name }}
                                             </option>
                                         @endif
@@ -405,11 +405,9 @@
                                     updatePositions();
                                 });
                             </script>
-                            <button
-                                class="inline-flex items-center justify-center whitespace-nowrap rounded-xl text-base sm:text-lg font-semibold ring-offset-background transition-colors ease-in-out duration-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-blue-500 text-white hover:bg-blue-700 h-10 sm:h-11 px-4 sm:px-8"
-                                type="submit">
+                            <x-button-create-edit>
                                 儲存修改
-                            </button>
+                            </x-button-create-edit>
                         </form>
                     </div>
                 </div>
