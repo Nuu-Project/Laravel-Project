@@ -66,7 +66,8 @@
                                                     <x-button-status :status="$product->status" />
                                                 </form>
 
-                                                <a href="{{ route('admin.reports.index', ['filter[reportable_id]' => $product->id]) }}">
+                                                <a
+                                                    href="{{ route('admin.reports.index', ['filter[reportable_id]' => $product->id]) }}">
                                                     <x-button-red-short>
                                                         檢舉詳情
                                                     </x-button-red-short>

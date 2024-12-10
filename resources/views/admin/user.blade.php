@@ -97,10 +97,10 @@
                                                     </div>
                                                 </td>
                                                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                                    <x-button-red
+                                                    <x-button-red-short
                                                         onclick="showSuspendDialog({{ $user->id }}, {{ json_encode($user->name) }})">
                                                         停用
-                                                    </x-button-red>
+                                                    </x-button-red-short>
                                                 </td>
                                             </tr>
                                         @endforeach

@@ -1,6 +1,5 @@
 <x-template-layout>
 
-<body class="font-body">
 
     <x-navbar />
     <!-- 新增：搜索表單 -->
