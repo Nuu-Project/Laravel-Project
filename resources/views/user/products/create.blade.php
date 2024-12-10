@@ -62,7 +62,7 @@
                                     <option value="">選擇適用的年級...</option>
                                     @foreach ($tags as $tag)
                                         @if ($tag->type === '年級')
-                                            <option value="{{ $tag->getTranslation('slug', 'zh_TW') }}">
+                                            <option value="{{ $tag->id }}">
                                                 {{ $tag->name }}</option>
                                         @endif
                                     @endforeach
@@ -76,7 +76,7 @@
                                     <option value="">選擇學期...</option>
                                     @foreach ($tags as $tag)
                                         @if ($tag->type === '學期')
-                                            <option value="{{ $tag->getTranslation('slug', 'zh_TW') }}">
+                                            <option value="{{ $tag->id }}">
                                                 {{ $tag->name }}</option>
                                         @endif
                                     @endforeach
@@ -90,7 +90,7 @@
                                     <option value="">選擇科目...</option>
                                     @foreach ($tags as $tag)
                                         @if ($tag->type === '科目')
-                                            <option value="{{ $tag->getTranslation('slug', 'zh_TW') }}">
+                                            <option value="{{ $tag->id }}">
                                                 {{ $tag->name }}</option>
                                         @endif
                                     @endforeach
@@ -104,7 +104,7 @@
                                     <option value="">選擇課程類別...</option>
                                     @foreach ($tags as $tag)
                                         @if ($tag->type === '課程')
-                                            <option value="{{ $tag->getTranslation('slug', 'zh_TW') }}">
+                                            <option value="{{ $tag->id }}">
                                                 {{ $tag->name }}</option>
                                         @endif
                                     @endforeach
