@@ -41,8 +41,7 @@
                                 </label>
                                 <input
                                     class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                                    id="name" name="name" placeholder="請輸入書名" maxlength="50"
-                                    value= "{{ old('name') }}" />
+                                    id="name" name="name" placeholder="請輸入書名" maxlength="50" />
                                 <x-input-error :messages="$errors->get('name')" class="mt-2" />
                             </div>
                             <div class="grid gap-2">
@@ -53,7 +52,7 @@
                                 </label>
                                 <input
                                     class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                                    id="price" name="price" placeholder="輸入價格" type="number" value="{{ old('price') }}" />
+                                    id="price" name="price" placeholder="輸入價格" type="number" />
                                 <x-input-error :messages="$errors->get('price')" class="mt-2" />
                             </div>
                             <div class="grid gap-2">
@@ -65,10 +64,6 @@
                                         @if ($tag->type === '年級')
                                             <option value="{{ $tag->id }}">
                                                 {{ $tag->name }}</option>
-                                            <option value="{{ $tag->getTranslation('slug', 'zh_TW') }}"
-                                            {{ old('grade') == $tag->getTranslation('slug', 'zh_TW') ? 'selected' : '' }}>
-                                            {{ $tag->name }}
-                                            </option>
                                         @endif
                                     @endforeach
                                 </select>
@@ -83,10 +78,6 @@
                                         @if ($tag->type === '學期')
                                             <option value="{{ $tag->id }}">
                                                 {{ $tag->name }}</option>
-                                            <option value="{{ $tag->getTranslation('slug', 'zh_TW') }}"
-                                            {{ old('semester') == $tag->getTranslation('slug', 'zh_TW') ? 'selected' : '' }}>
-                                            {{ $tag->name }}
-                                            </option>
                                         @endif
                                     @endforeach
                                 </select>
@@ -99,10 +90,8 @@
                                     <option value="">選擇科目...</option>
                                     @foreach ($tags as $tag)
                                         @if ($tag->type === '科目')
-                                            <option value="{{ $tag->id }}"
-                                            {{ old('subject') == $tag->getTranslation('slug', 'zh_TW') ? 'selected' : '' }}>
-                                            {{ $tag->name }}
-                                            </option>
+                                            <option value="{{ $tag->id }}">
+                                                {{ $tag->name }}</option>
                                         @endif
                                     @endforeach
                                 </select>
@@ -115,10 +104,6 @@
                                     <option value="">選擇課程類別...</option>
                                     @foreach ($tags as $tag)
                                         @if ($tag->type === '課程')
-                                            <option value="{{ $tag->getTranslation('slug', 'zh_TW') }}"
-                                            {{ old('category') == $tag->getTranslation('slug', 'zh_TW') ? 'selected' : '' }}>
-                                            {{ $tag->name }}
-                                            </option>
                                             <option value="{{ $tag->id }}">
                                                 {{ $tag->name }}</option>
                                         @endif
@@ -134,8 +119,8 @@
                                 </label>
                                 <textarea
                                     class="flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                                    id="description" name="description" placeholder="請填寫有關該書的書況or使用情況等等~~" rows="4" maxlength = "50">{{old('description')}}</textarea>
-                                <x-input-error :messages="$errors->get('description')" class="mt-2" />
+                                    id="description" name="description" placeholder="請填寫有關該書的書況or使用情況等等~~" rows="4" maxlength="50"></textarea>
+                                <x-input-error :messages="$errors->get('description')" class="mt-2"/>
                             </div>
                             <div class="grid gap-2">
                                 <label
