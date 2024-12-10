@@ -172,11 +172,9 @@
                                 </div>
                                 <x-input-error :messages="$errors->get('images')" class="mt-2" />
                             </div>
-                            <button
-                                class="inline-flex items-center justify-center whitespace-nowrap rounded-xl text-base sm:text-lg font-semibold ring-offset-background transition-colors ease-in-out duration-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-blue-500 text-white hover:bg-blue-700 h-10 sm:h-11 px-4 sm:px-8"
-                                type="submit">
+                            <x-button-create-edit>
                                 刊登商品
-                            </button>
+                            </x-button-create-edit>
                         </form>
                     </div>
                 </div>

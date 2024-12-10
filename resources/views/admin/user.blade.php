@@ -81,9 +81,10 @@
                                                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                                     <div class="flex items-center space-x-2">
                                                         <span
-                                                            class="text-sm text-gray-500">{{ $user->reports_count ?? 0 }}次</span>
-                                                        <button
-                                                            class="px-3 py-1 bg-red-600 text-white rounded hover:bg-red-700">檢舉詳情</button>
+                                                            >{{ $user->reports_count ?? 0 }}次</span>
+                                                        <x-button-red-short>
+                                                            檢舉詳情
+                                                        </x-button-red-short>
                                                     </div>
                                                 </td>
                                                 <td class="px-6 py-4 whitespace-nowrap">
@@ -96,9 +97,10 @@
                                                     </div>
                                                 </td>
                                                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                                    <button
-                                                        onclick="showSuspendDialog({{ $user->id }}, {{ json_encode($user->name) }})"
-                                                        class="px-3 py-1 bg-red-600 text-white rounded hover:bg-red-700">停用</button>
+                                                    <x-button-red-short
+                                                        onclick="showSuspendDialog({{ $user->id }}, {{ json_encode($user->name) }})">
+                                                        停用
+                                                    </x-button-red-short>
                                                 </td>
                                             </tr>
                                         @endforeach

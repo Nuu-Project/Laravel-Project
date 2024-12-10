@@ -1,6 +1,5 @@
 <x-template-layout>
 
-<body class="font-body">
 
     <x-navbar />
     <!-- 新增：搜索表單 -->
@@ -8,8 +7,9 @@
         <div class="flex items-center justify-center gap-2">
             <input type="text" name="filter[name]" placeholder="搜索產品名稱..." value="{{ request('filter.name') ?? '' }}"
                 class="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-            <button type="submit"
-                class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition duration-300 ease-in-out">搜索</button>
+            <x-button-search>
+                搜索
+            </x-button-search>
         </div>
 
         <!-- 保留現有的標籤選擇 -->
@@ -30,9 +30,9 @@
                 @endforeach
             </select>
         @endforeach
-        <button class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition ease-in-out duration-300">
+        <x-button-search>
             搜索
-        </button>
+        </x-button-search>
 
         <!-- 保留現有的名稱搜尋 -->
         <input type="hidden" name="filter[name]" value="{{ request('filter.name') }}">
@@ -92,14 +92,10 @@
                             </div>
                         </div>
                         <div class="flex items-center p-6">
-                            <a href= "{{ route('products.show', ['product' => $product->id]) }}"
-                                class="inline-flex items-center justify-center whitespace-nowrap rounded-xl
-                                        text-lg font-semibold ring-offset-background
-                                        transition-colors ease-in-out duration-500 focus-visible:outline-none
-                                        focus-visible:ring-2 focus-visible:ring-ring
-                                        focus-visible:ring-offset-2 disabled:pointer-events-none
-                                        disabled:opacity-50 bg-blue-500 text-white hover:bg-blue-700 h-10 px-3 py-2 ml-auto">
+                            <a href= "{{ route('products.show', ['product' => $product->id]) }}">
+                                <x-button-blue-short>
                                 洽談
+                                </x-button-blue-short>
                             </a>
                         </div>
                     </div>
