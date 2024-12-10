@@ -103,23 +103,20 @@
                                                 @csrf
                                                 @method('PUT')
                                                 <input type="hidden" name="product_id" value="{{ $product->id }}">
-                                                <button type="submit"
-                                                    class="px-4 py-2 {{ $product->status === ProductStatus::Active ? 'bg-red-600 hover:bg-red-700' : 'bg-blue-600 hover:bg-blue-700' }} text-white text-sm font-semibold rounded-xl transition ease-in-out duration-500">
-                                                    {{ $product->status === ProductStatus::Active ? '下架' : '上架' }}
-                                                </button>
+                                                <x-button-status :status="$product->status" />
                                             </form>
-                                            <a href="{{ route('user.products.edit', $product->id) }}"
-                                                class="px-4 py-2 bg-blue-600 text-white text-sm font-semibold rounded-xl hover:bg-blue-700 transition ease-in-out duration-500">
-                                                編輯
+                                            <a href="{{ route('user.products.edit', $product->id) }}">
+                                                <x-button-blue-short>
+                                                    編輯
+                                                </x-button-blue-short>
                                             </a>
                                             <form action="{{ route('user.products.destroy', $product->id) }}"
                                                 method="POST" onsubmit="return confirm('確定要刪除這個商品嗎？');">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit"
-                                                    class="px-4 py-2 bg-red-600 text-white text-sm font-semibold rounded-xl hover:bg-red-700 transition ease-in-out duration-500">
+                                                <x-button-red-short>
                                                     刪除
-                                                </button>
+                                                </x-button-red-short>
                                             </form>
                                         </div>
                                     </div>
