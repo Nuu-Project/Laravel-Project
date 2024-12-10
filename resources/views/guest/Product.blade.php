@@ -1,4 +1,5 @@
 <x-template-layout>
+
     <x-navbar />
     <!-- 新增：搜索表單 -->
     <form action="{{ route('products.index') }}" method="GET" class="mb-4">
@@ -118,7 +119,7 @@
                         <div class="flex items-center p-6">
                             <a href= "{{ route('products.show', ['product' => $product->id]) }}">
                                 <x-button-blue-short>
-                                洽談
+                                    洽談
                                 </x-button-blue-short>
                             </a>
                         </div>
