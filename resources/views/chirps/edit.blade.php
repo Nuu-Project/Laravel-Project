@@ -1,7 +1,7 @@
 <x-app-layout>
     <div class="max-w-2xl mx-auto p-4 sm:p-6 lg:p-8">
         <form method="POST"
-            action="{{ route('user.products.chirps.update', ['product' => $productId, 'chirp' => $chirp]) }}">
+            action="{{ route('user.products.messages.update', ['product' => $productId, 'chirp' => $chirp]) }}">
             @csrf
             @method('patch')
             <textarea name="message"

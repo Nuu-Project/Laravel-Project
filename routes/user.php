@@ -32,7 +32,7 @@ Route::prefix('user')->name('user.')->middleware(['auth', 'verified'])->group(fu
         ->name('products.store');
 
     // 留言 建立,編輯頁,更新留言,刪除
-    Route::resource('products.chirps', MessageController::class)
+    Route::resource('products.messages', MessageController::class)
         ->only(['store', 'edit', 'update', 'destroy']);
 
     // 商品檢舉
