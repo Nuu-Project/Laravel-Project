@@ -1,7 +1,6 @@
 <x-template-layout>
 
 
-    <x-navbar />
     <!-- 新增：搜索表單 -->
     <form action="{{ route('products.index') }}" method="GET">
         <div class="flex items-center justify-center gap-2 mb-4">

@@ -6,7 +6,7 @@
         </a>
         使用者後台
     </div>
-    <nav class="mt-4" x-data="{ open: false }">
+    <nav class="mt-4" x-data="{ open: true }">
         <div @click="open = !open" class="block py-2 px-4 text-gray-700 hover:bg-gray-200 cursor-pointer">
             <div class="flex justify-between items-center">
                 <span>商品管理</span>
