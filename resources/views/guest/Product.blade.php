@@ -3,39 +3,32 @@
 
     <x-navbar />
     <!-- 新增：搜索表單 -->
-    <form action="{{ route('products.index') }}" method="GET" class="mb-4">
-        <div class="flex items-center justify-center gap-2">
+    <form action="{{ route('products.index') }}" method="GET">
+        <div class="flex items-center justify-center gap-2 mb-4">
             <input type="text" name="filter[name]" placeholder="搜索產品名稱..." value="{{ request('filter.name') ?? '' }}"
                 class="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
             <x-button-search>
                 搜索
             </x-button-search>
         </div>
-
-        <!-- 保留現有的標籤選擇 -->
-        @foreach (request('filter.tags', []) as $tagId)
-            <input type="hidden" name="filter[tags][]" value="{{ $tagId }}">
-        @endforeach
-    </form>
-    <form action="{{ route('products.index') }}" method="GET" class="flex flex-wrap gap-2 justify-center">
-        @foreach (['科目', '課程', '年級', '學期'] as $type)
-            <select name="filter[tags][]" class="bg-gray text-primary-foreground px-4 py-2 rounded-md">
-                <option value="">選擇{{ $type }}...</option>
-                @foreach ($allTags as $tag)
-                    @if ($tag->type === $type)
-                        <option value="{{ $tag->id }}" {{ in_array($tag->id, request('filter.tags', [])) ? 'selected' : '' }}>
-                            {{ $tag->name }}
-                        </option>
-                    @endif
-                @endforeach
-            </select>
-        @endforeach
-        <x-button-search>
-            搜索
-        </x-button-search>
-
-        <!-- 保留現有的名稱搜尋 -->
-        <input type="hidden" name="filter[name]" value="{{ request('filter.name') }}">
+        <div class="flex flex-wrap gap-2 justify-center">
+            @foreach (['科目', '課程', '年級', '學期'] as $type)
+                <select name="filter[tags][]" class="bg-gray text-primary-foreground px-4 py-2 rounded-md">
+                    <option value="">選擇{{ $type }}...</option>
+                    @foreach ($allTags as $tag)
+                        @if ($tag->type === $type)
+                            <option value="{{ $tag->id }}"
+                                {{ in_array($tag->id, request('filter.tags', [])) ? 'selected' : '' }}>
+                                {{ $tag->name }}
+                            </option>
+                        @endif
+                    @endforeach
+                </select>
+            @endforeach
+            <x-button-search>
+                搜索
+            </x-button-search>
+        </div>
     </form>
 
 
@@ -94,7 +87,7 @@
                         <div class="flex items-center p-6">
                             <a href= "{{ route('products.show', ['product' => $product->id]) }}">
                                 <x-button-blue-short>
-                                洽談
+                                    洽談
                                 </x-button-blue-short>
                             </a>
                         </div>
