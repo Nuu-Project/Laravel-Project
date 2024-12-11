@@ -113,17 +113,17 @@
                                     <x-slot name="content">
                                         <x-dropdown-link :href="route('user.products.messages.edit', [
                                             'product' => $product->id,
-                                            'chirp' => $chirp->id,
+                                            'message' => $chirp->id,
                                         ])">
                                             {{ __('更改') }}
                                         </x-dropdown-link>
                                         <form method="POST"
-                                            action="{{ route('user.products.messages.destroy', ['product' => $product->id, 'chirp' => $chirp->id]) }}">
+                                            action="{{ route('user.products.messages.destroy', ['product' => $product->id, 'message' => $chirp->id]) }}">
                                             @csrf
                                             @method('delete')
                                             <x-dropdown-link :href="route('user.products.messages.destroy', [
                                                 'product' => $product->id,
-                                                'chirp' => $chirp->id,
+                                                'message' => $chirp->id,
                                             ])"
                                                 onclick="event.preventDefault(); this.closest('form').submit();">
                                                 {{ __('刪除') }}
