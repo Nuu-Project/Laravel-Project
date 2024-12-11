@@ -25,7 +25,8 @@ class UserController extends Controller
                     });
                 }),
             ])
-            ->paginate(10);
+            ->paginate(10)
+            ->withQueryString();
 
         // 返回视图并传递用户数据
         return view('admin.user', compact('users'));
