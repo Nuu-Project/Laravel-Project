@@ -53,37 +53,3 @@ function showSuspendDialog(userId, userName) {
         }
     });
 }
-
-document.addEventListener('DOMContentLoaded', function () {
-    const searchInput = document.getElementById('search-users');
-    const searchResults = document.getElementById('search-results');
-    const allUsersList = document.getElementById('all-users-list');
-    const users = document.querySelectorAll('#all-users-list tbody tr');
-    const searchResultsBody = searchResults.querySelector('tbody');
-
-    searchInput.addEventListener('input', function () {
-        const searchTerm = this.value.toLowerCase();
-
-        searchResultsBody.innerHTML = '';
-
-        if (searchTerm.length > 0) {
-            searchResults.style.display = 'block';
-            allUsersList.style.display = 'none';
-
-            users.forEach(user => {
-                const userName = user.querySelector('td:nth-child(1)').textContent
-                    .toLowerCase();
-                const userPosition = user.querySelector('td:nth-child(2)').textContent
-                    .toLowerCase();
-
-                if (userName.includes(searchTerm) || userPosition.includes(searchTerm)) {
-                    const clonedRow = user.cloneNode(true);
-                    searchResultsBody.appendChild(clonedRow);
-                }
-            });
-        } else {
-            searchResults.style.display = 'none';
-            allUsersList.style.display = 'block';
-        }
-    });
-});

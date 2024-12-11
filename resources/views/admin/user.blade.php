@@ -10,12 +10,16 @@
             <div class="mb-8">
                 <div class="flex items-center justify-between mb-4">
                     <h2 id="users-title" class="text-xl font-semibold text-gray-900">用戶</h2>
-                    <div>
-                        <label for="search-users" class="sr-only">搜索用戶</label>
-                        <input type="text" id="search-users"
-                            class="w-full rounded-md border border-gray-300 bg-white px-4 py-2 text-sm"
-                            placeholder="Search...">
-                    </div>
+                    <form action="{{ route('admin.users.index') }}" method="GET">
+                        <div>
+                            <input type="text" name="filter[name]" id="filter[name]"
+                                class="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                placeholder="Search..." value="{{ request('filter.name') ?? '' }}">
+                            <x-button-search>
+                                搜索
+                            </x-button-search>
+                        </div>
+                    </form>
                 </div>
 
                 <!-- 搜索結果 -->
@@ -33,7 +37,6 @@
 
             <!-- All users 部分 -->
             <div>
-                <h2 class="text-xl font-semibold text-gray-900 mb-4">所有用戶</h2>
                 <div id="all-users-list" class="bg-white shadow overflow-hidden sm:rounded-lg">
                     <div class="overflow-x-auto">
                         <table class="min-w-full divide-y divide-gray-200">

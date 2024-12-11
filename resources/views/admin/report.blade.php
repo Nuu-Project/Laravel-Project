@@ -11,10 +11,12 @@
                     <div class="flex items-center justify-between mb-4">
                         <h2 id="reviews-title" class="text-xl font-semibold text-gray-900">Reviews</h2>
                         <div>
-                            <label for="filter[reportable_id]" class="sr-only">搜索留言</label>
-                            <input type="text" id="filter[reportable_id]" name="filter[reportable_id]"
-                                class="w-full rounded-md border border-gray-300 bg-white px-4 py-2 text-sm"
-                                placeholder="請輸入查詢ID..." value="{{ request('filter.reportable_id') }}">
+                            <input type="text" id="filter[name]" name="filter[name]"
+                                class="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                placeholder="請輸入查詢商品名稱..." value="{{ request('filter.name') }}">
+                            <x-button-search>
+                                搜索
+                            </x-button-search>
                         </div>
                     </div>
                 </form>
