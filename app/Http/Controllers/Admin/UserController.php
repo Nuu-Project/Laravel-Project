@@ -5,10 +5,10 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use DateTime;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
-use Illuminate\Database\Eloquent\Builder;
 
 class UserController extends Controller
 {
@@ -17,15 +17,15 @@ class UserController extends Controller
     {
         // 获取所有用户
         $users = QueryBuilder::for(User::class)
-        ->allowedFilters([
-            AllowedFilter::callback('name', function (Builder $query, $value) {
-                $query->where(function ($query) use ($value) {
-                    $query->where('name', 'like', "%{$value}%")
-                          ->orWhere('email', 'like', "%{$value}%");
-                });
-            }),
-        ])
-        ->paginate(10);
+            ->allowedFilters([
+                AllowedFilter::callback('name', function (Builder $query, $value) {
+                    $query->where(function ($query) use ($value) {
+                        $query->where('name', 'like', "%{$value}%")
+                            ->orWhere('email', 'like', "%{$value}%");
+                    });
+                }),
+            ])
+            ->paginate(10);
 
         // 返回视图并传递用户数据
         return view('admin.user', compact('users'));
