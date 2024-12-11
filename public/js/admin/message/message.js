@@ -51,7 +51,6 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // 初始化所有功能
-    initializeSearch();
     initializeMessageExpansion();
     window.addEventListener('resize', handleResize);
 });
