@@ -31,8 +31,17 @@
 </head>
 
 <body>
-    <x-navbar />
-    {{ $slot }}
+    <div class="flex h-screen bg-gray-100">
+        <x-side-bar-admin />
+
+        <!-- 主要內容區 -->
+        <div class="flex-1 flex flex-col overflow-hidden">
+
+            <!-- 頂部導航欄 -->
+            <x-navbar-admin />
+            {{ $slot }}
+        </div>
+    </div>
 </body>
 
 </html>

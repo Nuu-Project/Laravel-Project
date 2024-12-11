@@ -1,5 +1,4 @@
-<x-template-layout>
-
+<x-template-login-register-layout>
 
     <!-- home section -->
     <section class="bg-white py-10 md:mb-10">
@@ -131,4 +130,4 @@
             </div>
         </section>
     </x-guest-layout>
-</x-template-layout>
+</x-template-login-register-layout>

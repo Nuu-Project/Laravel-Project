@@ -2,13 +2,7 @@
     use App\Enums\ProductStatus;
 @endphp
 
-<x-template-layout>
-    <div class="flex flex-col md:flex-row h-screen bg-gray-100">
-        <x-side-bar />
-
-        <!-- 主要內容區 -->
-        <div class="flex-1 flex flex-col overflow-hidden">
-            <x-navbar-admin />
+<x-template-admin-layout>
 
             <!-- 主要內容 -->
             <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-200">
@@ -85,6 +79,4 @@
                     </div>
                 </div>
             </main>
-        </div>
-    </div>
-</x-template-layout>
+</x-template-admin-layout>
