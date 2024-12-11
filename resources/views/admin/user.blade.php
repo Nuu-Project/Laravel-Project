@@ -105,4 +105,4 @@
             </div>
         </div>
     </main>
-</x-template-layout>
+</x-template-admin-layout>
