@@ -28,31 +28,31 @@ class MessageController extends Controller
         return redirect()->route('products.show', ['product' => $productId]);
     }
 
-    public function edit($productId, Chirp $chirp): View
+    public function edit($productId, Chirp $message): View
     {
-        Gate::authorize('update', $chirp);
+        Gate::authorize('update', $message);
 
         return view('chirps.edit', [
-            'chirp' => $chirp,
+            'chirp' => $message,
             'productId' => $productId,
         ]);
     }
 
-    public function update(Request $request, $productId, Chirp $chirp): RedirectResponse
+    public function update(Request $request, $productId, Chirp $message): RedirectResponse
     {
-        Gate::authorize('update', $chirp);
+        Gate::authorize('update', $message);
         $validated = $request->validate([
             'message' => ['required', 'string', 'max:255'],
         ]);
-        $chirp->update($validated);
+        $message->update($validated);
 
         return redirect()->route('products.show', ['product' => $productId]);
     }
 
-    public function destroy($productId, Chirp $chirp)
+    public function destroy($productId, Chirp $message)
     {
-        $this->authorize('delete', $chirp);
-        $chirp->delete();
+        $this->authorize('delete', $message);
+        $message->delete();
 
         if (request()->is('admin/search*')) {
             return redirect()->route('admin.search')->with('success', 'Review deleted successfully.');
