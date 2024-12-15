@@ -1,8 +1,6 @@
 <x-template-layout>
     <script src="{{ asset('js/user/products/info.js') }}"></script>
 
-    <x-navbar />
-
     <div class="grid md:grid-cols-2 gap-6 lg:gap-12 items-start max-w-6xl px-4 mx-auto py-6">
         <div>
             {{-- 主圖片顯示區域 --}}
@@ -113,17 +111,17 @@
                                     <x-slot name="content">
                                         <x-dropdown-link :href="route('user.products.messages.edit', [
                                             'product' => $product->id,
-                                            'chirp' => $chirp->id,
+                                            'message' => $chirp->id,
                                         ])">
                                             {{ __('更改') }}
                                         </x-dropdown-link>
                                         <form method="POST"
-                                            action="{{ route('user.products.messages.destroy', ['product' => $product->id, 'chirp' => $chirp->id]) }}">
+                                            action="{{ route('user.products.messages.destroy', ['product' => $product->id, 'message' => $chirp->id]) }}">
                                             @csrf
                                             @method('delete')
                                             <x-dropdown-link :href="route('user.products.messages.destroy', [
                                                 'product' => $product->id,
-                                                'chirp' => $chirp->id,
+                                                'message' => $chirp->id,
                                             ])"
                                                 onclick="event.preventDefault(); this.closest('form').submit();">
                                                 {{ __('刪除') }}

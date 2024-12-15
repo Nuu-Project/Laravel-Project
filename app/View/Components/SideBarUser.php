@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class SideBar extends Component
+class SideBarUser extends Component
 {
     /**
      * Create a new component instance.
@@ -21,6 +21,6 @@ class SideBar extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.side-bar');
+        return view('components.side-bar-user');
     }
 }

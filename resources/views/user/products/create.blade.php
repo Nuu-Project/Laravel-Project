@@ -1,33 +1,27 @@
-<x-template-layout>
-    <div class="flex flex-col md:flex-row h-screen bg-gray-100">
-        <x-link-user />
+<x-template-user-layout>
 
-        <!-- 主要內容區 -->
-        <div class="flex-1 flex flex-col overflow-hidden">
-            <x-navbar-user />
+    <!-- 主要內容 -->
+    <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-200">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div class="grid gap-6 md:gap-8">
+                <div class="grid gap-2">
+                    <h1 class="text-2xl sm:text-3xl font-bold">新增刊登商品</h1>
+                    <p class="text-sm sm:text-base text-muted-foreground">請依照下順序進行填寫，照片上傳張數最多五張。</p>
+                    <p class="text-sm sm:text-base text-muted-foreground">圖片最左邊將會是商品首圖。</p>
+                </div>
 
-            <!-- 主要內容 -->
-            <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-200">
-                <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
-                    <div class="grid gap-6 md:gap-8">
-                        <div class="grid gap-2">
-                            <h1 class="text-2xl sm:text-3xl font-bold">新增刊登商品</h1>
-                            <p class="text-sm sm:text-base text-muted-foreground">請依照下順序進行填寫，照片上傳張數最多五張。</p>
-                            <p class="text-sm sm:text-base text-muted-foreground">圖片最左邊將會是商品首圖。</p>
-                        </div>
-
-                        <!-- 驗證錯誤顯示 -->
-                        @if ($errors->any())
-                            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4"
-                                role="alert">
-                                <strong class="font-bold">驗證錯誤！</strong>
-                                <ul>
-                                    @foreach ($errors->all() as $error)
-                                        <li>{{ $error }}</li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                        @endif
+                <!-- 驗證錯誤顯示 -->
+                @if ($errors->any())
+                    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4"
+                        role="alert">
+                        <strong class="font-bold">驗證錯誤！</strong>
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
 
                         <form class="grid gap-6" action="{{ route('user.products.store') }}" method="POST"
                             enctype="multipart/form-data" id="productForm">
@@ -357,4 +351,4 @@
             alert('{{ session('success') }}');
         </script>
     @endif
-</x-template-layout>
+</x-template-user-layout>

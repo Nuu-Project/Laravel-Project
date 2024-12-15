@@ -30,9 +30,9 @@ class ProductController extends Controller
                 }),
             ])
             ->with(['media', 'user', 'tags'])
-            ->where('status', ProductStatus::Active->value);
-
-        $products = $products->paginate(6);
+            ->where('status', ProductStatus::Active->value)
+            ->paginate(6)
+            ->withQueryString();
 
         $allTags = Tag::whereNull('deleted_at')->get();
 

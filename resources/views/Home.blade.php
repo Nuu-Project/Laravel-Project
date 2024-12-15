@@ -1,7 +1,5 @@
 <x-template-layout>
 
-    <x-navbar />
-
     <!-- feature section -->
     <section class="bg-white py-1 md:mt-10">
 

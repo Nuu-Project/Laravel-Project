@@ -1,30 +1,4 @@
 document.addEventListener('DOMContentLoaded', function () {
-    // 搜索功能
-    function initializeSearch() {
-        const searchInput = document.getElementById('search-reviews');
-        const reviewsTable = document.getElementById('reviews-table');
-        const noResults = document.getElementById('no-results');
-        const reviewsList = document.querySelector('.overflow-x-auto tbody');
-        const rows = reviewsList.querySelectorAll('tr');
-
-        reviewsTable.style.display = 'block';
-        noResults.classList.add('hidden');
-
-        searchInput.addEventListener('input', function () {
-            const searchTerm = this.value.toLowerCase().trim();
-            let hasResults = false;
-
-            rows.forEach(row => {
-                const userName = row.querySelector('td:nth-child(1)').textContent.toLowerCase();
-                row.style.display = userName.includes(searchTerm) ? '' : 'none';
-                if (userName.includes(searchTerm)) hasResults = true;
-            });
-
-            reviewsTable.style.display = 'block';
-            noResults.classList[hasResults ? 'add' : 'remove']('hidden');
-        });
-    }
-
     // 文字截斷功能
     function truncateText(text, length) {
         const characters = Array.from(text);
@@ -77,7 +51,6 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // 初始化所有功能
-    initializeSearch();
     initializeMessageExpansion();
     window.addEventListener('resize', handleResize);
 });
