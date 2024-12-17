@@ -2,7 +2,23 @@
 
     <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-200">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
-            <h3 class="text-gray-700 text-3xl font-medium mb-6">新增角色</h3>
+            <h3 class="text-gray-700 text-3xl font-medium mb-6">新增管理員</h3>
+
+            <!-- 用戶搜索部分 -->
+            <div class="mb-8">
+                <div class="flex items-center justify-between mb-4">
+                    <h2 id="users-title" class="text-xl font-semibold text-gray-900">一般用戶</h2>
+                    <form action="{{ route('admin.roles.create') }}" method="GET">
+                        <div>
+                            <input type="text" name="filter[name]" id="filter[name]"
+                                class="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                placeholder="Search..." value="{{ request('filter.name') ?? '' }}">
+                            <x-button-search>
+                                搜索
+                            </x-button-search>
+                        </div>
+                    </form>
+                </div>
 
             <div class="bg-white rounded-lg shadow-md p-6">
                 <!-- 表單開始 -->
