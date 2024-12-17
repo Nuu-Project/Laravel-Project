@@ -15,7 +15,6 @@ class UserController extends Controller
     // 方法示例
     public function index()
     {
-        // 获取所有用户
         $users = QueryBuilder::for(User::class)
             ->allowedFilters([
                 AllowedFilter::callback('name', function (Builder $query, $value) {
@@ -28,7 +27,6 @@ class UserController extends Controller
             ->paginate(10)
             ->withQueryString();
 
-        // 返回视图并传递用户数据
         return view('admin.user', compact('users'));
     }
 

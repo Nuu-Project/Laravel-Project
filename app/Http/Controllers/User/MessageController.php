@@ -54,10 +54,6 @@ class MessageController extends Controller
         $this->authorize('delete', $message);
         $message->delete();
 
-        if (request()->is('admin/search*')) {
-            return redirect()->route('admin.search')->with('success', 'Review deleted successfully.');
-        }
-
         return redirect()->route('products.show', ['product' => $productId])
             ->with('success', 'Review deleted successfully.');
     }

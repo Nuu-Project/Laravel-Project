@@ -178,7 +178,6 @@ class ProductController extends Controller
         if ($request->hasFile('images') || $request->has('image_ids')) {
             $existingMedia = $product->getMedia('images')->keyBy('id');
 
-            // 1. 先刪除被标记为删除的图片
             foreach ($deletedImageIds as $imageId) {
                 if ($existingMedia->has($imageId)) {
                     $existingMedia[$imageId]->delete();
