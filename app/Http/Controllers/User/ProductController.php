@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Spatie\QueryBuilder\QueryBuilder;
 use Spatie\Tags\Tag;
 
 class ProductController extends Controller
@@ -14,10 +15,15 @@ class ProductController extends Controller
     public function index()
     {
         $userId = Auth::user()->id;
-        $userProducts = Product::with(['media', 'user', 'tags'])
+        $userProducts = QueryBuilder::for(Product::class)
             ->where('user_id', $userId)
+            ->allowedFilters([
+                'name',
+            ])
+            ->with(['media', 'user', 'tags'])
             ->orderBy('updated_at', 'desc')
-            ->paginate(3);
+            ->paginate(3)
+            ->withQueryString();
         $message = $userProducts->isEmpty() ? '您目前沒有任何商品，趕緊刊登一個吧!' : null;
 
         return view('user.products.check', compact('userProducts', 'message'));
