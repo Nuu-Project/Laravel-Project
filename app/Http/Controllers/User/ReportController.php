@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\User;
 
+use App\Enums\ProductStatus;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Models\Reportable;
