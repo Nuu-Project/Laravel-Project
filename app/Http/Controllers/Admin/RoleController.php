@@ -34,10 +34,8 @@ class RoleController extends Controller
             'role_type' => 'required|in:admin,user',
         ]);
 
-        // 获取选中的用户
         $users = User::whereIn('id', $request->user_ids)->get();
 
-        // 为每个用户分配角色
         foreach ($users as $user) {
             $user->assignRole($request->role_type);
         }
