@@ -48,6 +48,7 @@ class MessageController extends Controller
 
         return redirect()->route('products.show', ['product' => $productId]);
     }
+
     public function destroy($productId, Chirp $message)
     {
         $this->authorize('delete', $message);
