@@ -41,7 +41,7 @@ class ProductController extends Controller
 
     public function show($productId): View
     {
-        $product = Product::with('tags')->findOrFail($productId);
+        $product = Product::findOrFail($productId);
 
         $chirps = $product->chirps()->with('user')->get();
         $reports = Report::where('type', '商品')->get()->mapWithKeys(function ($item) {
