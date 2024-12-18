@@ -34,7 +34,7 @@ class ReportController extends Controller
             return response()->json([
                 'message' => '你已檢舉過了',
                 'description' => $reportable->description,
-            ], 200);
+            ]);
         }
 
         return response()->json(['message' => '檢舉已成功提交']);

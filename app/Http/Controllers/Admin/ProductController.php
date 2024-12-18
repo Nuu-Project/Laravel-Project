@@ -14,7 +14,7 @@ class ProductController extends Controller
         $products = Product::query()
             ->withCount('reportables')
             ->with('user')
-            ->get();
+            ->paginate(10);
 
         // 返回到視圖，並傳遞商品資料
         return view('admin.products', compact('products'));
