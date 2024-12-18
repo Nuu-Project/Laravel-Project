@@ -14,9 +14,9 @@ class Report extends Model
         return $this->morphedByMany(Product::class, 'reportable');
     }
 
-    public function chirps()
+    public function messages()
     {
-        return $this->morphedByMany(Chirp::class, 'reportable');
+        return $this->morphedByMany(Message::class, 'reportable');
     }
 
     public function users()

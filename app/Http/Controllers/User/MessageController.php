@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
-use App\Models\Chirp;
+use App\Models\Message;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -20,7 +20,7 @@ class MessageController extends Controller
             'message' => ['required', 'string', 'max:255'],
         ]);
 
-        $request->user()->chirps()->create([
+        $request->user()->messages()->create([
             'message' => $validated['message'],
             'product_id' => $productId,
         ]);
@@ -28,17 +28,17 @@ class MessageController extends Controller
         return redirect()->route('products.show', ['product' => $productId]);
     }
 
-    public function edit($productId, Chirp $message): View
+    public function edit($productId, Message $message): View
     {
         Gate::authorize('update', $message);
 
-        return view('chirps.edit', [
-            'chirp' => $message,
+        return view('messages.edit', [
+            'message' => $message,
             'productId' => $productId,
         ]);
     }
 
-    public function update(Request $request, $productId, Chirp $message): RedirectResponse
+    public function update(Request $request, $productId, Message $message): RedirectResponse
     {
         Gate::authorize('update', $message);
         $validated = $request->validate([
@@ -49,7 +49,7 @@ class MessageController extends Controller
         return redirect()->route('products.show', ['product' => $productId]);
     }
 
-    public function destroy($productId, Chirp $message)
+    public function destroy($productId, Message $message)
     {
         $this->authorize('delete', $message);
         $message->delete();
