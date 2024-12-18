@@ -63,9 +63,9 @@ class User extends Authenticatable implements MustVerifyEmail
         Mail::to($this->email)->send(new CustomVerifyMail($verificationUrl));
     }
 
-    public function chirps(): HasMany
+    public function messages(): HasMany
     {
-        return $this->hasMany(Chirp::class);
+        return $this->hasMany(Message::class);
     }
 
     public function reports()

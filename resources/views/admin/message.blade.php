@@ -25,13 +25,13 @@
                 <!-- Reviews 列表 -->
                 <div class="bg-white shadow overflow-hidden sm:rounded-lg" id="reviews-table">
                     <div class="overflow-x-auto">
-                        <x-table-message :chirps="$chirps->items()">
+                        <x-table-message :messages="$messages->items()">
                         </x-table-message>
                     </div>
 
                     <!-- 分頁導航 -->
                     <div class="px-6 py-4 border-t border-gray-200">
-                        {{ $chirps->links() }}
+                        {{ $messages->links() }}
                     </div>
                 </div>
             </div>

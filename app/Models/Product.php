@@ -27,9 +27,9 @@ class Product extends Model implements HasMedia
         return $this->morphToMany(Tag::class, 'taggable')->whereNull('tags.deleted_at');
     }
 
-    public function chirps()
+    public function messages()
     {
-        return $this->hasMany(Chirp::class);
+        return $this->hasMany(Message::class);
     }
 
     public function reports()
