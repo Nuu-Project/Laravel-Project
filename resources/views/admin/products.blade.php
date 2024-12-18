@@ -69,7 +69,7 @@
                                             </td>
 
                                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                                {{ $product->status->label() }}
+                                                {{ $product->status->status() }}
                                             </td>
                                         </tr>
                                     @endforeach
