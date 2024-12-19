@@ -70,7 +70,7 @@
                                 :value="__('Name')">Name</lable>
                                 <input id="name"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                                    type="text" name="name" :value="old('name')" required autofocus
+                                    type="text" name="name" value="{{ old('name') }}" required autofocus
                                     autocomplete="name"></input>
                                 <x-input-error :messages="$errors->get('name')" class="mt-2" />
                         </div>
@@ -82,7 +82,7 @@
                                 <input
                                     class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                                     id="email" class="block mt-1 w-full" type="email" name="email"
-                                    :value="old('email')" required autofocus placeholder="name@o365.nuu.edu.tw">
+                                    value="{{ old('email') }}" required autofocus placeholder="name@o365.nuu.edu.tw">
                                 </input>
                                 <x-input-error :messages="$errors->get('email')" class="mt-2" />
                         </div>
