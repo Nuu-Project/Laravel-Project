@@ -136,9 +136,9 @@
                 </div>
             @endforeach
         </div>
-        @if ($chirps->hasPages())
+        @if ($messages->hasPages())
             <div class="mt-6">
-                {{ $chirps->links() }}
+                {{ $messages->links() }}
             </div>
         @endif
     </div>
