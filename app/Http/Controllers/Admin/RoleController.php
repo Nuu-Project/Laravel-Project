@@ -4,7 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
+use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class RoleController extends Controller
 {
@@ -18,7 +21,18 @@ class RoleController extends Controller
     public function create(Request $request)
     {
         // 獲取未分配角色的用戶
-        $users = User::whereDoesntHave('roles')->paginate(10);
+        $users = QueryBuilder::for(User::class)
+            ->whereDoesntHave('roles')
+            ->allowedFilters([
+                AllowedFilter::callback('name', function (Builder $query, $value) {
+                    $query->where(function ($query) use ($value) {
+                        $query->where('name', 'like', "%{$value}%")
+                            ->orWhere('email', 'like', "%{$value}%");
+                    });
+                }),
+            ])
+            ->paginate(10)
+            ->withQueryString();
 
         // 獲取要分配的角色類型（admin 或 user）
         $type = $request->query('type');
@@ -34,10 +48,8 @@ class RoleController extends Controller
             'role_type' => 'required|in:admin,user',
         ]);
 
-        // 获取选中的用户
         $users = User::whereIn('id', $request->user_ids)->get();
 
-        // 为每个用户分配角色
         foreach ($users as $user) {
             $user->assignRole($request->role_type);
         }

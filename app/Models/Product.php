@@ -6,6 +6,7 @@ use App\Enums\ProductStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -26,9 +27,9 @@ class Product extends Model implements HasMedia
         return $this->morphToMany(Tag::class, 'taggable')->whereNull('tags.deleted_at');
     }
 
-    public function chirps()
+    public function messages()
     {
-        return $this->hasMany(Chirp::class);
+        return $this->hasMany(Message::class);
     }
 
     public function reports()
@@ -72,51 +73,100 @@ class Product extends Model implements HasMedia
             $product->addMedia($compressedPath)->toMediaCollection('images');
         }
 
-        // 刪除臨時文件
+        // 清理臨時文件
         Storage::delete($originalPath);
-        Storage::delete($compressedPath);
+        if (Storage::exists('temp')) {
+            Storage::deleteDirectory('temp');
+        }
 
-        // 返回壓縮後圖片的路徑，讓控制器繼續處理
         return $compressedPath;
     }
 
     protected function compressImage($imagePath)
     {
-        // 確保壓縮圖片的目錄存在
-        $compressedDirectory = storage_path('app/temp/');
-        if (! is_dir($compressedDirectory)) {
-            mkdir($compressedDirectory, 0777, true);  // 創建目錄
+        // 使用 Storage 來處理臨時文件
+        $tempFileName = 'temp/compressed_'.uniqid().'.jpg';
+        $compressedPath = Storage::path($tempFileName);
+
+        // 確保臨時目錄存在
+        if (!Storage::exists('temp')) {
+            Storage::makeDirectory('temp');
         }
 
-        $compressedPath = storage_path('app/temp/compressed_'.uniqid().'.jpg');  // 使用唯一ID來命名壓縮圖片
+        // 獲取原始文件大小
+        $originalFileSize = Storage::size($imagePath);
 
-        // 確保能夠檢測圖片的 MIME 類型
-        $imageInfo = getimagesize(storage_path('app/'.$imagePath));
-        if (! $imageInfo) {
-            throw new \Exception('無法檢測圖片類型，文件可能不是有效的圖片');
+        // 獲取原始圖片信息
+        $imageInfo = getimagesize(Storage::path($imagePath));
+        if (!$imageInfo) {
+            throw new \Exception('無法檢測圖片類型');
         }
 
+        $originalWidth = $imageInfo[0];
+        $originalHeight = $imageInfo[1];
         $mime = $imageInfo['mime'];
 
-        // 根據 MIME 類型創建圖片資源
-        switch ($mime) {
-            case 'image/jpeg':
-                $img = imagecreatefromjpeg(storage_path('app/'.$imagePath));
-                break;
-            case 'image/png':
-                $img = imagecreatefrompng(storage_path('app/'.$imagePath));
-                break;
-            case 'image/gif':
-                $img = imagecreatefromgif(storage_path('app/'.$imagePath));
-                break;
-            default:
-                throw new \Exception('不支持的圖片格式：'.$mime);
+        // 設置最大尺寸
+        $maxWidth = 800;  // 可以根據需求調整
+        $maxHeight = 500;  // 可以根據需求調整
+
+        // 計算新的尺寸（保持比例）
+        $ratio = min($maxWidth / $originalWidth, $maxHeight / $originalHeight);
+
+        // 如果圖片已經小於最大尺寸，保持原始大小
+        if ($ratio >= 1) {
+            $newWidth = $originalWidth;
+            $newHeight = $originalHeight;
+        } else {
+            $newWidth = round($originalWidth * $ratio);
+            $newHeight = round($originalHeight * $ratio);
         }
 
-        // 壓縮並保存圖片
-        if ($img) {
-            imagejpeg($img, $compressedPath, 75); // 壓縮品質為 75
-            imagedestroy($img); // 釋放內存
+        // 創建新的圖片
+        $newImage = imagecreatetruecolor($newWidth, $newHeight);
+
+        // 載入原始圖片
+        switch ($mime) {
+            case 'image/jpeg':
+                $sourceImage = imagecreatefromjpeg(Storage::path($imagePath));
+                break;
+            case 'image/png':
+                $sourceImage = imagecreatefrompng(Storage::path($imagePath));
+                // 保持 PNG 透明度
+                imagealphablending($newImage, false);
+                imagesavealpha($newImage, true);
+                break;
+            case 'image/gif':
+                $sourceImage = imagecreatefromgif(Storage::path($imagePath));
+                break;
+            default:
+                throw new \Exception('不支持的圖片格式');
+        }
+
+        // 重新採樣縮放圖片（使用更好的演算法）
+        imagecopyresampled(
+            $newImage,
+            $sourceImage,
+            0, 0, 0, 0,
+            $newWidth,
+            $newHeight,
+            $originalWidth,
+            $originalHeight
+        );
+
+        // 進行壓縮
+        imagejpeg($newImage, $compressedPath, 75);  // 壓縮品質為 75
+
+        // 釋放內存
+        imagedestroy($newImage);
+        imagedestroy($sourceImage);
+
+        // 檢查壓縮效果
+        $compressedSize = Storage::size($tempFileName);
+        if ($compressedSize >= $originalFileSize) {
+            // 刪除臨時文件
+            Storage::delete($tempFileName);
+            return Storage::path($imagePath);
         }
 
         return $compressedPath;

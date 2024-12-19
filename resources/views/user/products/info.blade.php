@@ -80,7 +80,7 @@
         </form>
 
         <div class="mt-6 bg-white shadow-sm rounded-lg divide-y">
-            @foreach ($chirps as $chirp)
+            @foreach ($messages as $message)
                 <div class="p-6 flex space-x-2">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-600 -scale-x-100" fill="none"
                         viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -90,14 +90,14 @@
                     <div class="flex-1">
                         <div class="flex justify-between items-center">
                             <div>
-                                <span class="text-gray-800">{{ $chirp->user->name }}</span>
+                                <span class="text-gray-800">{{ $message->user->name }}</span>
                                 <small
-                                    class="ml-2 text-sm text-gray-600">{{ $chirp->created_at->format('Y/m/d , H:i:s') }}</small>
-                                @unless ($chirp->created_at->eq($chirp->updated_at))
+                                    class="ml-2 text-sm text-gray-600">{{ $message->created_at->format('Y/m/d , H:i:s') }}</small>
+                                @unless ($message->created_at->eq($message->updated_at))
                                     <small class="text-sm text-gray-600"> &middot; {{ __('edited') }}</small>
                                 @endunless
                             </div>
-                            @if ($chirp->user->is(auth()->user()))
+                            @if ($message->user->is(auth()->user()))
                                 <x-dropdown>
                                     <x-slot name="trigger">
                                         <button>
@@ -111,17 +111,17 @@
                                     <x-slot name="content">
                                         <x-dropdown-link :href="route('user.products.messages.edit', [
                                             'product' => $product->id,
-                                            'message' => $chirp->id,
+                                            'message' => $message->id,
                                         ])">
                                             {{ __('更改') }}
                                         </x-dropdown-link>
                                         <form method="POST"
-                                            action="{{ route('user.products.messages.destroy', ['product' => $product->id, 'message' => $chirp->id]) }}">
+                                            action="{{ route('user.products.messages.destroy', ['product' => $product->id, 'message' => $message->id]) }}">
                                             @csrf
                                             @method('delete')
                                             <x-dropdown-link :href="route('user.products.messages.destroy', [
                                                 'product' => $product->id,
-                                                'message' => $chirp->id,
+                                                'message' => $message->id,
                                             ])"
                                                 onclick="event.preventDefault(); this.closest('form').submit();">
                                                 {{ __('刪除') }}
@@ -131,7 +131,7 @@
                                 </x-dropdown>
                             @endif
                         </div>
-                        <p class="mt-4 text-lg text-gray-900 whitespace-pre-line">{{ $chirp->message }}</p>
+                        <p class="mt-4 text-lg text-gray-900">{{ $message->message }}</p>
                     </div>
                 </div>
             @endforeach

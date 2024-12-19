@@ -41,17 +41,13 @@ class ProductController extends Controller
 
     public function show($productId): View
     {
-        $product = Product::with('tags')->findOrFail($productId);
+        $product = Product::findOrFail($productId);
 
-        $chirps = $product->chirps()
-            ->with('user')
-            ->orderBy('created_at', 'asc')
-            ->paginate(10);
-
+        $messages = $product->messages()->with('user')->get();
         $reports = Report::where('type', '商品')->get()->mapWithKeys(function ($item) {
             return [$item->id => json_decode($item->name, true)['zh_TW']];
         });
 
-        return view('user.products.info', compact('chirps', 'product', 'reports'));
+        return view('user.products.info', compact('messages', 'product', 'reports'));
     }
 }

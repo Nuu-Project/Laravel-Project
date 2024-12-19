@@ -20,7 +20,19 @@
                 </div>
             @endif
 
-            <h3 class="text-gray-700 text-3xl font-medium mb-6">我的商品</h3>
+            <div class="flex items-center justify-between mb-6">
+                <h3 id="users-title" class="text-3xl font-medium text-gray-900">我的商品</h3>
+                <form action="{{ route('user.products.index') }}" method="GET">
+                    <div>
+                        <input type="text" name="filter[name]" id="filter[name]"
+                            class="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            placeholder="輸入商品名稱..." value="{{ request('filter.name') ?? '' }}">
+                        <x-button-search>
+                            搜索
+                        </x-button-search>
+                    </div>
+                </form>
+            </div>
 
             <div class="flex flex-col w-full min-h-screen">
                 <main class="flex min-h-[calc(100vh_-_theme(spacing.16))] flex-1 flex-col gap-4 p-4 md:gap-8 md:p-10">
@@ -39,7 +51,7 @@
                                     </div>
                                     <div>
                                         <h1 class="font-semibold text-sm">
-                                            目前狀態: {{ $product->status->label() }}
+                                            目前狀態: {{ $product->status->status() }}
                                         </h1>
                                     </div>
                                 </div>

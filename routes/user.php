@@ -21,11 +21,7 @@ Route::prefix('user')->name('user.')->middleware(['auth', 'verified'])->group(fu
     // 商品檢舉
     Route::post('/reports', [ReportController::class, 'store'])->name('reports.store');
 
-});
-
-//
-// 個人資料 頁面,修改密碼,刪除帳號
-Route::middleware('auth')->group(function () {
+    // 個人資料 頁面,修改密碼,刪除帳號
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
