@@ -1,5 +1,5 @@
 <x-mail::message>
-<div class="welcome-name">{{ Auth::user()->name }}</div>您好
+<div class="welcome-name">{{ $userName }}</div>您好
 歡迎註冊
 請點擊驗證登入
 

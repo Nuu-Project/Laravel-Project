@@ -18,32 +18,17 @@ class User extends Authenticatable implements MustVerifyEmail
 {
     use HasFactory, HasRoles, Notifiable, SoftDeletes;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
     protected $fillable = [
         'name',
         'email',
         'password',
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
     protected $hidden = [
         'password',
         'remember_token',
     ];
 
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
     protected function casts(): array
     {
         return [
@@ -56,11 +41,14 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         $verificationUrl = URL::temporarySignedRoute(
             'verification.verify',
-            Carbon::now()->addMinutes(60),
-            ['id' => $this->id, 'hash' => sha1($this->email)]
+            now()->addMinutes(60),
+            [
+                'id' => $this->getKey(),
+                'hash' => sha1($this->getEmailForVerification()),
+            ]
         );
 
-        Mail::to($this->email)->send(new CustomVerifyMail($verificationUrl));
+        Mail::to($this->email)->send(new CustomVerifyMail($verificationUrl, $this->name));
     }
 
     public function chirps(): HasMany

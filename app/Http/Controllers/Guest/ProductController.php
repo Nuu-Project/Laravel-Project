@@ -43,7 +43,11 @@ class ProductController extends Controller
     {
         $product = Product::with('tags')->findOrFail($productId);
 
-        $chirps = $product->chirps()->with('user')->get();
+        $chirps = $product->chirps()
+            ->with('user')
+            ->orderBy('created_at', 'asc')
+            ->paginate(10);
+
         $reports = Report::where('type', '商品')->get()->mapWithKeys(function ($item) {
             return [$item->id => json_decode($item->name, true)['zh_TW']];
         });

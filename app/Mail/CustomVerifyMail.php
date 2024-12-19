@@ -12,15 +12,13 @@ class CustomVerifyMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $verificationUrl;
-
     /**
      * Create a new message instance.
      */
-    public function __construct($verificationUrl)
-    {
-        $this->verificationUrl = $verificationUrl;
-    }
+    public function __construct(
+        protected string $verificationUrl,
+        protected string $userName
+    ) {}
 
     /**
      * Get the message envelope.
@@ -28,7 +26,7 @@ class CustomVerifyMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Custom Verify Mail',
+            subject: 'Email 驗證通知',
         );
     }
 
@@ -39,16 +37,10 @@ class CustomVerifyMail extends Mailable
     {
         return new Content(
             markdown: 'mail.custom.verify',
+            with: [
+                'verificationUrl' => $this->verificationUrl,
+                'userName' => $this->userName,
+            ],
         );
-    }
-
-    /**
-     * Get the attachments for the message.
-     *
-     * @return array<int, \Illuminate\Mail\Mailables\Attachment>
-     */
-    public function attachments(): array
-    {
-        return [];
     }
 }
