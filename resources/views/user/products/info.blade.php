@@ -73,7 +73,7 @@
     <div class="max-w-2xl mx-auto p-4 sm:p-6 lg:p-8">
         <form method="POST" action="{{ route('user.products.messages.store', ['product' => $product->id]) }}">
             @csrf
-            <textarea name="message" placeholder="{{ __('今天想留點什麼足跡?') }}"
+            <textarea name="message" placeholder="{{ __('想問什麼?') }}"
                 class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm">{{ old('message') }}</textarea>
             <x-input-error :messages="$errors->store->get('message')" class="mt-2" />
             <x-primary-button class="mt-4">{{ __('留言') }}</x-primary-button>
@@ -136,5 +136,10 @@
                 </div>
             @endforeach
         </div>
+        @if ($messages->hasPages())
+            <div class="mt-6">
+                {{ $messages->links() }}
+            </div>
+        @endif
     </div>
 </x-template-layout>
