@@ -396,9 +396,9 @@
                             updatePositions();
                         });
                     </script>
-                    <x-button-create-edit>
+                    <x-button.create-edit>
                         儲存修改
-                    </x-button-create-edit>
+                    </x-button.create-edit>
                 </form>
             </div>
         </div>

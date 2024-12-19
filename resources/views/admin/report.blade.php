@@ -14,9 +14,9 @@
                             <input type="text" id="filter[name]" name="filter[name]"
                                 class="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                                 placeholder="請輸入查詢商品名稱..." value="{{ request('filter.name') }}">
-                            <x-button-search>
+                            <x-button.search>
                                 搜索
-                            </x-button-search>
+                            </x-button.search>
                         </div>
                     </div>
                 </form>
@@ -24,25 +24,7 @@
                 <div class="bg-white shadow overflow-hidden sm:rounded-lg">
                     <div class="overflow-x-auto">
                         <table class="min-w-full divide-y divide-gray-200">
-                            <thead class="bg-gray-50">
-                                <tr>
-                                    <th
-                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        商品名稱</th>
-                                    <th
-                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        檢舉原因</th>
-                                    <th
-                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        自定義原因</th>
-                                    <th
-                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        檢舉人</th>
-                                    <th
-                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        檢舉日期</th>
-                                </tr>
-                            </thead>
+                            <x-thead.report />
                             <tbody class="bg-white divide-y divide-gray-200">
                                 @foreach ($reportables as $reportable)
                                     <tr>

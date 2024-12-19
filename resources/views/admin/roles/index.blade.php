@@ -28,19 +28,7 @@
                     </div>
 
                     <table class="min-w-full divide-y divide-gray-200">
-                        <thead>
-                            <tr>
-                                <th
-                                    class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    選擇</th>
-                                <th
-                                    class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    名稱</th>
-                                <th
-                                    class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Email</th>
-                            </tr>
-                        </thead>
+                        <x-thead.roles />
                         <tbody class="bg-white divide-y divide-gray-200">
                             @foreach ($users as $user)
                                 @if ($user->hasRole('admin'))
