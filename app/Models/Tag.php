@@ -25,22 +25,4 @@ class Tag extends Model
         'name' => 'array',
         'slug' => 'array',
     ];
-
-    public static function tagFindOrCreate($name, $type, $slug, $orderColumn)
-    {
-        $tag = static::where('name->en', $name['en'])->where('type', $type)->first();
-
-        if (! $tag) {
-            $tag = new static;
-            $tag->setTranslation('name', 'en', $name['en']);
-            $tag->setTranslation('name', 'zh_TW', $name['zh_TW']);
-            $tag->setTranslation('slug', 'en', $slug['en']);
-            $tag->setTranslation('slug', 'zh_TW', $slug['zh_TW']);
-            $tag->type = $type;
-            $tag->order_column = $orderColumn;
-            $tag->save();
-        }
-
-        return $tag;
-    }
 }

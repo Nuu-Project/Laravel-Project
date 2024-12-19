@@ -69,12 +69,15 @@
                                             </td>
 
                                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                                {{ $product->status->label() }}
+                                                {{ $product->status->status() }}
                                             </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
                             </table>
+                            <div class="px-6 py-4 border-t border-gray-200">
+                                {{ $products->links() }}
+                            </div>
                         </div>
                     </div>
                 </div>

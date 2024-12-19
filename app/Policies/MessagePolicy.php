@@ -2,10 +2,10 @@
 
 namespace App\Policies;
 
-use App\Models\Chirp;
+use App\Models\Message;
 use App\Models\User;
 
-class ChirpPolicy
+class MessagePolicy
 {
     /**
      * Determine whether the user can view any models.
@@ -18,7 +18,7 @@ class ChirpPolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Chirp $chirp): bool
+    public function view(User $user, Message $message): bool
     {
         //
     }
@@ -34,23 +34,23 @@ class ChirpPolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Chirp $chirp): bool
+    public function update(User $user, Message $message): bool
     {
-        return $chirp->user()->is($user);
+        return $message->user()->is($user);
     }
 
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Chirp $chirp): bool
+    public function delete(User $user, Message $message): bool
     {
-        return $user->id === $chirp->user_id || $user->isAdmin();
+        return $user->id === $message->user_id || $user->isAdmin();
     }
 
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, Chirp $chirp): bool
+    public function restore(User $user, Message $message): bool
     {
         //
     }
@@ -58,7 +58,7 @@ class ChirpPolicy
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, Chirp $chirp): bool
+    public function forceDelete(User $user, Message $message): bool
     {
         //
     }
