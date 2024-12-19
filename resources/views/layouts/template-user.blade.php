@@ -32,11 +32,11 @@
 
 <body>
     <div class="flex flex-col md:flex-row h-screen bg-gray-100">
-        <x-side-bar-user />
+        <x-navbar.side-bar-user />
 
         <!-- 主要內容區 -->
         <div class="flex-1 flex flex-col overflow-hidden">
-            <x-navbar-user />
+            <x-navbar.user />
             {{ $slot }}
         </div>
     </div>

@@ -24,22 +24,22 @@
                 </td>
                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 font-medium">
                     <a href="{{ route('admin.tags.edit', $tag->id) }}">
-                        <x-button-blue-short>
+                        <x-button.blue-short>
                             編輯
-                        </x-button-blue-short>
+                        </x-button.blue-short>
                     </a>
                     <form action="{{ route('admin.tags.restore', $tag->id) }}" method="POST" style="display:inline;">
                         @csrf
-                        <x-button-blue-short>
+                        <x-button.blue-short>
                             啟用
-                        </x-button-blue-short>
+                        </x-button.blue-short>
                     </form>
                     <form action="{{ route('admin.tags.destroy', $tag->id) }}" method="POST" style="display:inline;">
                         @csrf
                         @method('DELETE')
-                        <x-button-red-short>
+                        <x-button.red-short>
                             取消
-                        </x-button-red-short>
+                        </x-button.red-short>
                     </form>
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">

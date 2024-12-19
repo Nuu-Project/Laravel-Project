@@ -20,7 +20,7 @@ class ProductController extends Controller
             ->paginate(3);
         $message = $userProducts->isEmpty() ? '您目前沒有任何商品，趕緊刊登一個吧!' : null;
 
-        return view('user.products.check', compact('userProducts', 'message'));
+        return view('user.products.index', compact('userProducts', 'message'));
     }
 
     public function create()
