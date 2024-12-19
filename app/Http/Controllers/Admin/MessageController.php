@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Chirp;
+use App\Models\Message;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
@@ -17,7 +17,7 @@ class MessageController extends Controller
 
     public function index(Request $request): View
     {
-        $chirps = QueryBuilder::for(Chirp::class)
+        $messages = QueryBuilder::for(Message::class)
             ->allowedFilters([
                 AllowedFilter::callback('name', function (Builder $query, $value) {
                     $query->whereHas('user', function ($query) use ($value) {
@@ -29,6 +29,6 @@ class MessageController extends Controller
             ->paginate(10)
             ->withQueryString();
 
-        return view('admin.message', compact('chirps'));
+        return view('admin.message', compact('messages'));
     }
 }

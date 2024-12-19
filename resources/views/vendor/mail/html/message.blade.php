@@ -21,7 +21,7 @@
     {{-- Footer --}}
     <x-slot:footer>
         <x-mail::footer>
-            © {{ date('Y:M:D') }} 聯大二手書網
+            © {{ date('Y') }} 聯大二手書網
         </x-mail::footer>
     </x-slot:footer>
 </x-mail::layout>
