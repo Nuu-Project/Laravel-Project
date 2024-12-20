@@ -15,9 +15,9 @@
                             <input type="text" name="filter[name]" id="filter[name]"
                                 class="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                                 placeholder="請輸入用戶名稱..." value="{{ request('filter.name') ?? '' }}">
-                            <x-button-search>
+                            <x-button.search>
                                 搜索
-                            </x-button-search>
+                            </x-button.search>
                         </div>
                     </form>
                 </div>
@@ -25,8 +25,8 @@
                 <!-- Reviews 列表 -->
                 <div class="bg-white shadow overflow-hidden sm:rounded-lg" id="reviews-table">
                     <div class="overflow-x-auto">
-                        <x-table-message :messages="$messages->items()">
-                        </x-table-message>
+                        <x-table.message :messages="$messages->items()">
+                        </x-table.message>
                     </div>
 
                     <!-- 分頁導航 -->

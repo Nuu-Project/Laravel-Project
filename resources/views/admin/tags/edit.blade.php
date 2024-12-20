@@ -65,9 +65,9 @@
                 </div>
 
                 <!-- 提交按鈕 -->
-                <x-button-create-edit>
+                <x-button.create-edit>
                     確定修改標籤
-                </x-button-create-edit>
+                </x-button.create-edit>
             </form>
         </div>
     </main>

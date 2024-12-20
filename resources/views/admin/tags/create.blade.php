@@ -58,9 +58,9 @@
                     <x-input-error :messages="$errors->get('order_column')" class="mt-2" />
                 </div>
 
-                <x-button-create-edit>
+                <x-button.create-edit>
                     確定新增標籤
-                </x-button-create-edit>
+                </x-button.create-edit>
             </form>
         </div>
     </main>

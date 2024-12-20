@@ -27,7 +27,7 @@
                     <div class="bg-white shadow overflow-hidden sm:rounded-lg">
                         <div class="overflow-x-auto">
                             <table class="min-w-full divide-y divide-gray-200">
-                                <x-check-table />
+                                <x-table.products />
                                 <tbody class="bg-white divide-y divide-gray-200">
                                     @foreach ($products as $product)
                                         <tr>
@@ -47,9 +47,9 @@
                                             <td
                                                 class="px-6 py-4 whitespace-nowrap text-sm font-medium flex flex-row items-center space-x-2">
                                                 <a href="{{ route('products.show', ['product' => $product->id]) }}">
-                                                    <x-button-blue-short>
+                                                    <x-button.blue-short>
                                                         前往
-                                                    </x-button-blue-short>
+                                                    </x-button.blue-short>
                                                 </a>
 
                                                 <form
@@ -57,14 +57,14 @@
                                                     method="POST" class="inline">
                                                     @csrf
                                                     @method('PUT')
-                                                    <x-button-status :status="$product->status" />
+                                                    <x-button.status :status="$product->status" />
                                                 </form>
 
                                                 <a
                                                     href="{{ route('admin.reports.index', ['filter[reportable_id]' => $product->id]) }}">
-                                                    <x-button-red-short>
+                                                    <x-button.red-short>
                                                         檢舉詳情
-                                                    </x-button-red-short>
+                                                    </x-button.red-short>
                                                 </a>
                                             </td>
 

@@ -15,9 +15,9 @@
                             <input type="text" name="filter[name]" id="filter[name]"
                                 class="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                                 placeholder="Search..." value="{{ request('filter.name') ?? '' }}">
-                            <x-button-search>
+                            <x-button.search>
                                 搜索
-                            </x-button-search>
+                            </x-button.search>
                         </div>
                     </form>
                 </div>
@@ -26,7 +26,7 @@
                 <div id="search-results" class="bg-white shadow overflow-hidden sm:rounded-lg" style="display: none;">
                     <div class="overflow-x-auto">
                         <table class="min-w-full divide-y divide-gray-200">
-                            <x-table-user />
+                            <x-table.user />
                             <tbody class="bg-white divide-y divide-gray-200">
                                 <!-- Search results will be dynamically inserted here -->
                             </tbody>
@@ -40,22 +40,7 @@
                 <div id="all-users-list" class="bg-white shadow overflow-hidden sm:rounded-lg">
                     <div class="overflow-x-auto">
                         <table class="min-w-full divide-y divide-gray-200">
-                            <thead class="bg-gray-50">
-                                <tr>
-                                    <th
-                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        用戶名稱</th>
-                                    <th
-                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        檢舉</th>
-                                    <th
-                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        權限</th>
-                                    <th
-                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        停用</th>
-                                </tr>
-                            </thead>
+                            <x-thead.user />
                             <tbody class="bg-white divide-y divide-gray-200">
                                 @foreach ($users as $user)
                                     <tr>
@@ -76,9 +61,9 @@
                                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                             <div class="flex items-center space-x-2">
                                                 <span>{{ $user->reports_count ?? 0 }}次</span>
-                                                <x-button-red-short>
+                                                <x-button.red-short>
                                                     檢舉詳情
-                                                </x-button-red-short>
+                                                </x-button.red-short>
                                             </div>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap">
@@ -91,10 +76,10 @@
                                             </div>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                            <x-button-red-short
+                                            <x-button.red-short
                                                 onclick="showSuspendDialog({{ $user->id }}, {{ json_encode($user->name) }})">
                                                 停用
-                                            </x-button-red-short>
+                                            </x-button.red-short>
                                         </td>
                                     </tr>
                                 @endforeach

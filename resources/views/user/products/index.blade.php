@@ -103,20 +103,20 @@
                                         @csrf
                                         @method('PUT')
                                         <input type="hidden" name="product_id" value="{{ $product->id }}">
-                                        <x-button-status :status="$product->status" />
+                                        <x-button.status :status="$product->status" />
                                     </form>
                                     <a href="{{ route('user.products.edit', $product->id) }}">
-                                        <x-button-blue-short>
+                                        <x-button.blue-short>
                                             編輯
-                                        </x-button-blue-short>
+                                        </x-button.blue-short>
                                     </a>
                                     <form action="{{ route('user.products.destroy', $product->id) }}" method="POST"
                                         onsubmit="return confirm('確定要刪除這個商品嗎？');">
                                         @csrf
                                         @method('DELETE')
-                                        <x-button-red-short>
+                                        <x-button.red-short>
                                             刪除
-                                        </x-button-red-short>
+                                        </x-button.red-short>
                                     </form>
                                 </div>
                             </div>

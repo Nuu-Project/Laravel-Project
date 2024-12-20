@@ -31,7 +31,7 @@
 </head>
 
 <body>
-    <x-navbar />
+    <x-navbar.home />
     {{ $slot }}
 </body>
 

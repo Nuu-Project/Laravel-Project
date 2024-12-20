@@ -9,7 +9,7 @@
     <nav class="mt-4" x-data="{ open: true }">
         <div @click="open = !open" class="block py-2 px-4 text-gray-700 hover:bg-gray-200 cursor-pointer">
             <div class="flex justify-between items-center">
-                <span>後台管理</span>
+                <span>後台管理系統</span>
                 <svg :class="{ 'transform rotate-180': open }" class="w-4 h-4 transition-transform duration-200"
                     fill="currentColor" viewBox="0 0 20 20">
                     <path fill-rule="evenodd"
@@ -25,10 +25,10 @@
             <a href="{{ route('admin.messages.index') }}"
                 class="block py-2 px-4 text-gray-700 hover:bg-gray-200">留言管理</a>
             <a href="{{ route('admin.roles.index') }}" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">角色管理</a>
-            <a href="{{ route('admin.tags.index') }}"
-                class="block py-2 px-4 text-gray-700 hover:bg-gray-200">新增標籤與刪除標籤</a>
             <a href="{{ route('admin.reports.index') }}"
                 class="block py-2 px-4 text-gray-700 hover:bg-gray-200">檢舉詳情</a>
+            <a href="{{ route('admin.tags.index') }}"
+                class="block py-2 px-4 text-gray-700 hover:bg-gray-200">新增標籤與刪除標籤</a>
         </div>
     </nav>
 </div>
