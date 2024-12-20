@@ -51,7 +51,7 @@
                                     </div>
                                     <div>
                                         <h1 class="font-semibold text-sm">
-                                            目前狀態: {{ $product->status->status() }}
+                                            目前狀態: {{ $product->status->name() }}
                                         </h1>
                                     </div>
                                 </div>

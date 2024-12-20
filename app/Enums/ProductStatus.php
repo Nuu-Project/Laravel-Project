@@ -7,7 +7,7 @@ enum ProductStatus: int
     case Active = 100;
     case Inactive = 200;
 
-    public function status(): string
+    public function name(): string
     {
         return match ($this) {
             self::Active => '上架中',
