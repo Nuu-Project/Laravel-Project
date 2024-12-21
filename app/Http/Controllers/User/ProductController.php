@@ -302,7 +302,7 @@ class ProductController extends Controller
             'status' => $newStatus,
         ]);
 
-        $message = "商品{$newStatus->status()}！";
+        $message = "商品{$newStatus->name()}！";
 
         return redirect()->route('user.products.index')->with('success', $message);
     }
