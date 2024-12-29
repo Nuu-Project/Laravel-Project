@@ -20,7 +20,7 @@ class ProductController extends Controller
         return view('admin.products', compact('products'));
     }
 
-    public function demoteData(Product $product)
+    public function inactive(Product $product)
     {
         // 根據當前狀態切換到相反的狀態
         $newStatus = $product->status === ProductStatus::Active
