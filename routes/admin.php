@@ -13,8 +13,8 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'verified', 'role:ad
     Route::get('/products', [ProductController::class, 'index'])
         ->name('products.index');
     // 商品管理下架 未返回畫面
-    Route::put('/products/{product}/inactive', [ProductController::class, 'demoteData'])
-        ->name('products.demote');
+    Route::put('/products/{product}/inactive', [ProductController::class, 'inactive'])
+        ->name('products.inactive');
 
     // 用戶管理頁
     Route::get('/users', [UserController::class, 'index'])
@@ -29,7 +29,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'verified', 'role:ad
 
     // 角色管理路由
     Route::resource('roles', RoleController::class)
-        ->only(['index', 'store', 'edit', 'update', 'create']);
+        ->only(['index', 'store', 'update', 'create']);
 
     // 標籤 頁面,新增,修改,刪除
     Route::resource('tags', TagController::class)

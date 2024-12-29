@@ -9,9 +9,6 @@ enum ProductStatus: int
 
     public function name(): string
     {
-        return match ($this) {
-            self::Active => '上架中',
-            self::Inactive => '已下架',
-        };
+        return trans('product-status.'.$this->name);
     }
 }
