@@ -53,7 +53,7 @@
                                                 </a>
 
                                                 <form
-                                                    action="{{ route('admin.products.demote', ['product' => $product->id]) }}"
+                                                    action="{{ route('admin.products.inactive', ['product' => $product->id]) }}"
                                                     method="POST" class="inline">
                                                     @csrf
                                                     @method('PUT')
