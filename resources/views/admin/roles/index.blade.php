@@ -11,12 +11,11 @@
                 <form id="adminForm" action="{{ route('admin.roles.update', ['role' => 'admin']) }}" method="POST">
                     @csrf
                     @method('PUT')
-                    <input type="hidden" name="role_type" value="admin">
 
                     <div class="flex justify-between items-center mb-4">
                         <h4 class="text-gray-700 text-xl font-medium">管理員列表</h4>
                         <div class="flex gap-2">
-                            <a href="{{ route('admin.roles.create', ['type' => 'admin']) }}"
+                            <a href="{{ route('admin.roles.create') }}"
                                 class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                                 新增
                             </a>
@@ -39,42 +38,40 @@
                                                 data-role="admin">
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                            {{ $user->name }}</td>
+                                            {{ $user->name }}
+                                        </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                            {{ $user->email }}</td>
+                                            {{ $user->email }}
+                                        </td>
                                     </tr>
                                 @endif
                             @endforeach
                         </tbody>
-                        <script>
-                            document.addEventListener('DOMContentLoaded', function() {
-                                const checkboxes = document.querySelectorAll('.role-checkbox');
+                    </table>
+                </form>
+            </div>
+        </div>
+    </main>
 
-                                checkboxes.forEach(checkbox => {
-                                    checkbox.addEventListener('change', function() {
-                                        const role = this.dataset.role;
-                                        const checkedBoxes = document.querySelectorAll(
-                                            `.role-checkbox[data-role="${role}"]:checked`);
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const checkboxes = document.querySelectorAll('.role-checkbox');
 
-                                        const modifyBtn = document.querySelector(
-                                            `#modify${role.charAt(0).toUpperCase() + role.slice(1)}Btn`);
+            checkboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', function() {
+                    const checkedBoxes = document.querySelectorAll('.role-checkbox[data-role="admin"]:checked');
+                    const modifyBtn = document.querySelector('#modifyAdminBtn');
 
-                                        // 顯示或隱藏按鈕
-                                        modifyBtn.classList.toggle('hidden', checkedBoxes.length === 0);
-                                    });
-                                });
+                    // 顯示或隱藏按鈕
+                    modifyBtn.classList.toggle('hidden', checkedBoxes.length === 0);
+                });
+            });
 
-                                // 當修改按鈕被點擊時提交表單
-                                const modifyAdminBtn = document.getElementById('modifyAdminBtn');
-                                const modifyUserBtn = document.getElementById('modifyUserBtn');
-
-                                modifyAdminBtn?.addEventListener('click', function() {
-                                    document.getElementById('adminForm').submit();
-                                });
-
-                                modifyUserBtn?.addEventListener('click', function() {
-                                    document.getElementById('userForm').submit();
-                                });
-                            });
-                        </script>
+            // 當修改按鈕被點擊時提交表單
+            const modifyAdminBtn = document.getElementById('modifyAdminBtn');
+            modifyAdminBtn?.addEventListener('click', function() {
+                document.getElementById('adminForm').submit();
+            });
+        });
+    </script>
 </x-template-admin-layout>

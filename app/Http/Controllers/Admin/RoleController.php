@@ -13,14 +13,13 @@ class RoleController extends Controller
 {
     public function index()
     {
-        $users = User::role(['admin', 'user'])->paginate(10);
+        $users = User::role(['admin'])->paginate(10);
 
         return view('admin.roles.index', compact('users'));
     }
 
     public function create(Request $request)
     {
-        // 獲取未分配角色的用戶
         $users = QueryBuilder::for(User::class)
             ->whereDoesntHave('roles')
             ->allowedFilters([
@@ -34,27 +33,23 @@ class RoleController extends Controller
             ->paginate(10)
             ->withQueryString();
 
-        // 獲取要分配的角色類型（admin 或 user）
-        $type = $request->query('type');
-
-        return view('admin.roles.create', compact('users', 'type'));
+        return view('admin.roles.create', compact('users'));
     }
 
     public function store(Request $request)
     {
-        $request->validate([
+        $validated = $request->validate([
             'user_ids' => 'required|array',
             'user_ids.*' => 'exists:users,id',
-            'role_type' => 'required|in:admin,user',
         ]);
 
-        $users = User::whereIn('id', $request->user_ids)->get();
+        $roleType = 'admin'; // 默认分配为 admin，可根据需求调整
+        $users = User::whereIn('id', $validated['user_ids'])->get();
 
         foreach ($users as $user) {
-            $user->assignRole($request->role_type);
+            $user->assignRole($roleType);
         }
 
-        // 返回成功消息和重定向
         return redirect()->route('admin.roles.index')->with('success', '角色分配成功');
     }
 

@@ -52,8 +52,6 @@
                         {{ $users->links() }}
                     </div>
 
-                    <input type="hidden" name="role_type" value="{{ $type }}">
-
                     <!-- 提交按鈕 -->
                     <div class="mt-4 flex justify-end space-x-4">
                         <button type="button" id="cancelBtn"
