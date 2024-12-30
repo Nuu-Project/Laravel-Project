@@ -98,7 +98,7 @@
                                     </div>
                                 </div>
                                 <div class="flex justify-center space-x-4 mt-6">
-                                    <form action="{{ route('user.products.demoteData', $product->id) }}"
+                                    <form action="{{ route('user.products.inactive', $product->id) }}"
                                         method="POST">
                                         @csrf
                                         @method('PUT')
