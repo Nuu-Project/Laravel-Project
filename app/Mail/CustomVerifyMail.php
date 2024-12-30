@@ -13,12 +13,13 @@ class CustomVerifyMail extends Mailable
     use Queueable, SerializesModels;
 
     public $verificationUrl;
+
     public $username;
 
     /**
      * Create a new message instance.
      */
-    public function __construct($verificationUrl,$username)
+    public function __construct($verificationUrl, $username)
     {
         $this->verificationUrl = $verificationUrl;
         $this->username = $username;

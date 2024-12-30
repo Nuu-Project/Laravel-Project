@@ -60,7 +60,7 @@ class User extends Authenticatable implements MustVerifyEmail
             ['id' => $this->id, 'hash' => sha1($this->email)]
         );
 
-        Mail::to($this->email)->send(new CustomVerifyMail($verificationUrl,$this->name));
+        Mail::to($this->email)->send(new CustomVerifyMail($verificationUrl, $this->name));
     }
 
     public function messages(): HasMany

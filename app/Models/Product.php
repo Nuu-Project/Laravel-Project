@@ -6,7 +6,6 @@ use App\Enums\ProductStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -89,7 +88,7 @@ class Product extends Model implements HasMedia
         $compressedPath = Storage::path($tempFileName);
 
         // 確保臨時目錄存在
-        if (!Storage::exists('temp')) {
+        if (! Storage::exists('temp')) {
             Storage::makeDirectory('temp');
         }
 
@@ -98,7 +97,7 @@ class Product extends Model implements HasMedia
 
         // 獲取原始圖片信息
         $imageInfo = getimagesize(Storage::path($imagePath));
-        if (!$imageInfo) {
+        if (! $imageInfo) {
             throw new \Exception('無法檢測圖片類型');
         }
 
@@ -166,6 +165,7 @@ class Product extends Model implements HasMedia
         if ($compressedSize >= $originalFileSize) {
             // 刪除臨時文件
             Storage::delete($tempFileName);
+
             return Storage::path($imagePath);
         }
 

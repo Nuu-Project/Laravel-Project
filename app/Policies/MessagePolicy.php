@@ -11,6 +11,7 @@ class MessagePolicy
     {
         return $message->user()->is($user);
     }
+
     public function delete(User $user, Message $message): bool
     {
         return $user->id === $message->user_id || $user->isAdmin();
