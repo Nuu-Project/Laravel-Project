@@ -65,8 +65,8 @@
     <!-- feature section //end -->
 
     <!-- donation section -->
-    <x-product-card />
-    <x-page-last />
+    <x-product.card />
+    <x-page.last />
 
 
     <script>
