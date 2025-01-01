@@ -12,7 +12,7 @@ class ProductController extends Controller
     public function index(): View
     {
         $products = Product::query()
-            ->withCount('reportables')
+            ->withCount('reports')
             ->with('user')
             ->paginate(10);
 

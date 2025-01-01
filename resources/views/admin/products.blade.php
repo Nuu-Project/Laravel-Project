@@ -43,7 +43,7 @@
                                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                                 {{ $product->updated_at->format('Y/m/d') }}</td>
                                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                                {{ $product->reportables_count }}</td>
+                                                {{ $product->reports_count }}</td>
                                             <td
                                                 class="px-6 py-4 whitespace-nowrap text-sm font-medium flex flex-row items-center space-x-2">
                                                 <a href="{{ route('products.show', ['product' => $product->id]) }}">

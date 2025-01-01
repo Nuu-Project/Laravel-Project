@@ -39,10 +39,8 @@ class ProductController extends Controller
         return view('guest.Product', compact('products', 'allTags'));
     }
 
-    public function show($productId): View
+    public function show(Product $product): View
     {
-        $product = Product::findOrFail($productId);
-
         $messages = $product->messages()->with('user')->oldest()->paginate(10);
         $reports = Report::where('type', '商品')->get()->mapWithKeys(function ($item) {
             return [$item->id => json_decode($item->name, true)['zh_TW']];
