@@ -36,7 +36,7 @@ class ProductController extends Controller
 
         $allTags = Tag::whereNull('deleted_at')->get();
 
-        return view('products.index', compact('products', 'allTags'));
+        return view('guest.products.index', compact('products', 'allTags'));
     }
 
     public function show(Product $product): View
@@ -46,6 +46,6 @@ class ProductController extends Controller
             return [$item->id => json_decode($item->name, true)['zh_TW']];
         });
 
-        return view('user.products.show', compact('messages', 'product', 'reports'));
+        return view('guest.products.show', compact('messages', 'product', 'reports'));
     }
 }
