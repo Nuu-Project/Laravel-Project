@@ -39,11 +39,6 @@ class Product extends Model implements HasMedia
         return $this->morphToMany(Report::class, 'reportable');
     }
 
-    public function reportables()
-    {
-        return $this->morphMany(Reportable::class, 'reportable');
-    }
-
     public function registerMediaCollections(): void
     {
         $this->addMediaCollection('images')
