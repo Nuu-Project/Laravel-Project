@@ -64,18 +64,12 @@ class Product extends Model implements HasMedia
         $manager = new ImageManager(Driver::class);
         $image = $manager->read($image->getRealPath());
 
-        $image->resize(800, 500, function ($constraint) {
-            $constraint->aspectRatio();
-            $constraint->upsize();
-        });
+        $image->scale(height: 600);
 
-        // 将图像编码为 JPG 格式并保存
         $encoded = $image->encode(new JpegEncoder(quality: 50));
 
-        // 存储图像
         Storage::put($tempFileName, $encoded);
 
-        // 返回存储路径
         return Storage::path($tempFileName);
     }
 }
