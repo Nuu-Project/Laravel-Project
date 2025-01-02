@@ -72,7 +72,9 @@ class ProductController extends Controller
             // 處理圖片上傳
             if ($request->hasFile('images')) {
                 foreach ($request->file('images') as $index => $image) {
-                    if ($index >= 5) break;
+                    if ($index >= 5) {
+                        break;
+                    }
 
                     $compressedPath = $product->uploadCompressedImage($image);
                     $product->addMedia($compressedPath)->toMediaCollection('images');
