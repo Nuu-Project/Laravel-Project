@@ -14,7 +14,7 @@
                         <div>
                             <input type="text" name="filter[name]" id="filter[name]"
                                 class="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                placeholder="Search..." value="{{ request('filter.name') ?? '' }}">
+                                placeholder="請輸入用戶名稱..." value="{{ request('filter.name') ?? '' }}">
                             <x-button.search>
                                 搜索
                             </x-button.search>
