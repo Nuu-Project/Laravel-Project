@@ -162,9 +162,9 @@
                                                     d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2" />
                                             </svg>
                                             <p class="mb-2 text-sm text-gray-500"><span
-                                                    class="font-semibold">點擊上傳</span> 或拖放</p>
-                                            <p class="text-xs text-gray-500">SVG, PNG, JPG or GIF (最大.
-                                                3200x3200px)</p>
+                                                    class="font-semibold">點擊上傳</span> 或拖曳</p>
+                                            <p class="text-xs text-gray-500">PNG,JPG,JPEG,GIF(最大.
+                                                3200x3200px 2MB)</p>
                                         </div>
                                         <div id="preview{{ $i }}"
                                             class="absolute inset-0 flex items-center justify-center {{ $product->getMedia('images')->sortBy('order_column')->values()->get($i) ? '' : 'hidden' }}">

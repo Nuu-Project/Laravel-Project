@@ -146,9 +146,9 @@
                                                     d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2" />
                                             </svg>
                                             <p class="mb-2 text-sm text-gray-500"><span
-                                                    class="font-semibold">點擊上傳</span> 或拖放</p>
-                                            <p class="text-xs text-gray-500">SVG, PNG, JPG or GIF (最大.
-                                                3200x3200px)</p>
+                                                    class="font-semibold">點擊上傳</span>或拖曳</p>
+                                            <p class="text-xs text-gray-500">PNG,JPG,JPEG,GIF (最大.
+                                                3200x3200px, 2MB)</p>
                                         </div>
                                         <div id="preview{{ $i }}"
                                             class="absolute inset-0 flex items-center justify-center hidden">
@@ -184,13 +184,13 @@
     <script>
         // 儲存已選擇的圖片檔案
         let savedFiles = new Array(5).fill(null);
-        
+
         function previewImage(input, number) {
             const preview = document.getElementById('preview' + number);
             const placeholder = document.getElementById('placeholder' + number);
             const deleteButton = document.getElementById('deleteButton' + number);
             const file = input.files[0];
-            
+
             if (file) {
                 const reader = new FileReader();
                 reader.onloadend = function() {
@@ -198,7 +198,7 @@
                     preview.classList.remove('hidden');
                     placeholder.classList.add('hidden');
                     deleteButton.classList.remove('hidden');
-                    
+
                     // 儲存檔案資訊
                     const savedImages = JSON.parse(sessionStorage.getItem('savedFiles') || '[]');
                     savedImages[number] = {
@@ -214,7 +214,7 @@
                 preview.classList.add('hidden');
                 placeholder.classList.remove('hidden');
                 deleteButton.classList.add('hidden');
-                
+
                 // 移除儲存的圖片
                 const savedImages = JSON.parse(sessionStorage.getItem('savedFiles') || '[]');
                 savedImages[number] = null;
@@ -247,16 +247,18 @@
                 bstr = atob(arr[1]),
                 n = bstr.length,
                 u8arr = new Uint8Array(n);
-            while(n--){
+            while (n--) {
                 u8arr[n] = bstr.charCodeAt(n);
             }
-            return new File([u8arr], filename, {type:mime});
+            return new File([u8arr], filename, {
+                type: mime
+            });
         }
 
         // 在頁面載入時恢復已保存的圖片
         document.addEventListener('DOMContentLoaded', function() {
             const savedImages = JSON.parse(sessionStorage.getItem('savedFiles') || '[]');
-            
+
             if (savedImages.length > 0) {
                 savedImages.forEach((imageData, index) => {
                     if (imageData) {
@@ -264,7 +266,7 @@
                         const placeholder = document.getElementById('placeholder' + index);
                         const deleteButton = document.getElementById('deleteButton' + index);
                         const imageInput = document.getElementById('image' + index);
-                        
+
                         if (preview && placeholder && deleteButton && imageInput) {
                             // 恢復預覽圖片
                             preview.querySelector('img').src = imageData.dataUrl;
@@ -284,7 +286,7 @@
         });
 
         // 表單提交成功後清除暫存
-        @if(session('success'))
+        @if (session('success'))
             sessionStorage.removeItem('savedFiles');
         @endif
 
@@ -292,7 +294,7 @@
         document.querySelector('form').addEventListener('submit', function(e) {
             const savedImages = JSON.parse(sessionStorage.getItem('savedFiles') || '[]');
             const hasImages = savedImages.some(img => img !== null);
-            
+
             // 檢查是否有選擇圖片
             if (!hasImages) {
                 e.preventDefault();
