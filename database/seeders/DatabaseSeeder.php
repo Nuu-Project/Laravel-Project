@@ -2,8 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\Report;
-use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -17,7 +15,7 @@ class DatabaseSeeder extends Seeder
             TagSeeder::class,
         ]);
 
-        if(!app()->isProduction()) {
+        if (! app()->isProduction()) {
             $this->call(ProductSeeder::class);
         }
     }

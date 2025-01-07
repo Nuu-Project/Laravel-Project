@@ -3,12 +3,12 @@
 namespace App\Http\Controllers\User;
 
 use App\Enums\ProductStatus;
-use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\Rule;
 use Spatie\QueryBuilder\QueryBuilder;
 use Spatie\Tags\Tag;
 
