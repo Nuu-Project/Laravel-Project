@@ -12,12 +12,12 @@ class ProductController extends Controller
     public function index(): View
     {
         $products = Product::query()
-            ->withCount('reportables')
+            ->withCount('reports')
             ->with('user')
             ->paginate(10);
 
         // 返回到視圖，並傳遞商品資料
-        return view('admin.products', compact('products'));
+        return view('admin.products.index', compact('products'));
     }
 
     public function inactive(Product $product)

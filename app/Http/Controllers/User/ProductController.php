@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Spatie\QueryBuilder\QueryBuilder;
 use Spatie\Tags\Tag;
 
@@ -51,7 +52,7 @@ class ProductController extends Controller
             'images.*' => [
                 'required',
                 'image',
-                'mimes:svg,png,jpg,jpeg,gif',
+                'mimes:png,jpg,jpeg,gif',
                 'max:2048',
                 'dimensions:max_width=3200,max_height=3200',
             ],
@@ -74,7 +75,11 @@ class ProductController extends Controller
                     if ($index >= 5) {
                         break;
                     }
-                    $product->uploadCompressedImage($image, $product);
+
+                    $compressedPath = $product->uploadCompressedImage($image);
+                    $product->addMedia($compressedPath)->toMediaCollection('images');
+
+                    Storage::delete($compressedPath); // 删除临时文件
                 }
             }
 
@@ -146,7 +151,7 @@ class ProductController extends Controller
             'images.*' => [
                 'nullable',
                 'image',
-                'mimes:svg,png,jpg,jpeg,gif',
+                'mimes:png,jpg,jpeg,gif',
                 'max:2048',
                 'dimensions:max_width=3200,max_height=3200',
             ],
