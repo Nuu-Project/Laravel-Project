@@ -36,11 +36,11 @@
 
             <div class="flex flex-col w-full min-h-screen">
                 <main class="flex min-h-[calc(100vh_-_theme(spacing.16))] flex-1 flex-col gap-4 p-4 md:gap-8 md:p-10">
-                    @if ($message)
+                    {{-- @if ($message)
                         <div class="alert alert-info text-lg font-semibold text-center text-blue-500 p-4">
                             {{ $message }}
                         </div>
-                    @endif
+                    @endif --}}
                     <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
                         @foreach ($userProducts as $product)
                             <div class="rounded-lg border bg-white text-card-foreground shadow-sm p-6" data-v0-t="card">
