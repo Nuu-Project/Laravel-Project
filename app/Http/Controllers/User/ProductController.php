@@ -209,7 +209,7 @@ class ProductController extends Controller
                         $newImageFile = $request->file("images.$index");
 
                         // 壓縮圖片
-                        $compressedImagePath = $product->uploadCompressedImage($newImageFile, $product);
+                        $compressedImagePath = $product->uploadCompressedImage($newImageFile);
 
                         // 確保壓縮文件存在
                         if (! file_exists($compressedImagePath)) {
