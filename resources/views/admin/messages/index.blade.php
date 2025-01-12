@@ -6,7 +6,6 @@
         <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
             <h3 class="text-gray-700 text-3xl font-medium mb-6">留言管理</h3>
 
-            <!-- Reviews 搜索部分 -->
             <div class="mb-8">
                 <div class="flex items-center justify-between mb-4">
                     <h2 id="reviews-title" class="text-xl font-semibold text-gray-900">留言</h2>
@@ -16,7 +15,7 @@
                                 class="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                                 placeholder="請輸入用戶名稱..." value="{{ request('filter.name') ?? '' }}">
                             <x-button.search>
-                                搜索
+                                搜尋
                             </x-button.search>
                         </div>
                     </form>
