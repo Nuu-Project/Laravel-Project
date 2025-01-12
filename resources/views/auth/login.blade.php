@@ -64,6 +64,12 @@
                         {!! $errors->first('message') !!}
                     </div>
                 @endif
+                @if ($errors->has('time_limit'))
+                    <div class="text-sm text-red-600 space-y-1 text-center">
+                        您的帳號已被暫時停用，<br>
+                        請於 {{ $errors->first('time_limit') }} 後再嘗試。
+                    </div>
+                @endif
                 <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
                     <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl text-center">
                         Sign in to your account
