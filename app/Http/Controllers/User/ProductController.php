@@ -68,19 +68,14 @@ class ProductController extends Controller
             'user_id' => auth()->id(),
         ]);
 
-<<<<<<< HEAD
+
         // 處理圖片上傳
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $index => $image) {
                 if ($index >= 5) {
                     break;
-=======
-            // 處理圖片上傳
-            if ($request->hasFile('images')) {
-                foreach ($request->file('images') as $index => $image) {
-                    if ($index >= 5) {
-                        break;
-                    }
+
+                }
 
                     $compressedImage = $product->uploadCompressedImage($image);
 
@@ -89,15 +84,8 @@ class ProductController extends Controller
                     Storage::put($compressedImagePath, $compressedImage->toJpg(80));
 
                     $product->addMedia(Storage::path($compressedImagePath))->toMediaCollection('images');
->>>>>>> 86ba84ee7a32e8221a2109cfb12141d93e23bc46
                 }
-
-                $compressedPath = $product->uploadCompressedImage($image);
-                $product->addMedia($compressedPath)->toMediaCollection('images');
-
-                Storage::delete($compressedPath); // 刪除臨時文件
             }
-        }
 
         // 獲取並附加新的標籤
         $tagIds = [

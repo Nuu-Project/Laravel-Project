@@ -3,7 +3,7 @@
 
     <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-200">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
-            <h3 class="text-gray-700 text-3xl font-medium mb-6">角色管理</h3>
+            <x-h.h3>角色管理</x-h.h3>
 
             <!-- Admin 表格 -->
             <div class="bg-white rounded-lg shadow-md p-6 mb-6">
@@ -37,12 +37,12 @@
                                                 class="role-checkbox form-checkbox h-4 w-4 text-blue-600"
                                                 data-role="admin">
                                         </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                        <x-td.gray-900>
                                             {{ $user->name }}
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                        </x-td.gray-900>
+                                        <x-td.gray-500>
                                             {{ $user->email }}
-                                        </td>
+                                        </x-td.gray-500>
                                     </tr>
                                 @endif
                             @endforeach
@@ -59,7 +59,8 @@
 
             checkboxes.forEach(checkbox => {
                 checkbox.addEventListener('change', function() {
-                    const checkedBoxes = document.querySelectorAll('.role-checkbox[data-role="admin"]:checked');
+                    const checkedBoxes = document.querySelectorAll(
+                        '.role-checkbox[data-role="admin"]:checked');
                     const modifyBtn = document.querySelector('#modifyAdminBtn');
 
                     // 顯示或隱藏按鈕
