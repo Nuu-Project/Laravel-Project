@@ -58,7 +58,6 @@ class ProductController extends Controller
             ],
         ];
 
-        try {
             // 驗證
             $validated = $request->validate($rules);
 
@@ -102,11 +101,6 @@ class ProductController extends Controller
             }
 
             return redirect()->route('user.products.create')->with('success', '產品已成功創建！');
-        } catch (\Illuminate\Validation\ValidationException $e) {
-            return redirect()->back()
-                ->withErrors($e->validator)
-                ->withInput();
-        }
     }
 
     public function edit(Request $request, Product $product)
