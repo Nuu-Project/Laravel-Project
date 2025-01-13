@@ -33,7 +33,7 @@ class AuthenticatedSessionController extends Controller
             Auth::logout();
 
             return redirect()->route('login')->withErrors([
-                'time_limit' => $formattedTimeLimit,
+                'message' => "您的帳號已被暫時停用，/n於 {$formattedTimeLimit} 後再嘗試。",
             ]);
         }
 

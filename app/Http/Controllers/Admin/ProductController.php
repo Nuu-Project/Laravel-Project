@@ -17,7 +17,7 @@ class ProductController extends Controller
             ->paginate(10);
 
         // 返回到視圖，並傳遞商品資料
-        return view('admin.products.index', compact('products'));
+        return view('admin.products', compact('products'));
     }
 
     public function inactive(Product $product)

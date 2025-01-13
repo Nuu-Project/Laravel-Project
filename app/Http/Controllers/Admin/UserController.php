@@ -26,7 +26,7 @@ class UserController extends Controller
             ->paginate(10)
             ->withQueryString();
 
-        return view('admin.users.index', compact('users'));
+        return view('admin.user', compact('users'));
     }
 
     public function suspend(Request $request, User $user)

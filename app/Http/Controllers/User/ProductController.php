@@ -8,7 +8,6 @@ use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Validation\Rule;
 use Spatie\QueryBuilder\QueryBuilder;
 use Spatie\Tags\Tag;
 
@@ -26,8 +25,9 @@ class ProductController extends Controller
             ->orderBy('updated_at', 'desc')
             ->paginate(3)
             ->withQueryString();
+        $message = $userProducts->isEmpty() ? '您目前沒有任何商品，趕緊刊登一個吧!' : null;
 
-        return view('user.products.index', compact('userProducts'));
+        return view('user.products.index', compact('userProducts', 'message'));
     }
 
     public function create()
@@ -44,10 +44,10 @@ class ProductController extends Controller
             'name' => ['required', 'string', 'max:50'],
             'price' => ['required', 'numeric', 'min:0', 'max:9999'],
             'description' => ['required', 'string'],
-            'grade' => ['required', Rule::exists('tags', 'id')->where('type', '年級')],
-            'semester' => ['required', Rule::exists('tags', 'id')->where('type', '學期')],
-            'subject' => ['required', Rule::exists('tags', 'id')->where('type', '科目')],
-            'category' => ['required', Rule::exists('tags', 'id')->where('type', '課程')],
+            'grade' => ['required', 'exists:tags,id', 'not_in:選擇適用的年級...'],
+            'semester' => ['required', 'exists:tags,id', 'not_in:選擇學期...'],
+            'subject' => ['required', 'exists:tags,id', 'not_in:選擇科目...'],
+            'category' => ['required', 'exists:tags,id', 'not_in:選擇課程類別...'],
             'images' => ['required', 'array', 'min:1', 'max:5'],
             'images.*' => [
                 'required',
@@ -76,13 +76,10 @@ class ProductController extends Controller
                         break;
                     }
 
-                    $compressedImage = $product->uploadCompressedImage($image);
+                    $compressedPath = $product->uploadCompressedImage($image);
+                    $product->addMedia($compressedPath)->toMediaCollection('images');
 
-                    $compressedImagePath = 'images/compressed_'.uniqid().'.jpg';
-
-                    Storage::put($compressedImagePath, $compressedImage->toJpg(80));
-
-                    $product->addMedia(Storage::path($compressedImagePath))->toMediaCollection('images');
+                    Storage::delete($compressedPath); // 删除临时文件
                 }
             }
 
@@ -113,11 +110,10 @@ class ProductController extends Controller
 
     public function edit(Request $request, Product $product)
     {
-        $tag = $product->tags();
-        $gradeTag = $tag->firstWhere('type', '年級');
-        $semesterTag = $tag->firstWhere('type', '學期');
-        $subjectTag = $tag->firstWhere('type', '科目');
-        $categoryTag = $tag->firstWhere('type', '課程');
+        $gradeTag = $product->tags->firstWhere('type', '年級');
+        $semesterTag = $product->tags->firstWhere('type', '學期');
+        $subjectTag = $product->tags->firstWhere('type', '科目');
+        $categoryTag = $product->tags->firstWhere('type', '課程');
         $tags = Tag::whereNull('deleted_at')->get();
 
         if ($request->hasFile('images')) {
@@ -134,7 +130,7 @@ class ProductController extends Controller
                 }
 
                 // 上傳新的圖片
-                $product->uploadCompressedImage($image);
+                $product->uploadCompressedImage($image, $product);
             }
         }
 
@@ -147,10 +143,10 @@ class ProductController extends Controller
         $rules = [
             'name' => ['required', 'string', 'max:50'],
             'description' => ['required', 'string'],
-            'grade' => ['required', Rule::exists('tags', 'id')->where('type', '年級')],
-            'semester' => ['required', Rule::exists('tags', 'id')->where('type', '學期')],
-            'subject' => ['required', Rule::exists('tags', 'id')->where('type', '科目')],
-            'category' => ['required', Rule::exists('tags', 'id')->where('type', '課程')],
+            'grade' => ['required', 'exists:tags,id', 'not_in:選擇適用的年級...'],
+            'semester' => ['required', 'exists:tags,id', 'not_in:選擇學期...'],
+            'subject' => ['required', 'exists:tags,id', 'not_in:選擇科目...'],
+            'category' => ['required', 'exists:tags,id', 'not_in:選擇課程類別...'],
             'images' => ['nullable', 'array', 'min:1', 'max:5'],
             'images.*' => [
                 'nullable',
@@ -188,7 +184,7 @@ class ProductController extends Controller
         $request->validate($rules);
 
         // 更新產品資料
-        $product->update($request->only(['name', 'description']));
+        $product->update($request->only(['name', 'price', 'description']));
 
         if ($request->hasFile('images') || $request->has('image_ids')) {
             $existingMedia = $product->getMedia('images')->keyBy('id');
@@ -212,7 +208,7 @@ class ProductController extends Controller
                         $newImageFile = $request->file("images.$index");
 
                         // 壓縮圖片
-                        $compressedImagePath = $product->uploadCompressedImage($newImageFile);
+                        $compressedImagePath = $product->uploadCompressedImage($newImageFile, $product);
 
                         // 確保壓縮文件存在
                         if (! file_exists($compressedImagePath)) {
@@ -273,6 +269,30 @@ class ProductController extends Controller
 
         // 重新導向到產品清單頁面，並標註成功訊息
         return redirect()->route('user.products.index')->with('success', '產品已成功刪除');
+    }
+
+    public function uploadTempImage(Request $request)
+    {
+        $request->validate([
+            'image' => 'required|image|max:2048',
+            'position' => 'required|integer|min:0|max:4',
+        ]);
+
+        try {
+            $file = $request->file('image');
+            $path = $file->store('temp/products', 'public');
+
+            return response()->json([
+                'success' => true,
+                'path' => $path,
+                'position' => $request->position,
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => '上傳圖片時發生錯誤',
+            ]);
+        }
     }
 
     public function inactive(Product $product)

@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -9,14 +10,19 @@ class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
-        $this->call([
-            ReportSeeder::class,
-            RoleSeeder::class,
-            TagSeeder::class,
-        ]);
+        //插入數據測試用
+        // User::factory(10)->create();
 
-        if (! app()->isProduction()) {
-            $this->call(ProductSeeder::class);
-        }
+        // User::factory()->create([
+        //     'name' => 'Test User',
+        //     'email' => 'test@example.com',
+        // ]);
+
+        $this->call([
+            PermissionSeeder::class,        //確保先運行前兩個Seeder
+            RoleSeeder::class,
+            RoleHasPermissionsSeeder::class,
+        ]);
+        $this->call(ProductSeeder::class);
     }
 }

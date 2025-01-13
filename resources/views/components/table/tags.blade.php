@@ -28,22 +28,19 @@
                             編輯
                         </x-button.blue-short>
                     </a>
-                    @if (!is_null($tag->deleted_at))
-                        <form action="{{ route('admin.tags.restore', $tag->id) }}" method="POST" style="display:inline;">
-                            @csrf
-                            <x-button.blue-short>
-                                啟用
-                            </x-button.blue-short>
-                        </form>
-                    @else
-                        <form action="{{ route('admin.tags.destroy', $tag->id) }}" method="POST" style="display:inline;">
-                            @csrf
-                            @method('DELETE')
-                            <x-button.red-short>
-                                取消
-                            </x-button.red-short>
-                        </form>
-                    @endif
+                    <form action="{{ route('admin.tags.restore', $tag->id) }}" method="POST" style="display:inline;">
+                        @csrf
+                        <x-button.blue-short>
+                            啟用
+                        </x-button.blue-short>
+                    </form>
+                    <form action="{{ route('admin.tags.destroy', $tag->id) }}" method="POST" style="display:inline;">
+                        @csrf
+                        @method('DELETE')
+                        <x-button.red-short>
+                            取消
+                        </x-button.red-short>
+                    </form>
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                     {{ is_null($tag->deleted_at) ? '啟用中' : '已停用' }}
