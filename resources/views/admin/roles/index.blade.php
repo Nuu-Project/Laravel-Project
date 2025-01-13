@@ -37,12 +37,12 @@
                                                 class="role-checkbox form-checkbox h-4 w-4 text-blue-600"
                                                 data-role="admin">
                                         </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                        <x-td.gray-900>
                                             {{ $user->name }}
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                        </x-td.gray-900>
+                                        <x-td.gray-500>
                                             {{ $user->email }}
-                                        </td>
+                                        </x-td.gray-500>
                                     </tr>
                                 @endif
                             @endforeach
@@ -59,7 +59,8 @@
 
             checkboxes.forEach(checkbox => {
                 checkbox.addEventListener('change', function() {
-                    const checkedBoxes = document.querySelectorAll('.role-checkbox[data-role="admin"]:checked');
+                    const checkedBoxes = document.querySelectorAll(
+                        '.role-checkbox[data-role="admin"]:checked');
                     const modifyBtn = document.querySelector('#modifyAdminBtn');
 
                     // 顯示或隱藏按鈕
