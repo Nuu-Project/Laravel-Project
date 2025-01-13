@@ -10,7 +10,8 @@ class TagController extends Controller
 {
     public function index()
     {
-        return view('admin.tags.index', ['tags' => Tag::withTrashed()->get()]);
+        $tags = Tag::paginate(10); // 每頁顯示10筆資料
+        return view('admin.tags.index', compact('tags'));
     }
 
     public function create()
