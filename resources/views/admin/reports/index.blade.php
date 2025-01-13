@@ -27,21 +27,11 @@
                             <tbody class="bg-white divide-y divide-gray-200">
                                 @foreach ($reportables as $reportable)
                                     <tr>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                                            {{ $reportable->reportable->name }}
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                            {{ json_decode($reportable->report->name, true)['zh_TW'] }}
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                            {{ $reportable->description }}
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                            {{ $reportable->whistleblower->email }}
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                            {{ $reportable->updated_at->format('Y-m-d') }}
-                                        </td>
+                                        <x-td.gray-900>{{ $reportable->reportable->name }}</x-td.gray-900>
+                                        <x-td.gray-500>{{ json_decode($reportable->report->name, true)['zh_TW'] }}</x-td.gray-500>
+                                        <x-td.gray-500>{{ $reportable->description }}</x-td.gray-500>
+                                        <x-td.gray-500>{{ $reportable->whistleblower->email }}</x-td.gray-500>
+                                        <x-td.gray-500>{{ $reportable->updated_at->format('Y-m-d') }}</x-td.gray-500>
                                     </tr>
                                 @endforeach
                             </tbody>
