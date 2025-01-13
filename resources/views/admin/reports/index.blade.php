@@ -5,7 +5,6 @@
         <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
             <h3 class="text-gray-700 text-3xl font-medium mb-6">檢舉詳情</h3>
 
-            <!-- Reviews 搜索部分 -->
             <div class="mb-8">
                 <form action="{{ route('admin.reports.index') }}" method="GET">
                     <div class="flex items-center justify-between mb-4">
@@ -13,9 +12,9 @@
                         <div>
                             <input type="text" id="filter[name]" name="filter[name]"
                                 class="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                placeholder="請輸入查詢商品名稱..." value="{{ request('filter.name') }}">
+                                placeholder="請輸入商品名稱..." value="{{ request('filter.name') }}">
                             <x-button.search>
-                                搜索
+                                搜尋
                             </x-button.search>
                         </div>
                     </div>

@@ -146,9 +146,9 @@
                                                     d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2" />
                                             </svg>
                                             <p class="mb-2 text-sm text-gray-500"><span
-                                                    class="font-semibold">點擊上傳</span> 或拖放</p>
-                                            <p class="text-xs text-gray-500">SVG, PNG, JPG or GIF (最大.
-                                                3200x3200px)</p>
+                                                    class="font-semibold">點擊上傳</span>或拖曳</p>
+                                            <p class="text-xs text-gray-500">PNG,JPG,JPEG,GIF (最大.
+                                                3200x3200px, 2MB)</p>
                                         </div>
                                         <div id="preview{{ $i }}"
                                             class="absolute inset-0 flex items-center justify-center hidden">
@@ -182,27 +182,43 @@
     </div>
 
     <script>
+        // 儲存已選擇的圖片檔案
+        let savedFiles = new Array(5).fill(null);
+
         function previewImage(input, number) {
             const preview = document.getElementById('preview' + number);
             const placeholder = document.getElementById('placeholder' + number);
             const deleteButton = document.getElementById('deleteButton' + number);
             const file = input.files[0];
-            const reader = new FileReader();
-
-            reader.onloadend = function() {
-                preview.querySelector('img').src = reader.result;
-                preview.classList.remove('hidden');
-                placeholder.classList.add('hidden');
-                deleteButton.classList.remove('hidden');
-            }
 
             if (file) {
+                const reader = new FileReader();
+                reader.onloadend = function() {
+                    preview.querySelector('img').src = reader.result;
+                    preview.classList.remove('hidden');
+                    placeholder.classList.add('hidden');
+                    deleteButton.classList.remove('hidden');
+
+                    // 儲存檔案資訊
+                    const savedImages = JSON.parse(sessionStorage.getItem('savedFiles') || '[]');
+                    savedImages[number] = {
+                        dataUrl: reader.result,
+                        name: file.name,
+                        type: file.type
+                    };
+                    sessionStorage.setItem('savedFiles', JSON.stringify(savedImages));
+                }
                 reader.readAsDataURL(file);
             } else {
                 preview.querySelector('img').src = '#';
                 preview.classList.add('hidden');
                 placeholder.classList.remove('hidden');
                 deleteButton.classList.add('hidden');
+
+                // 移除儲存的圖片
+                const savedImages = JSON.parse(sessionStorage.getItem('savedFiles') || '[]');
+                savedImages[number] = null;
+                sessionStorage.setItem('savedFiles', JSON.stringify(savedImages));
             }
         }
 
@@ -212,21 +228,79 @@
             const imageInput = document.getElementById(`image${index}`);
             const deleteButton = document.getElementById(`deleteButton${index}`);
 
-            // 重置預覽圖
             preview.querySelector('img').src = '#';
             preview.classList.add('hidden');
-
-            // 顯示佔位符
             placeholder.classList.remove('hidden');
-
-            // 清空文件輸入
             imageInput.value = '';
-
-            // 隱藏刪除按鈕
             deleteButton.classList.add('hidden');
 
-            updatePositions();
+            // 移除儲存的圖片
+            const savedImages = JSON.parse(sessionStorage.getItem('savedFiles') || '[]');
+            savedImages[index] = null;
+            sessionStorage.setItem('savedFiles', JSON.stringify(savedImages));
         }
+
+        // 將 Base64 轉換為 File 物件
+        function dataURLtoFile(dataurl, filename) {
+            let arr = dataurl.split(','),
+                mime = arr[0].match(/:(.*?);/)[1],
+                bstr = atob(arr[1]),
+                n = bstr.length,
+                u8arr = new Uint8Array(n);
+            while (n--) {
+                u8arr[n] = bstr.charCodeAt(n);
+            }
+            return new File([u8arr], filename, {
+                type: mime
+            });
+        }
+
+        // 在頁面載入時恢復已保存的圖片
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedImages = JSON.parse(sessionStorage.getItem('savedFiles') || '[]');
+
+            if (savedImages.length > 0) {
+                savedImages.forEach((imageData, index) => {
+                    if (imageData) {
+                        const preview = document.getElementById('preview' + index);
+                        const placeholder = document.getElementById('placeholder' + index);
+                        const deleteButton = document.getElementById('deleteButton' + index);
+                        const imageInput = document.getElementById('image' + index);
+
+                        if (preview && placeholder && deleteButton && imageInput) {
+                            // 恢復預覽圖片
+                            preview.querySelector('img').src = imageData.dataUrl;
+                            preview.classList.remove('hidden');
+                            placeholder.classList.add('hidden');
+                            deleteButton.classList.remove('hidden');
+
+                            // 恢復檔案輸入
+                            const file = dataURLtoFile(imageData.dataUrl, imageData.name);
+                            const container = new DataTransfer();
+                            container.items.add(file);
+                            imageInput.files = container.files;
+                        }
+                    }
+                });
+            }
+        });
+
+        // 表單提交成功後清除暫存
+        @if (session('success'))
+            sessionStorage.removeItem('savedFiles');
+        @endif
+
+        // 監聽表單提交
+        document.querySelector('form').addEventListener('submit', function(e) {
+            const savedImages = JSON.parse(sessionStorage.getItem('savedFiles') || '[]');
+            const hasImages = savedImages.some(img => img !== null);
+
+            // 檢查是否有選擇圖片
+            if (!hasImages) {
+                e.preventDefault();
+                alert('請至少上傳一張商品圖片');
+            }
+        });
 
         // 拖曳功能
         function initializeDragAndDrop() {
@@ -258,12 +332,8 @@
                         const draggedIndex = allItems.indexOf(draggedItem);
                         const droppedIndex = allItems.indexOf(this);
 
-                        // 直接交換兩個元素的位置
                         if (draggedIndex !== droppedIndex) {
-                            // 創建一個臨時的佔位元素
                             const placeholder = document.createElement('div');
-
-                            // 交換元素位置
                             parent.replaceChild(placeholder, draggedItem);
                             parent.replaceChild(draggedItem, this);
                             parent.replaceChild(this, placeholder);
@@ -296,49 +366,7 @@
             document.getElementById('imageOrder').value = JSON.stringify(orderData);
         }
 
-        // 修改表單提交處理邏輯
-        document.querySelector('form').addEventListener('submit', function(event) {
-            event.preventDefault();
-
-            // 檢查必填欄位
-            const requiredFields = ['name', 'price', 'description', 'grade', 'semester', 'category'];
-            let allFieldsFilled = true;
-
-            for (const fieldId of requiredFields) {
-                const field = document.getElementById(fieldId);
-                if (!field.value) {
-                    allFieldsFilled = false;
-                    break;
-                }
-            }
-
-            // 檢查圖片
-            let hasValidImage = false;
-            const imageContainers = document.querySelectorAll('#imageContainer .relative');
-
-            for (const container of imageContainers) {
-                const preview = container.querySelector('[id^="preview"]');
-                const imageInput = container.querySelector('input[type="file"]');
-
-                if (imageInput.files.length > 0) {
-                    hasValidImage = true;
-                    break;
-                }
-            }
-
-            if (!allFieldsFilled || !hasValidImage) {
-                alert('請確保所有必填欄位都已填寫，且至少上傳一張商品圖片');
-                return;
-            }
-
-            // 更新圖片順序
-            updatePositions();
-
-            // 提交表單
-            this.submit();
-        });
-
-        // 頁面載入時初始化
+        // 在 DOMContentLoaded 事件中初始化拖曳功能
         document.addEventListener('DOMContentLoaded', function() {
             initializeDragAndDrop();
             updatePositions();
