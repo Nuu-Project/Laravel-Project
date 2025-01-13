@@ -73,7 +73,6 @@ class ProductController extends Controller
             foreach ($request->file('images') as $index => $image) {
                 if ($index >= 5) {
                     break;
-
                 }
 
                 $compressedImage = (new \App\Services\CompressedImage)->uploadCompressedImage($image);
