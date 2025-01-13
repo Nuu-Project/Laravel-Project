@@ -111,11 +111,11 @@ class ProductController extends Controller
 
     public function edit(Request $request, Product $product)
     {
-        $tag = $product->tags();
-        $gradeTag = $tag->firstWhere('type', '年級');
-        $semesterTag = $tag->firstWhere('type', '學期');
-        $subjectTag = $tag->firstWhere('type', '科目');
-        $categoryTag = $tag->firstWhere('type', '課程');
+        $productTags = $product->tags;
+        $gradeTag = $productTags->where('type', '年級')->first();
+        $semesterTag = $productTags->where('type', '學期')->first();
+        $subjectTag = $productTags->where('type', '科目')->first();
+        $categoryTag = $productTags->where('type', '課程')->first();
         $tags = Tag::whereNull('deleted_at')->get();
 
         if ($request->hasFile('images')) {
