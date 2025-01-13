@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Enums\RoleType;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
@@ -43,7 +44,7 @@ class RoleController extends Controller
             'user_ids.*' => 'exists:users,id',
         ]);
 
-        $roleType = 'admin'; // 默认分配为 admin，可根据需求调整
+        $roleType = RoleType::Admin;
         $users = User::whereIn('id', $validated['user_ids'])->get();
 
         foreach ($users as $user) {

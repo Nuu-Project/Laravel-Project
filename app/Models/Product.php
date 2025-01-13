@@ -6,8 +6,6 @@ use App\Enums\ProductStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Intervention\Image\Interfaces\ImageInterface;
-use Intervention\Image\Laravel\Facades\Image;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\Tags\HasTags;
@@ -54,10 +52,4 @@ class Product extends Model implements HasMedia
     protected $casts = [
         'status' => ProductStatus::class,
     ];
-
-    public function uploadCompressedImage(string $image): ImageInterface
-    {
-        return Image::read($image)
-            ->scale(800);
-    }
 }
