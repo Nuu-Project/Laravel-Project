@@ -58,8 +58,8 @@ class ProductController extends Controller
             ],
         ];
 
-            // 驗證
-            $validated = $request->validate($rules);
+        // 驗證
+        $validated = $request->validate($rules);
 
         $product = Product::create([
             'name' => $validated['name'],
@@ -73,12 +73,6 @@ class ProductController extends Controller
             foreach ($request->file('images') as $index => $image) {
                 if ($index >= 5) {
                     break;
-
-                    $compressedImage = (new \App\Services\CompressedImage)->uploadCompressedImage($image);
-
-                    Storage::put($compressedImagePath = 'public/images/compressed_'.uniqid().'.jpg', $compressedImage->toJpeg(80));
-
-                    $product->addMedia(Storage::path($compressedImagePath))->toMediaCollection('images');
                 }
 
                 $compressedImage = (new \App\Services\CompressedImage)->uploadCompressedImage($image);
@@ -87,25 +81,26 @@ class ProductController extends Controller
 
                 $product->addMedia(Storage::path($compressedImagePath))->toMediaCollection('images');
             }
+        }
 
-            // 獲取並附加新的標籤
-            $tagIds = [
-                $request->input('grade'),
-                $request->input('semester'),
-                $request->input('subject'),
-                $request->input('category'),
-            ];
+        // 獲取並附加新的標籤
+        $tagIds = [
+            $request->input('grade'),
+            $request->input('semester'),
+            $request->input('subject'),
+            $request->input('category'),
+        ];
 
-            foreach ($tagIds as $tagId) {
-                if ($tagId) {
-                    $tag = Tag::find($tagId);
-                    if ($tag) {
-                        $product->attachTag($tag);
-                    }
+        foreach ($tagIds as $tagId) {
+            if ($tagId) {
+                $tag = Tag::find($tagId);
+                if ($tag) {
+                    $product->attachTag($tag);
                 }
             }
+        }
 
-            return redirect()->route('user.products.create')->with('success', '產品已成功創建！');
+        return redirect()->route('user.products.create')->with('success', '產品已成功創建！');
     }
 
     public function edit(Request $request, Product $product)
