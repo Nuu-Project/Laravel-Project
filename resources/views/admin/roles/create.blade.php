@@ -16,7 +16,6 @@
                                 placeholder="Search..." value="{{ request('filter.name') ?? '' }}">
                             <x-button.search>
                                 搜尋
-                                搜尋
                             </x-button.search>
                         </div>
                     </form>
