@@ -11,50 +11,30 @@
                 @csrf
 
                 <div class="grid gap-2">
-                    <label
-                        class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                        for="name[zh_TW]">
-                        Name :
-                    </label>
-                    <input
-                        class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                        id="name" name="name" placeholder="請輸入新的中文 name" required />
+                    <x-label.tags for="name[zh_TW]">Name:</x-label.tags>
+                    <x-input.tags id="name" name="name" placeholder="輸入新的中文 name" required>
+                    </x-input.tags>
                     <x-input-error :messages="$errors->get('name')" class="mt-2" />
                 </div>
 
                 <div class="grid gap-2">
-                    <label
-                        class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                        for="slug[zh_TW]">
-                        Slug :
-                    </label>
-                    <input
-                        class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                        id="slug" name="slug" placeholder="輸入新的中文 slug" required />
+                    <x-label.tags for="slug[zh_TW]">Slug:</x-label.tags>
+                    <x-input.tags id="slug" name="slug" placeholder="輸入新的中文 slug" required>
+                    </x-input.tags>
                     <x-input-error :messages="$errors->get('slug')" class="mt-2" />
                 </div>
 
                 <div class="grid gap-2">
-                    <label
-                        class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                        for="type">
-                        Type:
-                    </label>
-                    <input
-                        class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                        id="type" name="type" placeholder="輸入新的中文 type" />
+                    <x-label.tags for="type">Type:</x-label.tags>
+                    <x-input.tags id="type" name="type" placeholder="輸入新的中文 type" required>
+                    </x-input.tags>
                     <x-input-error :messages="$errors->get('type')" class="mt-2" />
                 </div>
 
                 <div class="grid gap-2">
-                    <label
-                        class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                        for="order_column">
-                        Order Column:
-                    </label>
-                    <input
-                        class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                        id="order_column" name="order_column" placeholder="輸入新的Order Column" />
+                    <x-label.tags for="order_column">Order Column:</x-label.tags>
+                    <x-input.tags id="order_column" name="order_column" placeholder="輸入新的Order Column" required>
+                    </x-input.tags>
                     <x-input-error :messages="$errors->get('order_column')" class="mt-2" />
                 </div>
 
