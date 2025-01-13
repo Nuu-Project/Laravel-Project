@@ -10,7 +10,7 @@ class TagController extends Controller
 {
     public function index()
     {
-        return view('admin.tags.index', ['tags' => Tag::withTrashed()->get()]);
+        return view('admin.tags.index', ['tags' => Tag::withTrashed()->paginate(10)]);
     }
 
     public function create()

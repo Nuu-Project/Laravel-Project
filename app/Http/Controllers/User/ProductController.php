@@ -61,19 +61,18 @@ class ProductController extends Controller
             // 驗證
             $validated = $request->validate($rules);
 
-            $product = Product::create([
-                'name' => $validated['name'],
-                'price' => $validated['price'],
-                'description' => $validated['description'],
-                'user_id' => auth()->id(),
-            ]);
+        $product = Product::create([
+            'name' => $validated['name'],
+            'price' => $validated['price'],
+            'description' => $validated['description'],
+            'user_id' => auth()->id(),
+        ]);
 
-            // 處理圖片上傳
-            if ($request->hasFile('images')) {
-                foreach ($request->file('images') as $index => $image) {
-                    if ($index >= 5) {
-                        break;
-                    }
+        // 處理圖片上傳
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $index => $image) {
+                if ($index >= 5) {
+                    break;
 
                     $compressedImage = (new \App\Services\CompressedImage)->uploadCompressedImage($image);
 
@@ -81,6 +80,12 @@ class ProductController extends Controller
 
                     $product->addMedia(Storage::path($compressedImagePath))->toMediaCollection('images');
                 }
+
+                $compressedImage = (new \App\Services\CompressedImage)->uploadCompressedImage($image);
+
+                Storage::put($compressedImagePath = 'images/compressed_'.uniqid().'.jpg', $compressedImage->toJpeg(80));
+
+                $product->addMedia(Storage::path($compressedImagePath))->toMediaCollection('images');
             }
 
             // 獲取並附加新的標籤
