@@ -6,7 +6,7 @@
         <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
             <h3 class="text-gray-700 text-3xl font-medium mb-6">用戶管理</h3>
 
-            <!-- 用戶搜索部分 -->
+
             <div class="mb-8">
                 <div class="flex items-center justify-between mb-4">
                     <h2 id="users-title" class="text-xl font-semibold text-gray-900">用戶</h2>
@@ -14,15 +14,14 @@
                         <div>
                             <input type="text" name="filter[name]" id="filter[name]"
                                 class="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                placeholder="Search..." value="{{ request('filter.name') ?? '' }}">
+                                placeholder="請輸入用戶名稱..." value="{{ request('filter.name') ?? '' }}">
                             <x-button.search>
-                                搜索
+                                搜尋
                             </x-button.search>
                         </div>
                     </form>
                 </div>
 
-                <!-- 搜索結果 -->
                 <div id="search-results" class="bg-white shadow overflow-hidden sm:rounded-lg" style="display: none;">
                     <div class="overflow-x-auto">
                         <table class="min-w-full divide-y divide-gray-200">
