@@ -1,13 +1,11 @@
 <x-template-layout>
 
-
-    <!-- 新增：搜索表單 -->
     <form action="{{ route('products.index') }}" method="GET">
         <div class="flex items-center justify-center gap-2 mb-4">
-            <input type="text" name="filter[name]" placeholder="搜索產品名稱..." value="{{ request('filter.name') ?? '' }}"
+            <input type="text" name="filter[name]" placeholder="搜尋產品名稱..." value="{{ request('filter.name') ?? '' }}"
                 class="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
             <x-button.search>
-                搜索
+                搜尋
             </x-button.search>
         </div>
         <div class="flex flex-wrap gap-2 justify-center">
@@ -25,7 +23,7 @@
                 </select>
             @endforeach
             <x-button.search>
-                搜索
+                搜尋
             </x-button.search>
         </div>
     </form>

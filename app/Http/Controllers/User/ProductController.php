@@ -73,12 +73,15 @@ class ProductController extends Controller
             foreach ($request->file('images') as $index => $image) {
                 if ($index >= 5) {
                     break;
+
+                    $compressedImage = $product->uploadCompressedImage($image);
+
+                    $compressedImagePath = 'images/compressed_'.uniqid().'.jpg';
+
+                    Storage::put($compressedImagePath, $compressedImage->toJpg(80));
+
+                    $product->addMedia(Storage::path($compressedImagePath))->toMediaCollection('images');
                 }
-
-                $compressedPath = $product->uploadCompressedImage($image);
-                $product->addMedia($compressedPath)->toMediaCollection('images');
-
-                Storage::delete($compressedPath); // 刪除臨時文件
             }
         }
 
@@ -104,11 +107,11 @@ class ProductController extends Controller
 
     public function edit(Request $request, Product $product)
     {
-        $tag = $product->tags();
-        $gradeTag = $tag->firstWhere('type', '年級');
-        $semesterTag = $tag->firstWhere('type', '學期');
-        $subjectTag = $tag->firstWhere('type', '科目');
-        $categoryTag = $tag->firstWhere('type', '課程');
+        $productTags = $product->tags;
+        $gradeTag = $productTags->where('type', '年級')->first();
+        $semesterTag = $productTags->where('type', '學期')->first();
+        $subjectTag = $productTags->where('type', '科目')->first();
+        $categoryTag = $productTags->where('type', '課程')->first();
         $tags = Tag::whereNull('deleted_at')->get();
 
         if ($request->hasFile('images')) {
@@ -125,7 +128,7 @@ class ProductController extends Controller
                 }
 
                 // 上傳新的圖片
-                $product->uploadCompressedImage($image, $product);
+                $product->uploadCompressedImage($image);
             }
         }
 
@@ -203,15 +206,16 @@ class ProductController extends Controller
                         $newImageFile = $request->file("images.$index");
 
                         // 壓縮圖片
-                        $compressedImagePath = $product->uploadCompressedImage($newImageFile, $product);
+                        $compressedImage = (new \App\Services\CompressedImage)->uploadCompressedImage($newImageFile);
 
-                        // 確保壓縮文件存在
-                        if (! file_exists($compressedImagePath)) {
-                            throw new \Exception("壓縮後的文件不存在：$compressedImagePath");
-                        }
+                        // 生成壓縮圖片的路徑並存儲到文件系統
+                        Storage::put(
+                            $compressedImagePath = 'images/compressed_'.uniqid().'.jpg',
+                            $compressedImage->toJpeg(80)
+                        );
 
                         // 添加壓縮後的圖片到媒體集合
-                        $product->addMedia($compressedImagePath)
+                        $product->addMedia(Storage::path($compressedImagePath))
                             ->withCustomProperties(['order_column' => $index + 1])
                             ->toMediaCollection('images');
 

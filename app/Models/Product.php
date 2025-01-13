@@ -6,10 +6,6 @@ use App\Enums\ProductStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Facades\Storage;
-use Intervention\Image\Drivers\Gd\Driver;
-use Intervention\Image\Encoders\JpegEncoder;
-use Intervention\Image\ImageManager;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\Tags\HasTags;
@@ -56,26 +52,4 @@ class Product extends Model implements HasMedia
     protected $casts = [
         'status' => ProductStatus::class,
     ];
-
-    public function uploadCompressedImage($image)
-    {
-        $tempFileName = 'temp/compressed_'.uniqid().'.jpg';
-
-        $manager = new ImageManager(Driver::class);
-        $image = $manager->read($image->getRealPath());
-
-        $image->resize(800, 500, function ($constraint) {
-            $constraint->aspectRatio();
-            $constraint->upsize();
-        });
-
-        // 将图像编码为 JPG 格式并保存
-        $encoded = $image->encode(new JpegEncoder(quality: 50));
-
-        // 存储图像
-        Storage::put($tempFileName, $encoded);
-
-        // 返回存储路径
-        return Storage::path($tempFileName);
-    }
 }
