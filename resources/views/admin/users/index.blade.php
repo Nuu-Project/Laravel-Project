@@ -4,7 +4,7 @@
     <!-- 主要內容 -->
     <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-200">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
-            <h3 class="text-gray-700 text-3xl font-medium mb-6">用戶管理</h3>
+            <x-h.h3>用戶管理</x-h.h3>
 
             <div class="mb-8">
                 <div class="flex items-center justify-between mb-4">
