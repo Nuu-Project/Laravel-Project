@@ -78,7 +78,7 @@ class ProductController extends Controller
 
                     $compressedImage = (new \App\Services\CompressedImage)->uploadCompressedImage($image);
 
-                    Storage::put($compressedImagePath = 'images/compressed_'.uniqid().'.jpg', $compressedImage->toJpeg(80));
+                    Storage::put($compressedImagePath = 'public/images/compressed_'.uniqid().'.jpg', $compressedImage->toJpeg(80));
 
                     $product->addMedia(Storage::path($compressedImagePath))->toMediaCollection('images');
                 }
