@@ -68,11 +68,28 @@ class ProductController extends Controller
             'user_id' => auth()->id(),
         ]);
 
+<<<<<<< HEAD
         // 處理圖片上傳
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $index => $image) {
                 if ($index >= 5) {
                     break;
+=======
+            // 處理圖片上傳
+            if ($request->hasFile('images')) {
+                foreach ($request->file('images') as $index => $image) {
+                    if ($index >= 5) {
+                        break;
+                    }
+
+                    $compressedImage = $product->uploadCompressedImage($image);
+
+                    $compressedImagePath = 'images/compressed_'.uniqid().'.jpg';
+
+                    Storage::put($compressedImagePath, $compressedImage->toJpg(80));
+
+                    $product->addMedia(Storage::path($compressedImagePath))->toMediaCollection('images');
+>>>>>>> 86ba84ee7a32e8221a2109cfb12141d93e23bc46
                 }
 
                 $compressedPath = $product->uploadCompressedImage($image);
@@ -125,7 +142,7 @@ class ProductController extends Controller
                 }
 
                 // 上傳新的圖片
-                $product->uploadCompressedImage($image, $product);
+                $product->uploadCompressedImage($image);
             }
         }
 
@@ -203,7 +220,7 @@ class ProductController extends Controller
                         $newImageFile = $request->file("images.$index");
 
                         // 壓縮圖片
-                        $compressedImagePath = $product->uploadCompressedImage($newImageFile, $product);
+                        $compressedImagePath = $product->uploadCompressedImage($newImageFile);
 
                         // 確保壓縮文件存在
                         if (! file_exists($compressedImagePath)) {

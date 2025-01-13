@@ -38,7 +38,7 @@ return [
             'image' => '請上傳有效的圖片',
             'dimensions' => '圖片尺寸不可超過 3200x3200 像素',
             'max' => '圖片大小不可超過 2MB',
-            'mimes' => '只接受 SVG、PNG、JPG 或 GIF 格式的圖片',
+            'mimes' => '只接受 PNG、JPG、JPEG 或 GIF 格式的圖片',
         ],
         'subject' => [
             'required' => '請選擇科目',
