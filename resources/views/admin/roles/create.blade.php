@@ -2,12 +2,12 @@
 
     <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-200">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
-            <h3 class="text-gray-700 text-3xl font-medium mb-6">新增管理員</h3>
+            <x-h.h3>新增管理員</x-h.h3>
 
 
             <div class="mb-8">
                 <div class="flex items-center justify-between mb-4">
-                    <h2 id="users-title" class="text-xl font-semibold text-gray-900">一般用戶</h2>
+                    <x-h.h2 id="users-title">一般用戶</x-h.h2>
                     <form action="{{ route('admin.roles.create') }}" method="GET">
                         <div>
                             <input type="text" name="filter[name]" id="filter[name]"

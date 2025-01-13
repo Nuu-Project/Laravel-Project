@@ -3,7 +3,7 @@
     <!-- 主要內容 -->
     <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-200">
         <div class="container mx-auto px-6 py-8">
-            <h3 class="text-gray-700 text-3xl font-medium">新增標籤</h3>
+            <x-h.h3>新增標籤</x-h.h3>
 
             <!-- 這裡放置原有的表單內容 -->
             <form id="tagForm" class="mt-8 space-y-6" action="{{ route('admin.tags.store') }}" method="POST"

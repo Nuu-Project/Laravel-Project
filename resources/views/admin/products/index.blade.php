@@ -21,7 +21,7 @@
                 </div>
             @endif
 
-            <h3 class="text-gray-700 text-3xl font-medium mb-6">商品管理</h3>
+            <x-h.h3>商品管理</x-h.h3>
 
             <div class="bg-white shadow overflow-hidden sm:rounded-lg">
                 <div class="overflow-x-auto">
