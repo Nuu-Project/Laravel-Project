@@ -4,12 +4,12 @@
     <!-- 主要內容 -->
     <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-200">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
-            <h3 class="text-gray-700 text-3xl font-medium mb-6">用戶管理</h3>
+            <x-h.h3>用戶管理</x-h.h3>
 
 
             <div class="mb-8">
                 <div class="flex items-center justify-between mb-4">
-                    <h2 id="users-title" class="text-xl font-semibold text-gray-900">用戶</h2>
+                    <x-h.h2 id="users-title">用戶</x-h.h2>
                     <form action="{{ route('admin.users.index') }}" method="GET">
                         <div>
                             <input type="text" name="filter[name]" id="filter[name]"
