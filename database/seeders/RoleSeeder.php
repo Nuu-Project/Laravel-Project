@@ -13,8 +13,6 @@ class RoleSeeder extends Seeder
     public function run(): void
     {
 
-        Role::updateOrCreate(['name' => 'visitor']);    //未登入訪客
-        Role::updateOrCreate(['name' => 'user']);   //已登入使用者
         Role::updateOrCreate(['name' => 'admin']);  //管理員
 
     }
