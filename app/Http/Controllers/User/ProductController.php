@@ -68,7 +68,6 @@ class ProductController extends Controller
             'user_id' => auth()->id(),
         ]);
 
-
         // 處理圖片上傳
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $index => $image) {
@@ -77,13 +76,13 @@ class ProductController extends Controller
 
                 }
 
-                    $compressedImage = (new \App\Services\CompressedImage)->uploadCompressedImage($image);
+                $compressedImage = (new \App\Services\CompressedImage)->uploadCompressedImage($image);
 
-                    Storage::put($compressedImagePath = 'images/compressed_'.uniqid().'.jpg', $compressedImage->toJpeg(80));
+                Storage::put($compressedImagePath = 'images/compressed_'.uniqid().'.jpg', $compressedImage->toJpeg(80));
 
-                    $product->addMedia(Storage::path($compressedImagePath))->toMediaCollection('images');
-                }
+                $product->addMedia(Storage::path($compressedImagePath))->toMediaCollection('images');
             }
+        }
 
         // 獲取並附加新的標籤
         $tagIds = [
