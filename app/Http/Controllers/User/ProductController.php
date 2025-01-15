@@ -5,12 +5,12 @@ namespace App\Http\Controllers\User;
 use App\Enums\ProductStatus;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
+use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 use Spatie\QueryBuilder\QueryBuilder;
-use App\Models\Tag;
 
 class ProductController extends Controller
 {
@@ -32,9 +32,9 @@ class ProductController extends Controller
 
     public function create()
     {
-        $tags = Tag::whereNull('deleted_at')->get();
+        $tags = Tag::whereIn('type', ['年級', '學期', '科目', '課程'])->whereNull('deleted_at')->get();
 
-        return view('user.products.create', compact('tags'));
+        return view('user.products.create', ['tags' => $tags]);
     }
 
     public function store(Request $request)

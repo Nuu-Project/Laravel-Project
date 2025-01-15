@@ -6,11 +6,11 @@ use App\Enums\ProductStatus;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Models\Report;
+use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
-use App\Models\Tag;
 
 class ProductController extends Controller
 {
