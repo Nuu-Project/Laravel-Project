@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 use Spatie\QueryBuilder\QueryBuilder;
-use Spatie\Tags\Tag;
+use App\Models\Tag;
 
 class ProductController extends Controller
 {

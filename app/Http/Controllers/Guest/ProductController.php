@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
-use Spatie\Tags\Tag;
+use App\Models\Tag;
 
 class ProductController extends Controller
 {
