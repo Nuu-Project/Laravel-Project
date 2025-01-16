@@ -30,7 +30,7 @@
                                         <x-td.gray-900>{{ $reportable->reportable->name }}</x-td.gray-900>
                                         <x-td.gray-500>{{ json_decode($reportable->report->name, true)['zh_TW'] }}</x-td.gray-500>
                                         <x-td.gray-500>{{ $reportable->description }}</x-td.gray-500>
-                                        <x-td.gray-500>{{ $reportable->whistleblower->email }}</x-td.gray-500>
+                                        <x-td.gray-500>{{ $reportable->reportable->user->email }}</x-td.gray-500>
                                         <x-td.gray-500>{{ $reportable->updated_at->format('Y-m-d') }}</x-td.gray-500>
                                     </tr>
                                 @endforeach
