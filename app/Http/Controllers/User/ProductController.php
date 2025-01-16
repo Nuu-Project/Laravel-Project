@@ -92,14 +92,8 @@ class ProductController extends Controller
             $request->input('category'),
         ];
 
-        foreach ($tagIds as $tagId) {
-            if ($tagId) {
-                $tag = Tag::find($tagId);
-                if ($tag) {
-                    $product->attachTag($tag);
-                }
-            }
-        }
+        // 同步標籤到產品
+        $product->tags()->sync($tagIds);
 
         return redirect()->route('user.products.create')->with('success', '產品已成功創建！');
     }
@@ -244,14 +238,8 @@ class ProductController extends Controller
             $request->input('category'),
         ];
 
-        foreach ($tagIds as $tagId) {
-            if ($tagId) {
-                $tag = Tag::find($tagId);
-                if ($tag) {
-                    $product->attachTag($tag);
-                }
-            }
-        }
+        // 同步標籤到產品
+        $product->tags()->sync($tagIds);
 
         // 保存更新後的產品資料
         $product->save();
