@@ -32,7 +32,7 @@ class ProductController extends Controller
 
     public function create()
     {
-        $tags = Tag::whereIn('type', ['年級', '學期', '科目', '課程'])->whereNull('deleted_at')->get();
+        $tags = Tag::whereIn('type', ['年級', '學期', '科目', '課程'])->get();
 
         return view('user.products.create', ['tags' => $tags]);
     }
@@ -225,9 +225,6 @@ class ProductController extends Controller
                 }
             }
         }
-
-        // 處理標籤
-        $product->tags()->detach(); // 先清除所有標籤
 
         // 獲取並附加新的標籤
         $tagIds = [
