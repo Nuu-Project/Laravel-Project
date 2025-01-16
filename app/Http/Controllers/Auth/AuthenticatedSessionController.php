@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
-use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -26,16 +25,6 @@ class AuthenticatedSessionController extends Controller
     public function store(LoginRequest $request): RedirectResponse
     {
         $request->authenticate();
-
-        $user = Auth::user();
-        if ($user->time_limit && Carbon::parse($user->time_limit)->isFuture()) {
-            $formattedTimeLimit = Carbon::parse($user->time_limit)->format('Y-m-d H:i:s');
-            Auth::logout();
-
-            return redirect()->route('login')->withErrors([
-                'time_limit' => $formattedTimeLimit,
-            ]);
-        }
 
         $request->session()->regenerate();
 

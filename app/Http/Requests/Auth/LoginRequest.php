@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Auth;
 
+use Carbon\Carbon;
 use Illuminate\Auth\Events\Lockout;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
@@ -37,7 +38,7 @@ class LoginRequest extends FormRequest
      *
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function authenticate(): void
+    public function authenticate()
     {
         $this->ensureIsNotRateLimited();
 
@@ -46,6 +47,16 @@ class LoginRequest extends FormRequest
 
             throw ValidationException::withMessages([
                 'email' => trans('auth.failed'),
+            ]);
+        }
+
+        $user = Auth::user();
+        if ($user && $user->time_limit && Carbon::parse($user->time_limit)->isFuture()) {
+            Auth::logout();
+            $formattedTimeLimit = Carbon::parse($user->time_limit)->format('Y-m-d H:i:s');
+
+            throw ValidationException::withMessages([
+                'time_limit' => $formattedTimeLimit,
             ]);
         }
 
