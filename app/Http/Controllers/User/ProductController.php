@@ -5,12 +5,12 @@ namespace App\Http\Controllers\User;
 use App\Enums\ProductStatus;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
+use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 use Spatie\QueryBuilder\QueryBuilder;
-use Spatie\Tags\Tag;
 
 class ProductController extends Controller
 {
@@ -32,9 +32,9 @@ class ProductController extends Controller
 
     public function create()
     {
-        $tags = Tag::whereNull('deleted_at')->get();
+        $tags = Tag::whereIn('type', ['年級', '學期', '科目', '課程'])->whereNull('deleted_at')->get();
 
-        return view('user.products.create', compact('tags'));
+        return view('user.products.create', ['tags' => $tags]);
     }
 
     public function store(Request $request)
@@ -91,14 +91,8 @@ class ProductController extends Controller
             $request->input('category'),
         ];
 
-        foreach ($tagIds as $tagId) {
-            if ($tagId) {
-                $tag = Tag::find($tagId);
-                if ($tag) {
-                    $product->attachTag($tag);
-                }
-            }
-        }
+        // 同步標籤到產品
+        $product->tags()->sync($tagIds);
 
         return redirect()->route('user.products.create')->with('success', '產品已成功創建！');
     }
@@ -243,14 +237,8 @@ class ProductController extends Controller
             $request->input('category'),
         ];
 
-        foreach ($tagIds as $tagId) {
-            if ($tagId) {
-                $tag = Tag::find($tagId);
-                if ($tag) {
-                    $product->attachTag($tag);
-                }
-            }
-        }
+        // 同步標籤到產品
+        $product->tags()->sync($tagIds);
 
         // 保存更新後的產品資料
         $product->save();
