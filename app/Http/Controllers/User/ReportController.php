@@ -23,7 +23,7 @@ class ReportController extends Controller
                 'report_id' => $request->input('report_id'),
                 'reportable_id' => $request->input('product'), // 關聯的 Product ID
                 'reportable_type' => Product::class, // 關聯的模型類型
-                'whistleblower_id' => Auth::id(),
+                'user_id' => Auth::id(),
             ],
             [
                 'description' => $request->input('description'),
