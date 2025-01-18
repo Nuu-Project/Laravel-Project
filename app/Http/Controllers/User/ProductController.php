@@ -43,7 +43,7 @@ class ProductController extends Controller
         $rules = [
             'name' => ['required', 'string', 'max:50'],
             'price' => ['required', 'numeric', 'min:0', 'max:9999'],
-            'description' => ['required', 'string'],
+            'description' => ['required', 'string', 'max:255'],
             'grade' => ['required', Rule::exists('tags', 'id')->where('type', '年級')],
             'semester' => ['required', Rule::exists('tags', 'id')->where('type', '學期')],
             'subject' => ['required', Rule::exists('tags', 'id')->where('type', '科目')],
@@ -114,7 +114,7 @@ class ProductController extends Controller
         // 基本驗證規則
         $rules = [
             'name' => ['required', 'string', 'max:50'],
-            'description' => ['required', 'string'],
+            'description' => ['required', 'string', 'max:255'],
             'grade' => ['required', Rule::exists('tags', 'id')->where('type', '年級')],
             'semester' => ['required', Rule::exists('tags', 'id')->where('type', '學期')],
             'subject' => ['required', Rule::exists('tags', 'id')->where('type', '科目')],
