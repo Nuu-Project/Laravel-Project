@@ -1,5 +1,6 @@
 @php
     use App\Enums\ProductStatus;
+    use App\Enums\Tagtype;
 @endphp
 
 <x-template-user-layout>
@@ -75,8 +76,14 @@
                                         <h6 class="font-black text-gray-600 text-sm md:text-lg">年級 :
                                             <span class="font-semibold text-gray-900 text-md md:text-lg">
                                                 @php
-                                                    $gradeTag = $product->tags->firstWhere('type', '年級');
-                                                    $semesterTag = $product->tags->firstWhere('type', '學期');
+                                                    $gradeTag = $product->tags->firstWhere(
+                                                        'type',
+                                                        Tagtype::Grade->value,
+                                                    );
+                                                    $semesterTag = $product->tags->firstWhere(
+                                                        'type',
+                                                        Tagtype::Semester->value,
+                                                    );
                                                 @endphp
                                                 {{ $gradeTag ? $gradeTag->name : '無' }}
                                                 {{ $semesterTag ? $semesterTag->name : '學期:無' }}
@@ -85,7 +92,10 @@
                                         <h6 class="font-black text-gray-600 text-sm md:text-lg">課程 :
                                             <span class="font-semibold text-gray-900 text-md md:text-lg">
                                                 @php
-                                                    $categoryTag = $product->tags->firstWhere('type', '課程');
+                                                    $categoryTag = $product->tags->firstWhere(
+                                                        'type',
+                                                        Tagtype::Category->value,
+                                                    );
                                                 @endphp
                                                 {{ $categoryTag ? $categoryTag->name : '無' }}
                                             </span>

@@ -1,3 +1,7 @@
+@php
+    use App\Enums\Tagtype;
+@endphp
+
 <x-template-user-layout>
 
     <!-- 主要內容 -->
@@ -57,7 +61,7 @@
                             class="w-full h-10 rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
                             <option value="">選擇適用的年級...</option>
                             @foreach ($tags as $tag)
-                                @if ($tag->type === '年級')
+                                @if ($tag->type === Tagtype::Grade->value)
                                     <option value="{{ $tag->id }}"
                                         {{ old('grade') == $tag->id ? 'selected' : '' }}>
                                         {{ $tag->name }}</option>
@@ -72,7 +76,7 @@
                             class="w-full h-10 rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
                             <option value="">選擇學期...</option>
                             @foreach ($tags as $tag)
-                                @if ($tag->type === '學期')
+                                @if ($tag->type === Tagtype::Semester->value)
                                     <option value="{{ $tag->id }}"
                                         {{ old('semester') == $tag->id ? 'selected' : '' }}>
                                         {{ $tag->name }}</option>
@@ -87,7 +91,7 @@
                             class="w-full h-10 rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
                             <option value="">選擇科目...</option>
                             @foreach ($tags as $tag)
-                                @if ($tag->type === '科目')
+                                @if ($tag->type === Tagtype::Subject->value)
                                     <option value="{{ $tag->id }}"
                                         {{ old('subject') == $tag->id ? 'selected' : '' }}>
                                         {{ $tag->name }}</option>
@@ -102,7 +106,7 @@
                             class="w-full h-10 rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
                             <option value="">選擇課程類別...</option>
                             @foreach ($tags as $tag)
-                                @if ($tag->type === '課程')
+                                @if ($tag->type === Tagtype::Category->value)
                                     <option value="{{ $tag->id }}"
                                         {{ old('category') == $tag->id ? 'selected' : '' }}>
                                         {{ $tag->name }}</option>
