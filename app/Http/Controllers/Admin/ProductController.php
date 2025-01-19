@@ -6,15 +6,24 @@ use App\Enums\ProductStatus;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Builder;
+use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class ProductController extends Controller
 {
     public function index(): View
     {
-        $products = Product::query()
+        $products = QueryBuilder::for(Product::class)
+            ->allowedFilters([
+                AllowedFilter::callback('name', function (Builder $query, string $value) {
+                    $query->where('name', 'like', "%{$value}%");
+                }),
+            ])
             ->withCount('reports')
             ->with('user')
-            ->paginate(10);
+            ->paginate(10)
+            ->withQueryString();
 
         // 返回到視圖，並傳遞商品資料
         return view('admin.products.index', compact('products'));
