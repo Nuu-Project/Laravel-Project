@@ -32,7 +32,7 @@ class ProductController extends Controller
 
     public function create()
     {
-        $tags = Tag::whereIn('type', ['年級', '學期', '科目', '課程'])->whereNull('deleted_at')->get();
+        $tags = Tag::whereIn('type', ['年級', '學期', '科目', '課程'])->get();
 
         return view('user.products.create', ['tags' => $tags]);
     }
@@ -43,7 +43,7 @@ class ProductController extends Controller
         $rules = [
             'name' => ['required', 'string', 'max:50'],
             'price' => ['required', 'numeric', 'min:0', 'max:9999'],
-            'description' => ['required', 'string'],
+            'description' => ['required', 'string', 'max:255'],
             'grade' => ['required', Rule::exists('tags', 'id')->where('type', '年級')],
             'semester' => ['required', Rule::exists('tags', 'id')->where('type', '學期')],
             'subject' => ['required', Rule::exists('tags', 'id')->where('type', '科目')],
@@ -106,24 +106,6 @@ class ProductController extends Controller
         $categoryTag = $productTags->where('type', '課程')->first();
         $tags = Tag::whereNull('deleted_at')->get();
 
-        if ($request->hasFile('images')) {
-            $images = $request->file('images');
-
-            // 先獲取並按 id 升序排序已存在的圖片
-            $existingMedia = $product->getMedia('images')->sortBy('id')->values();
-
-            foreach ($images as $index => $image) {
-                // 確認是否需要替換該圖片
-                if (isset($existingMedia[$index])) {
-                    // 如果圖片已存在，則替換
-                    $existingMedia[$index]->delete();
-                }
-
-                // 上傳新的圖片
-                $product->uploadCompressedImage($image);
-            }
-        }
-
         return view('user.products.edit', compact('product', 'tags', 'gradeTag', 'semesterTag', 'categoryTag', 'subjectTag'));
     }
 
@@ -132,7 +114,7 @@ class ProductController extends Controller
         // 基本驗證規則
         $rules = [
             'name' => ['required', 'string', 'max:50'],
-            'description' => ['required', 'string'],
+            'description' => ['required', 'string', 'max:255'],
             'grade' => ['required', Rule::exists('tags', 'id')->where('type', '年級')],
             'semester' => ['required', Rule::exists('tags', 'id')->where('type', '學期')],
             'subject' => ['required', Rule::exists('tags', 'id')->where('type', '科目')],
@@ -225,9 +207,6 @@ class ProductController extends Controller
                 }
             }
         }
-
-        // 處理標籤
-        $product->tags()->detach(); // 先清除所有標籤
 
         // 獲取並附加新的標籤
         $tagIds = [
