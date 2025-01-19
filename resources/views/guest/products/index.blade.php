@@ -1,3 +1,7 @@
+@php
+    use App\Enums\Tagtype;
+@endphp
+
 <x-template-layout>
 
     <form action="{{ route('products.index') }}" method="GET">
@@ -9,7 +13,7 @@
             </x-button.search>
         </div>
         <div class="flex flex-wrap gap-2 justify-center">
-            @foreach (['科目', '課程', '年級', '學期'] as $type)
+            @foreach ([Tagtype::Subject->value, Tagtype::Category->value, Tagtype::Grade->value, Tagtype::Semester->value] as $type)
                 <select name="filter[tags][]" class="bg-gray text-primary-foreground px-4 py-2 rounded-md">
                     <option value="">選擇{{ $type }}...</option>
                     @foreach ($allTags as $tag)
@@ -64,8 +68,8 @@
                                 <h6 class="font-black text-gray-600 text-sm md:text-lg">年級 :
                                     <span class="font-semibold text-gray-900 text-md md:text-lg">
                                         @php
-                                            $gradeTag = $product->tags->firstWhere('type', '年級');
-                                            $semesterTag = $product->tags->firstWhere('type', '學期');
+                                            $gradeTag = $product->tags->firstWhere('type', Tagtype::Grade->value);
+                                            $semesterTag = $product->tags->firstWhere('type', Tagtype::Semester->value);
                                         @endphp
                                         {{ $gradeTag ? $gradeTag->name : '無' }}
                                         {{ $semesterTag ? $semesterTag->name : '學期:無' }}
@@ -74,7 +78,7 @@
                                 <h6 class="font-black text-gray-600 text-sm md:text-lg">課程 :
                                     <span class="font-semibold text-gray-900 text-md md:text-lg">
                                         @php
-                                            $categoryTag = $product->tags->firstWhere('type', '課程');
+                                            $categoryTag = $product->tags->firstWhere('type', Tagtype::Category->value);
                                         @endphp
                                         {{ $categoryTag ? $categoryTag->name : '無' }}
                                     </span>
