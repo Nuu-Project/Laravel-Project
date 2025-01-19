@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
+
 class TagController extends Controller
 {
     public function index()
@@ -15,7 +16,7 @@ class TagController extends Controller
         $tags = QueryBuilder::for(Tag::class)
             ->allowedFilters([
                 AllowedFilter::callback('name', function (Builder $query, string $value) {
-                        $query->where('name', 'like', "%{$value}%");
+                    $query->where('name', 'like', "%{$value}%");
                 }),
             ])
             ->withTrashed()
