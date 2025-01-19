@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
+use App\Models\User;
 
 class LoginRequest extends FormRequest
 {
@@ -42,21 +43,18 @@ class LoginRequest extends FormRequest
     {
         $this->ensureIsNotRateLimited();
 
+        $user = user::firstWhere('email', $this->string('email'));
+        if ($user && $user->time_limit && Carbon::parse($user->time_limit)->isFuture()) {
+            throw ValidationException::withMessages([
+                'time_limit' => Carbon::parse($user->time_limit)->format('Y-m-d H:i:s'),
+            ]);
+        }
+
         if (! Auth::attempt($this->only('email', 'password'), $this->boolean('remember'))) {
             RateLimiter::hit($this->throttleKey());
 
             throw ValidationException::withMessages([
                 'email' => trans('auth.failed'),
-            ]);
-        }
-
-        $user = Auth::user();
-        if ($user && $user->time_limit && Carbon::parse($user->time_limit)->isFuture()) {
-            Auth::logout();
-            $formattedTimeLimit = Carbon::parse($user->time_limit)->format('Y-m-d H:i:s');
-
-            throw ValidationException::withMessages([
-                'time_limit' => $formattedTimeLimit,
             ]);
         }
 
