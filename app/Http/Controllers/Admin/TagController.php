@@ -4,13 +4,25 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Tag;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
-
+use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\QueryBuilder;
 class TagController extends Controller
 {
     public function index()
     {
-        return view('admin.tags.index', ['tags' => Tag::withTrashed()->paginate(10)]);
+        $tags = QueryBuilder::for(Tag::class)
+            ->allowedFilters([
+                AllowedFilter::callback('name', function (Builder $query, string $value) {
+                        $query->where('name', 'like', "%{$value}%");
+                }),
+            ])
+            ->withTrashed()
+            ->paginate(10)
+            ->withQueryString();
+
+        return view('admin.tags.index', compact('tags'));
     }
 
     public function create()
