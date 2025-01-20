@@ -16,7 +16,7 @@ class MessageController extends Controller
     {
         $messages = QueryBuilder::for(Message::class)
             ->allowedFilters([
-                AllowedFilter::callback('name', function (Builder $query, $value) {
+                AllowedFilter::callback('name', function (Builder $query, string $value) {
                     $query->whereHas('user', function ($query) use ($value) {
                         $query->where('name', 'like', "%{$value}%");
                     });

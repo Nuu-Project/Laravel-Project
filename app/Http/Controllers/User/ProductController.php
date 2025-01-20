@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\User;
 
 use App\Enums\ProductStatus;
+use App\Enums\Tagtype;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Models\Tag;
@@ -32,7 +33,7 @@ class ProductController extends Controller
 
     public function create()
     {
-        $tags = Tag::whereIn('type', ['年級', '學期', '科目', '課程'])->get();
+        $tags = Tag::whereIn('type', [Tagtype::Grade, Tagtype::Semester, Tagtype::Subject, Tagtype::Category])->get();
 
         return view('user.products.create', ['tags' => $tags]);
     }
@@ -44,10 +45,10 @@ class ProductController extends Controller
             'name' => ['required', 'string', 'max:50'],
             'price' => ['required', 'numeric', 'min:0', 'max:9999'],
             'description' => ['required', 'string', 'max:255'],
-            'grade' => ['required', Rule::exists('tags', 'id')->where('type', '年級')],
-            'semester' => ['required', Rule::exists('tags', 'id')->where('type', '學期')],
-            'subject' => ['required', Rule::exists('tags', 'id')->where('type', '科目')],
-            'category' => ['required', Rule::exists('tags', 'id')->where('type', '課程')],
+            'grade' => ['required', Rule::exists('tags', 'id')->where('type', Tagtype::Grade)],
+            'semester' => ['required', Rule::exists('tags', 'id')->where('type', Tagtype::Semester)],
+            'subject' => ['required', Rule::exists('tags', 'id')->where('type', Tagtype::Subject)],
+            'category' => ['required', Rule::exists('tags', 'id')->where('type', Tagtype::Category)],
             'images' => ['required', 'array', 'min:1', 'max:5'],
             'images.*' => [
                 'required',
@@ -100,10 +101,10 @@ class ProductController extends Controller
     public function edit(Request $request, Product $product)
     {
         $productTags = $product->tags;
-        $gradeTag = $productTags->where('type', '年級')->first();
-        $semesterTag = $productTags->where('type', '學期')->first();
-        $subjectTag = $productTags->where('type', '科目')->first();
-        $categoryTag = $productTags->where('type', '課程')->first();
+        $gradeTag = $productTags->where('type', Tagtype::Grade)->first();
+        $semesterTag = $productTags->where('type', Tagtype::Semester)->first();
+        $subjectTag = $productTags->where('type', Tagtype::Subject)->first();
+        $categoryTag = $productTags->where('type', Tagtype::Category)->first();
         $tags = Tag::whereNull('deleted_at')->get();
 
         return view('user.products.edit', compact('product', 'tags', 'gradeTag', 'semesterTag', 'categoryTag', 'subjectTag'));
@@ -115,10 +116,10 @@ class ProductController extends Controller
         $rules = [
             'name' => ['required', 'string', 'max:50'],
             'description' => ['required', 'string', 'max:255'],
-            'grade' => ['required', Rule::exists('tags', 'id')->where('type', '年級')],
-            'semester' => ['required', Rule::exists('tags', 'id')->where('type', '學期')],
-            'subject' => ['required', Rule::exists('tags', 'id')->where('type', '科目')],
-            'category' => ['required', Rule::exists('tags', 'id')->where('type', '課程')],
+            'grade' => ['required', Rule::exists('tags', 'id')->where('type', Tagtype::Grade)],
+            'semester' => ['required', Rule::exists('tags', 'id')->where('type', Tagtype::Semester)],
+            'subject' => ['required', Rule::exists('tags', 'id')->where('type', Tagtype::Subject)],
+            'category' => ['required', Rule::exists('tags', 'id')->where('type', Tagtype::Category)],
             'images' => ['nullable', 'array', 'min:1', 'max:5'],
             'images.*' => [
                 'nullable',

@@ -16,7 +16,7 @@ class UserController extends Controller
     {
         $users = QueryBuilder::for(User::class)
             ->allowedFilters([
-                AllowedFilter::callback('name', function (Builder $query, $value) {
+                AllowedFilter::callback('name', function (Builder $query, string $value) {
                     $query->where(function ($query) use ($value) {
                         $query->where('name', 'like', "%{$value}%")
                             ->orWhere('email', 'like', "%{$value}%");
