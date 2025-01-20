@@ -1,5 +1,6 @@
 @php
     use App\Enums\ProductStatus;
+    use App\Enums\Tagtype;
 @endphp
 
 <x-template-user-layout>
@@ -36,11 +37,6 @@
 
             <div class="flex flex-col w-full min-h-screen">
                 <main class="flex min-h-[calc(100vh_-_theme(spacing.16))] flex-1 flex-col gap-4 p-4 md:gap-8 md:p-10">
-                    {{-- @if ($message)
-                        <div class="alert alert-info text-lg font-semibold text-center text-blue-500 p-4">
-                            {{ $message }}
-                        </div>
-                    @endif --}}
                     <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
                         @foreach ($userProducts as $product)
                             <div class="rounded-lg border bg-white text-card-foreground shadow-sm p-6" data-v0-t="card">
@@ -80,8 +76,14 @@
                                         <h6 class="font-black text-gray-600 text-sm md:text-lg">年級 :
                                             <span class="font-semibold text-gray-900 text-md md:text-lg">
                                                 @php
-                                                    $gradeTag = $product->tags->firstWhere('type', '年級');
-                                                    $semesterTag = $product->tags->firstWhere('type', '學期');
+                                                    $gradeTag = $product->tags->firstWhere(
+                                                        'type',
+                                                        Tagtype::Grade->value,
+                                                    );
+                                                    $semesterTag = $product->tags->firstWhere(
+                                                        'type',
+                                                        Tagtype::Semester->value,
+                                                    );
                                                 @endphp
                                                 {{ $gradeTag ? $gradeTag->name : '無' }}
                                                 {{ $semesterTag ? $semesterTag->name : '學期:無' }}
@@ -90,7 +92,10 @@
                                         <h6 class="font-black text-gray-600 text-sm md:text-lg">課程 :
                                             <span class="font-semibold text-gray-900 text-md md:text-lg">
                                                 @php
-                                                    $categoryTag = $product->tags->firstWhere('type', '課程');
+                                                    $categoryTag = $product->tags->firstWhere(
+                                                        'type',
+                                                        Tagtype::Category->value,
+                                                    );
                                                 @endphp
                                                 {{ $categoryTag ? $categoryTag->name : '無' }}
                                             </span>
@@ -98,8 +103,7 @@
                                     </div>
                                 </div>
                                 <div class="flex justify-center space-x-4 mt-6">
-                                    <form action="{{ route('user.products.inactive', $product->id) }}"
-                                        method="POST">
+                                    <form action="{{ route('user.products.inactive', $product->id) }}" method="POST">
                                         @csrf
                                         @method('PUT')
                                         <input type="hidden" name="product_id" value="{{ $product->id }}">
