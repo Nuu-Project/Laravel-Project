@@ -60,7 +60,7 @@ class ProductController extends Controller
         ];
 
         // 驗證
-        $validated = $request->validate($rules);
+        $validated = $request->validate($rules, trans('product'));
 
         $product = Product::create([
             'name' => $validated['name'],
@@ -154,7 +154,7 @@ class ProductController extends Controller
         }
 
         // 驗證
-        $request->validate($rules);
+        $request->validate($rules, trans('product'));
 
         // 更新產品資料
         $product->update($request->only(['name', 'description']));
