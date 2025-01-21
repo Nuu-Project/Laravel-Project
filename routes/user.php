@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\User\MessageController;
+use App\Http\Controllers\User\ProductMessageController;
 use App\Http\Controllers\User\ProductController;
 use App\Http\Controllers\User\ProfileController;
 use App\Http\Controllers\User\ReportController;
@@ -15,7 +15,7 @@ Route::prefix('user')->name('user.')->middleware(['auth', 'verified'])->group(fu
         ->name('products.inactive');
 
     // 留言 建立,編輯頁,更新留言,刪除
-    Route::resource('products.messages', MessageController::class)
+    Route::resource('products.messages', ProductMessageController::class)
         ->only(['store', 'edit', 'update', 'destroy']);
 
     // 商品檢舉

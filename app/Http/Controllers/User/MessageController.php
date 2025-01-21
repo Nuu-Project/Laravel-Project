@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
 
-class MessageController extends Controller
+class ProductMessageController extends Controller
 {
     use AuthorizesRequests;
 
