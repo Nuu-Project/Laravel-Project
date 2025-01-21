@@ -1,7 +1,7 @@
 <?php
 
-use App\Http\Controllers\User\ProductMessageController;
 use App\Http\Controllers\User\ProductController;
+use App\Http\Controllers\User\ProductMessageController;
 use App\Http\Controllers\User\ProfileController;
 use App\Http\Controllers\User\ReportController;
 use Illuminate\Support\Facades\Route;
