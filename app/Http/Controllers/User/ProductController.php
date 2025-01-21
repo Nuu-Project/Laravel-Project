@@ -105,7 +105,7 @@ class ProductController extends Controller
         $semesterTag = $productTags->where('type', Tagtype::Semester)->first();
         $subjectTag = $productTags->where('type', Tagtype::Subject)->first();
         $categoryTag = $productTags->where('type', Tagtype::Category)->first();
-        $tags = Tag::whereNull('deleted_at')->get();
+        $tags = Tag::->get();
 
         return view('user.products.edit', compact('product', 'tags', 'gradeTag', 'semesterTag', 'categoryTag', 'subjectTag'));
     }
