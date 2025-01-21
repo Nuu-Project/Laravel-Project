@@ -100,6 +100,10 @@ class ProductController extends Controller
 
     public function edit(Request $request, Product $product)
     {
+        if ($product->user_id !== auth()->id()) {
+            return redirect()->route('user.products.index')->with('error', '您無權編輯此商品。');
+        }
+
         $productTags = $product->tags;
         $gradeTag = $productTags->where('type', Tagtype::Grade)->first();
         $semesterTag = $productTags->where('type', Tagtype::Semester)->first();
@@ -112,6 +116,10 @@ class ProductController extends Controller
 
     public function update(Request $request, Product $product)
     {
+        if ($product->user_id !== auth()->id()) {
+            return redirect()->route('user.products.index')->with('error', '您無權編輯此商品。');
+        }
+
         // 基本驗證規則
         $rules = [
             'name' => ['required', 'string', 'max:50'],

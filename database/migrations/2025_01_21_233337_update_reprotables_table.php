@@ -15,5 +15,4 @@ return new class extends Migration
             $table->string('description', 50)->change();
         });
     }
-
 };
