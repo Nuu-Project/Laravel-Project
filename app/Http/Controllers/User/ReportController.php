@@ -4,16 +4,21 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Models\Product;
+use App\Models\Report;
 use App\Models\Reportable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 
 class ReportController extends Controller
 {
-    public function store(Request $request)
+    public function store(Request $request, Product $product)
     {
         $request->validate([
-            'report_id' => 'required|exists:reports,id',
+            'report_id' => ['required', Rule::uniqid(Reportable::class)
+                ->where('report_id', $product->id)
+                ->where('user_id', auth()->id()),
+            ],
             'description' => 'required|string|max:255',
             'product' => 'required|exists:products,id',
         ]);
