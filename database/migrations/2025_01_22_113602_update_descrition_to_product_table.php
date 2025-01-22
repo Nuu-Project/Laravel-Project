@@ -15,4 +15,11 @@ return new class extends Migration
             $table->string('description', 50)->change();
         });
     }
+
+    public function down(): void
+    {
+        Schema::table('reportables', function (Blueprint $table) {
+            $table->string('description', 255)->change();
+        });
+    }
 };
