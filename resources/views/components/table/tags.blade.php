@@ -3,11 +3,11 @@
 <table class="min-w-full divide-y divide-gray-200">
     <thead class="bg-gray-50">
         <tr>
-            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">標籤名稱</th>
-            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">上傳時間</th>
-            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">最後修改時間</th>
-            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">操作</th>
-            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">狀態</th>
+            <x-th.name>標籤名稱</x-th.name>
+            <x-th.name>上傳時間</x-th.name>
+            <x-th.name>最後修改時間</x-th.name>
+            <x-th.name>操作</x-th.name>
+            <x-th.name>狀態</x-th.name>
         </tr>
     </thead>
     <tbody class="bg-white divide-y divide-gray-200">
@@ -29,14 +29,16 @@
                         </x-button.blue-short>
                     </a>
                     @if (!is_null($tag->deleted_at))
-                        <form action="{{ route('admin.tags.restore', $tag->id) }}" method="POST" style="display:inline;">
+                        <form action="{{ route('admin.tags.restore', $tag->id) }}" method="POST"
+                            style="display:inline;">
                             @csrf
                             <x-button.blue-short>
                                 啟用
                             </x-button.blue-short>
                         </form>
                     @else
-                        <form action="{{ route('admin.tags.destroy', $tag->id) }}" method="POST" style="display:inline;">
+                        <form action="{{ route('admin.tags.destroy', $tag->id) }}" method="POST"
+                            style="display:inline;">
                             @csrf
                             @method('DELETE')
                             <x-button.red-short>
