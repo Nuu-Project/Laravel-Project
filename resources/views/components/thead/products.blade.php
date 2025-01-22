@@ -1,5 +1,5 @@
 <div>
-    <thead class="bg-gray-50">
+    <x-thead.gray-50>
         <tr>
             <x-th.name>商品編號</x-th.name>
             <x-th.name>商品名稱</x-th.name>
@@ -10,5 +10,5 @@
             <x-th.name>操作</x-th.name>
             <x-th.name>狀態</x-th.name>
         </tr>
-    </thead>
+    </x-thead.gray-50>
 </div>

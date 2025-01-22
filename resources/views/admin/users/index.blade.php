@@ -24,7 +24,7 @@
                 <div id="search-results" class="bg-white shadow overflow-hidden sm:rounded-lg" style="display: none;">
                     <div class="overflow-x-auto">
                         <table class="min-w-full divide-y divide-gray-200">
-                            <x-table.user />
+                            <x-thead.user />
                             <tbody class="bg-white divide-y divide-gray-200">
                                 <!-- Search results will be dynamically inserted here -->
                             </tbody>

@@ -1,7 +1,7 @@
 @props(['tags'])
 
 <table class="min-w-full divide-y divide-gray-200">
-    <thead class="bg-gray-50">
+    <x-thead.gray-50>
         <tr>
             <x-th.name>標籤名稱</x-th.name>
             <x-th.name>上傳時間</x-th.name>
@@ -9,7 +9,7 @@
             <x-th.name>操作</x-th.name>
             <x-th.name>狀態</x-th.name>
         </tr>
-    </thead>
+    </x-thead.gray-50>
     <tbody class="bg-white divide-y divide-gray-200">
         @foreach ($tags as $tag)
             <tr>

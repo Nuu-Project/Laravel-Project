@@ -1,7 +1,7 @@
 @props(['messages'])
 
 <table class="min-w-full divide-y divide-gray-200">
-    <thead class="bg-gray-50">
+    <x-thead.gray-50>
         <tr>
             <x-th.name>用戶名稱</x-th.name>
             <x-th.name>商品</x-th.name>
@@ -9,7 +9,7 @@
             <x-th.name>留言日期</x-th.name>
             <x-th.name>刪除</x-th.name>
         </tr>
-    </thead>
+    </x-thead.gray-50>
     <tbody class="bg-white divide-y divide-gray-200">
         @foreach ($messages as $message)
             <tr>
