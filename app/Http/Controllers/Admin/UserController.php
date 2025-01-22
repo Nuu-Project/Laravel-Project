@@ -31,7 +31,7 @@ class UserController extends Controller
 
     public function suspend(Request $request, User $user)
     {
-        $validated = $request->validate([
+        $request->validate([
             'duration' => ['required', 'integer', 'min:0'],
             'reason' => ['nullable', 'string', 'max:255'],
         ]);
