@@ -4,17 +4,18 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Models\Message;
+use App\Models\Product;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
 
-class MessageController extends Controller
+class ProductMessageController extends Controller
 {
     use AuthorizesRequests;
 
-    public function store(Request $request, $productId): RedirectResponse
+    public function store(Request $request, Product $product): RedirectResponse
     {
         $validated = $request->validate([
             'message' => ['required', 'string', 'max:255'],
@@ -22,23 +23,23 @@ class MessageController extends Controller
 
         $request->user()->messages()->create([
             'message' => $validated['message'],
-            'product_id' => $productId,
+            'product_id' => $product,
         ]);
 
-        return redirect()->route('products.show', ['product' => $productId]);
+        return redirect()->route('products.show', ['product' => $product]);
     }
 
-    public function edit($productId, Message $message): View
+    public function edit(Product $product, Message $message): View
     {
         Gate::authorize('update', $message);
 
         return view('messages.edit', [
             'message' => $message,
-            'productId' => $productId,
+            'productId' => $product,
         ]);
     }
 
-    public function update(Request $request, $productId, Message $message): RedirectResponse
+    public function update(Request $request, Product $product, Message $message): RedirectResponse
     {
         Gate::authorize('update', $message);
         $validated = $request->validate([
@@ -46,15 +47,15 @@ class MessageController extends Controller
         ]);
         $message->update($validated);
 
-        return redirect()->route('products.show', ['product' => $productId]);
+        return redirect()->route('products.show', ['product' => $product]);
     }
 
-    public function destroy($productId, Message $message)
+    public function destroy(Product $product, Message $message)
     {
         $this->authorize('delete', $message);
         $message->delete();
 
-        return redirect()->route('products.show', ['product' => $productId])
+        return redirect()->route('products.show', ['product' => $product])
             ->with('success', 'Review deleted successfully.');
     }
 }

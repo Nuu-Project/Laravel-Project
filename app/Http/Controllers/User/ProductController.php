@@ -44,7 +44,7 @@ class ProductController extends Controller
         $rules = [
             'name' => ['required', 'string', 'max:50'],
             'price' => ['required', 'numeric', 'min:0', 'max:9999'],
-            'description' => ['required', 'string', 'max:255'],
+            'description' => ['required', 'string', 'max:50'],
             'grade' => ['required', Rule::exists('tags', 'id')->where('type', Tagtype::Grade)],
             'semester' => ['required', Rule::exists('tags', 'id')->where('type', Tagtype::Semester)],
             'subject' => ['required', Rule::exists('tags', 'id')->where('type', Tagtype::Subject)],
@@ -100,6 +100,10 @@ class ProductController extends Controller
 
     public function edit(Request $request, Product $product)
     {
+        if ($product->user_id !== auth()->id()) {
+            return redirect()->route('user.products.index')->with('error', '您無權編輯此商品。');
+        }
+
         $productTags = $product->tags;
         $gradeTag = $productTags->where('type', Tagtype::Grade)->first();
         $semesterTag = $productTags->where('type', Tagtype::Semester)->first();
@@ -112,10 +116,14 @@ class ProductController extends Controller
 
     public function update(Request $request, Product $product)
     {
+        if ($product->user_id !== auth()->id()) {
+            return redirect()->route('user.products.index')->with('error', '您無權編輯此商品。');
+        }
+
         // 基本驗證規則
         $rules = [
             'name' => ['required', 'string', 'max:50'],
-            'description' => ['required', 'string', 'max:255'],
+            'description' => ['required', 'string', 'max:50'],
             'grade' => ['required', Rule::exists('tags', 'id')->where('type', Tagtype::Grade)],
             'semester' => ['required', Rule::exists('tags', 'id')->where('type', Tagtype::Semester)],
             'subject' => ['required', Rule::exists('tags', 'id')->where('type', Tagtype::Subject)],
@@ -251,5 +259,26 @@ class ProductController extends Controller
         $message = "商品{$newStatus->name()}！";
 
         return redirect()->route('user.products.index')->with('success', $message);
+    }
+
+    public function ProcessImage(Request $request)
+    {
+        $image = $request->file('image');
+
+        $originalFilePath = storage::disk('temp')->putFile('', $image);
+
+        $compressedImage = (new \App\Services\CompressedImage)->uploadCompressedImage($image);
+
+        Storage::put($compressedImagePath = 'compressed_'.uniqid().'.jpg', $compressedImage->toJpeg(80));
+
+        Storage::disk('temp')->delete($originalFilePath);
+
+        encrypt($compressedImagePath);
+
+        return response()->json([
+            'success' => true,
+            'message' => '圖片上傳成功',
+            'path' => $compressedImagePath,
+        ]);
     }
 }
