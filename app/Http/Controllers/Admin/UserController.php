@@ -31,6 +31,10 @@ class UserController extends Controller
 
     public function suspend(Request $request, User $user)
     {
+        $request->validate([
+            'duration' => ['required', 'integer', 'min:0'],
+            'reason' => ['nullable', 'string', 'max:255'],
+        ]);
 
         $user->time_limit = now()->addSeconds($request->integer('duration'));
         $user->save();
