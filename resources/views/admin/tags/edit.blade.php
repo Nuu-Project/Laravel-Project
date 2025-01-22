@@ -1,7 +1,7 @@
 <x-template-admin-layout>
 
     <!-- 主要內容 -->
-    <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-200">
+    <x-main.flex-container>
         <div class="container mx-auto px-6 py-8">
             <x-h.h3>編輯標籤</x-h.h3>
 
@@ -49,5 +49,5 @@
                 </x-button.create-edit>
             </form>
         </div>
-    </main>
+    </x-main.flex-container>
 </x-template-admin-layout>

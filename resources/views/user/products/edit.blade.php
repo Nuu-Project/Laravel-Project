@@ -5,7 +5,7 @@
 <x-template-user-layout>
 
     <!-- 主要內容 -->
-    <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-200">
+    <x-main.flex-container>
         <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
             <div class="grid gap-6 md:gap-8">
                 <div class="grid gap-2">
@@ -406,7 +406,7 @@
                 </form>
             </div>
         </div>
-    </main>
+    </x-main.flex-container>
     </div>
     </div>
 

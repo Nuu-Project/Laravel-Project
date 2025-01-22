@@ -2,7 +2,7 @@
     <script src="{{ asset('js/admin/message/message.js') }}"></script>
 
     <!-- 主要內容 -->
-    <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-200">
+    <x-main.flex-container>
         <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
             <x-h.h3>留言管理</x-h.h3>
 
@@ -35,5 +35,5 @@
                 </div>
             </div>
         </div>
-    </main>
+    </x-main.flex-container>
 </x-template-admin-layout>

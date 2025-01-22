@@ -1,7 +1,7 @@
 <x-template-admin-layout>
 
     <!-- 主要內容 -->
-    <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-200">
+    <x-main.flex-container>
         <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
             <x-h.h3>檢舉詳情</x-h.h3>
 
@@ -45,5 +45,5 @@
                 </div>
             </div>
         </div>
-    </main>
+    </x-main.flex-container>
 </x-template-admin-layout>
