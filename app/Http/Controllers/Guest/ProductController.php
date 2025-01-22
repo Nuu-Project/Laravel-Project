@@ -34,7 +34,7 @@ class ProductController extends Controller
             ->paginate(6)
             ->withQueryString();
 
-        $allTags = Tag::->get();
+        $allTags = Tag::get();
 
         return view('guest.products.index', compact('products', 'allTags'));
     }
