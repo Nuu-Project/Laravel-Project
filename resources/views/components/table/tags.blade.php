@@ -13,32 +13,30 @@
     <tbody class="bg-white divide-y divide-gray-200">
         @foreach ($tags as $tag)
             <tr>
-                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                    <div class="text-sm leading-5 font-medium text-gray-900">{{ $tag->name }}</div>
-                </td>
-                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                    <div class="text-sm leading-5 text-gray-900">{{ $tag->created_at }}</div>
-                </td>
-                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                    <div class="text-sm leading-5 text-gray-900">{{ $tag->updated_at }}</div>
-                </td>
-                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 font-medium">
+                <x-td.gray-900>
+                    <x-div.gray-900>{{ $tag->name }}</x-div.gray-900>
+                </x-td.gray-900>
+                <x-td.gray-900>
+                    <x-div.gray-900>{{ $tag->created_at }}</x-div.gray-900>
+                </x-td.gray-900>
+                <x-td.gray-900>
+                    <x-div.gray-900>{{ $tag->updated_at }}</x-div.gray-900>
+                </x-td.gray-900>
+                <x-td.gray-900>
                     <a href="{{ route('admin.tags.edit', $tag->id) }}">
                         <x-button.blue-short>
                             編輯
                         </x-button.blue-short>
                     </a>
                     @if (!is_null($tag->deleted_at))
-                        <form action="{{ route('admin.tags.restore', $tag->id) }}" method="POST"
-                            style="display:inline;">
+                        <form action="{{ route('admin.tags.restore', $tag->id) }}" method="POST" style="display:inline;">
                             @csrf
                             <x-button.blue-short>
                                 啟用
                             </x-button.blue-short>
                         </form>
                     @else
-                        <form action="{{ route('admin.tags.destroy', $tag->id) }}" method="POST"
-                            style="display:inline;">
+                        <form action="{{ route('admin.tags.destroy', $tag->id) }}" method="POST" style="display:inline;">
                             @csrf
                             @method('DELETE')
                             <x-button.red-short>
@@ -46,10 +44,10 @@
                             </x-button.red-short>
                         </form>
                     @endif
-                </td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                </x-td.gray-900>
+                <x-td.gray-500>
                     {{ is_null($tag->deleted_at) ? '啟用中' : '已停用' }}
-                </td>
+                </x-td.gray-500>
             </tr>
         @endforeach
     </tbody>
