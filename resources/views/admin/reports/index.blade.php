@@ -39,9 +39,9 @@
                     </div>
 
                     <!-- 分頁導航 -->
-                    <div class="px-6 py-4 border-t border-gray-200">
+                    <x-div.gray-200>
                         {{ $reportables->links() }}
-                    </div>
+                    </x-div.gray-200>
                 </x-div.bg-white>
             </div>
         </x-div.container>

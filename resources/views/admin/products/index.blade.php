@@ -79,9 +79,9 @@
                             @endforeach
                         </tbody>
                     </table>
-                    <div class="px-6 py-4 border-t border-gray-200">
+                    <x-div.gray-200>
                         {{ $products->links() }}
-                    </div>
+                    </x-div.gray-200>
                 </div>
             </x-div.bg-white>
         </x-div.container>

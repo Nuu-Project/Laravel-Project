@@ -13,9 +13,9 @@
                     <x-table.tags :tags="$tags">
                     </x-table.tags>
 
-                    <div class="px-6 py-4 border-t border-gray-200">
+                    <x-div.gray-200>
                         {{ $tags->links() }}
-                    </div>
+                    </x-div.gray-200>
                 </div>
             </div>
         </div>
