@@ -6,8 +6,8 @@
 
     <form action="{{ route('products.index') }}" method="GET">
         <div class="flex items-center justify-center gap-2 mb-4">
-            <input type="text" name="filter[name]" placeholder="搜尋產品名稱..." value="{{ request('filter.name') ?? '' }}"
-                class="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <x-input.search type="text" name="filter[name]" placeholder="搜尋商品名稱..." value="{{ request('filter.name') }}">
+            </x-input.search>
             <x-button.search>
                 搜尋
             </x-button.search>
