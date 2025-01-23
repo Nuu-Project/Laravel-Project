@@ -1,8 +1,8 @@
 <x-template-admin-layout>
     <script src="{{ asset('js/roles/index.js') }}"></script>
 
-    <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-200">
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <x-main.flex-container>
+        <x-div.container>
             <x-h.h3>角色管理</x-h.h3>
 
             <!-- Admin 表格 -->
@@ -26,9 +26,9 @@
                         </div>
                     </div>
 
-                    <table class="min-w-full divide-y divide-gray-200">
+                    <x-table.gray-200>
                         <x-thead.roles />
-                        <tbody class="bg-white divide-y divide-gray-200">
+                        <x-tbody.gray-200>
                             @foreach ($users as $user)
                                 @if ($user->hasRole('admin'))
                                     <tr>
@@ -46,12 +46,12 @@
                                     </tr>
                                 @endif
                             @endforeach
-                        </tbody>
-                    </table>
+                        </x-tbody.gray-200>
+                    </x-table.gray-200>
                 </form>
             </div>
-        </div>
-    </main>
+        </x-div.container>
+    </x-main.flex-container>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {

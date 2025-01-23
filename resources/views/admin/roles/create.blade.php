@@ -1,32 +1,32 @@
 <x-template-admin-layout>
 
-    <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-200">
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <x-main.flex-container>
+        <x-div.container>
             <x-h.h3>新增管理員</x-h.h3>
 
 
             <div class="mb-8">
-                <div class="flex items-center justify-between mb-4">
+                <x-div.flex-container>
                     <x-h.h2 id="users-title">一般用戶</x-h.h2>
                     <form action="{{ route('admin.roles.create') }}" method="GET">
                         <div>
-                            <input type="text" name="filter[name]" id="filter[name]"
-                                class="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                placeholder="請輸入用戶名稱或email..." value="{{ request('filter.name') ?? '' }}">
+                            <x-input.search type="text" name="filter[name]" placeholder="搜尋用戶名稱或email..."
+                                value="{{ request('filter.name') }}">
+                            </x-input.search>
                             <x-button.search>
                                 搜尋
                             </x-button.search>
                         </div>
                     </form>
-                </div>
+                </x-div.flex-container>
 
                 <div class="bg-white rounded-lg shadow-md p-6">
                     <!-- 表單開始 -->
                     <form action="{{ route('admin.roles.store') }}" method="POST">
                         @csrf <!-- CSRF 保護 -->
-                        <table class="min-w-full divide-y divide-gray-200">
+                        <x-table.gray-200>
                             <x-thead.roles />
-                            <tbody class="bg-white divide-y divide-gray-200">
+                            <x-tbody.gray-200>
                                 @foreach ($users as $user)
                                     @if (!$user->hasRole('admin') && !$user->hasRole('user'))
                                         <tr>
@@ -44,8 +44,8 @@
                                         </tr>
                                     @endif
                                 @endforeach
-                            </tbody>
-                        </table>
+                            </x-tbody.gray-200>
+                        </x-table.gray-200>
 
                         <!-- 分頁 -->
                         <div>
@@ -70,6 +70,6 @@
                         window.location.href = '{{ route('admin.roles.index') }}';
                     });
                 </script>
-            </div>
-    </main>
+        </x-div.container>
+    </x-main.flex-container>
 </x-template-admin-layout>
