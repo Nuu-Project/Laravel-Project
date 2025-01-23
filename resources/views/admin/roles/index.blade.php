@@ -26,7 +26,7 @@
                         </div>
                     </div>
 
-                    <table class="min-w-full divide-y divide-gray-200">
+                    <x-table.gray-200>
                         <x-thead.roles />
                         <tbody class="bg-white divide-y divide-gray-200">
                             @foreach ($users as $user)
@@ -47,7 +47,7 @@
                                 @endif
                             @endforeach
                         </tbody>
-                    </table>
+                    </x-table.gray-200>
                 </form>
             </div>
         </x-div.container>

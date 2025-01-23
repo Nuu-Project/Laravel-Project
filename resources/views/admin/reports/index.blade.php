@@ -22,7 +22,7 @@
 
                 <x-div.bg-white>>
                     <div class="overflow-x-auto">
-                        <table class="min-w-full divide-y divide-gray-200">
+                        <x-table.gray-200>
                             <x-thead.report />
                             <tbody class="bg-white divide-y divide-gray-200">
                                 @foreach ($reportables as $reportable)
@@ -35,7 +35,7 @@
                                     </tr>
                                 @endforeach
                             </tbody>
-                        </table>
+                        </x-table.gray-200>
                     </div>
 
                     <!-- 分頁導航 -->

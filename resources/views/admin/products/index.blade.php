@@ -41,7 +41,7 @@
 
             <x-div.bg-white>
                 <div class="overflow-x-auto">
-                    <table class="min-w-full divide-y divide-gray-200">
+                    <x-table.gray-200>
                         <x-thead.products />
                         <tbody class="bg-white divide-y divide-gray-200">
                             @foreach ($products as $product)
@@ -78,7 +78,7 @@
                                 </tr>
                             @endforeach
                         </tbody>
-                    </table>
+                    </x-table.gray-200>
                     <x-div.gray-200>
                         {{ $products->links() }}
                     </x-div.gray-200>

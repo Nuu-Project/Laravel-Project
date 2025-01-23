@@ -1,6 +1,6 @@
 @props(['tags'])
 
-<table class="min-w-full divide-y divide-gray-200">
+<x-table.gray-200>
     <x-thead.gray-50>
         <tr>
             <x-th.name>標籤名稱</x-th.name>
@@ -51,4 +51,4 @@
             </tr>
         @endforeach
     </tbody>
-</table>
+</x-table.gray-200>

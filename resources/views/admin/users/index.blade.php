@@ -23,12 +23,12 @@
 
                 <x-div.bg-white id="search-results" style="display: none;">
                     <div class="overflow-x-auto">
-                        <table class="min-w-full divide-y divide-gray-200">
+                        <x-table.gray-200>
                             <x-thead.user />
                             <tbody class="bg-white divide-y divide-gray-200">
                                 <!-- Search results will be dynamically inserted here -->
                             </tbody>
-                        </table>
+                        </x-table.gray-200>
                     </div>
                 </x-div.bg-white>
             </div>
@@ -36,7 +36,7 @@
             <!-- All users 部分 -->
             <div class="bg-white rounded-lg shadow">
                 <div class="overflow-x-auto">
-                    <table class="min-w-full divide-y divide-gray-200">
+                    <x-table.gray-200>
                         <x-thead.user />
                         <tbody class="bg-white divide-y divide-gray-200">
                             @foreach ($users as $user)
@@ -80,7 +80,7 @@
                                 </tr>
                             @endforeach
                         </tbody>
-                    </table>
+                    </x-table.gray-200>
 
                     <x-div.gray-200>
                         {{ $users->links() }}
