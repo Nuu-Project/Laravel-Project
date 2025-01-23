@@ -5,14 +5,14 @@
 <x-template-user-layout>
 
     <!-- 主要內容 -->
-    <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-200">
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <x-main.flex-container>
+        <x-div.container>
             <div class="grid gap-6 md:gap-8">
-                <div class="grid gap-2">
+                <x-div.grid>
                     <h1 class="text-2xl sm:text-3xl font-bold">修改刊登商品</h1>
                     <p class="text-sm sm:text-base text-muted-foreground">請依照下順序進行填寫，照片上傳張數最多五張。</p>
                     <p class="text-sm sm:text-base text-muted-foreground">圖片最左邊將會是商品首圖。</p>
-                </div>
+                </x-div.grid>
 
                 <!-- 驗證錯誤顯示 -->
                 @if ($errors->any())
@@ -33,7 +33,7 @@
                     @method('PUT')
                     <input type="hidden" name="imageOrder" id="imageOrder">
                     <input type="hidden" name="deleted_image_ids" id="deletedImageIds" value="[]">
-                    <div class="grid gap-2">
+                    <x-div.grid>
                         <label
                             class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                             for="name">
@@ -44,8 +44,8 @@
                             id="name" name="name" placeholder="請輸入書名" value="{{ $product->name }}"
                             maxlength="50" />
                         <x-input-error :messages="$errors->get('name')" class="mt-2" />
-                    </div>
-                    <div class="grid gap-2">
+                    </x-div.grid>
+                    <x-div.grid>
                         <label
                             class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                             for="price">
@@ -56,9 +56,9 @@
                             id="price" name="price" placeholder="輸入價格" type="number"
                             value="{{ $product->price }}" readonly />
                         <x-input-error :messages="$errors->get('price')" class="mt-2" />
-                    </div>
+                    </x-div.grid>
 
-                    <div class="grid gap-2">
+                    <x-div.grid>
                         <label class="text-sm font-medium leading-none" for="grade">年級</label>
                         <select id="grade" name="grade"
                             class="w-full h-10 rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
@@ -75,9 +75,9 @@
                             @endforeach
                         </select>
                         <x-input-error :messages="$errors->get('grade')" class="mt-2" />
-                    </div>
+                    </x-div.grid>
 
-                    <div class="grid gap-2">
+                    <x-div.grid>
                         <label class="text-sm font-medium leading-none" for="semester">學期</label>
                         <select id="semester" name="semester"
                             class="w-full h-10 rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
@@ -92,9 +92,9 @@
                             @endforeach
                         </select>
                         <x-input-error :messages="$errors->get('semester')" class="mt-2" />
-                    </div>
+                    </x-div.grid>
 
-                    <div class="grid gap-2">
+                    <x-div.grid>
                         <label class="text-sm font-medium leading-none" for="subject">科目</label>
                         <select id="subject" name="subject"
                             class="w-full h-10 rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
@@ -109,9 +109,9 @@
                             @endforeach
                         </select>
                         <x-input-error :messages="$errors->get('subject')" class="mt-2" />
-                    </div>
+                    </x-div.grid>
 
-                    <div class="grid gap-2">
+                    <x-div.grid>
                         <label class="text-sm font-medium leading-none" for="category">課程類別</label>
                         <select id="category" name="category"
                             class="w-full h-10 rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
@@ -126,9 +126,9 @@
                             @endforeach
                         </select>
                         <x-input-error :messages="$errors->get('category')" class="mt-2" />
-                    </div>
+                    </x-div.grid>
 
-                    <div class="grid gap-2">
+                    <x-div.grid>
                         <label
                             class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                             for="description">
@@ -138,8 +138,8 @@
                             class="flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                             id="description" name="description" placeholder="請填寫有關該書的書況or使用情況等等~~" rows="4" maxlength = "50">{{ $product->description }}</textarea>
                         <x-input-error :messages="$errors->get('description')" class="mt-2" />
-                    </div>
-                    <div class="grid gap-2">
+                    </x-div.grid>
+                    <x-div.grid>
                         <label
                             class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                             for="image">
@@ -190,7 +190,7 @@
                             @endfor
                         </div>
                         <x-input-error :messages="$errors->get('images')" class="mt-2" />
-                    </div>
+                    </x-div.grid>
 
                     <script>
                         function previewImage(input, number) {
@@ -405,8 +405,8 @@
                     </x-button.create-edit>
                 </form>
             </div>
-        </div>
-    </main>
+        </x-div.container>
+    </x-main.flex-container>
     </div>
     </div>
 

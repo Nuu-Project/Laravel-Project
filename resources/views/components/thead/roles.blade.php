@@ -1,12 +1,9 @@
 <div>
-    <thead class="bg-gray-50">
+    <x-thead.gray-50>
         <tr>
-            <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                選擇</th>
-            <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                名稱</th>
-            <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Email</th>
+            <x-th.name>選擇</x-th.name>
+            <x-th.name>名稱</x-th.name>
+            <x-th.name>Email</x-th.name>
         </tr>
-    </thead>
+    </x-thead.gray-50>
 </div>
