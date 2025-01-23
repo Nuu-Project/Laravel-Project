@@ -3,9 +3,8 @@
 
     <!-- 主要內容 -->
     <x-main.flex-container>
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <x-div.container>
             <x-h.h3>留言管理</x-h.h3>
-
             <div class="mb-8">
                 <div class="flex items-center justify-between mb-4">
                     <x-h.h2 id="reviews-title">留言</x-h.h2>
@@ -34,6 +33,6 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </x-div.container>
     </x-main.flex-container>
 </x-template-admin-layout>

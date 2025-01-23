@@ -2,7 +2,7 @@
 
     <!-- 主要內容 -->
     <x-main.flex-container>
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <x-div.container>
             <x-h.h3>檢舉詳情</x-h.h3>
 
             <div class="mb-8">
@@ -44,6 +44,6 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </x-div.container>
     </x-main.flex-container>
 </x-template-admin-layout>

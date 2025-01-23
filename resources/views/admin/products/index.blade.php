@@ -6,7 +6,7 @@
 
     <!-- 主要內容 -->
     <x-main.flex-container>
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <x-div.container>
             {{-- 添加提示訊息顯示 --}}
             @if (session('success'))
                 <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4"
@@ -85,6 +85,6 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </x-div.container>
     </x-main.flex-container>
 </x-template-admin-layout>

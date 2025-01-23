@@ -1,7 +1,7 @@
 <x-template-admin-layout>
 
     <x-main.flex-container>
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <x-div.container>
             <x-h.h3>新增管理員</x-h.h3>
 
 
@@ -70,6 +70,6 @@
                         window.location.href = '{{ route('admin.roles.index') }}';
                     });
                 </script>
-            </div>
+        </x-div.container>
     </x-main.flex-container>
 </x-template-admin-layout>

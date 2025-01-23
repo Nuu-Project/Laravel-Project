@@ -6,7 +6,7 @@
 
     <!-- 主要內容 -->
     <x-main.flex-container>
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <x-div.container>
             <div class="grid gap-6 md:gap-8">
                 <div class="grid gap-2">
                     <h1 class="text-2xl sm:text-3xl font-bold">新增刊登商品</h1>
@@ -180,7 +180,7 @@
                     </x-button.create-edit>
                 </form>
             </div>
-        </div>
+        </x-div.container>
     </x-main.flex-container>
     </div>
     </div>
