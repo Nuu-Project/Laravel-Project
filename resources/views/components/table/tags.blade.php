@@ -1,28 +1,28 @@
 @props(['tags'])
 
-<table class="min-w-full divide-y divide-gray-200">
-    <thead class="bg-gray-50">
+<x-table.gray-200>
+    <x-thead.gray-50>
         <tr>
-            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">標籤名稱</th>
-            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">上傳時間</th>
-            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">最後修改時間</th>
-            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">操作</th>
-            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">狀態</th>
+            <x-th.name>標籤名稱</x-th.name>
+            <x-th.name>上傳時間</x-th.name>
+            <x-th.name>最後修改時間</x-th.name>
+            <x-th.name>操作</x-th.name>
+            <x-th.name>狀態</x-th.name>
         </tr>
-    </thead>
-    <tbody class="bg-white divide-y divide-gray-200">
+    </x-thead.gray-50>
+    <x-tbody.gray-200>
         @foreach ($tags as $tag)
             <tr>
-                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                    <div class="text-sm leading-5 font-medium text-gray-900">{{ $tag->name }}</div>
-                </td>
-                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                    <div class="text-sm leading-5 text-gray-900">{{ $tag->created_at }}</div>
-                </td>
-                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                    <div class="text-sm leading-5 text-gray-900">{{ $tag->updated_at }}</div>
-                </td>
-                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 font-medium">
+                <x-td.gray-900>
+                    <x-div.gray-900>{{ $tag->name }}</x-div.gray-900>
+                </x-td.gray-900>
+                <x-td.gray-900>
+                    <x-div.gray-900>{{ $tag->created_at }}</x-div.gray-900>
+                </x-td.gray-900>
+                <x-td.gray-900>
+                    <x-div.gray-900>{{ $tag->updated_at }}</x-div.gray-900>
+                </x-td.gray-900>
+                <x-td.gray-900>
                     <a href="{{ route('admin.tags.edit', $tag->id) }}">
                         <x-button.blue-short>
                             編輯
@@ -44,11 +44,11 @@
                             </x-button.red-short>
                         </form>
                     @endif
-                </td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                </x-td.gray-900>
+                <x-td.gray-500>
                     {{ is_null($tag->deleted_at) ? '啟用中' : '已停用' }}
-                </td>
+                </x-td.gray-500>
             </tr>
         @endforeach
-    </tbody>
-</table>
+    </x-tbody.gray-200>
+</x-table.gray-200>

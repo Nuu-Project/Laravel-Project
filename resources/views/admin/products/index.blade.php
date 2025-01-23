@@ -5,8 +5,8 @@
 <x-template-admin-layout>
 
     <!-- 主要內容 -->
-    <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-200">
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <x-main.flex-container>
+        <x-div.container>
             {{-- 添加提示訊息顯示 --}}
             @if (session('success'))
                 <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4"
@@ -25,31 +25,27 @@
 
             <!-- 新增搜尋區塊 -->
             <div class="mb-8">
-                <div class="flex items-center justify-between mb-4">
+                <x-div.flex-container>
                     <x-h.h2 id="products-title">商品</x-h.h2>
                     <div class="flex space-x-4">
-                        <form action="{{ route('admin.products.index') }}" method="GET" class="flex items-center space-x-2">
-                            <input type="text" 
-                                   name="filter[name]" 
-                                   placeholder="搜尋商品名稱..."
-                                   value="{{ request('filter.name') }}"
-                                   class="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-                            <input type="text" 
-                                   name="filter[user]" 
-                                   placeholder="搜尋賣家名稱..."
-                                   value="{{ request('filter.user') }}"
-                                   class="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-                            <x-button.search>搜尋</x-button.search>
+                        <form action="{{ route('admin.products.index') }}" method="GET"
+                            class="flex items-center space-x-2">
+                            <x-input.search type="text" name="filter[name]" placeholder="搜尋商品名稱..."
+                                value="{{ request('filter.name') }}">
+                            </x-input.search>
+                            <x-button.search>
+                                搜尋
+                            </x-button.search>
                         </form>
                     </div>
-                </div>
+                </x-div.flex-container>
             </div>
 
-            <div class="bg-white shadow overflow-hidden sm:rounded-lg">
+            <x-div.bg-white>
                 <div class="overflow-x-auto">
-                    <table class="min-w-full divide-y divide-gray-200">
-                        <x-table.products />
-                        <tbody class="bg-white divide-y divide-gray-200">
+                    <x-table.gray-200>
+                        <x-thead.products />
+                        <x-tbody.gray-200>
                             @foreach ($products as $product)
                                 <tr>
                                     <x-td.gray-900>{{ $product->id }}</x-td.gray-900>
@@ -83,13 +79,13 @@
                                     </x-td.operate>
                                 </tr>
                             @endforeach
-                        </tbody>
-                    </table>
-                    <div class="px-6 py-4 border-t border-gray-200">
+                        </x-tbody.gray-200>
+                    </x-table.gray-200>
+                    <x-div.gray-200>
                         {{ $products->links() }}
-                    </div>
+                    </x-div.gray-200>
                 </div>
-            </div>
-        </div>
-    </main>
+            </x-div.bg-white>
+        </x-div.container>
+    </x-main.flex-container>
 </x-template-admin-layout>

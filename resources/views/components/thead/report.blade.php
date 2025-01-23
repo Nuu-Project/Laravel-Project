@@ -1,16 +1,11 @@
 <div>
-    <thead class="bg-gray-50">
+    <x-thead.gray-50>
         <tr>
-            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                商品名稱</th>
-            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                檢舉原因</th>
-            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                自定義原因</th>
-            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                檢舉人</th>
-            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                檢舉日期</th>
+            <x-th.name>商品名稱</x-th.name>
+            <x-th.name>檢舉原因</x-th.name>
+            <x-th.name>自定義原因</x-th.name>
+            <x-th.name>檢舉人</x-th.name>
+            <x-th.name>檢舉日期</x-th.name>
         </tr>
-    </thead>
+    </x-thead.gray-50>
 </div>
