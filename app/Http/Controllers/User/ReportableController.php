@@ -8,20 +8,19 @@ use App\Models\Reportable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class ReportController extends Controller
+class ReportableController extends Controller
 {
-    public function store(Request $request)
+    public function store(Request $request, Product $product)
     {
         $request->validate([
             'report_id' => 'required|exists:reports,id',
             'description' => 'required|string|max:255',
-            'product' => 'required|exists:products,id',
         ]);
 
-        $reportable = Reportable::updateOrCreate(
+        $reportable = Reportable::firstOrCreate(
             [
                 'report_id' => $request->input('report_id'),
-                'reportable_id' => $request->input('product'), // 關聯的 Product ID
+                'reportable_id' => $product->id, // 關聯的 Product ID
                 'reportable_type' => Product::class, // 關聯的模型類型
                 'user_id' => Auth::id(),
             ],
