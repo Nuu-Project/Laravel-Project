@@ -39,7 +39,7 @@
                 </x-div.flex-container>
             </div>
 
-            <div class="bg-white shadow overflow-hidden sm:rounded-lg">
+            <x-div.bg-white>
                 <div class="overflow-x-auto">
                     <table class="min-w-full divide-y divide-gray-200">
                         <x-thead.products />
@@ -83,7 +83,7 @@
                         {{ $products->links() }}
                     </div>
                 </div>
-            </div>
+            </x-div.bg-white>
         </x-div.container>
     </x-main.flex-container>
 </x-template-admin-layout>

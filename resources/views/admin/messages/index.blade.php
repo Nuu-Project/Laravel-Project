@@ -20,7 +20,7 @@
                     </form>
                 </x-div.flex-container>
                 <!-- Reviews 列表 -->
-                <div class="bg-white shadow overflow-hidden sm:rounded-lg" id="reviews-table">
+                <x-div.bg-white id="reviews-table">
                     <div class="overflow-x-auto">
                         <x-table.message :messages="$messages->items()">
                         </x-table.message>
@@ -30,7 +30,7 @@
                     <div class="px-6 py-4 border-t border-gray-200">
                         {{ $messages->links() }}
                     </div>
-                </div>
+                </x-div.bg-white>
             </div>
         </x-div.container>
     </x-main.flex-container>

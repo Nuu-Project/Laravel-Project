@@ -21,7 +21,7 @@
                     </form>
                 </x-div.flex-container>
 
-                <div id="search-results" class="bg-white shadow overflow-hidden sm:rounded-lg" style="display: none;">
+                <x-div.bg-white id="search-results" style="display: none;">
                     <div class="overflow-x-auto">
                         <table class="min-w-full divide-y divide-gray-200">
                             <x-thead.user />
@@ -30,7 +30,7 @@
                             </tbody>
                         </table>
                     </div>
-                </div>
+                </x-div.bg-white>
             </div>
 
             <!-- All users 部分 -->

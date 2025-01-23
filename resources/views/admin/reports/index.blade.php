@@ -20,7 +20,7 @@
                     </x-div.flex-container>
                 </form>
 
-                <div class="bg-white shadow overflow-hidden sm:rounded-lg">
+                <x-div.bg-white>>
                     <div class="overflow-x-auto">
                         <table class="min-w-full divide-y divide-gray-200">
                             <x-thead.report />
@@ -42,7 +42,7 @@
                     <div class="px-6 py-4 border-t border-gray-200">
                         {{ $reportables->links() }}
                     </div>
-                </div>
+                </x-div.bg-white>
             </div>
         </x-div.container>
     </x-main.flex-container>
