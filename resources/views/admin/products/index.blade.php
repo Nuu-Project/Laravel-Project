@@ -25,19 +25,18 @@
 
             <!-- 新增搜尋區塊 -->
             <div class="mb-8">
-                <div class="flex items-center justify-between mb-4">
+                <x-div.flex-container>
                     <x-h.h2 id="products-title">商品</x-h.h2>
                     <div class="flex space-x-4">
-                        <form action="{{ route('admin.products.index') }}" method="GET" class="flex items-center space-x-2">
-                            <input type="text"
-                                   name="filter[name]"
-                                   placeholder="搜尋商品名稱..."
-                                   value="{{ request('filter.name') }}"
-                                   class="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <form action="{{ route('admin.products.index') }}" method="GET"
+                            class="flex items-center space-x-2">
+                            <input type="text" name="filter[name]" placeholder="搜尋商品名稱..."
+                                value="{{ request('filter.name') }}"
+                                class="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
                             <x-button.search>搜尋</x-button.search>
                         </form>
                     </div>
-                </div>
+                </x-div.flex-container>
             </div>
 
             <div class="bg-white shadow overflow-hidden sm:rounded-lg">

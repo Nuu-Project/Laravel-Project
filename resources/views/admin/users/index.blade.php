@@ -7,7 +7,7 @@
             <x-h.h3>用戶管理</x-h.h3>
 
             <div class="mb-8">
-                <div class="flex items-center justify-between mb-4">
+                <x-div.flex-container>
                     <x-h.h2 id="users-title">用戶</x-h.h2>
                     <form action="{{ route('admin.users.index') }}" method="GET">
                         <div>
@@ -19,7 +19,7 @@
                             </x-button.search>
                         </div>
                     </form>
-                </div>
+                </x-div.flex-container>
 
                 <div id="search-results" class="bg-white shadow overflow-hidden sm:rounded-lg" style="display: none;">
                     <div class="overflow-x-auto">

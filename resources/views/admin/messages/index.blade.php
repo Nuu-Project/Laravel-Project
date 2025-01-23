@@ -6,7 +6,7 @@
         <x-div.container>
             <x-h.h3>留言管理</x-h.h3>
             <div class="mb-8">
-                <div class="flex items-center justify-between mb-4">
+                <x-div.flex-container>
                     <x-h.h2 id="reviews-title">留言</x-h.h2>
                     <form action="{{ route('admin.messages.index') }}" method="GET">
                         <div>
@@ -18,8 +18,7 @@
                             </x-button.search>
                         </div>
                     </form>
-                </div>
-
+                </x-div.flex-container>
                 <!-- Reviews 列表 -->
                 <div class="bg-white shadow overflow-hidden sm:rounded-lg" id="reviews-table">
                     <div class="overflow-x-auto">

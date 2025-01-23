@@ -6,7 +6,7 @@
 
 
             <div class="mb-8">
-                <div class="flex items-center justify-between mb-4">
+                <x-div.flex-container>
                     <x-h.h2 id="users-title">一般用戶</x-h.h2>
                     <form action="{{ route('admin.roles.create') }}" method="GET">
                         <div>
@@ -18,7 +18,7 @@
                             </x-button.search>
                         </div>
                     </form>
-                </div>
+                </x-div.flex-container>
 
                 <div class="bg-white rounded-lg shadow-md p-6">
                     <!-- 表單開始 -->

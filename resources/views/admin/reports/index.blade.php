@@ -7,7 +7,7 @@
 
             <div class="mb-8">
                 <form action="{{ route('admin.reports.index') }}" method="GET">
-                    <div class="flex items-center justify-between mb-4">
+                    <x-div.flex-container>
                         <x-h.h2 id="reviews-title">Reviews</x-h.h2>
                         <div>
                             <input type="text" id="filter[name]" name="filter[name]"
@@ -17,7 +17,7 @@
                                 搜尋
                             </x-button.search>
                         </div>
-                    </div>
+                    </x-div.flex-container>
                 </form>
 
                 <div class="bg-white shadow overflow-hidden sm:rounded-lg">
