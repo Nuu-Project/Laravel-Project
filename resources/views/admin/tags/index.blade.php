@@ -5,7 +5,7 @@
         <x-div.container>
             <x-h.h3>標籤管理</x-h.h3>
             <div class="p-4">
-                <a href="{{ route('admin.tags.create') }}"> <x-button.search>新增標籤</x-button.search></a>
+                <a href="{{ route('admin.tags.create') }}"><x-button.search>新增標籤</x-button.search></a>
             </div>
             <div class="bg-white rounded-lg shadow">
                 <div class="overflow-x-auto">
