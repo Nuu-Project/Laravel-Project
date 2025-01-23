@@ -2,9 +2,9 @@
 
     <!-- 主要內容 -->
     <x-main.flex-container>
-        <div class="container mx-auto px-6 py-8">
+        <x-div.container>
             <x-h.h3>新增標籤</x-h.h3>
-
+            
             <!-- 這裡放置原有的表單內容 -->
             <form id="tagForm" class="mt-8 space-y-6" action="{{ route('admin.tags.store') }}" method="POST"
                 enctype="multipart/form-data">
@@ -42,6 +42,6 @@
                     確定新增標籤
                 </x-button.create-edit>
             </form>
-        </div>
+        </x-div.container>
     </x-main.flex-container>
 </x-template-admin-layout>

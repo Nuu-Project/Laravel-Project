@@ -2,7 +2,7 @@
 
     <!-- 主要內容 -->
     <x-main.flex-container>
-        <div class="container mx-auto px-6 py-8">
+        <x-div.container>
             <x-h.h3>編輯標籤</x-h.h3>
 
             <!-- 這裡放置原有的表單內容 -->
@@ -48,6 +48,6 @@
                     確定修改標籤
                 </x-button.create-edit>
             </form>
-        </div>
+        </x-div.container>
     </x-main.flex-container>
 </x-template-admin-layout>
