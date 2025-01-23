@@ -10,7 +10,7 @@
                     <x-h.h2 id="users-title">一般用戶</x-h.h2>
                     <form action="{{ route('admin.roles.create') }}" method="GET">
                         <div>
-                            <x-input.search type="text" name="filter[name]" placeholder="搜尋商品名稱..."
+                            <x-input.search type="text" name="filter[name]" placeholder="搜尋用戶名稱或email..."
                                 value="{{ request('filter.name') }}">
                             </x-input.search>
                             <x-button.search>

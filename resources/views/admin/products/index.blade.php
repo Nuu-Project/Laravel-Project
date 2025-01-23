@@ -33,7 +33,9 @@
                             <x-input.search type="text" name="filter[name]" placeholder="搜尋商品名稱..."
                                 value="{{ request('filter.name') }}">
                             </x-input.search>
-                            <x-button.search>搜尋</x-button.search>
+                            <x-button.search>
+                                搜尋
+                            </x-button.search>
                         </form>
                     </div>
                 </x-div.flex-container>

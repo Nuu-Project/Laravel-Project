@@ -10,7 +10,7 @@
                     <x-h.h2 id="reviews-title">留言</x-h.h2>
                     <form action="{{ route('admin.messages.index') }}" method="GET">
                         <div>
-                            <x-input.search type="text" name="filter[name]" placeholder="搜尋商品名稱..."
+                            <x-input.search type="text" name="filter[name]" placeholder="請輸入用戶名稱..."
                                 value="{{ request('filter.name') }}">
                             </x-input.search>
                             <x-button.search>
