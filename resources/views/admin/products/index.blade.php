@@ -34,6 +34,11 @@
                                    placeholder="搜尋商品名稱..."
                                    value="{{ request('filter.name') }}"
                                    class="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <input type="text" 
+                                   name="filter[user]" 
+                                   placeholder="搜尋賣家名稱..."
+                                   value="{{ request('filter.user') }}"
+                                   class="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
                             <x-button.search>搜尋</x-button.search>
                         </form>
                     </div>
