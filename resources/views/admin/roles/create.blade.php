@@ -48,9 +48,9 @@
                         </x-table.gray-200>
 
                         <!-- 分頁 -->
-                        <div>
+                        <x-div.gray-200>
                             {{ $users->links() }}
-                        </div>
+                        </x-div.gray-200>
 
                         <!-- 提交按鈕 -->
                         <div class="mt-4 flex justify-end space-x-4">
