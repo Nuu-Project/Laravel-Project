@@ -10,7 +10,7 @@
             <x-th.name>狀態</x-th.name>
         </tr>
     </x-thead.gray-50>
-    <tbody class="bg-white divide-y divide-gray-200">
+    <x-tbody.gray-200>
         @foreach ($tags as $tag)
             <tr>
                 <x-td.gray-900>
@@ -50,5 +50,5 @@
                 </x-td.gray-500>
             </tr>
         @endforeach
-    </tbody>
+    </x-tbody.gray-200>
 </x-table.gray-200>

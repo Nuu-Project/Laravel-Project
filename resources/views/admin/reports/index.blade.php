@@ -20,11 +20,11 @@
                     </x-div.flex-container>
                 </form>
 
-                <x-div.bg-white>>
+                <x-div.bg-white>
                     <div class="overflow-x-auto">
                         <x-table.gray-200>
                             <x-thead.report />
-                            <tbody class="bg-white divide-y divide-gray-200">
+                            <x-tbody.gray-200>
                                 @foreach ($reportables as $reportable)
                                     <tr>
                                         <x-td.gray-900>{{ $reportable->reportable->name }}</x-td.gray-900>
@@ -34,7 +34,7 @@
                                         <x-td.gray-500>{{ $reportable->updated_at->format('Y-m-d') }}</x-td.gray-500>
                                     </tr>
                                 @endforeach
-                            </tbody>
+                            </x-tbody.gray-200>
                         </x-table.gray-200>
                     </div>
 
