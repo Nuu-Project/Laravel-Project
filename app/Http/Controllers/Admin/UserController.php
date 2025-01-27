@@ -37,6 +37,7 @@ class UserController extends Controller
         ]);
 
         $user->time_limit = now()->addSeconds($request->integer('duration'));
+        $user->suspend_reason = $request->input('reason'); // 保存暫停原因
         $user->save();
 
         return response()->json(['message' => '用戶已成功暫停']);
