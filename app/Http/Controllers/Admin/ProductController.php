@@ -19,6 +19,11 @@ class ProductController extends Controller
                 AllowedFilter::callback('name', function (Builder $query, string $value) {
                     $query->where('name', 'like', "%{$value}%");
                 }),
+                AllowedFilter::callback('user', function (Builder $query, string $value) {
+                    $query->whereHas('user', function (Builder $query) use ($value) {
+                        $query->where('name', 'like', "%{$value}%");
+                    });
+                }),
             ])
             ->withCount('reports')
             ->with('user')

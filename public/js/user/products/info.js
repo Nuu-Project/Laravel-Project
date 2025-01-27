@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     let currentIndex = 0;
     const images = document.querySelectorAll('img[data-index]');
     const thumbnails = document.querySelectorAll('.thumbnail');
@@ -34,12 +34,12 @@ document.addEventListener('DOMContentLoaded', function() {
     updateDisplay(0);
 });
 
-window.addEventListener('load', function() {
+window.addEventListener('load', function () {
     console.log('頁面已完全加載');
     var reportButton = document.getElementById('reportButton');
     if (reportButton) {
         console.log('找到檢舉按鈕');
-        reportButton.addEventListener('click', function() {
+        reportButton.addEventListener('click', function () {
             console.log('檢舉按鈕被點擊');
             var inputOptions = JSON.parse(reportButton.dataset.reports);
             try {
@@ -77,18 +77,18 @@ window.addEventListener('load', function() {
                                 _token: document.querySelector('meta[name="csrf-token"]').content,
                                 product: reportButton.dataset.productId,
                             },
-                            success: function(response) {
+                            success: function (response) {
                                 if (response.message === '你已檢舉過了') {
                                     Swal.fire({
-                                        title: `${response.message}`,
-                                        html: `檢舉原因已更新：<br><p style="white-space: pre-wrap;">${response.description}</p>`,
+                                        title: '你已檢舉過了',
+                                        html: `檢舉原因：<br><p style="white-space: pre-wrap;">${response.description}</p>`,
                                         icon: 'info'
                                     });
                                 } else {
                                     Swal.fire('檢舉已送出', response.message, 'success');
                                 }
                             },
-                            error: function(xhr) {
+                            error: function (xhr) {
                                 Swal.fire('錯誤', '無法提交檢舉', 'error');
                             }
                         });
