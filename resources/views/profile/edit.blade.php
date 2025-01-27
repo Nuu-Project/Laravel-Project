@@ -17,4 +17,5 @@
         <div class="max-w-xl">
             @include('profile.update-password-form')
         </div>
+    </div>
 </x-template-layout>
