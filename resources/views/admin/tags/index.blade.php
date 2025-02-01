@@ -1,23 +1,22 @@
 <x-template-admin-layout>
 
     <!-- 主要內容 -->
-    <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-200 p-4">
-        <div class="max-w-7xl mx-auto">
+    <x-main.flex-container>
+        <x-div.container>
             <x-h.h3>標籤管理</x-h.h3>
             <div class="p-4">
-                <a href="{{ route('admin.tags.create') }}"><button
-                        class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">新增標籤</button></a>
+                <a href="{{ route('admin.tags.create') }}"><x-button.search>新增標籤</x-button.search></a>
             </div>
             <div class="bg-white rounded-lg shadow">
                 <div class="overflow-x-auto">
                     <x-table.tags :tags="$tags">
                     </x-table.tags>
 
-                    <div class="px-6 py-4 border-t border-gray-200">
+                    <x-div.gray-200>
                         {{ $tags->links() }}
-                    </div>
+                    </x-div.gray-200>
                 </div>
             </div>
-        </div>
-    </main>
+        </x-div.container>
+    </x-main.flex-container>
 </x-template-admin-layout>
