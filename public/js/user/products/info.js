@@ -78,18 +78,30 @@ window.addEventListener('load', function () {
                                 product: reportButton.dataset.productId,
                             },
                             success: function (response) {
-                                if (response.message === '你已檢舉過了') {
-                                    Swal.fire({
-                                        title: '你已檢舉過了',
+                                const messages = {
+                                    duplicate: {
+                                        title: '你已檢舉過此商品',
                                         html: `檢舉原因：<br><p style="white-space: pre-wrap;">${response.description}</p>`,
                                         icon: 'info'
-                                    });
-                                } else {
-                                    Swal.fire('檢舉已送出', response.message, 'success');
+                                    },
+                                    success: {
+                                        title: '檢舉已成功提交',
+                                        text: '感謝您的回報，我們會盡快處理',
+                                        icon: 'success'
+                                    }
+                                };
+
+                                const messageConfig = messages[response.status];
+                                if (messageConfig) {
+                                    Swal.fire(messageConfig);
                                 }
                             },
                             error: function (xhr) {
-                                Swal.fire('錯誤', '無法提交檢舉', 'error');
+                                Swal.fire({
+                                    title: '系統錯誤',
+                                    text: '無法提交檢舉，請稍後再試',
+                                    icon: 'error'
+                                });
                             }
                         });
                     }
