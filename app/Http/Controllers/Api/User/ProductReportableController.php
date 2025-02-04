@@ -33,6 +33,6 @@ class ProductReportableController extends Controller
             'description' => $request->input('description'),
         ]);
 
-        return response()->json(['status' => 'success', 'message' => '檢舉已成功提交']);
+        return response()->json(['status' => 'success']);
     }
 }
