@@ -256,25 +256,4 @@ class ProductController extends Controller
 
         return redirect()->route('user.products.index')->with('success', $message);
     }
-
-    public function ProcessImage(Request $request)
-    {
-        $image = $request->file('image');
-
-        $originalFilePath = storage::disk('temp')->putFile('', $image);
-
-        $compressedImage = (new \App\Services\CompressedImage)->uploadCompressedImage($image);
-
-        Storage::put($compressedImagePath = 'compressed_'.uniqid().'.jpg', $compressedImage->toJpeg(80));
-
-        Storage::disk('temp')->delete($originalFilePath);
-
-        encrypt($compressedImagePath);
-
-        return response()->json([
-            'success' => true,
-            'message' => '圖片上傳成功',
-            'path' => $compressedImagePath,
-        ]);
-    }
 }
