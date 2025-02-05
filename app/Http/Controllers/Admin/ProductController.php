@@ -25,7 +25,7 @@ class ProductController extends Controller
                     });
                 }),
             ])
-            ->withCount('reports')
+            ->withCount('report_types')
             ->with('user')
             ->paginate(10)
             ->withQueryString();
