@@ -32,8 +32,7 @@
                 <div class="lg:flex flex-col md:flex-row md:items-center text-center md:space-x-6"
                     :class="{ 'hidden': !navbarOpen, 'flex': navbarOpen }">
                     @if (Route::has('register'))
-                        <a href="/register"
-                            class="px-6 py-4 bg-blue-500 text-white font-semibold text-lg rounded-xl hover:bg-blue-700 transition ease-in-out duration-500 mb-5 md:mb-0">註冊</a>
+                        <x-a.register href="/register">註冊</x-a.register>
                     @endif
                     @if (Route::has('login'))
                         @auth
@@ -41,8 +40,7 @@
                                 class="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none
                             focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white">Dashboard</a>
                         @else
-                            <a href="/login"
-                                class="px-6 py-4 border-2 border-blue-500 text-blue-500 font-semibold text-lg rounded-xl hover:bg-blue-700 hover:text-white transition ease-linear duration-500">登入</a>
+                            <x-a.login href="/login">登入</x-a.login>
                         @endif
                     @endauth
                 </div>

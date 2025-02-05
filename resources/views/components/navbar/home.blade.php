@@ -98,10 +98,8 @@
                             </x-slot>
                         </x-dropdown>
                     @else
-                        <a href="/register"
-                            class="px-6 py-4 bg-blue-500 text-white font-semibold text-lg rounded-xl hover:bg-blue-700 transition ease-in-out duration-500 mb-5 md:mb-0">註冊</a>
-                        <a href="/login"
-                            class="px-6 py-4 border-2 border-blue-500 text-blue-500 font-semibold text-lg rounded-xl hover:bg-blue-700 hover:text-white transition ease-linear duration-500">登入</a>
+                        <x-a.register href="/register">註冊</x-a.register>
+                        <x-a.login href="/login">登入</x-a.login>
                     @endauth
                 </div>
             </nav>
