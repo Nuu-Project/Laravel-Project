@@ -8,7 +8,7 @@ class Reportable extends Model
 {
     protected $fillable = ['report_type_id', 'reportable_id', 'reportable_type', 'user_id', 'description'];
 
-    public function report()
+    public function report_type()
     {
         return $this->belongsTo(ReportType::class);
     }
@@ -18,8 +18,8 @@ class Reportable extends Model
         return $this->morphTo();
     }
 
-    public function whistleblower()
+    public function user()
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(User::class);
     }
 }
