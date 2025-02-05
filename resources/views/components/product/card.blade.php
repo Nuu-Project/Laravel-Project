@@ -13,7 +13,7 @@
 
 
                     <div class="flex items-center justify-between mb-8">
-                        <x-h.h6>年級 : <span class="font-semibold text-gray-900 text-md md:text-lg">大二【上下】</span></x-h.h6>
+                        <x-h.h6>年級 : <x-span.font-semibold>大二【上下】</x-span.font-semibold></x-h.h6>
 
                         <x-h.h6>課程 : <span class="font-semibold text-gray-900 text-md md:text-lg">必修</span></x-h.h6>
                 </x-div.card-box>
@@ -30,9 +30,9 @@
                 <x-h.h4>會計學<br></x-h.h4>
 
                 <div class="flex items-center justify-between mb-8">
-                    <x-h.h6>年級 : <span class="font-semibold text-gray-900 text-md md:text-lg">大一【上】</span></x-h.h6>
+                    <x-h.h6>年級 : <x-span.font-semibold>大一【上】</x-span.font-semibold></x-h.h6>
 
-                    <x-h.h6>課程 : <span class="font-semibold text-gray-900 text-md md:text-lg">必修</span></x-h.h6>
+                    <x-h.h6>課程 : <x-span.font-semibold>必修</x-span.font-semibold></x-h.h6>
             </x-div.card-box>
 
 
@@ -48,9 +48,9 @@
 
 
             <div class="flex items-center justify-between mb-8">
-                <x-h.h6>年級 : <span class="font-semibold text-gray-900 text-md md:text-lg">大一【上】</span></x-h.h6>
+                <x-h.h6>年級 : <x-span.font-semibold>大一【上】</x-span.font-semibold></x-h.h6>
 
-                <x-h.h6>課程 : <span class="font-semibold text-gray-900 text-md md:text-lg">必修</span></x-h.h6>
+                <x-h.h6>課程 : <x-span.font-semibold>必修</x-span.font-semibold></x-h.h6>
         </x-div.card-box>
 
         <a href="{{ route('products.index', ['tags' => ['introduction-to-computer-science']]) }}"
