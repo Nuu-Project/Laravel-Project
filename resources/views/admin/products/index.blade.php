@@ -56,7 +56,7 @@
                                     <x-td.gray-900>{{ $product->user->name }}</x-td.gray-900>
                                     <x-td.gray-900>{{ $product->created_at->format('Y/m/d') }}</x-td.gray-900>
                                     <x-td.gray-900>{{ $product->updated_at->format('Y/m/d') }}</x-td.gray-900>
-                                    <x-td.gray-900>{{ $product->reports_count }}</x-td.gray-900>
+                                    <x-td.gray-900>{{ $product->report_types_count }}</x-td.gray-900>
                                     <x-td.gray-900>
                                         <a href="{{ route('products.show', ['product' => $product->id]) }}">
                                             <x-button.blue-short>
