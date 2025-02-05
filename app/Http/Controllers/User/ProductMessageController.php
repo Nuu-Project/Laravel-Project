@@ -23,7 +23,7 @@ class ProductMessageController extends Controller
 
         $request->user()->messages()->create([
             'message' => $validated['message'],
-            'product_id' => $product,
+            'product_id' => $product->id,
         ]);
 
         return redirect()->route('products.show', ['product' => $product]);
