@@ -40,9 +40,9 @@
                                         <x-td.gray-900>
                                             {{ $user->name }}
                                         </x-td.gray-900>
-                                        <x-td.gray-500>
+                                        <x-td.gray-900>
                                             {{ $user->email }}
-                                        </x-td.gray-500>
+                                        </x-td.gray-900>
                                     </tr>
                                 @endif
                             @endforeach
