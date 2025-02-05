@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Tag;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 
@@ -77,10 +78,14 @@ class TagController extends Controller
     private function validateTag(Request $request)
     {
         return $request->validate([
-            'name' => 'required|string|max:255',
-            'slug' => 'required|string|max:255',
+            'name' => ['required', 'string', 'max:255', Rule::unique('tags', 'name->zh_TW')],
+            'slug' => ['required', 'string', 'max:255', 'regex:/^[a-z]+$/', Rule::unique('tags', 'slug->zh_TW')],
             'type' => 'required|string|max:255',
-            'order_column' => 'required|integer',
+            'order_column' => [
+                'required',
+                'integer',
+                Rule::unique('tags')->where('type', $request->type),
+            ],
         ]);
     }
 }
