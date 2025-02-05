@@ -7,7 +7,7 @@
         管理者後台
     </div>
     <nav class="mt-4" x-data="{ open: true }">
-        <div @click="open = !open" class="block py-2 px-4 text-gray-700 hover:bg-gray-200 cursor-pointer">
+        <div @click="open = !open" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">
             <div class="flex justify-between items-center">
                 <span>後台管理系統</span>
                 <svg :class="{ 'transform rotate-180': open }" class="w-4 h-4 transition-transform duration-200"
@@ -19,16 +19,12 @@
             </div>
         </div>
         <div x-show="open" class="pl-4">
-            <a href="{{ route('admin.products.index') }}"
-                class="block py-2 px-4 text-gray-700 hover:bg-gray-200">商品管理</a>
-            <a href="{{ route('admin.users.index') }}" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">用戶管理</a>
-            <a href="{{ route('admin.messages.index') }}"
-                class="block py-2 px-4 text-gray-700 hover:bg-gray-200">留言管理</a>
-            <a href="{{ route('admin.roles.index') }}" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">角色管理</a>
-            <a href="{{ route('admin.reports.index') }}"
-                class="block py-2 px-4 text-gray-700 hover:bg-gray-200">檢舉詳情</a>
-            <a href="{{ route('admin.tags.index') }}"
-                class="block py-2 px-4 text-gray-700 hover:bg-gray-200">新增標籤與刪除標籤</a>
+            <x-a.block-hover href="{{ route('admin.products.index') }}">商品管理</x-a.block-hover>
+            <x-a.block-hover href="{{ route('admin.users.index') }}">用戶管理</x-a.block-hover>
+            <x-a.block-hover href="{{ route('admin.messages.index') }}">留言管理</x-a.block-hover>
+            <x-a.block-hover href="{{ route('admin.roles.index') }}">角色管理</x-a.block-hover>
+            <x-a.block-hover href="{{ route('admin.reports.index') }}">檢舉詳情</x-a.block-hover>
+            <x-a.block-hover href="{{ route('admin.tags.index') }}">新增標籤與刪除標籤</x-a.block-hover>
         </div>
     </nav>
 </div>

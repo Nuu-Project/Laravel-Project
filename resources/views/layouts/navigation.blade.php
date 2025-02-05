@@ -3,7 +3,7 @@
     <!-- home section -->
     <section class="bg-white py-10 md:mb-11">
 
-        <div class="container max-w-screen-xl mx-auto px-4">
+        <x-div.container-screen>
 
             <nav class="flex-wrap lg:flex items-center" x-data="{ navbarOpen: false }">
                 <div class="flex items-center mb-10 lg:mb-0">
@@ -25,14 +25,8 @@
 
                 <ul class="lg:flex flex-col lg:flex-row lg:items-center lg:mx-auto lg:space-x-8 xl:space-x-14"
                     :class="{ 'hidden': !navbarOpen, 'flex': navbarOpen }">
-                    <li
-                        class="font-semibold text-gray-900 hover:text-gray-400 transition ease-in-out duration-300 mb-5 lg:mb-0 text-2xl">
-                        <a href="/">首頁</a>
-                    </li>
-                    <li
-                        class="font-semibold text-gray-900 hover:text-gray-400 transition ease-in-out duration-300 mb-5 lg:mb-0 text-2xl">
-                        <a href="{{ route('products.index') }}">商品</a>
-                    </li>
+                    <x-li.font-semibold><a href="/">首頁</a></x-li.font-semibold>
+                    <x-li.font-semibold><a href="{{ route('products.index') }}">商品</a></x-li.font-semibold>
                 </ul>
 
                 <div class="lg:flex flex-col md:flex-row md:items-center text-center md:space-x-6"
@@ -83,12 +77,10 @@
                             </x-slot>
                         </x-dropdown>
                     @else
-                        <a href="/register"
-                            class="px-6 py-4 bg-blue-500 text-white font-semibold text-lg rounded-xl hover:bg-blue-700 transition ease-in-out duration-500 mb-5 md:mb-0">註冊</a>
-                        <a href="/login"
-                            class="px-6 py-4 border-2 border-blue-500 text-blue-500 font-semibold text-lg rounded-xl hover:bg-blue-700 hover:text-white transition ease-linear duration-500">登入</a>
+                        <x-a.register href="/register">註冊</x-a.register>
+                        <x-a.login href="/login">登入</x-a.login>
                     @endauth
                 </div>
             </nav>
-        </div>
+        </x-div.container-screen>
     </section>

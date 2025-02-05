@@ -45,9 +45,9 @@
                         </form>
                     @endif
                 </x-td.gray-900>
-                <x-td.gray-500>
+                <x-td.gray-900>
                     {{ is_null($tag->deleted_at) ? '啟用中' : '已停用' }}
-                </x-td.gray-500>
+                </x-td.gray-900>
             </tr>
         @endforeach
     </x-tbody.gray-200>
