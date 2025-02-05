@@ -13,22 +13,14 @@
 
                 <div class="text-center lg:text-left space-y-7 mb-10 lg:mb-0">
                     <x-h.h4>STEP.1</x-h.h4>
-                    <a href="/register"
-                        class="block font-black text-gray-800 text-sm md:text-lg hover:text-gray-1000 transition ease-in-out duration-300">註冊帳戶</a>
-
-                    <a href="/login"
-                        class="block font-black text-gray-800 text-sm md:text-lg hover:text-gray-1000 transition ease-in-out duration-300">登入帳戶</a>
+                    <x-a.block-font-black href="/register">註冊帳戶</x-a.block-font-black>
+                    <x-a.block-font-black href="/login">登入帳戶</x-a.block-font-black>
                 </div>
 
                 <div class="text-center lg:text-left space-y-7 mb-10 lg:mb-0">
                     <x-h.h4>STEP.2</x-h.h4>
-
-                    <a href="{{ route('products.index') }}"
-                        class="block font-black text-gray-800 text-sm md:text-lg hover:text-gray-1000 transition ease-in-out duration-300">點選菜單-商品</a>
-
-                    <a href="{{ route('products.index') }}"
-                        class="block font-black text-gray-800 text-sm md:text-lg hover:text-gray-1000 transition ease-in-out duration-300">瀏覽商品</a>
-
+                    <x-a.block-font-black href="{{ route('products.index') }}">點選菜單-商品</x-a.block-font-black>
+                    <x-a.block-font-black href="{{ route('products.index') }}">瀏覽商品</x-a.block-font-black>
                 </div>
 
                 <div class="text-center lg:text-left space-y-7 mb-10 lg:mb-0">
