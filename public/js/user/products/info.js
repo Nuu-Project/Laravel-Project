@@ -72,7 +72,7 @@ window.addEventListener('load', function () {
                             url: reportButton.dataset.storeUrl,
                             method: 'POST',
                             data: {
-                                report_id: reportId,
+                                report_type_id: reportId,
                                 description: description,
                                 _token: document.querySelector('meta[name="csrf-token"]').content,
                                 product: reportButton.dataset.productId,
@@ -87,7 +87,7 @@ window.addEventListener('load', function () {
                                 }
                             },
                             error: function (xhr) {
-                                if (xhr.status === 422 && xhr.responseJSON.errors?.report_id) {
+                                if (xhr.status === 422 && xhr.responseJSON.errors?.report_type_id) {
                                     Swal.fire({
                                         title: '你已經檢舉過此商品',
                                         text: '請勿重複檢舉',
