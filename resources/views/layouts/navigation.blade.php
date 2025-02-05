@@ -3,7 +3,7 @@
     <!-- home section -->
     <section class="bg-white py-10 md:mb-11">
 
-        <div class="container max-w-screen-xl mx-auto px-4">
+        <x-div.container-screen>
 
             <nav class="flex-wrap lg:flex items-center" x-data="{ navbarOpen: false }">
                 <div class="flex items-center mb-10 lg:mb-0">
@@ -90,5 +90,5 @@
                     @endauth
                 </div>
             </nav>
-        </div>
+        </x-div.container-screen>
     </section>

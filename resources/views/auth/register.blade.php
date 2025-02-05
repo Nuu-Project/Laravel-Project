@@ -2,7 +2,7 @@
 
     <!-- home section -->
     <section class="bg-white py-10 md:mb-10">
-        <div class="container max-w-screen-xl mx-auto px-4">
+        <x-div.container-screen>
             <nav class="flex-wrap lg:flex items-center" x-data="{ navbarOpen: false }">
                 <div class="flex items-center mb-10 lg:mb-0">
                     <img src="images/book-4-fix.png" alt="Logo">
@@ -46,13 +46,13 @@
                     @endauth
                 </div>
             </nav>
-        </div>
+        </x-div.container-screen>
     </section>
 
 
     <x-guest-layout>
         <section class="mt-5">
-            <div class="flex flex-col container max-w-screen-xl mx-auto px-4">
+            <x-div.container-screen>
                 <div class="flex items-center justify-center mb-6 text-2xl font-semibold text-gray-900 text-center">
                     <img class="w-12 h-12 mr-2" src="images/sign-up.png" alt="logo">
                     註冊
@@ -127,6 +127,7 @@
 
                         </div>
                     </form>
+            </x-div.container-screen>
         </section>
     </x-guest-layout>
 </x-template-login-register-layout>
