@@ -70,6 +70,6 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function reports()
     {
-        return $this->morphToMany(Report::class, 'reportable');
+        return $this->morphToMany(ReportType::class, 'reportable');
     }
 }

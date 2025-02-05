@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Guest;
 use App\Enums\ProductStatus;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
-use App\Models\Report;
+use App\Models\ReportType;
 use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -42,7 +42,7 @@ class ProductController extends Controller
     public function show(Product $product): View
     {
         $messages = $product->messages()->with('user')->oldest()->paginate(10);
-        $reports = Report::where('type', '商品')->get()->mapWithKeys(function ($item) {
+        $reports = ReportType::where('type', '商品')->get()->mapWithKeys(function ($item) {
             return [$item->id => json_decode($item->name, true)['zh_TW']];
         });
 

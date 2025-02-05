@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\Report;
+use App\Models\ReportType;
 use Illuminate\Database\Seeder;
 
 class ReportSeeder extends Seeder
@@ -58,7 +58,7 @@ class ReportSeeder extends Seeder
         ];
 
         foreach ($reports as $reportData) {
-            Report::updateOrCreate(
+            ReportType::updateOrCreate(
                 [
                     'type' => $reportData['type'],
                     'order_column' => $reportData['order_column'],

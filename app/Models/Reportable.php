@@ -10,7 +10,7 @@ class Reportable extends Model
 
     public function report()
     {
-        return $this->belongsTo(Report::class);
+        return $this->belongsTo(ReportType::class);
     }
 
     public function reportable()
