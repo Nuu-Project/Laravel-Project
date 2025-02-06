@@ -53,11 +53,11 @@
                                 <tr>
                                     <x-td.gray-900>{{ $product->id }}</x-td.gray-900>
                                     <x-td.gray-900>{{ $product->name }}</x-td.gray-900>
-                                    <x-td.gray-500>{{ $product->user->name }}</x-td.gray-500>
-                                    <x-td.gray-500>{{ $product->created_at->format('Y/m/d') }}</x-td.gray-500>
-                                    <x-td.gray-500>{{ $product->updated_at->format('Y/m/d') }}</x-td.gray-500>
-                                    <x-td.gray-500>{{ $product->reports_count }}</x-td.gray-500>
-                                    <x-td.operate>
+                                    <x-td.gray-900>{{ $product->user->name }}</x-td.gray-900>
+                                    <x-td.gray-900>{{ $product->created_at->format('Y/m/d') }}</x-td.gray-900>
+                                    <x-td.gray-900>{{ $product->updated_at->format('Y/m/d') }}</x-td.gray-900>
+                                    <x-td.gray-900>{{ $product->report_types_count }}</x-td.gray-900>
+                                    <x-td.gray-900>
                                         <a href="{{ route('products.show', ['product' => $product->id]) }}">
                                             <x-button.blue-short>
                                                 前往
@@ -73,13 +73,13 @@
                                         </form>
 
                                         <a
-                                            href="{{ route('admin.reports.index', ['filter[reportable_id]' => $product->id]) }}">
+                                            href="{{ route('admin.reportables.index', ['filter[reportable_id]' => $product->id]) }}">
                                             <x-button.red-short>
                                                 檢舉詳情
                                             </x-button.red-short>
                                         </a>
-                                        <x-td.gray-500>{{ $product->status->name() }}</x-td.gray-500>
-                                    </x-td.operate>
+                                        <x-td.gray-900>{{ $product->status->name() }}</x-td.gray-900>
+                                    </x-td.gray-900>
                                 </tr>
                             @endforeach
                         </x-tbody.gray-200>

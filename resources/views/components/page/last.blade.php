@@ -1,7 +1,7 @@
 <div>
     <footer class="bg-white py-16">
 
-        <div class="container max-w-screen-xl mx-auto px-4">
+        <x-div.container-screen>
             <div class="flex flex-col lg:flex-row lg:justify-between">
 
                 <div class="space-y-7 mb-10 lg:mb-0">
@@ -12,27 +12,19 @@
                 </div>
 
                 <div class="text-center lg:text-left space-y-7 mb-10 lg:mb-0">
-                    <h4 class="font-semibold text-gray-900 text-lg md:text-2xl">STEP.1</h4>
-                    <a href="/register"
-                        class="block font-black text-gray-800 text-sm md:text-lg hover:text-gray-1000 transition ease-in-out duration-300">註冊帳戶</a>
-
-                    <a href="/login"
-                        class="block font-black text-gray-800 text-sm md:text-lg hover:text-gray-1000 transition ease-in-out duration-300">登入帳戶</a>
+                    <x-h.h4>STEP.1</x-h.h4>
+                    <x-a.block-font-black href="/register">註冊帳戶</x-a.block-font-black>
+                    <x-a.block-font-black href="/login">登入帳戶</x-a.block-font-black>
                 </div>
 
                 <div class="text-center lg:text-left space-y-7 mb-10 lg:mb-0">
-                    <h4 class="font-semibold text-gray-900 text-lg md:text-2xl">STEP.2</h4>
-
-                    <a href="{{ route('products.index') }}"
-                        class="block font-black text-gray-800 text-sm md:text-lg hover:text-gray-1000 transition ease-in-out duration-300">點選菜單-商品</a>
-
-                    <a href="{{ route('products.index') }}"
-                        class="block font-black text-gray-800 text-sm md:text-lg hover:text-gray-1000 transition ease-in-out duration-300">瀏覽商品</a>
-
+                    <x-h.h4>STEP.2</x-h.h4>
+                    <x-a.block-font-black href="{{ route('products.index') }}">點選菜單-商品</x-a.block-font-black>
+                    <x-a.block-font-black href="{{ route('products.index') }}">瀏覽商品</x-a.block-font-black>
                 </div>
 
                 <div class="text-center lg:text-left space-y-7 mb-10 lg:mb-0">
-                    <h4 class="font-semibold text-gray-900 text-lg md:text-2xl">STEP.3</h4>
+                    <x-h.h4>STEP.3</x-h.h4>
 
                     <p
                         class="block font-black text-gray-800 text-sm md:text-lg hover:text-gray-1000 transition ease-in-out duration-300">
@@ -44,7 +36,7 @@
                 </div>
 
                 <div class="text-center lg:text-left space-y-7 mb-10 lg:mb-0">
-                    <h4 class="font-semibold text-gray-900 text-lg md:text-2xl">支持我們</h4>
+                    <x-h.h4>支持我們</x-h.h4>
 
                     <a class="block font-black text-gray-800 text-sm md:text-lg hover:text-gray-1000 transition ease-in-out duration-300"
                         href="https://docs.google.com/forms/d/e/1FAIpQLSfJP4fi8V-8nQ0UgMyFncuDxUhzdtvfWmI050Z6F5y73ndhug/viewform?embedded=true">
@@ -54,6 +46,6 @@
                 </div>
 
             </div>
-        </div>
+        </x-div.container-screen>
     </footer>
 </div>

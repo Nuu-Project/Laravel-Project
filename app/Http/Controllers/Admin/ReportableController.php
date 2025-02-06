@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 
-class ReportController extends Controller
+class ReportableController extends Controller
 {
     public function index()
     {
@@ -23,10 +23,10 @@ class ReportController extends Controller
                     });
                 }),
             ])
-            ->with(['reportable', 'report', 'whistleblower'])
+            ->with(['reportable', 'report_type', 'user'])
             ->paginate(10)
             ->withQueryString();
 
-        return view('admin.reports.index', compact('reportables'));
+        return view('admin.reportables.index', compact('reportables'));
     }
 }

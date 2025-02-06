@@ -3,7 +3,6 @@
 use App\Http\Controllers\User\ProductController;
 use App\Http\Controllers\User\ProductMessageController;
 use App\Http\Controllers\User\ProfileController;
-use App\Http\Controllers\User\ReportableController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('user')->name('user.')->middleware(['auth', 'verified'])->group(function () {
@@ -17,9 +16,6 @@ Route::prefix('user')->name('user.')->middleware(['auth', 'verified'])->group(fu
     // 留言 建立,編輯頁,更新留言,刪除
     Route::resource('products.messages', ProductMessageController::class)
         ->only(['store', 'edit', 'update', 'destroy']);
-
-    // 商品檢舉
-    Route::post('products/{product}/reportables', [ReportableController::class, 'store'])->name('reports.store');
 
     // 個人資料 頁面,修改密碼,刪除帳號
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

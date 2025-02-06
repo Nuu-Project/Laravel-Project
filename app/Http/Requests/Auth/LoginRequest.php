@@ -46,7 +46,7 @@ class LoginRequest extends FormRequest
         $user = user::firstWhere('email', $this->string('email'));
         if ($user && $user->time_limit && Carbon::parse($user->time_limit)->isFuture()) {
             throw ValidationException::withMessages([
-                'time_limit' => Carbon::parse($user->time_limit)->format('Y-m-d H:i:s'),
+                'time_limit' => Carbon::parse($user->time_limit)->toDateTimeString(),
             ]);
         }
 
