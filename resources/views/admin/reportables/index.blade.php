@@ -23,7 +23,7 @@
                 <x-div.bg-white>
                     <div class="overflow-x-auto">
                         <x-table.gray-200>
-                            <x-thead.report />
+                            <x-thead.reportable />
                             <x-tbody.gray-200>
                                 @foreach ($reportables as $reportable)
                                     <tr>
