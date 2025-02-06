@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Guest;
+namespace App\Http\Controllers\Web\Guest;
 
 use App\Enums\ProductStatus;
 use App\Http\Controllers\Controller;

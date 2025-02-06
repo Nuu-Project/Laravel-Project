@@ -1,11 +1,11 @@
 <?php
 
-use App\Http\Controllers\Admin\MessageController;
-use App\Http\Controllers\Admin\ProductController;
-use App\Http\Controllers\Admin\ReportableController;
-use App\Http\Controllers\Admin\RoleController;
-use App\Http\Controllers\Admin\TagController;
-use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Web\Admin\MessageController;
+use App\Http\Controllers\Web\Admin\ProductController;
+use App\Http\Controllers\Web\Admin\ReportableController;
+use App\Http\Controllers\Web\Admin\RoleController;
+use App\Http\Controllers\Web\Admin\TagController;
+use App\Http\Controllers\Web\Admin\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('admin')->name('admin.')->middleware(['auth', 'verified', 'role:admin'])->group(function () {
