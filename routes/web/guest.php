@@ -1,7 +1,7 @@
 <?php
 
-use App\Http\Controllers\Guest\HomeController;
-use App\Http\Controllers\Guest\ProductController;
+use App\Http\Controllers\Web\Guest\HomeController;
+use App\Http\Controllers\Web\Guest\ProductController;
 use Illuminate\Support\Facades\Route;
 
 // 首頁
