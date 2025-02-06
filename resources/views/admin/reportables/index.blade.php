@@ -6,7 +6,7 @@
             <x-h.h3>檢舉詳情</x-h.h3>
 
             <div class="mb-8">
-                <form action="{{ route('admin.reports.index') }}" method="GET">
+                <form action="{{ route('admin.reportables.index') }}" method="GET">
                     <x-div.flex-container>
                         <x-h.h2 id="reviews-title">Reviews</x-h.h2>
                         <div>
@@ -23,7 +23,7 @@
                 <x-div.bg-white>
                     <div class="overflow-x-auto">
                         <x-table.gray-200>
-                            <x-thead.report />
+                            <x-thead.reportable />
                             <x-tbody.gray-200>
                                 @foreach ($reportables as $reportable)
                                     <tr>
