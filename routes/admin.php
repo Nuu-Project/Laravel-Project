@@ -19,9 +19,6 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'verified', 'role:ad
     // 用戶管理頁
     Route::get('/users', [UserController::class, 'index'])
         ->name('users.index');
-    // 用戶停用
-    Route::post('/users/{user}/suspend', [UserController::class, 'suspend'])
-        ->name('users.suspend');
 
     // 留言管理頁 controller要改
     Route::get('/messages', [MessageController::class, 'index'])
