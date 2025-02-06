@@ -1,11 +1,11 @@
 <?php
 
-use App\Http\Controllers\Admin\MessageController;
-use App\Http\Controllers\Admin\ProductController;
-use App\Http\Controllers\Admin\ReportController;
-use App\Http\Controllers\Admin\RoleController;
-use App\Http\Controllers\Admin\TagController;
-use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Web\Admin\MessageController;
+use App\Http\Controllers\Web\Admin\ProductController;
+use App\Http\Controllers\Web\Admin\ReportableController;
+use App\Http\Controllers\Web\Admin\RoleController;
+use App\Http\Controllers\Web\Admin\TagController;
+use App\Http\Controllers\Web\Admin\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('admin')->name('admin.')->middleware(['auth', 'verified', 'role:admin'])->group(function () {
@@ -19,9 +19,6 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'verified', 'role:ad
     // 用戶管理頁
     Route::get('/users', [UserController::class, 'index'])
         ->name('users.index');
-    // 用戶停用
-    Route::post('/users/{user}/suspend', [UserController::class, 'suspend'])
-        ->name('users.suspend');
 
     // 留言管理頁 controller要改
     Route::get('/messages', [MessageController::class, 'index'])
@@ -41,6 +38,6 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'verified', 'role:ad
         ->withTrashed();
 
     // 檢舉詳情頁
-    Route::get('/reports', [ReportController::class, 'index'])
-        ->name('reports.index');
+    Route::get('/reportables', [ReportableController::class, 'index'])
+        ->name('reportables.index');
 });

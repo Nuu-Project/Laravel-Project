@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Web\Admin;
 
 use App\Enums\ProductStatus;
 use App\Http\Controllers\Controller;
@@ -25,7 +25,7 @@ class ProductController extends Controller
                     });
                 }),
             ])
-            ->withCount('reports')
+            ->withCount('report_types')
             ->with('user')
             ->paginate(10)
             ->withQueryString();

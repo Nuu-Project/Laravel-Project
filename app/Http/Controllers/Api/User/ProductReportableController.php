@@ -14,9 +14,9 @@ class ProductReportableController extends Controller
     public function store(Request $request, Product $product)
     {
         $request->validate([
-            'report_id' => [
+            'report_type_id' => [
                 'required',
-                'exists:reports,id',
+                'exists:report_types,id',
                 Rule::unique('reportables')
                     ->where('reportable_id', $product->id)
                     ->where('reportable_type', Product::class)
@@ -26,7 +26,7 @@ class ProductReportableController extends Controller
         ]);
 
         Reportable::create([
-            'report_id' => $request->input('report_id'),
+            'report_type_id' => $request->input('report_type_id'),
             'reportable_id' => $product->id, // 關聯的 Product ID
             'reportable_type' => Product::class, // 關聯的模型類型
             'user_id' => Auth::id(),

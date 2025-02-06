@@ -3,7 +3,7 @@
     <!-- feature section -->
     <section class="bg-white py-1 md:mt-10">
 
-        <div class="container max-w-screen-xl mx-auto px-4">
+        <x-div.container-screen>
 
             <p class="font-black text-gray-500 text-lg md:text-xl text-center uppercase mb-6">平台理念</p>
 
@@ -59,7 +59,7 @@
                 </div>
             </div>
 
-        </div> <!-- container.// -->
+        </x-div.container-screen> <!-- container.// -->
 
     </section>
     <!-- feature section //end -->
