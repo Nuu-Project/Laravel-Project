@@ -49,18 +49,10 @@ class ProductController extends Controller
             'semester' => ['required', Rule::exists('tags', 'id')->where('type', Tagtype::Semester)],
             'subject' => ['required', Rule::exists('tags', 'id')->where('type', Tagtype::Subject)],
             'category' => ['required', Rule::exists('tags', 'id')->where('type', Tagtype::Category)],
-            'images' => ['required', 'array', 'min:1', 'max:5'],
-            'images.*' => [
-                'required',
-                'image',
-                'mimes:png,jpg,jpeg,gif',
-                'max:2048',
-                'dimensions:max_width=3200,max_height=3200',
-            ],
         ];
 
         // 驗證
-        $validated = $request->validate($rules, trans('product'));
+        $validated = $request->validate($rules);
 
         $product = Product::create([
             'name' => $validated['name'],
@@ -68,21 +60,6 @@ class ProductController extends Controller
             'description' => $validated['description'],
             'user_id' => auth()->id(),
         ]);
-
-        // 處理圖片上傳
-        if ($request->hasFile('images')) {
-            foreach ($request->file('images') as $index => $image) {
-                if ($index >= 5) {
-                    break;
-                }
-
-                $compressedImage = (new \App\Services\CompressedImage)->uploadCompressedImage($image);
-
-                Storage::put($compressedImagePath = 'images/compressed_'.uniqid().'.jpg', $compressedImage->toJpeg(80));
-
-                $product->addMedia(Storage::path($compressedImagePath))->toMediaCollection('images');
-            }
-        }
 
         // 獲取並附加新的標籤
         $tagIds = [

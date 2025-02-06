@@ -9,5 +9,6 @@ Route::prefix('user')->name('user.')->middleware(['auth', 'verified'])->group(fu
     Route::post('products/{product}/reportables', [ProductReportableController::class, 'store'])
         ->name('products.reportables.store');
 
-    Route::post('products/processimage', [ProductProcessImageController::class, 'processImage']);
+    Route::post('/products/processimage', [ProductProcessImageController::class, 'processImage'])
+        ->name('products.processimage');
 });
