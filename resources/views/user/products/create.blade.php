@@ -238,7 +238,7 @@
                             window.location.reload();
                             return;
                         }
-
+                        phonesubmit
                         const text = await response.text();
                         try {
                             const data = JSON.parse(text);
@@ -339,10 +339,10 @@
             }
 
             const formData = new FormData(this);
-            
+
             // 移除自動生成的 imageOrder
             formData.delete('imageOrder');
-            
+
             // 添加圖片路徑
             const imageOrder = [];
             savedFiles.forEach((fileData, index) => {
@@ -382,7 +382,7 @@
                         window.location.reload();
                         return;
                     }
-                    
+
                     // 嘗試解析錯誤回應
                     return response.text().then(text => {
                         try {
