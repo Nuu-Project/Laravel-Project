@@ -34,7 +34,23 @@ class TagController extends Controller
 
     public function store(Request $request)
     {
-        $validatedData = $this->validateTag($request);
+        $validatedData = $request->validate([
+            'name' => [
+                'required', 'string', 'max:255',
+                Rule::unique('tags', 'name->zh_TW'),
+            ],
+            'slug' => [
+                'required', 'string', 'max:255', 'regex:/^[a-z]+$/',
+                Rule::unique('tags', 'slug->zh_TW'),
+            ],
+            'type' => 'required|string|max:255',
+            'order_column' => [
+                'required', 'integer',
+                Rule::unique('tags')
+                    ->where('type', $request->type),
+            ],
+        ]);
+
         Tag::create($validatedData);
 
         return redirect()
@@ -47,9 +63,28 @@ class TagController extends Controller
         return view('admin.tags.edit', compact('tag'));
     }
 
-    public function update(Request $request, Tag $tag)
+    public function update(Request $request, Tag $tag)//排除自己
     {
-        $validatedData = $this->validateTag($request);
+        $validatedData = $request->validate([
+            'name' => [
+                'required', 'string', 'max:255',
+                Rule::unique('tags', 'name->zh_TW')
+                    ->ignore($tag->id),
+            ],
+            'slug' => [
+                'required', 'string', 'max:255', 'regex:/^[a-z]+$/',
+                Rule::unique('tags', 'slug->zh_TW')
+                    ->ignore($tag->id),
+            ],
+            'type' => 'required|string|max:255',
+            'order_column' => [
+                'required', 'integer',
+                Rule::unique('tags')
+                    ->where('type', $tag->type)
+                    ->ignore($tag->id),
+            ],
+        ]);
+
         $tag->update($validatedData);
 
         return redirect()
@@ -73,19 +108,5 @@ class TagController extends Controller
         return redirect()
             ->route('admin.tags.index')
             ->with('success', '標籤已恢復');
-    }
-
-    private function validateTag(Request $request)
-    {
-        return $request->validate([
-            'name' => ['required', 'string', 'max:255', Rule::unique('tags', 'name->zh_TW')],
-            'slug' => ['required', 'string', 'max:255', 'regex:/^[a-z]+$/', Rule::unique('tags', 'slug->zh_TW')],
-            'type' => 'required|string|max:255',
-            'order_column' => [
-                'required',
-                'integer',
-                Rule::unique('tags')->where('type', $request->type),
-            ],
-        ]);
     }
 }
