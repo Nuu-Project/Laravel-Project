@@ -24,7 +24,7 @@ class ProductFactory extends Factory
             'user_id' => User::factory(),
             'name' => $this->faker->word(),  // 使用假數據生成器來生成商品名稱
             'price' => $this->faker->randomFloat(0, 10, 1000),  // 隨機生成價格，範圍10到1000
-            'description' => $this->faker->paragraph(),  // 隨機生成一段文字作為商品描述
+            'description' => $this->faker->text(50),  // 使用 text(50) 方法來限制 description 欄位為最多 50 個字
             'created_at' => now(),
             'updated_at' => now(),
         ];
