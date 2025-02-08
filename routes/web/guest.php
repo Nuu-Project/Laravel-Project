@@ -5,7 +5,7 @@ use App\Http\Controllers\Web\Guest\ProductController;
 use Illuminate\Support\Facades\Route;
 
 // 首頁
-Route::get('/', [HomeController::class, 'index'])
+Route::get('/', HomeController::class)
     ->name('dashboard');
 
 // 商品 瀏覽頁,洽談頁
