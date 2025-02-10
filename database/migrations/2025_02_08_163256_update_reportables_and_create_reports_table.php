@@ -44,6 +44,16 @@ class UpdateReportablesAndCreateReportsTable extends Migration
             DB::table('reportables')->where('id', $reportable->id)->update(['report_id' => $report_id]);
         }
 
+        Schema::table('reportables', function (Blueprint $table) {
+            if (Schema::hasColumn('reportables', 'report_type_id')) {
+                $table->dropForeign(['report_type_id']);
+            }
+
+            if (Schema::hasColumn('reportables', 'user_id')) {
+                $table->dropForeign(['user_id']);
+            }
+        });
+
         // 移除舊的唯一約束（如果存在）
         Schema::table('reportables', function (Blueprint $table) {
             $uniqueConstraints = DB::select("
@@ -69,12 +79,10 @@ class UpdateReportablesAndCreateReportsTable extends Migration
         // 移除多餘的欄位，並將 report_id 設為必填
         Schema::table('reportables', function (Blueprint $table) {
             if (Schema::hasColumn('reportables', 'report_type_id')) {
-                $table->dropForeign(['report_type_id']);
                 $table->dropColumn(['report_type_id']);
             }
 
             if (Schema::hasColumn('reportables', 'user_id')) {
-                $table->dropForeign(['user_id']);
                 $table->dropColumn(['user_id']);
             }
 
