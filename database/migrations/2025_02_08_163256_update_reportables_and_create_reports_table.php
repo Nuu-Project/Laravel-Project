@@ -15,13 +15,15 @@ class UpdateReportablesAndCreateReportsTable extends Migration
     public function up()
     {
         // 創建 reports 表
-        Schema::create('reports', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('report_type_id')->constrained('report_types');
-            $table->foreignId('user_id')->constrained('users');
-            $table->string('description', 255);
-            $table->timestamps();
-        });
+        if (! Schema::hasTable('reports')) {
+            Schema::create('reports', function (Blueprint $table) {
+                $table->id();
+                $table->foreignId('report_type_id')->constrained('report_types');
+                $table->foreignId('user_id')->constrained('users');
+                $table->string('description', 255);
+                $table->timestamps();
+            });
+        }
 
         // 添加 report_id 欄位到 reportables 表
         Schema::table('reportables', function (Blueprint $table) {
