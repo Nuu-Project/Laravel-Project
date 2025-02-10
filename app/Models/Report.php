@@ -3,13 +3,9 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Spatie\MediaLibrary\InteractsWithMedia;
 
 class Report extends Model
 {
-    use InteractsWithMedia, SoftDeletes;
-
     protected $fillable = [
         'report_type_id',
         'user_id',
