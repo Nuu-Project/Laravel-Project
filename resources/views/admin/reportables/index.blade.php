@@ -27,7 +27,7 @@
                             <x-tbody.gray-200>
                                 @foreach ($reportables as $reportable)
                                     <tr>
-                                        <x-td.gray-900>{{ $reportable->reportable->name }}</x-td.gray-900>
+                                        <x-td.gray-900>{{ $reportable->reportable ? $reportable->reportable->name : 'N/A' }}</x-td.gray-900>
                                         <x-td.gray-900>{{ json_decode($reportable->report->reportType->name, true)['zh_TW'] }}</x-td.gray-900>
                                         <x-td.gray-900>{{ $reportable->report->description }}</x-td.gray-900>
                                         <x-td.gray-900>{{ $reportable->report->user->email }}</x-td.gray-900>
