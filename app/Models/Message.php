@@ -27,6 +27,6 @@ class Message extends Model
 
     public function reports()
     {
-        return $this->morphToMany(report::class, 'reportable');
+        return $this->morphToMany(Report::class, 'reportable');
     }
 }
