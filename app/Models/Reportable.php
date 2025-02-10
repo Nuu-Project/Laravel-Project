@@ -6,20 +6,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class Reportable extends Model
 {
-    protected $fillable = ['report_type_id', 'reportable_id', 'reportable_type', 'user_id', 'description'];
+    protected $fillable = ['report_id', 'reportable_id', 'reportable_type'];
 
-    public function report_type()
+    public function report()
     {
-        return $this->belongsTo(ReportType::class);
+        return $this->belongsTo(Report::class);
     }
 
     public function reportable()
     {
         return $this->morphTo();
-    }
-
-    public function user()
-    {
-        return $this->belongsTo(User::class);
     }
 }
