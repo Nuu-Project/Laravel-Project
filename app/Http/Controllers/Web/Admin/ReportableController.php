@@ -23,7 +23,7 @@ class ReportableController extends Controller
                     });
                 }),
             ])
-            ->with(['reportable', 'report_type', 'user'])
+            ->with(['reportable', 'report', 'report.user', 'report.reportType'])
             ->paginate(10)
             ->withQueryString();
 
