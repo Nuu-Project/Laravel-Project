@@ -1,6 +1,6 @@
 <x-template-admin-layout>
 
-    <x-main.flex-container>
+    <x-flex-container>
         <x-div.container>
             <x-h.h3>新增管理員</x-h.h3>
 
@@ -71,5 +71,5 @@
                     });
                 </script>
         </x-div.container>
-    </x-main.flex-container>
+    </x-flex-container>
 </x-template-admin-layout>

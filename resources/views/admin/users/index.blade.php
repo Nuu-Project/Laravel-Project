@@ -2,7 +2,7 @@
     <script src="{{ asset('js/admin/user.js') }}"></script>
 
     <!-- 主要內容 -->
-    <x-main.flex-container>
+    <x-flex-container>
         <x-div.container>
             <x-h.h3>用戶管理</x-h.h3>
 
@@ -88,5 +88,5 @@
                 </div>
             </div>
         </x-div.container>
-    </x-main.flex-container>
+    </x-flex-container>
 </x-template-admin-layout>

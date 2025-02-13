@@ -6,7 +6,7 @@
 <x-template-user-layout>
 
     <!-- 主要內容 -->
-    <x-main.flex-container>
+    <x-flex-container>
         <x-div.container>
             @if (session('success'))
                 <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4"
@@ -133,5 +133,5 @@
                 </main>
             </div>
         </x-div.container>
-    </x-main.flex-container>
+    </x-flex-container>
 </x-template-user-layout>

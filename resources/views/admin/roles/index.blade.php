@@ -1,7 +1,7 @@
 <x-template-admin-layout>
     <script src="{{ asset('js/roles/index.js') }}"></script>
 
-    <x-main.flex-container>
+    <x-flex-container>
         <x-div.container>
             <x-h.h3>角色管理</x-h.h3>
 
@@ -51,7 +51,7 @@
                 </form>
             </div>
         </x-div.container>
-    </x-main.flex-container>
+    </x-flex-container>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {

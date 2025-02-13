@@ -5,7 +5,7 @@
 <x-template-admin-layout>
 
     <!-- 主要內容 -->
-    <x-main.flex-container>
+    <x-flex-container>
         <x-div.container>
             {{-- 添加提示訊息顯示 --}}
             @if (session('success'))
@@ -90,5 +90,5 @@
                 </div>
             </x-div.bg-white>
         </x-div.container>
-    </x-main.flex-container>
+    </x-flex-container>
 </x-template-admin-layout>
