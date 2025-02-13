@@ -53,7 +53,7 @@ class ProductController extends Controller
         ];
 
         // 驗證
-        $validated = $request->validate($rules);
+        $validated = $request->validate($rules, trans('product'));
 
         $product = Product::create([
             'name' => $validated['name'],
