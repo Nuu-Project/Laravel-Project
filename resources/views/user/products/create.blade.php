@@ -186,43 +186,55 @@
     </div>
 
     <script>
-        // 儲存已選擇的圖片檔案
-        let savedFiles = new Array(5).fill(null);
+        // 儲存已處理的圖片路徑
+        let processedImagePaths = new Array(5).fill(null);
 
-        function previewImage(input, number) {
+        async function previewImage(input, number) {
             const preview = document.getElementById('preview' + number);
             const placeholder = document.getElementById('placeholder' + number);
             const deleteButton = document.getElementById('deleteButton' + number);
             const file = input.files[0];
 
             if (file) {
-                const reader = new FileReader();
-                reader.onloadend = function() {
-                    preview.querySelector('img').src = reader.result;
-                    preview.classList.remove('hidden');
-                    placeholder.classList.add('hidden');
-                    deleteButton.classList.remove('hidden');
+                try {
+                    // 建立 FormData 物件
+                    const formData = new FormData();
+                    formData.append('image', file);
 
-                    // 儲存檔案資訊
-                    const savedImages = JSON.parse(sessionStorage.getItem('savedFiles') || '[]');
-                    savedImages[number] = {
-                        dataUrl: reader.result,
-                        name: file.name,
-                        type: file.type
-                    };
-                    sessionStorage.setItem('savedFiles', JSON.stringify(savedImages));
+                    // 發送圖片到處理 API
+                    const response = await fetch('/api/user/products/process-image', {
+                        method: 'POST',
+                        body: formData,
+                        headers: {
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                        }
+                    });
+
+                    const result = await response.json();
+
+                    if (result.success) {
+                        // 儲存加密後的圖片路徑
+                        processedImagePaths[number] = result.path;
+
+                        // 顯示預覽圖
+                        const reader = new FileReader();
+                        reader.onloadend = function() {
+                            preview.querySelector('img').src = reader.result;
+                            preview.classList.remove('hidden');
+                            placeholder.classList.add('hidden');
+                            deleteButton.classList.remove('hidden');
+                        }
+                        reader.readAsDataURL(file);
+                    } else {
+                        throw new Error('圖片處理失敗');
+                    }
+                } catch (error) {
+                    console.error('圖片上傳失敗:', error);
+                    alert('圖片上傳失敗，請重試');
+                    removeImage(number);
                 }
-                reader.readAsDataURL(file);
             } else {
-                preview.querySelector('img').src = '#';
-                preview.classList.add('hidden');
-                placeholder.classList.remove('hidden');
-                deleteButton.classList.add('hidden');
-
-                // 移除儲存的圖片
-                const savedImages = JSON.parse(sessionStorage.getItem('savedFiles') || '[]');
-                savedImages[number] = null;
-                sessionStorage.setItem('savedFiles', JSON.stringify(savedImages));
+                removeImage(number);
             }
         }
 
@@ -238,72 +250,38 @@
             imageInput.value = '';
             deleteButton.classList.add('hidden');
 
-            // 移除儲存的圖片
-            const savedImages = JSON.parse(sessionStorage.getItem('savedFiles') || '[]');
-            savedImages[index] = null;
-            sessionStorage.setItem('savedFiles', JSON.stringify(savedImages));
+            // 清除已處理的圖片路徑
+            processedImagePaths[index] = null;
         }
-
-        // 將 Base64 轉換為 File 物件
-        function dataURLtoFile(dataurl, filename) {
-            let arr = dataurl.split(','),
-                mime = arr[0].match(/:(.*?);/)[1],
-                bstr = atob(arr[1]),
-                n = bstr.length,
-                u8arr = new Uint8Array(n);
-            while (n--) {
-                u8arr[n] = bstr.charCodeAt(n);
-            }
-            return new File([u8arr], filename, {
-                type: mime
-            });
-        }
-
-        // 在頁面載入時恢復已保存的圖片
-        document.addEventListener('DOMContentLoaded', function() {
-            const savedImages = JSON.parse(sessionStorage.getItem('savedFiles') || '[]');
-
-            if (savedImages.length > 0) {
-                savedImages.forEach((imageData, index) => {
-                    if (imageData) {
-                        const preview = document.getElementById('preview' + index);
-                        const placeholder = document.getElementById('placeholder' + index);
-                        const deleteButton = document.getElementById('deleteButton' + index);
-                        const imageInput = document.getElementById('image' + index);
-
-                        if (preview && placeholder && deleteButton && imageInput) {
-                            // 恢復預覽圖片
-                            preview.querySelector('img').src = imageData.dataUrl;
-                            preview.classList.remove('hidden');
-                            placeholder.classList.add('hidden');
-                            deleteButton.classList.remove('hidden');
-
-                            // 恢復檔案輸入
-                            const file = dataURLtoFile(imageData.dataUrl, imageData.name);
-                            const container = new DataTransfer();
-                            container.items.add(file);
-                            imageInput.files = container.files;
-                        }
-                    }
-                });
-            }
-        });
-
-        // 表單提交成功後清除暫存
-        @if (session('success'))
-            sessionStorage.removeItem('savedFiles');
-        @endif
 
         // 監聽表單提交
-        document.querySelector('form').addEventListener('submit', function(e) {
-            const savedImages = JSON.parse(sessionStorage.getItem('savedFiles') || '[]');
-            const hasImages = savedImages.some(img => img !== null);
+        document.getElementById('productForm').addEventListener('submit', function(e) {
+            e.preventDefault();
 
-            // 檢查是否有選擇圖片
-            if (!hasImages) {
-                e.preventDefault();
+            // 檢查是否有處理過的圖片
+            const hasProcessedImages = processedImagePaths.some(path => path !== null);
+            if (!hasProcessedImages) {
                 alert('請至少上傳一張商品圖片');
+                return;
             }
+
+            // 移除所有舊的隱藏輸入欄位
+            const oldInputs = this.querySelectorAll('input[name^="encrypted_image_path"]');
+            oldInputs.forEach(input => input.remove());
+
+            // 為每個處理過的圖片創建隱藏的輸入欄位
+            processedImagePaths.forEach((path, index) => {
+                if (path) {
+                    const input = document.createElement('input');
+                    input.type = 'hidden';
+                    input.name = `encrypted_image_path[${index}]`;
+                    input.value = path;
+                    this.appendChild(input);
+                }
+            });
+
+            // 提交表單
+            this.submit();
         });
 
         // 拖曳功能
@@ -383,3 +361,5 @@
         </script>
     @endif
 </x-template-user-layout>
+
+<meta name="csrf-token" content="{{ csrf_token() }}">
