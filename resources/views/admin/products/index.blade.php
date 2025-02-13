@@ -55,7 +55,7 @@
                                     <x-gray-900>{{ $product->user->name }}</x-gray-900>
                                     <x-gray-900>{{ $product->created_at->format('Y/m/d') }}</x-gray-900>
                                     <x-gray-900>{{ $product->updated_at->format('Y/m/d') }}</x-gray-900>
-                                    <x-gray-900>{{ $product->report_types_count }}</x-gray-900>
+                                    <x-gray-900>{{ $product->reports_count }}</x-gray-900>
                                     <x-gray-900>
                                         <a href="{{ route('products.show', ['product' => $product->id]) }}">
                                             <x-button.blue-short>
@@ -72,7 +72,7 @@
                                         </form>
 
                                         <a
-                                            href="{{ route('admin.reports.index', ['filter[reportable_id]' => $product->id]) }}">
+                                            href="{{ route('admin.reportables.index', ['filter[reportable_id]' => $product->id]) }}">
                                             <x-button.red-short>
                                                 檢舉詳情
                                             </x-button.red-short>

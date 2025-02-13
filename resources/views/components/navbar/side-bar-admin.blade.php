@@ -1,7 +1,7 @@
 <!-- 左側邊欄 -->
 <div class="w-full md:w-64 bg-white shadow-md">
     <div class="p-4 text-2xl font-bold flex items-center">
-        <a href="/"> <class="flex items-center">
+        <a href="{{ route('dashboard') }}"> <class="flex items-center">
             <img src="{{ asset('images/book-4-fix.png') }}" alt="Logo" class="w-8 h-8 mr-2">
         </a>
         管理者後台
@@ -23,7 +23,7 @@
             <x-a.block-hover href="{{ route('admin.users.index') }}">用戶管理</x-a.block-hover>
             <x-a.block-hover href="{{ route('admin.messages.index') }}">留言管理</x-a.block-hover>
             <x-a.block-hover href="{{ route('admin.roles.index') }}">角色管理</x-a.block-hover>
-            <x-a.block-hover href="{{ route('admin.reports.index') }}">檢舉詳情</x-a.block-hover>
+            <x-a.block-hover href="{{ route('admin.reportables.index') }}">檢舉詳情</x-a.block-hover>
             <x-a.block-hover href="{{ route('admin.tags.index') }}">新增標籤與刪除標籤</x-a.block-hover>
         </div>
     </nav>

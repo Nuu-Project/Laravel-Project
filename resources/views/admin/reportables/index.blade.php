@@ -6,7 +6,7 @@
             <x-h.h3>檢舉詳情</x-h.h3>
 
             <div class="mb-8">
-                <form action="{{ route('admin.reports.index') }}" method="GET">
+                <form action="{{ route('admin.reportables.index') }}" method="GET">
                     <x-div.flex-container>
                         <x-h.h2 id="reviews-title">Reviews</x-h.h2>
                         <div>
@@ -23,15 +23,15 @@
                 <x-div.bg-white>
                     <div class="overflow-x-auto">
                         <x-table.gray-200>
-                            <x-thead.report />
+                            <x-thead.reportable />
                             <x-gray-200>
                                 @foreach ($reportables as $reportable)
                                     <tr>
-                                        <x-gray-900>{{ $reportable->reportable->name }}</x-gray-900>
-                                        <x-gray-900>{{ json_decode($reportable->report_type->name, true)['zh_TW'] }}</x-gray-900>
-                                        <x-gray-900>{{ $reportable->description }}</x-gray-900>
-                                        <x-gray-900>{{ $reportable->user->email }}</x-gray-900>
-                                        <x-gray-900>{{ $reportable->updated_at->format('Y-m-d') }}</x-gray-900>
+                                        <x-gray-900>{{ $reportable->reportable ? $reportable->reportable->name : 'N/A' }}</x-gray-900>
+                                        <x-gray-900>{{ json_decode($reportable->report->reportType->name, true)['zh_TW'] }}</x-gray-900>
+                                        <x-gray-900>{{ $reportable->report->description }}</x-gray-900>
+                                        <x-gray-900>{{ $reportable->report->user->email }}</x-gray-900>
+                                        <x-gray-900>{{ $reportable->report->updated_at->format('Y-m-d') }}</x-gray-900>
                                     </tr>
                                 @endforeach
                             </x-gray-200>

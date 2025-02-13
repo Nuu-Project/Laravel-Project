@@ -25,8 +25,8 @@ class Message extends Model
         return $this->belongsTo(Product::class);
     }
 
-    public function report_types()
+    public function reports()
     {
-        return $this->morphToMany(ReportType::class, 'reportable');
+        return $this->morphToMany(Report::class, 'reportable');
     }
 }
