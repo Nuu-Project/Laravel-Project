@@ -35,12 +35,12 @@
                                                 <input type="checkbox" name="user_ids[]" value="{{ $user->id }}"
                                                     class="form-checkbox h-4 w-4 text-blue-600">
                                             </td>
-                                            <x-td.gray-900>
+                                            <x-gray-900>
                                                 {{ $user->name }}
-                                            </x-td.gray-900>
-                                            <x-td.gray-900>
+                                            </x-gray-900>
+                                            <x-gray-900>
                                                 {{ $user->email }}
-                                            </x-td.gray-900>
+                                            </x-gray-900>
                                         </tr>
                                     @endif
                                 @endforeach

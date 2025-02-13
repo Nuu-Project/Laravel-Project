@@ -27,11 +27,11 @@
                             <x-gray-200>
                                 @foreach ($reportables as $reportable)
                                     <tr>
-                                        <x-td.gray-900>{{ $reportable->reportable->name }}</x-td.gray-900>
-                                        <x-td.gray-900>{{ json_decode($reportable->report_type->name, true)['zh_TW'] }}</x-td.gray-900>
-                                        <x-td.gray-900>{{ $reportable->description }}</x-td.gray-900>
-                                        <x-td.gray-900>{{ $reportable->user->email }}</x-td.gray-900>
-                                        <x-td.gray-900>{{ $reportable->updated_at->format('Y-m-d') }}</x-td.gray-900>
+                                        <x-gray-900>{{ $reportable->reportable->name }}</x-gray-900>
+                                        <x-gray-900>{{ json_decode($reportable->report_type->name, true)['zh_TW'] }}</x-gray-900>
+                                        <x-gray-900>{{ $reportable->description }}</x-gray-900>
+                                        <x-gray-900>{{ $reportable->user->email }}</x-gray-900>
+                                        <x-gray-900>{{ $reportable->updated_at->format('Y-m-d') }}</x-gray-900>
                                     </tr>
                                 @endforeach
                             </x-gray-200>

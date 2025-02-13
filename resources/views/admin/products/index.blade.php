@@ -51,13 +51,13 @@
                         <x-gray-200>
                             @foreach ($products as $product)
                                 <tr>
-                                    <x-td.gray-900>{{ $product->id }}</x-td.gray-900>
-                                    <x-td.gray-900>{{ $product->name }}</x-td.gray-900>
-                                    <x-td.gray-900>{{ $product->user->name }}</x-td.gray-900>
-                                    <x-td.gray-900>{{ $product->created_at->format('Y/m/d') }}</x-td.gray-900>
-                                    <x-td.gray-900>{{ $product->updated_at->format('Y/m/d') }}</x-td.gray-900>
-                                    <x-td.gray-900>{{ $product->report_types_count }}</x-td.gray-900>
-                                    <x-td.gray-900>
+                                    <x-gray-900>{{ $product->id }}</x-gray-900>
+                                    <x-gray-900>{{ $product->name }}</x-gray-900>
+                                    <x-gray-900>{{ $product->user->name }}</x-gray-900>
+                                    <x-gray-900>{{ $product->created_at->format('Y/m/d') }}</x-gray-900>
+                                    <x-gray-900>{{ $product->updated_at->format('Y/m/d') }}</x-gray-900>
+                                    <x-gray-900>{{ $product->report_types_count }}</x-gray-900>
+                                    <x-gray-900>
                                         <a href="{{ route('products.show', ['product' => $product->id]) }}">
                                             <x-button.blue-short>
                                                 前往
@@ -78,8 +78,8 @@
                                                 檢舉詳情
                                             </x-button.red-short>
                                         </a>
-                                        <x-td.gray-900>{{ $product->status->name() }}</x-td.gray-900>
-                                    </x-td.gray-900>
+                                        <x-gray-900>{{ $product->status->name() }}</x-gray-900>
+                                    </x-gray-900>
                                 </tr>
                             @endforeach
                         </x-gray-200>
