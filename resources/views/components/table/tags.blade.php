@@ -3,11 +3,11 @@
 <x-table.gray-200>
     <x-thead.gray-50>
         <tr>
-            <x-th.name>標籤名稱</x-th.name>
-            <x-th.name>上傳時間</x-th.name>
-            <x-th.name>最後修改時間</x-th.name>
-            <x-th.name>操作</x-th.name>
-            <x-th.name>狀態</x-th.name>
+            <x-name>標籤名稱</x-name>
+            <x-name>上傳時間</x-name>
+            <x-name>最後修改時間</x-name>
+            <x-name>操作</x-name>
+            <x-name>狀態</x-name>
         </tr>
     </x-thead.gray-50>
     <x-gray-200>

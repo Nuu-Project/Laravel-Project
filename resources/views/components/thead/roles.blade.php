@@ -1,9 +1,9 @@
 <div>
     <x-thead.gray-50>
         <tr>
-            <x-th.name>選擇</x-th.name>
-            <x-th.name>名稱</x-th.name>
-            <x-th.name>Email</x-th.name>
+            <x-name>選擇</x-name>
+            <x-name>名稱</x-name>
+            <x-name>Email</x-name>
         </tr>
     </x-thead.gray-50>
 </div>
