@@ -24,7 +24,7 @@
                     <div class="overflow-x-auto">
                         <x-table.gray-200>
                             <x-thead.report />
-                            <x-tbody.gray-200>
+                            <x-gray-200>
                                 @foreach ($reportables as $reportable)
                                     <tr>
                                         <x-td.gray-900>{{ $reportable->reportable->name }}</x-td.gray-900>
@@ -34,7 +34,7 @@
                                         <x-td.gray-900>{{ $reportable->updated_at->format('Y-m-d') }}</x-td.gray-900>
                                     </tr>
                                 @endforeach
-                            </x-tbody.gray-200>
+                            </x-gray-200>
                         </x-table.gray-200>
                     </div>
 

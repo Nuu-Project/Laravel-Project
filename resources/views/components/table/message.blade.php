@@ -10,7 +10,7 @@
             <x-th.name>刪除</x-th.name>
         </tr>
     </x-thead.gray-50>
-    <x-tbody.gray-200>
+    <x-gray-200>
         @foreach ($messages as $message)
             <tr>
                 <td class="px-6 py-4 whitespace-nowrap">
@@ -60,5 +60,5 @@
                 </td>
             </tr>
         @endforeach
-    </x-tbody.gray-200>
+    </x-gray-200>
 </x-table.gray-200>

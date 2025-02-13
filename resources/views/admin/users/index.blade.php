@@ -25,9 +25,9 @@
                     <div class="overflow-x-auto">
                         <x-table.gray-200>
                             <x-thead.user />
-                            <x-tbody.gray-200>
+                            <x-gray-200>
                                 <!-- Search results will be dynamically inserted here -->
-                            </x-tbody.gray-200>
+                            </x-gray-200>
                         </x-table.gray-200>
                     </div>
                 </x-div.bg-white>
@@ -38,7 +38,7 @@
                 <div class="overflow-x-auto">
                     <x-table.gray-200>
                         <x-thead.user />
-                        <x-tbody.gray-200>
+                        <x-gray-200>
                             @foreach ($users as $user)
                                 <tr>
                                     <td class="px-6 py-4 whitespace-nowrap">
@@ -79,7 +79,7 @@
                                     </td>
                                 </tr>
                             @endforeach
-                        </x-tbody.gray-200>
+                        </x-gray-200>
                     </x-table.gray-200>
 
                     <x-div.gray-200>

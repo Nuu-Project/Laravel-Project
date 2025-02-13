@@ -26,7 +26,7 @@
                         @csrf <!-- CSRF 保護 -->
                         <x-table.gray-200>
                             <x-thead.roles />
-                            <x-tbody.gray-200>
+                            <x-gray-200>
                                 @foreach ($users as $user)
                                     @if (!$user->hasRole('admin') && !$user->hasRole('user'))
                                         <tr>
@@ -44,7 +44,7 @@
                                         </tr>
                                     @endif
                                 @endforeach
-                            </x-tbody.gray-200>
+                            </x-gray-200>
                         </x-table.gray-200>
 
                         <!-- 分頁 -->

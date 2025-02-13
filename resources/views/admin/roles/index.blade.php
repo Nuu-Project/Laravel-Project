@@ -28,7 +28,7 @@
 
                     <x-table.gray-200>
                         <x-thead.roles />
-                        <x-tbody.gray-200>
+                        <x-gray-200>
                             @foreach ($users as $user)
                                 @if ($user->hasRole('admin'))
                                     <tr>
@@ -46,7 +46,7 @@
                                     </tr>
                                 @endif
                             @endforeach
-                        </x-tbody.gray-200>
+                        </x-gray-200>
                     </x-table.gray-200>
                 </form>
             </div>

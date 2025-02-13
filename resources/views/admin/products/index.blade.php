@@ -48,7 +48,7 @@
                 <div class="overflow-x-auto">
                     <x-table.gray-200>
                         <x-thead.products />
-                        <x-tbody.gray-200>
+                        <x-gray-200>
                             @foreach ($products as $product)
                                 <tr>
                                     <x-td.gray-900>{{ $product->id }}</x-td.gray-900>
@@ -82,7 +82,7 @@
                                     </x-td.gray-900>
                                 </tr>
                             @endforeach
-                        </x-tbody.gray-200>
+                        </x-gray-200>
                     </x-table.gray-200>
                     <x-div.gray-200>
                         {{ $products->links() }}
