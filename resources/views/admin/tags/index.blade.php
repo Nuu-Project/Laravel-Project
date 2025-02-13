@@ -1,7 +1,7 @@
 <x-template-admin-layout>
 
     <!-- 主要內容 -->
-    <x-main.flex-container>
+    <x-flex-container>
         <x-div.container>
             <x-h.h3>標籤管理</x-h.h3>
             <div class="p-4">
@@ -18,5 +18,5 @@
                 </div>
             </div>
         </x-div.container>
-    </x-main.flex-container>
+    </x-flex-container>
 </x-template-admin-layout>
