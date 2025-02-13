@@ -189,93 +189,40 @@
         // 儲存已選擇的圖片檔案
         let savedFiles = new Array(5).fill(null);
 
-        async function previewImage(input, number) {
+        function previewImage(input, number) {
             const preview = document.getElementById('preview' + number);
             const placeholder = document.getElementById('placeholder' + number);
             const deleteButton = document.getElementById('deleteButton' + number);
             const file = input.files[0];
 
             if (file) {
-                // 前端驗證
-                if (!file) {
-                    alert('請選擇圖片');
-                    removeImage(number);
-                    return;
-                }
-
-                // 檢查檔案大小
-                if (file.size > 2 * 1024 * 1024) {
-                    alert('圖片大小不能超過 2MB');
-                    removeImage(number);
-                    return;
-                }
-
-                // 檢查檔案類型
-                const validTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/jpg'];
-                if (!validTypes.includes(file.type)) {
-                    alert('圖片格式必須是 PNG、JPG、JPEG 或 GIF');
-                    removeImage(number);
-                    return;
-                }
-
-                try {
-                    const formData = new FormData();
-                    formData.append('image', file);
-
-                    const response = await fetch('/user/products/processimage', {
-                        method: 'POST',
-                        headers: {
-                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
-                            'Accept': 'application/json'
-                        },
-                        body: formData
-                    });
-
-                    // 檢查回應狀態
-                    if (!response.ok) {
-                        if (response.status === 419) {
-                            alert('會話已過期，請重新整理頁面');
-                            window.location.reload();
-                            return;
-                        }
-                        phonesubmit
-                        const text = await response.text();
-                        try {
-                            const data = JSON.parse(text);
-                            throw new Error(data.message || '圖片上傳失敗');
-                        } catch (e) {
-                            console.error('Response text:', text);
-                            throw new Error('系統錯誤，請重新整理頁面後再試');
-                        }
-                    }
-
-                    const data = await response.json();
-
-                    if (!data.success) {
-                        throw new Error(data.message || '圖片上傳失敗');
-                    }
-
-                    // 儲存路徑
-                    savedFiles[number] = {
-                        path: data.path
-                    };
-
-                    // 更新預覽
-                    preview.querySelector('img').src = `/storage/${data.path}`;
+                const reader = new FileReader();
+                reader.onloadend = function() {
+                    preview.querySelector('img').src = reader.result;
                     preview.classList.remove('hidden');
                     placeholder.classList.add('hidden');
                     deleteButton.classList.remove('hidden');
 
-                    // 更新圖片順序
-                    updatePositions();
-
-                } catch (error) {
-                    console.error('上傳錯誤:', error);
-                    alert(error.message || '圖片上傳失敗，請重試');
-                    removeImage(number);
+                    // 儲存檔案資訊
+                    const savedImages = JSON.parse(sessionStorage.getItem('savedFiles') || '[]');
+                    savedImages[number] = {
+                        dataUrl: reader.result,
+                        name: file.name,
+                        type: file.type
+                    };
+                    sessionStorage.setItem('savedFiles', JSON.stringify(savedImages));
                 }
+                reader.readAsDataURL(file);
             } else {
-                removeImage(number);
+                preview.querySelector('img').src = '#';
+                preview.classList.add('hidden');
+                placeholder.classList.remove('hidden');
+                deleteButton.classList.add('hidden');
+
+                // 移除儲存的圖片
+                const savedImages = JSON.parse(sessionStorage.getItem('savedFiles') || '[]');
+                savedImages[number] = null;
+                sessionStorage.setItem('savedFiles', JSON.stringify(savedImages));
             }
         }
 
@@ -291,124 +238,72 @@
             imageInput.value = '';
             deleteButton.classList.add('hidden');
 
-            // 清除儲存的路徑
-            savedFiles[index] = null;
+            // 移除儲存的圖片
+            const savedImages = JSON.parse(sessionStorage.getItem('savedFiles') || '[]');
+            savedImages[index] = null;
+            sessionStorage.setItem('savedFiles', JSON.stringify(savedImages));
         }
 
-        // 修改表單提交處理
-        document.getElementById('productForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-
-            // 前端表單驗證
-            const name = document.getElementById('name').value;
-            const price = document.getElementById('price').value;
-            const grade = document.getElementById('grade').value;
-            const semester = document.getElementById('semester').value;
-            const subject = document.getElementById('subject').value;
-            const category = document.getElementById('category').value;
-            const description = document.getElementById('description').value;
-
-            // 驗證必填欄位
-            if (!name) {
-                alert('請輸入書名');
-                return;
+        // 將 Base64 轉換為 File 物件
+        function dataURLtoFile(dataurl, filename) {
+            let arr = dataurl.split(','),
+                mime = arr[0].match(/:(.*?);/)[1],
+                bstr = atob(arr[1]),
+                n = bstr.length,
+                u8arr = new Uint8Array(n);
+            while (n--) {
+                u8arr[n] = bstr.charCodeAt(n);
             }
-            if (!price) {
-                alert('請輸入價格');
-                return;
-            }
-            if (!grade) {
-                alert('請選擇年級');
-                return;
-            }
-            if (!semester) {
-                alert('請選擇學期');
-                return;
-            }
-            if (!subject) {
-                alert('請選擇科目');
-                return;
-            }
-            if (!category) {
-                alert('請選擇課程類別');
-                return;
-            }
-            if (!description) {
-                alert('請輸入商品介紹');
-                return;
-            }
-
-            const formData = new FormData(this);
-
-            // 移除自動生成的 imageOrder
-            formData.delete('imageOrder');
-
-            // 添加圖片路徑
-            const imageOrder = [];
-            savedFiles.forEach((fileData, index) => {
-                if (fileData && fileData.path) {
-                    imageOrder.push({
-                        position: index,
-                        path: fileData.path
-                    });
-                }
+            return new File([u8arr], filename, {
+                type: mime
             });
+        }
 
-            // 確保至少有一張圖片
-            if (imageOrder.length === 0) {
-                alert('請至少上傳一張圖片');
-                return;
-            }
+        // 在頁面載入時恢復已保存的圖片
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedImages = JSON.parse(sessionStorage.getItem('savedFiles') || '[]');
 
-            formData.append('imageOrder', JSON.stringify(imageOrder));
+            if (savedImages.length > 0) {
+                savedImages.forEach((imageData, index) => {
+                    if (imageData) {
+                        const preview = document.getElementById('preview' + index);
+                        const placeholder = document.getElementById('placeholder' + index);
+                        const deleteButton = document.getElementById('deleteButton' + index);
+                        const imageInput = document.getElementById('image' + index);
 
-            // 移除原始的圖片檔案欄位
-            formData.delete('images[]');
+                        if (preview && placeholder && deleteButton && imageInput) {
+                            // 恢復預覽圖片
+                            preview.querySelector('img').src = imageData.dataUrl;
+                            preview.classList.remove('hidden');
+                            placeholder.classList.add('hidden');
+                            deleteButton.classList.remove('hidden');
 
-            // 提交表單
-            fetch(this.action, {
-                method: 'POST',
-                headers: {
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
-                    'Accept': 'application/json'
-                },
-                body: formData
-            })
-            .then(response => {
-                if (!response.ok) {
-                    // 檢查是否是認證問題
-                    if (response.status === 419) {
-                        alert('會話已過期，請重新整理頁面');
-                        window.location.reload();
-                        return;
-                    }
-
-                    // 嘗試解析錯誤回應
-                    return response.text().then(text => {
-                        try {
-                            // 嘗試解析為 JSON
-                            const data = JSON.parse(text);
-                            throw new Error(data.message || '提交失敗，請重試');
-                        } catch (e) {
-                            // 如果不是有效的 JSON，可能是其他錯誤
-                            console.error('Response text:', text);
-                            throw new Error('系統錯誤，請重新整理頁面後再試');
+                            // 恢復檔案輸入
+                            const file = dataURLtoFile(imageData.dataUrl, imageData.name);
+                            const container = new DataTransfer();
+                            container.items.add(file);
+                            imageInput.files = container.files;
                         }
-                    });
-                }
-                return response.json();
-            })
-            .then(data => {
-                if (data.success) {
-                    window.location.href = '{{ route('user.products.index') }}';
-                } else {
-                    alert(data.message || '提交失敗，請重試');
-                }
-            })
-            .catch(error => {
-                console.error('提交錯誤:', error);
-                alert(error.message || '表單提交失敗，請重試');
-            });
+                    }
+                });
+            }
+        });
+
+        // 表單提交成功後清除暫存
+        @if (session('success'))
+            sessionStorage.removeItem('savedFiles');
+        @endif
+
+        // 監聽表單提交
+        document.querySelector('form').addEventListener('submit', function(e) {
+            const savedImages = JSON.parse(sessionStorage.getItem('savedFiles') || '[]');
+            const hasImages = savedImages.some(img => img !== null);
+
+            // 檢查是否有選擇圖片
+            if (!hasImages) {
+                e.preventDefault();
+                alert('請至少上傳一張商品圖片');
+            }
         });
 
         // 拖曳功能
