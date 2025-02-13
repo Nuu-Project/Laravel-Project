@@ -9,6 +9,6 @@ Route::prefix('api')->name('api.')->middleware(['auth', 'verified'])->group(func
     Route::post('products/{product}/reportables', [ProductReportableController::class, 'store'])
         ->name('products.reportables.store');
 
-    Route::post('/products/process-image', [App\Http\Controllers\Api\User\ProductProcessImageController::class, 'processImage'])
+    Route::post('/products/process-image', [ProductProcessImageController::class, 'processImage'])
         ->name('products.process-image');
 });
