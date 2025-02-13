@@ -255,7 +255,7 @@
         }
 
         // 監聽表單提交
-        document.querySelector('form').addEventListener('submit', function(e) {
+        document.getElementById('productForm').addEventListener('submit', function(e) {
             e.preventDefault();
 
             // 檢查是否有處理過的圖片
@@ -264,6 +264,10 @@
                 alert('請至少上傳一張商品圖片');
                 return;
             }
+
+            // 移除所有舊的隱藏輸入欄位
+            const oldInputs = this.querySelectorAll('input[name^="encrypted_image_path"]');
+            oldInputs.forEach(input => input.remove());
 
             // 為每個處理過的圖片創建隱藏的輸入欄位
             processedImagePaths.forEach((path, index) => {
