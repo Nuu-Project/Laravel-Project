@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 
-class ProductReportableController extends Controller
+class ProductReportController extends Controller
 {
     public function store(Request $request, Product $product)
     {

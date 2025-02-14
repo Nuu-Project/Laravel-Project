@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\Web\Admin\MessageController;
 use App\Http\Controllers\Web\Admin\ProductController;
-use App\Http\Controllers\Web\Admin\ReportableController;
+use App\Http\Controllers\Web\Admin\ReportController;
 use App\Http\Controllers\Web\Admin\RoleController;
 use App\Http\Controllers\Web\Admin\TagController;
 use App\Http\Controllers\Web\Admin\UserController;
@@ -38,6 +38,6 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'verified', 'role:ad
         ->withTrashed();
 
     // 檢舉詳情頁
-    Route::get('/reportables', [ReportableController::class, 'index'])
+    Route::get('/reports', [ReportController::class, 'index'])
         ->name('reportables.index');
 });
