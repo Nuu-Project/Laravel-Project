@@ -202,7 +202,7 @@
                     formData.append('image', file);
 
                     // 發送圖片到處理 API
-                    const response = await fetch('/api/user/products/process-image', {
+                    const response = await fetch('/api/products/process-image', {
                         method: 'POST',
                         body: formData,
                         headers: {
