@@ -5,7 +5,7 @@
 <x-template-user-layout>
 
     <!-- 主要內容 -->
-    <x-main.flex-container>
+    <x-flex-container>
         <x-div.container>
             <div class="grid gap-6 md:gap-8">
                 <x-div.grid>
@@ -181,7 +181,7 @@
                 </form>
             </div>
         </x-div.container>
-    </x-main.flex-container>
+    </x-flex-container>
     </div>
     </div>
 
@@ -206,15 +206,9 @@
                         method: 'POST',
                         body: formData,
                         headers: {
-                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
-                        },
-                        // 確保包含認證資訊
-                        credentials: 'same-origin'
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                        }
                     });
-
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! status: ${response.status}`);
-                    }
 
                     const result = await response.json();
 
@@ -232,7 +226,7 @@
                         }
                         reader.readAsDataURL(file);
                     } else {
-                        throw new Error(result.message || '圖片處理失敗');
+                        throw new Error('圖片處理失敗');
                     }
                 } catch (error) {
                     console.error('圖片上傳失敗:', error);
