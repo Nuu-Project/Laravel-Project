@@ -15,9 +15,9 @@
             @endif
 
             @if (session('error'))
-                <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
+                <x-div.red role="alert">
                     <span class="block sm:inline">{{ session('error') }}</span>
-                </div>
+                </x-div.red>
             @endif
 
             <div class="flex items-center justify-between mb-6">
@@ -42,12 +42,12 @@
                                 <div class="space-y-2">
                                     <h4 class="font-semibold text-xl">商品名稱:{{ $product->name }}</h4>
                                     <div>
-                                        <h1 class="font-semibold text-sm">用戶名稱:{{ $product->user->name }}</h1>
+                                        <x-h.h1-small>用戶名稱:{{ $product->user->name }}</x-h.h1-small>
                                     </div>
                                     <div>
-                                        <h1 class="font-semibold text-sm">
+                                        <x-h.h1-small>
                                             目前狀態: {{ $product->status->name() }}
-                                        </h1>
+                                        </x-h.h1-small>
                                     </div>
                                 </div>
                                 <div class="mt-4">
@@ -73,7 +73,7 @@
                                     </div>
                                     <div class="flex items-center justify-between mb-8">
                                         <x-h.h6>年級 :
-                                            <span class="font-semibold text-gray-900 text-md md:text-lg">
+                                            <x-span.font-semibold>
                                                 @php
                                                     $gradeTag = $product->tags->firstWhere(
                                                         'type',
@@ -86,10 +86,10 @@
                                                 @endphp
                                                 {{ $gradeTag ? $gradeTag->name : '無' }}
                                                 {{ $semesterTag ? $semesterTag->name : '學期:無' }}
-                                            </span>
+                                            </x-span.font-semibold>
                                         </x-h.h6>
                                         <x-h.h6>課程 :
-                                            <span class="font-semibold text-gray-900 text-md md:text-lg">
+                                            <x-span.font-semibold>
                                                 @php
                                                     $categoryTag = $product->tags->firstWhere(
                                                         'type',
@@ -97,7 +97,7 @@
                                                     );
                                                 @endphp
                                                 {{ $categoryTag ? $categoryTag->name : '無' }}
-                                            </span>
+                                            </x-span.font-semibold>
                                         </x-h.h6>
                                     </div>
                                 </div>
