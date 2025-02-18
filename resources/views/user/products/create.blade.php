@@ -204,7 +204,7 @@
 
                     const result = await response.json();
 
-                    if (result.success) {測試
+                    if (result.success) {測試3
                         processedImagePaths[number] = result.path;
 
                         const reader = new FileReader();
