@@ -330,7 +330,7 @@
                 });
             });
         }
-
+測試
         function updatePositions() {
             const imageContainer = document.getElementById('imageContainer');
             const items = imageContainer.getElementsByClassName('relative');
