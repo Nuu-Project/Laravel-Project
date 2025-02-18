@@ -4,14 +4,12 @@ namespace App\Http\Controllers\Api\User;
 
 use App\Http\Controllers\Controller;
 use App\Models\Product;
-use App\Models\Report;
-use App\Models\Reportable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 
-class ProductReportableController extends Controller
+class ProductReportController extends Controller
 {
     public function store(Request $request, Product $product)
     {
@@ -35,16 +33,10 @@ class ProductReportableController extends Controller
             'description' => 'required|string|max:255',
         ]);
 
-        $report = Report::create([
+        $product->reports()->create([
             'report_type_id' => $request->input('report_type_id'),
             'user_id' => Auth::id(),
             'description' => $request->input('description'),
-        ]);
-
-        Reportable::create([
-            'report_id' => $report->id,
-            'reportable_id' => $product->id,
-            'reportable_type' => Product::class,
         ]);
 
         return response()->json(['status' => 'success']);

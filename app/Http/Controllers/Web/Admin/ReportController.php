@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 
-class ReportableController extends Controller
+class ReportController extends Controller
 {
     public function index()
     {

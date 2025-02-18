@@ -2,7 +2,7 @@
     <script src="{{ asset('js/admin/user.js') }}"></script>
 
     <!-- 主要內容 -->
-    <x-main.flex-container>
+    <x-flex-container>
         <x-div.container>
             <x-h.h3>用戶管理</x-h.h3>
 
@@ -25,9 +25,9 @@
                     <div class="overflow-x-auto">
                         <x-table.gray-200>
                             <x-thead.user />
-                            <x-tbody.gray-200>
+                            <x-gray-200>
                                 <!-- Search results will be dynamically inserted here -->
-                            </x-tbody.gray-200>
+                            </x-gray-200>
                         </x-table.gray-200>
                     </div>
                 </x-div.bg-white>
@@ -38,7 +38,7 @@
                 <div class="overflow-x-auto">
                     <x-table.gray-200>
                         <x-thead.user />
-                        <x-tbody.gray-200>
+                        <x-gray-200>
                             @foreach ($users as $user)
                                 <tr>
                                     <td class="px-6 py-4 whitespace-nowrap">
@@ -79,7 +79,7 @@
                                     </td>
                                 </tr>
                             @endforeach
-                        </x-tbody.gray-200>
+                        </x-gray-200>
                     </x-table.gray-200>
 
                     <x-div.gray-200>
@@ -88,5 +88,5 @@
                 </div>
             </div>
         </x-div.container>
-    </x-main.flex-container>
+    </x-flex-container>
 </x-template-admin-layout>

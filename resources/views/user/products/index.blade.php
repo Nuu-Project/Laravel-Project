@@ -6,13 +6,12 @@
 <x-template-user-layout>
 
     <!-- 主要內容 -->
-    <x-main.flex-container>
+    <x-flex-container>
         <x-div.container>
             @if (session('success'))
-                <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4"
-                    role="alert">
+                <x-div.green role="alert">
                     <span class="block sm:inline">{{ session('success') }}</span>
-                </div>
+                </x-div.green>
             @endif
 
             @if (session('error'))
@@ -73,7 +72,7 @@
                                         @endif
                                     </div>
                                     <div class="flex items-center justify-between mb-8">
-                                        <h6 class="font-black text-gray-600 text-sm md:text-lg">年級 :
+                                        <x-h.h6>年級 :
                                             <span class="font-semibold text-gray-900 text-md md:text-lg">
                                                 @php
                                                     $gradeTag = $product->tags->firstWhere(
@@ -88,8 +87,8 @@
                                                 {{ $gradeTag ? $gradeTag->name : '無' }}
                                                 {{ $semesterTag ? $semesterTag->name : '學期:無' }}
                                             </span>
-                                        </h6>
-                                        <h6 class="font-black text-gray-600 text-sm md:text-lg">課程 :
+                                        </x-h.h6>
+                                        <x-h.h6>課程 :
                                             <span class="font-semibold text-gray-900 text-md md:text-lg">
                                                 @php
                                                     $categoryTag = $product->tags->firstWhere(
@@ -99,7 +98,7 @@
                                                 @endphp
                                                 {{ $categoryTag ? $categoryTag->name : '無' }}
                                             </span>
-                                        </h6>
+                                        </x-h.h6>
                                     </div>
                                 </div>
                                 <div class="flex justify-center space-x-4 mt-6">
@@ -133,5 +132,5 @@
                 </main>
             </div>
         </x-div.container>
-    </x-main.flex-container>
+    </x-flex-container>
 </x-template-user-layout>

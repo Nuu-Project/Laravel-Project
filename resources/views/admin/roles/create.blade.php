@@ -1,6 +1,6 @@
 <x-template-admin-layout>
 
-    <x-main.flex-container>
+    <x-flex-container>
         <x-div.container>
             <x-h.h3>新增管理員</x-h.h3>
 
@@ -26,7 +26,7 @@
                         @csrf <!-- CSRF 保護 -->
                         <x-table.gray-200>
                             <x-thead.roles />
-                            <x-tbody.gray-200>
+                            <x-gray-200>
                                 @foreach ($users as $user)
                                     @if (!$user->hasRole('admin') && !$user->hasRole('user'))
                                         <tr>
@@ -35,16 +35,16 @@
                                                 <input type="checkbox" name="user_ids[]" value="{{ $user->id }}"
                                                     class="form-checkbox h-4 w-4 text-blue-600">
                                             </td>
-                                            <x-td.gray-900>
+                                            <x-gray-900>
                                                 {{ $user->name }}
-                                            </x-td.gray-900>
-                                            <x-td.gray-900>
+                                            </x-gray-900>
+                                            <x-gray-900>
                                                 {{ $user->email }}
-                                            </x-td.gray-900>
+                                            </x-gray-900>
                                         </tr>
                                     @endif
                                 @endforeach
-                            </x-tbody.gray-200>
+                            </x-gray-200>
                         </x-table.gray-200>
 
                         <!-- 分頁 -->
@@ -71,5 +71,5 @@
                     });
                 </script>
         </x-div.container>
-    </x-main.flex-container>
+    </x-flex-container>
 </x-template-admin-layout>
