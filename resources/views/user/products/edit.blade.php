@@ -211,7 +211,7 @@
                                 // 清除原來的圖片ID，因為我們現在有了新圖片
                                 imageIdInput.value = '';
                             }
-ooo
+
                             reader.onloadend = function() {
                                 preview.querySelector('img').src = reader.result;
                                 preview.classList.remove('hidden');
