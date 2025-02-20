@@ -204,7 +204,7 @@
 
                     const result = await response.json();
 
-                    if (result.success) {測試3
+                    if (result.success) {
                         processedImagePaths[number] = result.path;
 
                         const reader = new FileReader();
@@ -348,5 +348,3 @@
         </script>
     @endif
 </x-template-user-layout>
-
-<meta name="csrf-token" content="{{ csrf_token() }}">
