@@ -34,34 +34,25 @@
                     <input type="hidden" name="imageOrder" id="imageOrder">
                     <input type="hidden" name="deleted_image_ids" id="deletedImageIds" value="[]">
                     <x-div.grid>
-                        <label
-                            class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                            for="name">
+                        <x-label.form for="name">
                             書名
-                        </label>
-                        <input
-                            class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                            id="name" name="name" placeholder="請輸入書名" value="{{ $product->name }}"
+                        </x-label.form>
+                        <x-input.tags id="name" name="name" placeholder="請輸入書名" value="{{ $product->name }}"
                             maxlength="50" />
                         <x-input-error :messages="$errors->get('name')" class="mt-2" />
                     </x-div.grid>
                     <x-div.grid>
-                        <label
-                            class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                            for="price">
+                        <x-label.form for="price">
                             價格 (不可修改)
-                        </label>
-                        <input
-                            class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                            id="price" name="price" placeholder="輸入價格" type="number"
+                        </x-label.form>
+                        <x-input.tags id="price" name="price" placeholder="輸入價格" type="number"
                             value="{{ $product->price }}" readonly />
                         <x-input-error :messages="$errors->get('price')" class="mt-2" />
                     </x-div.grid>
 
                     <x-div.grid>
                         <label class="text-sm font-medium leading-none" for="grade">年級</label>
-                        <select id="grade" name="grade"
-                            class="w-full h-10 rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
+                        <x-select.form id="grade" name="grade">
                             <option value="" disabled @if (empty($product->grade)) selected @endif>
                                 選擇適用的年級...</option>
 
@@ -73,14 +64,13 @@
                                     </option>
                                 @endif
                             @endforeach
-                        </select>
+                        </x-select.form>
                         <x-input-error :messages="$errors->get('grade')" class="mt-2" />
                     </x-div.grid>
 
                     <x-div.grid>
                         <label class="text-sm font-medium leading-none" for="semester">學期</label>
-                        <select id="semester" name="semester"
-                            class="w-full h-10 rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
+                        <x-select.form id="semester" name="semester">
                             <option selected>選擇學期...</option>
                             @foreach ($tags as $tag)
                                 @if ($tag->type === Tagtype::Semester->value)
@@ -90,14 +80,13 @@
                                     </option>
                                 @endif
                             @endforeach
-                        </select>
+                        </x-select.form>
                         <x-input-error :messages="$errors->get('semester')" class="mt-2" />
                     </x-div.grid>
 
                     <x-div.grid>
                         <label class="text-sm font-medium leading-none" for="subject">科目</label>
-                        <select id="subject" name="subject"
-                            class="w-full h-10 rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
+                        <x-select.form id="subject" name="subject">
                             <option selected>選擇科目...</option>
                             @foreach ($tags as $tag)
                                 @if ($tag->type === Tagtype::Subject->value)
@@ -107,14 +96,13 @@
                                     </option>
                                 @endif
                             @endforeach
-                        </select>
+                        </x-select.form>
                         <x-input-error :messages="$errors->get('subject')" class="mt-2" />
                     </x-div.grid>
 
                     <x-div.grid>
                         <label class="text-sm font-medium leading-none" for="category">課程類別</label>
-                        <select id="category" name="category"
-                            class="w-full h-10 rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
+                        <x-select.form id="category" name="category">
                             <option selected>選擇課程類別...</option>
                             @foreach ($tags as $tag)
                                 @if ($tag->type === Tagtype::Category->value)
@@ -124,27 +112,23 @@
                                     </option>
                                 @endif
                             @endforeach
-                        </select>
+                        </x-select.form>
                         <x-input-error :messages="$errors->get('category')" class="mt-2" />
                     </x-div.grid>
 
                     <x-div.grid>
-                        <label
-                            class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                            for="description">
+                        <x-label.form for="description">
                             商品介紹 (最長50字)
-                        </label>
+                        </x-label.form>
                         <textarea
                             class="flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                             id="description" name="description" placeholder="請填寫有關該書的書況or使用情況等等~~" rows="4" maxlength = "50">{{ $product->description }}</textarea>
                         <x-input-error :messages="$errors->get('description')" class="mt-2" />
                     </x-div.grid>
                     <x-div.grid>
-                        <label
-                            class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                            for="image">
+                        <x-label.form for="image">
                             上傳圖片
-                        </label>
+                        </x-label.form>
 
                         <div id="imageContainer"
                             class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
@@ -159,8 +143,7 @@
                                         <div id="placeholder{{ $i }}"
                                             class="flex flex-col items-center justify-center pt-5 pb-6 {{ $product->getMedia('images')->sortBy('order_column')->values()->get($i) ? 'hidden' : '' }}">
                                             <svg class="w-8 h-8 mb-4 text-gray-500" aria-hidden="true"
-                                                xmlns="http://www.w3.org/2000/svg" fill="none"
-                                                viewBox="0 0 20 16">
+                                                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
                                                 <path stroke="currentColor" stroke-linecap="round"
                                                     stroke-linejoin="round" stroke-width="2"
                                                     d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2" />

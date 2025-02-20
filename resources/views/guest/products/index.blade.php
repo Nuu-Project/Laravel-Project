@@ -66,27 +66,27 @@
                                 @endif
                             </div>
                             <div class="flex items-center justify-between mb-8">
-                                <h6 class="font-black text-gray-600 text-sm md:text-lg">年級 :
-                                    <span class="font-semibold text-gray-900 text-md md:text-lg">
+                                <x-h.h6>年級 :
+                                    <x-span.font-semibold>
                                         @php
                                             $gradeTag = $product->tags->firstWhere('type', Tagtype::Grade->value);
                                             $semesterTag = $product->tags->firstWhere('type', Tagtype::Semester->value);
                                         @endphp
                                         {{ $gradeTag ? $gradeTag->name : '無' }}
                                         {{ $semesterTag ? $semesterTag->name : '學期:無' }}
-                                    </span>
-                                </h6>
-                                <h6 class="font-black text-gray-600 text-sm md:text-lg">課程 :
-                                    <span class="font-semibold text-gray-900 text-md md:text-lg">
+                                    </x-span.font-semibold>
+                                </x-h.h6>
+                                <x-h.h6>課程 :
+                                    <x-span.font-semibold>
                                         @php
                                             $categoryTag = $product->tags->firstWhere('type', Tagtype::Category->value);
                                         @endphp
                                         {{ $categoryTag ? $categoryTag->name : '無' }}
-                                    </span>
-                                </h6>
+                                    </x-span.font-semibold>
+                                </x-h.h6>
                             </div>
                         </div>
-                        <div class="flex items-center p-6">
+                        <div class="flex items-center pt-2 p-6">
                             <a href= "{{ route('products.show', ['product' => $product->id]) }}">
                                 <x-button.blue-short>
                                     洽談
