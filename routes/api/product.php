@@ -10,6 +10,5 @@ Route::name('api.')->middleware(['auth:sanctum', 'verified'])->group(function ()
         ->name('products.reportables.store');
 
     Route::post('/products/process-image', [ProductProcessImageController::class, 'processImage'])
-        ->middleware(['web'])
         ->name('products.process-image');
 });
