@@ -128,7 +128,7 @@
                             class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
                             @for ($i = 0; $i < 5; $i++)
                                 <div class="relative">
-                                    <input type="file" name="images[]" id="image{{ $i }}" class="hidden"
+                                    <input type="file" id="image{{ $i }}" class="hidden"
                                         accept="image/*" onchange="previewImage(this, {{ $i }})">
                                     <label for="image{{ $i }}"
                                         class="flex flex-col items-center justify-center w-full h-40 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
@@ -348,4 +348,3 @@
         </script>
     @endif
 </x-template-user-layout>
-再次測試
