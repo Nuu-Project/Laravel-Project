@@ -335,7 +335,7 @@
             document.getElementById('imageOrder').value = JSON.stringify(orderData);
         }
 
-        // 在 DOMContentLoaded 事件中初始化拖曳功能
+        //拖曳功能
         document.addEventListener('DOMContentLoaded', function() {
             initializeDragAndDrop();
             updatePositions();
