@@ -49,7 +49,8 @@ class ProductController extends Controller
             'semester' => ['required', Rule::exists('tags', 'id')->where('type', Tagtype::Semester)],
             'subject' => ['required', Rule::exists('tags', 'id')->where('type', Tagtype::Subject)],
             'category' => ['required', Rule::exists('tags', 'id')->where('type', Tagtype::Category)],
-            'images' => ['required', 'array', 'min:1', 'max:5'],
+            'encrypted_image_path' => ['required', 'array'],
+            'encrypted_image_path.*' => ['required', 'string'],
         ];
 
         // 驗證
@@ -62,18 +63,30 @@ class ProductController extends Controller
             'user_id' => auth()->id(),
         ]);
 
-        // 處理圖片上傳
         if ($request->has('encrypted_image_path')) {
-            // 解密圖片路徑
-            $decryptedImagePath = decrypt($request->input('encrypted_image_path'));
+            // 取出所有加密的圖片路徑
+            $encryptedPaths = $request->input('encrypted_image_path');
 
-            // 生成新的路徑
-            $newImagePath = 'images/compressed_'.uniqid().'.jpg';
-            // 移動圖片到新路徑
-            Storage::move($decryptedImagePath, $newImagePath);
+            // 遍歷所有的加密圖片
+            foreach ($encryptedPaths as $encryptedPath) {
+                // 解密圖片路徑
+                $decryptedImagePath = 'temp/'.decrypt($encryptedPath);
 
-            // 將圖片添加到媒體庫
-            $product->addMedia(Storage::path($newImagePath))->toMediaCollection('images');
+                // 讀取圖片內容
+                $fileContent = Storage::disk('local')->get($decryptedImagePath);
+
+                // 生成新路徑
+                $newImagePath = 'images/compressed_'.uniqid().'.jpg';
+
+                // 存儲圖片到 public 目錄
+                Storage::disk('public')->put($newImagePath, $fileContent);
+
+                // 將圖片添加到媒體庫
+                $product->addMedia(storage_path("app/public/{$newImagePath}"))->toMediaCollection('images');
+
+                // 刪除臨時圖片
+                Storage::disk('local')->delete($decryptedImagePath);
+            }
         }
 
         // 獲取並附加新的標籤
@@ -116,7 +129,8 @@ class ProductController extends Controller
             'semester' => ['required', Rule::exists('tags', 'id')->where('type', Tagtype::Semester)],
             'subject' => ['required', Rule::exists('tags', 'id')->where('type', Tagtype::Subject)],
             'category' => ['required', Rule::exists('tags', 'id')->where('type', Tagtype::Category)],
-            'images' => ['nullable', 'array', 'min:1', 'max:5'],
+            'encrypted_image_path' => ['required', 'array'],
+            'encrypted_image_path.*' => ['required', 'string'],
             'image_ids' => ['nullable', 'array', 'max:5'],
             'deleted_image_ids' => ['nullable', 'string'],
         ];
