@@ -1,10 +1,10 @@
 <div>
     <x-thead.gray-50>
         <tr>
-            <x-name>用戶名稱</x-name>
-            <x-name>檢舉</x-name>
-            <x-name>權限</x-name>
-            <x-name>停用</x-name>
+            <x-th>用戶名稱</x-th>
+            <x-th>檢舉</x-th>
+            <x-th>權限</x-th>
+            <x-th>停用</x-th>
         </tr>
     </x-thead.gray-50>
 </div>
