@@ -3,11 +3,11 @@
 <x-table.gray-200>
     <x-thead.gray-50>
         <tr>
-            <x-name>用戶名稱</x-name>
-            <x-name>商品</x-name>
-            <x-name>留言</x-name>
-            <x-name>留言日期</x-name>
-            <x-name>刪除</x-name>
+            <x-th>用戶名稱</x-th>
+            <x-th>商品</x-th>
+            <x-th>留言</x-th>
+            <x-th>留言日期</x-th>
+            <x-th>刪除</x-th>
         </tr>
     </x-thead.gray-50>
     <x-gray-200>

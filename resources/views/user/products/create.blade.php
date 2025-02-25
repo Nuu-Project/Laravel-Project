@@ -128,8 +128,8 @@
                             class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
                             @for ($i = 0; $i < 5; $i++)
                                 <div class="relative">
-                                    <input type="file" id="image{{ $i }}" class="hidden"
-                                        accept="image/*" onchange="previewImage(this, {{ $i }})">
+                                    <input type="file"id="image{{ $i }}" class="hidden" accept="image/*"
+                                        onchange="previewImage(this, {{ $i }})">
                                     <label for="image{{ $i }}"
                                         class="flex flex-col items-center justify-center w-full h-40 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
                                         <div id="placeholder{{ $i }}"
@@ -245,9 +245,10 @@
         document.getElementById('productForm').addEventListener('submit', function(e) {
             e.preventDefault();
 
-            // 檢查是否有處理過的圖片
-            const hasProcessedImages = processedImagePaths.some(path => path !== null);
-            if (!hasProcessedImages) {
+            // 過濾掉 null 值
+            const validPaths = processedImagePaths.filter(path => path !== null);
+
+            if (validPaths.length === 0) {
                 alert('請至少上傳一張商品圖片');
                 return;
             }
@@ -257,14 +258,12 @@
             oldInputs.forEach(input => input.remove());
 
             // 為每個處理過的圖片創建隱藏的輸入欄位
-            processedImagePaths.forEach((path, index) => {
-                if (path) {
-                    const input = document.createElement('input');
-                    input.type = 'hidden';
-                    input.name = `encrypted_image_path[]`;
-                    input.value = path;
-                    this.appendChild(input);
-                }
+            validPaths.forEach((path, index) => {
+                const input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = `encrypted_image_path[]`;
+                input.value = path;
+                this.appendChild(input);
             });
 
             // 提交表單
