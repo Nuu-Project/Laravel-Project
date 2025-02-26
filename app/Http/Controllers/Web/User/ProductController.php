@@ -121,7 +121,6 @@ class ProductController extends Controller
     {
         abort_unless($product->user_id == auth()->id(), 403, '您無權編輯此商品。');
 
-        // 基本驗證規則
         $rules = [
             'name' => ['required', 'string', 'max:50'],
             'description' => ['required', 'string', 'max:50'],
@@ -129,91 +128,65 @@ class ProductController extends Controller
             'semester' => ['required', Rule::exists('tags', 'id')->where('type', Tagtype::Semester)],
             'subject' => ['required', Rule::exists('tags', 'id')->where('type', Tagtype::Subject)],
             'category' => ['required', Rule::exists('tags', 'id')->where('type', Tagtype::Category)],
-            'encrypted_image_path' => ['required', 'array'],
+            'encrypted_image_path' => ['nullable', 'array'],
             'encrypted_image_path.*' => ['required', 'string'],
             'image_ids' => ['nullable', 'array', 'max:5'],
             'deleted_image_ids' => ['nullable', 'string'],
         ];
 
-        // 獲取要刪除的圖片 ID
-        $deletedImageIds = json_decode($request->input('deleted_image_ids', '[]'), true);
+        $request->validate($rules, trans('product'));
 
+        $deletedImageIds = json_decode($request->input('deleted_image_ids', '[]'), true);
         $existingImages = $product->getMedia('images');
 
-        $remainingImages = $existingImages->whereNotIn('id', $deletedImageIds);
-
-        // 檢查是否有新上傳的圖片
-        $newImages = collect($request->file('images', []))->filter();
-
-        // 計算最終的圖片數量
-        $totalImagesAfterUpdate = $remainingImages->count() + $newImages->count();
-
-        // 如果沒有任何圖片，添加必填驗證
-        if ($totalImagesAfterUpdate === 0) {
-            $rules['images'] = ['required', 'array', 'min:1'];
-            $messages['images.required'] = '請至少上傳一張商品圖片';
-            $messages['images.min'] = '請至少上傳一張商品圖片';
-        }
-
-        // 驗證
-        $request->validate($rules, trans('product'));
+        // 刪除標記為刪除的圖片
+        $existingImages->whereIn('id', $deletedImageIds)->each(function ($image) use ($product) {
+            if ($image->model_id === $product->id) {
+                $image->delete();
+            }
+        });
 
         // 更新產品資料
         $product->update($request->only(['name', 'description']));
 
-        // 刪除標記為刪除的圖片
-        $existingImages->whereIn('id', $deletedImageIds)->each->delete();
-
-        // 處理新上傳的圖片
-        $newImages->each(function ($image, $index) use ($product) {
-            try {
-                // 解密圖片路徑（假設路徑是加密的）
-                $decryptedImagePath = decrypt($image->getPathname());
-
-                // 生成新的路徑
-                $newImagePath = 'images/compressed_'.uniqid().'.jpg';
-
-                // 將圖片從解密後的路徑移動或複製到新的路徑
-                if (Storage::exists($decryptedImagePath)) {
-                    // 複製圖片到新路徑
-                    Storage::move($decryptedImagePath, $newImagePath);
-
-                    // 添加壓縮後的圖片到媒體集合
-                    $product->addMedia(Storage::path($newImagePath))
-                        ->withCustomProperties(['order_column' => $index + 1])
-                        ->toMediaCollection('images');
-                } else {
-                    \Log::error('解密後的圖片路徑無效：'.$decryptedImagePath);
+        if ($request->has('encrypted_image_path')) {
+            foreach ($request->input('encrypted_image_path') as $encryptedPath) {
+                try {
+                    $decryptedImagePath = 'temp/'.decrypt($encryptedPath);
+                    if (Storage::disk('local')->exists($decryptedImagePath)) {
+                        $fileContent = Storage::disk('local')->get($decryptedImagePath);
+                        $newImagePath = 'images/compressed_'.uniqid().'.jpg';
+                        Storage::disk('public')->put($newImagePath, $fileContent);
+                        $product->addMedia(storage_path("app/public/{$newImagePath}"))->toMediaCollection('images');
+                        Storage::disk('local')->delete($decryptedImagePath);
+                    } else {
+                        \Log::error("解密後的圖片不存在：{$decryptedImagePath}");
+                    }
+                } catch (\Exception $e) {
+                    \Log::error('圖片處理失敗：'.$e->getMessage());
                 }
-            } catch (\Exception $e) {
-                \Log::error('圖片處理失敗：'.$e->getMessage());
             }
-        });
+        }
 
-        // 更新現有圖片的順序
+        // 更新圖片順序
         $imageIds = $request->input('image_ids', []);
-        $existingImages->each(function ($image) use ($imageIds) {
+        foreach ($product->getMedia('images') as $image) {
             if (($index = array_search($image->id, $imageIds)) !== false) {
-                $image->order_column = $index + 1;
+                $image->setCustomProperty('order_column', $index + 1);
                 $image->save();
             }
-        });
+        }
 
-        // 獲取並附加新的標籤
+        // 更新標籤
         $tagIds = [
             $request->input('grade'),
             $request->input('semester'),
             $request->input('subject'),
             $request->input('category'),
         ];
-
-        // 同步標籤到產品
         $product->tags()->sync($tagIds);
-
-        // 保存更新後的產品資料
         $product->save();
 
-        // 重定向並返回成功消息
         return redirect()->route('user.products.index')->with('success', '商品更新成功！');
     }
 
