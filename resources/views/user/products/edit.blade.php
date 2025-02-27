@@ -27,8 +27,9 @@
                     </div>
                 @endif
 
-                <form class="grid gap-6" action="{{ route('user.products.update', ['product' => $product->id]) }}"
-                    method="POST" enctype="multipart/form-data">
+                <form id="productForm" class="grid gap-6"
+                    action="{{ route('user.products.update', ['product' => $product->id]) }}" method="POST"
+                    enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
                     <input type="hidden" name="imageOrder" id="imageOrder">
@@ -176,136 +177,79 @@
                     </x-div.grid>
 
                     <script>
-                        function previewImage(input, number) {
+                        // 全局變量
+                        let processedImagePaths = {};
+
+                        async function previewImage(input, number) {
                             const preview = document.getElementById('preview' + number);
                             const placeholder = document.getElementById('placeholder' + number);
                             const deleteButton = document.getElementById('deleteButton' + number);
-                            const imageIdInput = input.parentNode.querySelector('input[name="image_ids[]"]');
                             const file = input.files[0];
-                            const reader = new FileReader();
-
-                            // 只有當有新文件被選擇，且原來有圖片ID時，才標記原圖為刪除
-                            if (file && imageIdInput.value) {
-                                const deletedImageIds = JSON.parse(document.getElementById('deletedImageIds').value);
-                                if (!deletedImageIds.includes(imageIdInput.value)) {
-                                    deletedImageIds.push(imageIdInput.value);
-                                    document.getElementById('deletedImageIds').value = JSON.stringify(deletedImageIds);
-                                }
-                                // 清除原來的圖片ID，因為我們現在有了新圖片
-                                imageIdInput.value = '';
-                            }
-
-                            reader.onloadend = function() {
-                                preview.querySelector('img').src = reader.result;
-                                preview.classList.remove('hidden');
-                                placeholder.classList.add('hidden');
-                                deleteButton.classList.remove('hidden');
-                            }
 
                             if (file) {
-                                reader.readAsDataURL(file);
-                            } else {
-                                preview.querySelector('img').src = '#';
-                                preview.classList.add('hidden');
-                                placeholder.classList.remove('hidden');
-                                deleteButton.classList.add('hidden');
-                            }
-                        }
+                                try {
+                                    placeholder.innerHTML = '<div class="text-center">處理中...</div>';
 
-                        // 頁面加載時初始化預覽
-                        document.addEventListener('DOMContentLoaded', function() {
-                            @for ($i = 0; $i < 5; $i++)
-                                const preview{{ $i }} = document.getElementById('preview{{ $i }}');
-                                const placeholder{{ $i }} = document.getElementById('placeholder{{ $i }}');
-                                const deleteButton{{ $i }} = document.getElementById(
-                                    'deleteButton{{ $i }}');
-                                if (preview{{ $i }}.querySelector('img')?.src && preview{{ $i }}
-                                    .querySelector('img').src !== window.location.href + '#') {
-                                    preview{{ $i }}.classList.remove('hidden');
-                                    placeholder{{ $i }}.classList.add('hidden');
-                                    deleteButton{{ $i }}.classList.remove('hidden');
+                                    // 上傳並處理新圖片
+                                    const formData = new FormData();
+                                    formData.append('image', file);
+
+                                    const response = await fetch('/api/products/process-image', {
+                                        method: 'POST',
+                                        body: formData,
+                                        headers: {
+                                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                                        },
+                                        credentials: 'include'
+                                    });
+
+                                    const result = await response.json();
+
+                                    if (result.success) {
+                                        // 儲存處理後的圖片路徑
+                                        processedImagePaths[number] = result.path;
+
+                                        const reader = new FileReader();
+                                        reader.onloadend = function() {
+                                            preview.querySelector('img').src = reader.result;
+                                            preview.classList.remove('hidden');
+                                            placeholder.classList.add('hidden');
+                                            deleteButton.classList.remove('hidden');
+                                        }
+                                        reader.readAsDataURL(file);
+                                    } else {
+                                        console.error('圖片處理失敗:', result);
+                                        removeImage(number);
+                                    }
+                                } catch (error) {
+                                    console.error('上傳過程出錯:', error);
+                                    removeImage(number);
                                 }
-                            @endfor
-                        });
-
-                        function deleteImage(productId, imageId, index) {
-                            // 標記圖片為已刪除
-                            const deletedImageIds = JSON.parse(document.getElementById('deletedImageIds').value);
-                            if (imageId && !deletedImageIds.includes(imageId)) {
-                                deletedImageIds.push(imageId);
-                                document.getElementById('deletedImageIds').value = JSON.stringify(deletedImageIds);
+                            } else {
+                                removeImage(number);
                             }
-
-                            // 更新 UI
-                            removeImage(index);
-                            updatePositions();
                         }
 
-                        function removeImage(index) {
-                            const preview = document.getElementById(`preview${index}`);
-                            const placeholder = document.getElementById(`placeholder${index}`);
-                            const imageInput = document.getElementById(`image${index}`);
-                            const deleteButton = document.getElementById(`deleteButton${index}`);
+                        function removeImage(number) {
+                            const preview = document.getElementById(`preview${number}`);
+                            const placeholder = document.getElementById(`placeholder${number}`);
+                            const imageInput = document.getElementById(`image${number}`);
+                            const deleteButton = document.getElementById(`deleteButton${number}`);
 
-                            // 重置預覽圖
-                            preview.querySelector('img').src = '#';
+                            delete processedImagePaths[number];
+
+                            // 重置預覽圖片並隱藏整個預覽區域
+                            const previewImg = preview.querySelector('img');
+                            previewImg.removeAttribute('src');  // 移除 src 屬性而不是設置為 '#'
                             preview.classList.add('hidden');
 
-                            // 顯示佔位符
+                            // 顯示原本的 placeholder
                             placeholder.classList.remove('hidden');
 
-                            // 清空文件輸入
+                            // 重置文件輸入
                             imageInput.value = '';
-
-                            // 隱藏刪除按鈕
                             deleteButton.classList.add('hidden');
                         }
-                        // 修改表單提交處理邏輯
-                        document.querySelector('form').addEventListener('submit', function(event) {
-                            event.preventDefault();
-
-                            // 檢查必填欄位
-                            const requiredFields = ['name', 'description', 'grade', 'semester', 'category'];
-                            let allFieldsFilled = true;
-
-                            for (const fieldId of requiredFields) {
-                                const field = document.getElementById(fieldId);
-                                if (!field.value) {
-                                    allFieldsFilled = false;
-                                    break;
-                                }
-                            }
-
-                            // 檢查圖片
-                            let hasValidImage = false;
-                            const imageContainers = document.querySelectorAll('#imageContainer .relative');
-
-                            for (const container of imageContainers) {
-                                const preview = container.querySelector('[id^="preview"]');
-                                const imageInput = container.querySelector('input[type="file"]');
-                                const imageIdInput = container.querySelector('input[name="image_ids[]"]');
-
-                                if ((imageInput.files.length > 0) ||
-                                    (imageIdInput.value &&
-                                        !preview.classList.contains('hidden') &&
-                                        preview.querySelector('img')?.src &&
-                                        preview.querySelector('img').src !== '#')) {
-                                    hasValidImage = true;
-                                    break;
-                                }
-                            }
-
-                            if (!allFieldsFilled || !hasValidImage) {
-                                alert('請確保所有必填欄位都已填寫，且至少上傳一張商品圖片');
-                                return;
-                            }
-
-                            // 更新圖片順序
-                            updatePositions();
-
-                            // 提交表單
-                            this.submit();
-                        });
 
                         // 拖曳功能
                         function initializeDragAndDrop() {
@@ -382,6 +326,64 @@
                             initializeDragAndDrop();
                             updatePositions();
                         });
+
+                        // 修改表單提交監聽器
+                        document.getElementById('productForm').addEventListener('submit', function(e) {
+                            e.preventDefault();
+                            console.log('Form submitted'); // 調試用
+
+                            // 過濾掉空值，獲取有效的圖片路徑
+                            const validPaths = Object.values(processedImagePaths).filter(path => path);
+                            console.log('Valid paths:', validPaths); // 調試用
+
+                            // 檢查是否有圖片
+                            const hasExistingImages = Array.from(document.querySelectorAll('input[name="image_ids[]"]'))
+                                .some(input => input.value && !JSON.parse(document.getElementById('deletedImageIds').value)
+                                    .includes(input.value));
+
+                            if (!hasExistingImages && validPaths.length === 0) {
+                                alert('請至少上傳一張商品圖片');
+                                return;
+                            }
+
+                            // 移除任何現有的 encrypted_image_path 輸入
+                            this.querySelectorAll('input[name="encrypted_image_path[]"]').forEach(input => input.remove());
+
+                            // 為每個處理過的圖片創建隱藏的輸入欄位
+                            validPaths.forEach(path => {
+                                console.log('Adding path:', path); // 調試用
+                                const input = document.createElement('input');
+                                input.type = 'hidden';
+                                input.name = 'encrypted_image_path[]';
+                                input.value = path;
+                                this.appendChild(input);
+                            });
+
+                            // 更新圖片順序
+                            updatePositions();
+
+                            // 檢查表單數據
+                            const formData = new FormData(this);
+                            console.log('Form data:', Object.fromEntries(formData)); // 調試用
+
+                            // 提交表單
+                            this.submit();
+                        });
+
+                        function deleteImage(productId, imageId, number) {
+                            // 如果是已存在的圖片
+                            if (imageId) {
+                                // 更新要刪除的圖片ID列表
+                                const deletedImageIds = JSON.parse(document.getElementById('deletedImageIds').value || '[]');
+                                if (!deletedImageIds.includes(imageId)) {
+                                    deletedImageIds.push(imageId);
+                                    document.getElementById('deletedImageIds').value = JSON.stringify(deletedImageIds);
+                                }
+                            }
+
+                            // 清除該位置的圖片
+                            removeImage(number);
+                        }
                     </script>
                     <x-button.create-edit>
                         儲存修改
