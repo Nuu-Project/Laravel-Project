@@ -19,14 +19,13 @@
                             class="w-6 h-6">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
                         </svg>
-                        </x-button.arrow-r>
-                        <x-button.arrow-l id="rightArrow">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                stroke="currentColor" class="w-6 h-6">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M9 5l7 7-7 7" />
-                            </svg>
-                            </x-button.arrow-l>
+                    </x-button.arrow-r>
+                    <x-button.arrow-l id="rightArrow">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                            class="w-6 h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                        </svg>
+                    </x-button.arrow-l>
                 </div>
             @else
                 <div>沒有圖片</div>
@@ -127,6 +126,10 @@
                                                 {{ __('刪除') }}
                                             </x-dropdown-link>
                                         </form>
+                                        <x-dropdown-link href="#"
+                                            onclick="event.preventDefault(); reportMessage({{ $message->id }})">
+                                            {{ __('檢舉') }}
+                                        </x-dropdown-link>
                                     </x-slot>
                                 </x-dropdown>
                             @endif
