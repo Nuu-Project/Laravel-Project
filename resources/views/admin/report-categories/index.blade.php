@@ -9,7 +9,8 @@
             <div class="mb-8">
                 <x-div.flex-container>
                     <div class="p-4">
-                        <a href="{{ route('admin.report-categories.create') }}"><x-button.search>新增標籤</x-button.search></a>
+                        <a
+                            href="{{ route('admin.report-categories.create') }}"><x-button.search>新增標籤</x-button.search></a>
                     </div>
                     <div class="flex space-x-4">
                         <div class="flex items-center space-x-2">
@@ -62,20 +63,26 @@
                                             編輯
                                         </x-button.blue-short>
                                     </a>
-
-                                    <a href="#" class="inline">
-                                        <x-button.blue-short>
-                                            啟用
-                                        </x-button.blue-short>
-                                    </a>
-
-                                    <a href="#" class="inline">
-                                        <x-button.red-short>
-                                            刪除
-                                        </x-button.red-short>
-                                    </a>
+                                    @if (!is_null(1))
+                                        <form action="" method="POST" style="display:inline;">
+                                            @csrf
+                                            <x-button.blue-short>
+                                                啟用
+                                            </x-button.blue-short>
+                                        </form>
+                                    @else
+                                        <form action="" method="POST" style="display:inline;">
+                                            @csrf
+                                            @method('DELETE')
+                                            <x-button.red-short>
+                                                取消
+                                            </x-button.red-short>
+                                        </form>
+                                    @endif
                                 </x-gray-900>
-                                <x-gray-900>停用</x-gray-900>
+                                <x-gray-900>
+                                    {{ is_null(0) ? '啟用中' : '已停用' }}
+                                </x-gray-900>
                             </tr>
                         </x-gray-200>
                     </x-table.gray-200>
