@@ -3,7 +3,7 @@
     <!-- 主要內容 -->
     <x-flex-container>
         <x-div.container>
-            <x-h.h3>檢舉類別管理</x-h.h3>
+            <x-h.h3>檢舉類型管理</x-h.h3>
 
             <!-- 搜尋區塊在表格之前 -->
             <div class="mb-8">
@@ -13,7 +13,7 @@
                     </div>
                     <div class="flex space-x-4">
                         <div class="flex items-center space-x-2">
-                            <x-input.search type="text" name="filter[name]" placeholder="搜尋檢舉類別名稱...">
+                            <x-input.search type="text" name="filter[name]" placeholder="搜尋檢舉類型名稱...">
                             </x-input.search>
                             <x-button.search>
                                 搜尋
@@ -31,7 +31,7 @@
                             <tr>
                                 <th scope="col"
                                     class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    檢舉類別名稱
+                                    檢舉類型名稱
                                 </th>
                                 <th scope="col"
                                     class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">

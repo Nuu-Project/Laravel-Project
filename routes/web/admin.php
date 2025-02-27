@@ -41,17 +41,17 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'verified', 'role:ad
     Route::get('/reports', [ReportController::class, 'index'])
         ->name('reportables.index');
 
-    // 檢舉類別管理頁面(臨時路由)
+    // 檢舉類型管理頁面(臨時路由)
     Route::get('/report-categories', function() {
         return view('admin.report-categories.index');
     })->name('report-categories.index');
 
-    // 新增檢舉類別頁面(臨時路由)
+    // 新增檢舉類型頁面(臨時路由)
     Route::get('/report-categories/create', function() {
         return view('admin.report-categories.create');
     })->name('report-categories.create');
 
-    // 編輯檢舉類別頁面(臨時路由)
+    // 編輯檢舉類型頁面(臨時路由)
     Route::get('/report-categories/edit', function() {
         return view('admin.report-categories.edit');
     })->name('report-categories.edit');

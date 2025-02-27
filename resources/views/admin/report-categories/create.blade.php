@@ -3,7 +3,7 @@
     <!-- 主要內容 -->
     <x-flex-container>
         <x-div.container>
-            <x-h.h3>新增檢舉類別</x-h.h3>
+            <x-h.h3>新增檢舉類型</x-h.h3>
 
             <!-- 表單內容 -->
             <form id="reportCategoryForm" class="mt-8 space-y-6">
@@ -33,7 +33,7 @@
                 </x-div.grid>
 
                 <x-button.create-edit>
-                    確定新增檢舉類別
+                    確定新增檢舉類型
                 </x-button.create-edit>
             </form>
         </x-div.container>
