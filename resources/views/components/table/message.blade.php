@@ -7,6 +7,7 @@
             <x-th>商品</x-th>
             <x-th>留言</x-th>
             <x-th>留言日期</x-th>
+            <x-th>操作</x-th>
             <x-th>刪除</x-th>
         </tr>
     </x-thead.gray-50>
@@ -44,6 +45,17 @@
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                     {{ $message->created_at->format('Y-m-d H:i:s') }}</td>
+
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    <x-button.blue-short>
+                        前往
+                    </x-button.blue-short>
+
+                    <x-button.red-short>
+                        檢舉詳情
+                    </x-button.red-short>
+                </td>
+
                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                     @if ($message->product)
                         <form
