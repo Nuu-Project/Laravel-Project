@@ -23,8 +23,10 @@
             <x-a.block-hover href="{{ route('admin.users.index') }}">用戶管理</x-a.block-hover>
             <x-a.block-hover href="{{ route('admin.messages.index') }}">留言管理</x-a.block-hover>
             <x-a.block-hover href="{{ route('admin.roles.index') }}">角色管理</x-a.block-hover>
-            <x-a.block-hover href="{{ route('admin.reportables.index') }}">檢舉詳情</x-a.block-hover>
-            <x-a.block-hover href="{{ route('admin.tags.index') }}">新增標籤與刪除標籤</x-a.block-hover>
+            <x-a.block-hover href="{{ route('admin.reportables.index') }}">商品檢舉詳情</x-a.block-hover>
+            <x-a.block-hover href="{{ route('admin.message-reportables.index') }}">留言檢舉詳情</x-a.block-hover>
+            <x-a.block-hover href="{{ route('admin.tags.index') }}">新增與停用標籤</x-a.block-hover>
+            <x-a.block-hover href="{{ route('admin.report-categories.index') }}">新增與停用檢舉類型</x-a.block-hover>
         </div>
     </nav>
 </div>
