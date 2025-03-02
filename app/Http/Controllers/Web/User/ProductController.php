@@ -139,15 +139,29 @@ class ProductController extends Controller
         $deletedImageIds = json_decode($request->input('deleted_image_ids', '[]'), true);
         $existingImages = $product->getMedia('images');
 
-        // 刪除標記為刪除的圖片
-        $existingImages->whereIn('id', $deletedImageIds)->each(function ($image) use ($product) {
-            if ($image->model_id === $product->id) {
-                $image->delete();
-            }
-        });
+        $remainingImages = $existingImages->whereNotIn('id', $deletedImageIds);
+
+        // 檢查是否有新上傳的圖片
+        $newImages = collect($request->file('images', []))->filter();
+
+        // 計算最終的圖片數量
+        $totalImagesAfterUpdate = $remainingImages->count() + $newImages->count();
+
+        // 如果沒有任何圖片，添加必填驗證
+        if ($totalImagesAfterUpdate === 0) {
+            $rules['images'] = ['required', 'array', 'min:1'];
+            $messages['images.required'] = '請至少上傳一張商品圖片';
+            $messages['images.min'] = '請至少上傳一張商品圖片';
+        }
+
+        // 驗證
+        $request->validate($rules, trans('product'));
 
         // 更新產品資料
         $product->update($request->only(['name', 'description']));
+
+        // 刪除標記為刪除的圖片
+        $existingImages->whereIn('id', $deletedImageIds)->each->delete();
 
         if ($request->has('encrypted_image_path')) {
             foreach ($request->input('encrypted_image_path') as $encryptedPath) {
@@ -168,14 +182,17 @@ class ProductController extends Controller
             }
         }
 
-        // 更新圖片順序
+        // 過濾已刪除的 ID
         $imageIds = $request->input('image_ids', []);
-        foreach ($product->getMedia('images') as $image) {
-            if (($index = array_search($image->id, $imageIds)) !== false) {
-                $image->setCustomProperty('order_column', $index + 1);
+        $validImageIds = array_diff($imageIds, $deletedImageIds);
+
+        // 更新圖片的順序
+        $product->getMedia('images')->each(function ($image) use ($validImageIds) {
+            if (($index = array_search($image->id, $validImageIds)) !== false) {
+                $image->order_column = $index + 1;
                 $image->save();
             }
-        }
+        });
 
         // 更新標籤
         $tagIds = [
