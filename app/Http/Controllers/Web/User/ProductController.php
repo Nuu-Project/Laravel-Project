@@ -55,6 +55,7 @@ class ProductController extends Controller
 
         // 驗證
         $validated = $request->validate($rules, trans('product'));
+        $mediaDisk = config('filesystems.media_disk', 'public_images');
 
         $product = Product::create([
             'name' => $validated['name'],
@@ -76,13 +77,14 @@ class ProductController extends Controller
                 $fileContent = Storage::disk('local')->get($decryptedImagePath);
 
                 // 生成新路徑
-                $newImagePath = 'images/compressed_'.uniqid().'.jpg';
+                $newImagePath = 'compressed_'.uniqid().'.jpg';
 
                 // 存儲圖片到 public 目錄
-                Storage::disk('public')->put($newImagePath, $fileContent);
+                Storage::disk('public_images')->put($newImagePath, $fileContent);
 
                 // 將圖片添加到媒體庫
-                $product->addMedia(storage_path("app/public/{$newImagePath}"))->toMediaCollection('images');
+                $fullPath = Storage::disk($mediaDisk)->path($newImagePath);
+                $product->addMedia($fullPath)->toMediaCollection('images');
 
                 // 刪除臨時圖片
                 Storage::disk('local')->delete($decryptedImagePath);
@@ -135,6 +137,7 @@ class ProductController extends Controller
         ];
 
         $request->validate($rules, trans('product'));
+        $mediaDisk = config('filesystems.media_disk', 'public_images');
 
         $deletedImageIds = json_decode($request->input('deleted_image_ids', '[]'), true);
         $existingImages = $product->getMedia('images');
@@ -169,9 +172,9 @@ class ProductController extends Controller
                     $decryptedImagePath = 'temp/'.decrypt($encryptedPath);
                     if (Storage::disk('local')->exists($decryptedImagePath)) {
                         $fileContent = Storage::disk('local')->get($decryptedImagePath);
-                        $newImagePath = 'images/compressed_'.uniqid().'.jpg';
-                        Storage::disk('public')->put($newImagePath, $fileContent);
-                        $product->addMedia(storage_path("app/public/{$newImagePath}"))->toMediaCollection('images');
+                        $newImagePath = 'compressed_'.uniqid().'.jpg';
+                        $fullPath = Storage::disk($mediaDisk)->path($newImagePath);
+                        $product->addMedia($fullPath)->toMediaCollection('images');
                         Storage::disk('local')->delete($decryptedImagePath);
                     } else {
                         \Log::error("解密後的圖片不存在：{$decryptedImagePath}");
