@@ -110,10 +110,10 @@ class ProductController extends Controller
         abort_unless($product->user_id == auth()->id(), 403, '您無權編輯此商品。');
 
         $productTags = $product->tags;
-        $gradeTag = $productTags->where('type', Tagtype::Grade)->first();
-        $semesterTag = $productTags->where('type', Tagtype::Semester)->first();
-        $subjectTag = $productTags->where('type', Tagtype::Subject)->first();
-        $categoryTag = $productTags->where('type', Tagtype::Category)->first();
+        $gradeTag = $productTags->firstWhere('type', Tagtype::Grade->value);
+        $semesterTag = $productTags->firstWhere('type', Tagtype::Semester->value);
+        $subjectTag = $productTags->firstWhere('type', Tagtype::Subject->value);
+        $categoryTag = $productTags->firstWhere('type', Tagtype::Category->value);
         $tags = Tag::get();
 
         return view('user.products.edit', compact('product', 'tags', 'gradeTag', 'semesterTag', 'categoryTag', 'subjectTag'));
