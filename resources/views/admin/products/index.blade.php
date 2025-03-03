@@ -5,14 +5,13 @@
 <x-template-admin-layout>
 
     <!-- 主要內容 -->
-    <x-main.flex-container>
+    <x-flex-container>
         <x-div.container>
             {{-- 添加提示訊息顯示 --}}
             @if (session('success'))
-                <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4"
-                    role="alert">
+                <x-div.green role="alert">
                     <span class="block sm:inline">{{ session('success') }}</span>
-                </div>
+                </x-div.green>
             @endif
 
             @if (session('error'))
@@ -48,16 +47,16 @@
                 <div class="overflow-x-auto">
                     <x-table.gray-200>
                         <x-thead.products />
-                        <x-tbody.gray-200>
+                        <x-gray-200>
                             @foreach ($products as $product)
                                 <tr>
-                                    <x-td.gray-900>{{ $product->id }}</x-td.gray-900>
-                                    <x-td.gray-900>{{ $product->name }}</x-td.gray-900>
-                                    <x-td.gray-900>{{ $product->user->name }}</x-td.gray-900>
-                                    <x-td.gray-900>{{ $product->created_at->format('Y/m/d') }}</x-td.gray-900>
-                                    <x-td.gray-900>{{ $product->updated_at->format('Y/m/d') }}</x-td.gray-900>
-                                    <x-td.gray-900>{{ $product->report_types_count }}</x-td.gray-900>
-                                    <x-td.gray-900>
+                                    <x-gray-900>{{ $product->id }}</x-gray-900>
+                                    <x-gray-900>{{ $product->name }}</x-gray-900>
+                                    <x-gray-900>{{ $product->user->name }}</x-gray-900>
+                                    <x-gray-900>{{ $product->created_at->format('Y/m/d') }}</x-gray-900>
+                                    <x-gray-900>{{ $product->updated_at->format('Y/m/d') }}</x-gray-900>
+                                    <x-gray-900>{{ $product->reports_count }}</x-gray-900>
+                                    <x-gray-900>
                                         <a href="{{ route('products.show', ['product' => $product->id]) }}">
                                             <x-button.blue-short>
                                                 前往
@@ -78,11 +77,11 @@
                                                 檢舉詳情
                                             </x-button.red-short>
                                         </a>
-                                        <x-td.gray-900>{{ $product->status->name() }}</x-td.gray-900>
-                                    </x-td.gray-900>
+                                        <x-gray-900>{{ $product->status->name() }}</x-gray-900>
+                                    </x-gray-900>
                                 </tr>
                             @endforeach
-                        </x-tbody.gray-200>
+                        </x-gray-200>
                     </x-table.gray-200>
                     <x-div.gray-200>
                         {{ $products->links() }}
@@ -90,5 +89,5 @@
                 </div>
             </x-div.bg-white>
         </x-div.container>
-    </x-main.flex-container>
+    </x-flex-container>
 </x-template-admin-layout>

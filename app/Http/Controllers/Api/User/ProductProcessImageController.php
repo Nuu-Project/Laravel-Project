@@ -12,20 +12,18 @@ class ProductProcessImageController extends Controller
     {
         $image = $request->file('image');
 
-        $originalFilePath = Storage::disk('temp')->putFile('', $image);
-
         $compressedImage = (new \App\Services\CompressedImage)->uploadCompressedImage($image);
 
-        Storage::put($compressedImagePath = 'compressed_'.uniqid().'.jpg', $compressedImage->toJpeg(80));
+        $compressedImagePath = 'compressed_'.uniqid().'.jpg';
 
-        Storage::disk('temp')->delete($originalFilePath);
+        Storage::disk('temp')->put($compressedImagePath, $compressedImage->toJpeg(80));
 
-        encrypt($compressedImagePath);
+        $encryptedImagePath = encrypt($compressedImagePath);
 
         return response()->json([
             'success' => true,
             'message' => '圖片上傳成功',
-            'path' => $compressedImagePath,
+            'path' => $encryptedImagePath,
         ]);
     }
 }

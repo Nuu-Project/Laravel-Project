@@ -34,11 +34,11 @@
     </form>
 
 
-    <div class="flex flex-col w-full min-h-screen">
-        <main class="flex min-h-[calc(100vh_-_theme(spacing.16))] flex-1 flex-col gap-4 p-4 md:gap-8 md:p-10">
-            <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+    <div class="container mx-auto">
+        <main class="py-6">
+            <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3 max-w-7xl mx-auto px-4">
                 @foreach ($products as $product)
-                    <div class="rounded-lg border bg-card text-card-foreground shadow-sm" data-v0-t="card">
+                    <div class="rounded-lg border bg-card text-card-foreground shadow-sm max-w-sm mx-auto w-full" data-v0-t="card">
                         <div class="space-y-1.5 p-6">
                             <h4 class="font-semibold text-2xl mb-2">商品名稱:{{ $product->name }}</h4>
                             <div>
@@ -66,27 +66,27 @@
                                 @endif
                             </div>
                             <div class="flex items-center justify-between mb-8">
-                                <h6 class="font-black text-gray-600 text-sm md:text-lg">年級 :
-                                    <span class="font-semibold text-gray-900 text-md md:text-lg">
+                                <x-h.h6>年級 :
+                                    <x-span.font-semibold>
                                         @php
                                             $gradeTag = $product->tags->firstWhere('type', Tagtype::Grade->value);
                                             $semesterTag = $product->tags->firstWhere('type', Tagtype::Semester->value);
                                         @endphp
                                         {{ $gradeTag ? $gradeTag->name : '無' }}
                                         {{ $semesterTag ? $semesterTag->name : '學期:無' }}
-                                    </span>
-                                </h6>
-                                <h6 class="font-black text-gray-600 text-sm md:text-lg">課程 :
-                                    <span class="font-semibold text-gray-900 text-md md:text-lg">
+                                    </x-span.font-semibold>
+                                </x-h.h6>
+                                <x-h.h6>課程 :
+                                    <x-span.font-semibold>
                                         @php
                                             $categoryTag = $product->tags->firstWhere('type', Tagtype::Category->value);
                                         @endphp
                                         {{ $categoryTag ? $categoryTag->name : '無' }}
-                                    </span>
-                                </h6>
+                                    </x-span.font-semibold>
+                                </x-h.h6>
                             </div>
                         </div>
-                        <div class="flex items-center p-6">
+                        <div class="flex items-center pt-2 p-6">
                             <a href= "{{ route('products.show', ['product' => $product->id]) }}">
                                 <x-button.blue-short>
                                     洽談

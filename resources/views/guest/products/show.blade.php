@@ -14,20 +14,18 @@
                     @endforeach
 
                     {{-- 左右箭頭 --}}
-                    <button id="leftArrow"
-                        class="absolute left-0 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-r">
+                    <x-button.arrow-r id="leftArrow">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
                             class="w-6 h-6">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
                         </svg>
-                    </button>
-                    <button id="rightArrow"
-                        class="absolute right-0 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-l">
+                    </x-button.arrow-r>
+                    <x-button.arrow-l id="rightArrow">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
                             class="w-6 h-6">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
                         </svg>
-                    </button>
+                    </x-button.arrow-l>
                 </div>
             @else
                 <div>沒有圖片</div>
@@ -58,7 +56,7 @@
                 <button id="reportButton"
                     class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded flex-shrink-0"
                     data-reports='@json($reports->toArray())'
-                    data-store-url="{{ route('user.products.reportables.store', ['product' => $product->id]) }}"
+                    data-store-url="{{ route('api.products.reportables.store', ['product' => $product->id]) }}"
                     data-product-id="{{ $product->id }}">
                     檢舉
                 </button>
@@ -128,6 +126,10 @@
                                                 {{ __('刪除') }}
                                             </x-dropdown-link>
                                         </form>
+                                        <x-dropdown-link href="#"
+                                            onclick="event.preventDefault(); reportMessage({{ $message->id }})">
+                                            {{ __('檢舉') }}
+                                        </x-dropdown-link>
                                     </x-slot>
                                 </x-dropdown>
                             @endif

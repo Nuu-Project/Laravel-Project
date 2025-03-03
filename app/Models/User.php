@@ -68,8 +68,8 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Message::class);
     }
 
-    public function report_types()
+    public function reports()
     {
-        return $this->morphToMany(ReportType::class, 'reportable');
+        return $this->morphToMany(Report::class, 'reportable');
     }
 }

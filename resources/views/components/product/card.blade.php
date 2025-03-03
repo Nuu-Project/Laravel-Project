@@ -55,7 +55,5 @@
 
         <a href="{{ route('products.index', ['tags' => ['introduction-to-computer-science']]) }}"
             class="px-6 py-4 bg-info font-semibold text-white text-lg rounded-xl hover:bg-blue-700 transition ease-in-out duration-500">前往了解</a>
-</div>
-</div>
-</section>
+    </section>
 </div>

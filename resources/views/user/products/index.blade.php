@@ -6,23 +6,22 @@
 <x-template-user-layout>
 
     <!-- 主要內容 -->
-    <x-main.flex-container>
+    <x-flex-container>
         <x-div.container>
             @if (session('success'))
-                <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4"
-                    role="alert">
+                <x-div.green role="alert">
                     <span class="block sm:inline">{{ session('success') }}</span>
-                </div>
+                </x-div.green>
             @endif
 
             @if (session('error'))
-                <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
+                <x-div.red role="alert">
                     <span class="block sm:inline">{{ session('error') }}</span>
-                </div>
+                </x-div.red>
             @endif
 
             <div class="flex items-center justify-between mb-6">
-                <h3 id="users-title" class="text-3xl font-medium text-gray-900">我的商品</h3>
+                <h3 id="users-title" class="text-2xl font-medium text-gray-900">我的商品</h3>
                 <form action="{{ route('user.products.index') }}" method="GET">
                     <div>
                         <x-input.search type="text" name="filter[name]" placeholder="搜尋商品名稱..."
@@ -43,12 +42,12 @@
                                 <div class="space-y-2">
                                     <h4 class="font-semibold text-xl">商品名稱:{{ $product->name }}</h4>
                                     <div>
-                                        <h1 class="font-semibold text-sm">用戶名稱:{{ $product->user->name }}</h1>
+                                        <x-h.h1-small>用戶名稱:{{ $product->user->name }}</x-h.h1-small>
                                     </div>
                                     <div>
-                                        <h1 class="font-semibold text-sm">
+                                        <x-h.h1-small>
                                             目前狀態: {{ $product->status->name() }}
-                                        </h1>
+                                        </x-h.h1-small>
                                     </div>
                                 </div>
                                 <div class="mt-4">
@@ -73,8 +72,8 @@
                                         @endif
                                     </div>
                                     <div class="flex items-center justify-between mb-8">
-                                        <h6 class="font-black text-gray-600 text-sm md:text-lg">年級 :
-                                            <span class="font-semibold text-gray-900 text-md md:text-lg">
+                                        <x-h.h6>年級 :
+                                            <x-span.font-semibold>
                                                 @php
                                                     $gradeTag = $product->tags->firstWhere(
                                                         'type',
@@ -87,10 +86,10 @@
                                                 @endphp
                                                 {{ $gradeTag ? $gradeTag->name : '無' }}
                                                 {{ $semesterTag ? $semesterTag->name : '學期:無' }}
-                                            </span>
-                                        </h6>
-                                        <h6 class="font-black text-gray-600 text-sm md:text-lg">課程 :
-                                            <span class="font-semibold text-gray-900 text-md md:text-lg">
+                                            </x-span.font-semibold>
+                                        </x-h.h6>
+                                        <x-h.h6>課程 :
+                                            <x-span.font-semibold>
                                                 @php
                                                     $categoryTag = $product->tags->firstWhere(
                                                         'type',
@@ -98,8 +97,8 @@
                                                     );
                                                 @endphp
                                                 {{ $categoryTag ? $categoryTag->name : '無' }}
-                                            </span>
-                                        </h6>
+                                            </x-span.font-semibold>
+                                        </x-h.h6>
                                     </div>
                                 </div>
                                 <div class="flex justify-center space-x-4 mt-6">
@@ -133,5 +132,5 @@
                 </main>
             </div>
         </x-div.container>
-    </x-main.flex-container>
+    </x-flex-container>
 </x-template-user-layout>

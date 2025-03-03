@@ -3,14 +3,15 @@
 <x-table.gray-200>
     <x-thead.gray-50>
         <tr>
-            <x-th.name>用戶名稱</x-th.name>
-            <x-th.name>商品</x-th.name>
-            <x-th.name>留言</x-th.name>
-            <x-th.name>留言日期</x-th.name>
-            <x-th.name>刪除</x-th.name>
+            <x-th>用戶名稱</x-th>
+            <x-th>商品</x-th>
+            <x-th>留言</x-th>
+            <x-th>留言日期</x-th>
+            <x-th>操作</x-th>
+            <x-th>刪除</x-th>
         </tr>
     </x-thead.gray-50>
-    <x-tbody.gray-200>
+    <x-gray-200>
         @foreach ($messages as $message)
             <tr>
                 <td class="px-6 py-4 whitespace-nowrap">
@@ -44,6 +45,17 @@
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                     {{ $message->created_at->format('Y-m-d H:i:s') }}</td>
+
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    <x-button.blue-short>
+                        前往
+                    </x-button.blue-short>
+
+                    <x-button.red-short>
+                        檢舉詳情
+                    </x-button.red-short>
+                </td>
+
                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                     @if ($message->product)
                         <form
@@ -60,5 +72,5 @@
                 </td>
             </tr>
         @endforeach
-    </x-tbody.gray-200>
+    </x-gray-200>
 </x-table.gray-200>

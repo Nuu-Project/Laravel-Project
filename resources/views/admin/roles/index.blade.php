@@ -1,7 +1,7 @@
 <x-template-admin-layout>
     <script src="{{ asset('js/roles/index.js') }}"></script>
 
-    <x-main.flex-container>
+    <x-flex-container>
         <x-div.container>
             <x-h.h3>角色管理</x-h.h3>
 
@@ -28,7 +28,7 @@
 
                     <x-table.gray-200>
                         <x-thead.roles />
-                        <x-tbody.gray-200>
+                        <x-gray-200>
                             @foreach ($users as $user)
                                 @if ($user->hasRole('admin'))
                                     <tr>
@@ -37,21 +37,21 @@
                                                 class="role-checkbox form-checkbox h-4 w-4 text-blue-600"
                                                 data-role="admin">
                                         </td>
-                                        <x-td.gray-900>
+                                        <x-gray-900>
                                             {{ $user->name }}
-                                        </x-td.gray-900>
-                                        <x-td.gray-900>
+                                        </x-gray-900>
+                                        <x-gray-900>
                                             {{ $user->email }}
-                                        </x-td.gray-900>
+                                        </x-gray-900>
                                     </tr>
                                 @endif
                             @endforeach
-                        </x-tbody.gray-200>
+                        </x-gray-200>
                     </x-table.gray-200>
                 </form>
             </div>
         </x-div.container>
-    </x-main.flex-container>
+    </x-flex-container>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {

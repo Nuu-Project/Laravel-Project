@@ -11,39 +11,37 @@
                     <p class="font-black text-gray-500 text-md md:text-xl mb-6 text-center lg:text-left">聯大二手書交易平台</p>
                 </div>
 
-                <div class="text-center lg:text-left space-y-7 mb-10 lg:mb-0">
+                <x-div.text-center>
                     <x-h.h4>STEP.1</x-h.h4>
                     <x-a.block-font-black href="/register">註冊帳戶</x-a.block-font-black>
                     <x-a.block-font-black href="/login">登入帳戶</x-a.block-font-black>
-                </div>
+                </x-div.text-center>
 
-                <div class="text-center lg:text-left space-y-7 mb-10 lg:mb-0">
+                <x-div.text-center>
                     <x-h.h4>STEP.2</x-h.h4>
                     <x-a.block-font-black href="{{ route('products.index') }}">點選菜單-商品</x-a.block-font-black>
                     <x-a.block-font-black href="{{ route('products.index') }}">瀏覽商品</x-a.block-font-black>
-                </div>
+                </x-div.text-center>
 
-                <div class="text-center lg:text-left space-y-7 mb-10 lg:mb-0">
+                <x-div.text-center>
                     <x-h.h4>STEP.3</x-h.h4>
 
-                    <p
-                        class="block font-black text-gray-800 text-sm md:text-lg hover:text-gray-1000 transition ease-in-out duration-300">
-                        私訊賣家</p>
+                    <x-p.font-black>
+                        私訊賣家</x-p.font-black>
 
-                    <p
-                        class="block font-black text-gray-800 text-sm md:text-lg hover:text-gray-1000 transition ease-in-out duration-300">
-                        完成交易</p>
-                </div>
+                    <x-p.font-black>
+                        完成交易</x-p.font-black>
+                </x-div.text-center>
 
-                <div class="text-center lg:text-left space-y-7 mb-10 lg:mb-0">
+                <x-div.text-center>
                     <x-h.h4>支持我們</x-h.h4>
 
-                    <a class="block font-black text-gray-800 text-sm md:text-lg hover:text-gray-1000 transition ease-in-out duration-300"
+                    <x-a.block-font-black
                         href="https://docs.google.com/forms/d/e/1FAIpQLSfJP4fi8V-8nQ0UgMyFncuDxUhzdtvfWmI050Z6F5y73ndhug/viewform?embedded=true">
                         <p>
                             回饋表單</p>
-                    </a>
-                </div>
+                    </x-a.block-font-black>
+                </x-div.text-center>
 
             </div>
         </x-div.container-screen>
