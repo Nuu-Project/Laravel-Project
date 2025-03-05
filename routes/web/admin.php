@@ -42,22 +42,22 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'verified', 'role:ad
         ->name('reportables.index');
 
     // 檢舉類型管理頁面(臨時路由)
-    Route::get('/report-categories', function() {
+    Route::get('/report-categories', function () {
         return view('admin.report-categories.index');
     })->name('report-categories.index');
 
     // 新增檢舉類型頁面(臨時路由)
-    Route::get('/report-categories/create', function() {
+    Route::get('/report-categories/create', function () {
         return view('admin.report-categories.create');
     })->name('report-categories.create');
 
     // 編輯檢舉類型頁面(臨時路由)
-    Route::get('/report-categories/edit', function() {
+    Route::get('/report-categories/edit', function () {
         return view('admin.report-categories.edit');
     })->name('report-categories.edit');
 
     // 留言檢舉頁面(臨時路由)
-    Route::get('/message-reportables', function() {
+    Route::get('/message-reportables', function () {
         return view('admin.message-reportables.index');
     })->name('message-reportables.index');
 });

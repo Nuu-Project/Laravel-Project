@@ -17,6 +17,9 @@ Route::prefix('user')->name('user.')->middleware(['auth', 'verified'])->group(fu
     Route::resource('products.messages', ProductMessageController::class)
         ->only(['store', 'edit', 'update', 'destroy']);
 
+    Route::post('/products/{product}/messages/{message}/reply', [ProductMessageController::class, 'reply'])
+        ->name('products.messages.reply');
+
     // 個人資料 頁面,修改密碼,刪除帳號
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
