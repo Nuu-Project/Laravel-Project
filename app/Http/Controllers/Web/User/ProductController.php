@@ -173,6 +173,7 @@ class ProductController extends Controller
                     if (Storage::disk('local')->exists($decryptedImagePath)) {
                         $fileContent = Storage::disk('local')->get($decryptedImagePath);
                         $newImagePath = 'compressed_'.uniqid().'.jpg';
+                        Storage::disk($mediaDisk)->put($newImagePath, $fileContent);
                         $fullPath = Storage::disk($mediaDisk)->path($newImagePath);
                         $product->addMedia($fullPath)->toMediaCollection('images');
                         Storage::disk('local')->delete($decryptedImagePath);
