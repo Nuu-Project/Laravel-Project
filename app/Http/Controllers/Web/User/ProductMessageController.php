@@ -58,4 +58,20 @@ class ProductMessageController extends Controller
         return redirect()->route('products.show', ['product' => $product])
             ->with('success', 'Review deleted successfully.');
     }
+
+    public function reply(Request $request, Product $product, Message $message): RedirectResponse
+    {
+        $validated = $request->validate([
+            'message' => ['required', 'string', 'max:255'],
+        ]);
+
+        // 建立回覆留言，並關聯到原始留言
+        $request->user()->messages()->create([
+            'message' => $validated['message'],
+            'product_id' => $product->id,
+            'reply_to_id' => $message->id, // 設定回覆的留言 ID
+        ]);
+
+        return redirect()->route('products.show', ['product' => $product]);
+    }
 }

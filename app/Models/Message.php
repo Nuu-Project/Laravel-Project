@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Message extends Model
 {
@@ -13,6 +14,7 @@ class Message extends Model
     protected $fillable = [
         'message',
         'product_id',
+        'reply_to_id',
     ];
 
     public function user(): BelongsTo
@@ -28,5 +30,10 @@ class Message extends Model
     public function reports()
     {
         return $this->morphToMany(Report::class, 'reportable');
+    }
+
+    public function replies()
+    {
+        return $this->hasMany(Message::class, 'reply_to_id');
     }
 }
