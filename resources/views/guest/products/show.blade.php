@@ -56,7 +56,7 @@
                 <button id="reportButton"
                     class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded flex-shrink-0"
                     data-reports='@json($reports->toArray())'
-                    data-store-url="{{ route('api.products.reportables.store', ['product' => $product->id]) }}"
+                    data-store-url="{{ route('api.products.report.store', ['product' => $product->id]) }}"
                     data-product-id="{{ $product->id }}">
                     檢舉
                 </button>
