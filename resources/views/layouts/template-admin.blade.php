@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="{{ asset('css/tailwind.css') }}">
     <link rel="stylesheet" href="{{ asset('css/message.css') }}">
     <link rel="stylesheet" href="{{ asset('css/info.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/reportables.css') }}">
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">

@@ -1,0 +1,49 @@
+.cat-tab {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s;
+}
+
+.cat-tab:hover {
+    box-shadow: 0 0 5px #ffc107;
+}
+
+.cat-tab.active {
+    background-color: #fff8e1 !important;
+    border-color: #ffca28 !important;
+}
+
+.cat-icon {
+    display: inline-block;
+    transition: transform 0.3s;
+    opacity: 0.5;
+}
+
+.cat-tab:hover .cat-icon {
+    transform: rotate(15deg);
+    opacity: 1;
+}
+
+.cat-tab.active .cat-icon {
+    opacity: 1;
+}
+
+/* 貓爪印特效 */
+@keyframes pawprint {
+    0% {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    100% {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+}
+
+.paw-print {
+    position: absolute;
+    font-size: 1.2rem;
+    pointer-events: none;
+    animation: pawprint 0.8s forwards;
+}
