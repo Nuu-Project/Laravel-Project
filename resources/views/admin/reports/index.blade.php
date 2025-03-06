@@ -37,7 +37,7 @@
                                 @foreach ($reportables as $reportable)
                                     <tr>
                                         <x-gray-900>{{ $reportable->reportable ? $reportable->reportable->name : 'N/A' }}</x-gray-900>
-                                        <x-gray-900>{{ json_decode($reportable->report->reportType->name, true)['zh_TW'] }}</x-gray-900>
+                                        <x-gray-900>{{ $reportable->report->reportType->name }}</x-gray-900>
                                         <x-gray-900>{{ $reportable->report->description }}</x-gray-900>
                                         <x-gray-900>{{ $reportable->report->user->email }}</x-gray-900>
                                         <x-gray-900>{{ $reportable->report->updated_at->format('Y-m-d') }}</x-gray-900>
