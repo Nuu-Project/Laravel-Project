@@ -134,7 +134,7 @@
                                 </x-dropdown>
                             @endif
                         </div>
-                        <p class="mt-4 text-lg text-gray-900">{{ $message->message }}</p>
+                        <p class="mt-4 text-lg text-gray-900 whitespace-pre-line">{{ $message->message }}</p>
 
                         <!-- 回覆按鈕 -->
                         <button onclick="toggleReplyForm({{ $message->id }})" class="mt-2 text-sm text-blue-500">
@@ -160,7 +160,7 @@
                                     <small
                                         class="ml-2 text-sm text-gray-600">{{ $reply->created_at->format('Y/m/d , H:i:s') }}</small>
                                 </div>
-                                <p class="mt-2 text-gray-900">{{ $reply->message }}</p>
+                                <p class="mt-2 text-gray-900 whitespace-pre-line">{{ $reply->message }}</p>
                             </div>
                         @endforeach
                     </div>
