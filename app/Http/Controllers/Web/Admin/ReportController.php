@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Web\Admin;
 
+use App\Enums\ReportType;
 use App\Http\Controllers\Controller;
 use App\Models\Reportable;
 use Illuminate\Database\Eloquent\Builder;
@@ -14,19 +15,35 @@ class ReportController extends Controller
     {
         $reportables = QueryBuilder::for(Reportable::class)
             ->allowedFilters([
-                AllowedFilter::callback('reportable_id', function (Builder $query, int $value) {
-                    $query->Where('reportable_id', $value);
+                'reportable_id',
+                AllowedFilter::callback('type', function (Builder $query, string $type) {
+                    if ($type === ReportType::Product->value()) {
+                        $query->whereHas('report.reportType', function ($query) {
+                            $query->where('type', ReportType::Product->value());
+                        });
+                    } elseif ($type === ReportType::Message->value()) {
+                        $query->whereHas('report.reportType', function ($query) {
+                            $query->where('type', ReportType::Message->value());
+                        });
+                    }
                 }),
                 AllowedFilter::callback('name', function (Builder $query, string $value) {
-                    $query->WhereHasMorph('reportable', ['App\Models\Message', 'App\Models\Product'], function ($query) use ($value) {
-                        $query->where('name', 'like', "%{$value}%");
-                    });
+                    $type = request('filter.type');
+                    if ($type === ReportType::Product->value()) {
+                        $query->whereHasMorph('reportable', ['App\Models\Product'], function ($query) use ($value) {
+                            $query->where('name', 'like', "%{$value}%");
+                        });
+                    } elseif ($type === ReportType::Message->value()) {
+                        $query->whereHasMorph('reportable', ['App\Models\Message'], function ($query) use ($value) {
+                            $query->where('message', 'like', "%{$value}%");
+                        });
+                    }
                 }),
             ])
             ->with(['reportable', 'report', 'report.user', 'report.reportType'])
             ->paginate(10)
             ->withQueryString();
 
-        return view('admin.reportables.index', compact('reportables'));
+        return view('admin.reports.index', compact('reportables'));
     }
 }
