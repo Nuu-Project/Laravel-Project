@@ -9,3 +9,4 @@ Route::get('/user', function (Request $request) {
 
 require __DIR__.'/api/product.php';
 require __DIR__.'/api/admin.php';
+require __DIR__.'/api/message.php';
