@@ -8,7 +8,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
-use App\Models\ReportType;
 
 class MessageReportController extends Controller
 {
@@ -42,8 +41,7 @@ class MessageReportController extends Controller
 
         return response()->json([
             'status' => 'success',
-            'message' => '留言檢舉成功'
+            'message' => '留言檢舉成功',
         ]);
     }
 }
-
