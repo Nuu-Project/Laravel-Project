@@ -122,7 +122,7 @@ window.reportMessage = function(messageId) {
     // 從DOM中獲取檢舉數據
     var reportLink = event.target.closest('x-dropdown-link');
     var reports = JSON.parse(document.getElementById('reportButton').dataset.reports);
-    var storeUrl = `/api/messages/${messageId}/report`;
+    var storeUrl = `/api/messages/${messageId}/reportables`;
 
     try {
         Swal.fire({

@@ -18,7 +18,7 @@ class ReportController extends Controller
                     $query->Where('reportable_id', $value);
                 }),
                 AllowedFilter::callback('name', function (Builder $query, string $value) {
-                    $query->WhereHasMorph('reportable', ['App\Models\Product'], function ($query) use ($value) {
+                    $query->WhereHasMorph('reportable', ['App\Models\Message', 'App\Models\Product'], function ($query) use ($value) {
                         $query->where('name', 'like', "%{$value}%");
                     });
                 }),
