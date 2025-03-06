@@ -44,7 +44,7 @@ class ProductController extends Controller
         $messages = $product->messages()->whereNull('reply_to_id')->with(['user', 'replies.user'])->oldest()->paginate(10);
 
         $reports = ReportType::where('type', '商品')->get()->mapWithKeys(function ($item) {
-            return [$item->id => json_decode($item->name, true)['zh_TW']];
+            return [$item->id => $item->name];
         });
 
         return view('guest.products.show', compact('messages', 'product', 'reports'));
