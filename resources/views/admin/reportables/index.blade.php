@@ -14,13 +14,11 @@
                     <div class="flex mr-4">
                         <button id="product-tab"
                             class="cat-tab px-4 py-2 mr-2 font-medium text-sm bg-white rounded-lg border border-gray-200 active"
-                            onclick="switchTab('product')">
-                            <span class="cat-icon ragdoll">🐱</span> 1 商品檢舉詳情
+                            onclick="switchTab('product')">商品檢舉詳情
                         </button>
                         <button id="message-tab"
                             class="cat-tab px-4 py-2 font-medium text-sm bg-gray-100 rounded-lg border border-gray-200"
-                            onclick="switchTab('message')">
-                            <span class="cat-icon">🐱</span> 2 留言檢舉詳情
+                            onclick="switchTab('message')">留言檢舉詳情
                         </button>
                     </div>
 
