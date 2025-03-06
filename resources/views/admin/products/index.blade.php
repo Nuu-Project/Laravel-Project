@@ -72,7 +72,7 @@
                                         </form>
 
                                         <a
-                                            href="{{ route('admin.reportables.index', ['filter[reportable_id]' => $product->id]) }}">
+                                            href="{{ route('admin.reports.index', ['filter[reportable_id]' => $product->id]) }}">
                                             <x-button.red-short>
                                                 檢舉詳情
                                             </x-button.red-short>

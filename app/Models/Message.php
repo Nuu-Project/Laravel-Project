@@ -13,6 +13,7 @@ class Message extends Model
     protected $fillable = [
         'message',
         'product_id',
+        'reply_to_id',
     ];
 
     public function user(): BelongsTo
@@ -28,5 +29,10 @@ class Message extends Model
     public function reports()
     {
         return $this->morphToMany(Report::class, 'reportable');
+    }
+
+    public function replies()
+    {
+        return $this->hasMany(Message::class, 'reply_to_id');
     }
 }

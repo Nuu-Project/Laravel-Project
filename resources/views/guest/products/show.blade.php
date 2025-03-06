@@ -135,6 +135,34 @@
                             @endif
                         </div>
                         <p class="mt-4 text-lg text-gray-900">{{ $message->message }}</p>
+
+                        <!-- 回覆按鈕 -->
+                        <button onclick="toggleReplyForm({{ $message->id }})" class="mt-2 text-sm text-blue-500">
+                            回覆
+                        </button>
+
+                        <!-- 回覆表單 (預設隱藏) -->
+                        <form id="replyForm{{ $message->id }}" method="POST"
+                            action="{{ route('user.products.messages.reply', ['product' => $product->id, 'message' => $message->id]) }}"
+                            class="mt-2 hidden">
+                            @csrf
+                            <textarea name="message" placeholder="{{ __('回覆留言...') }}"
+                                class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"></textarea>
+                            <x-input-error :messages="$errors->get('message')" class="mt-2" />
+                            <x-primary-button class="mt-2">{{ __('提交回覆') }}</x-primary-button>
+                        </form>
+
+                        <!-- 顯示回覆的留言 -->
+                        @foreach ($message->replies as $reply)
+                            <div class="ml-8 mt-4 p-4 bg-gray-50 rounded-lg">
+                                <div class="flex justify-between items-center">
+                                    <span class="text-gray-800">{{ $reply->user->name }}</span>
+                                    <small
+                                        class="ml-2 text-sm text-gray-600">{{ $reply->created_at->format('Y/m/d , H:i:s') }}</small>
+                                </div>
+                                <p class="mt-2 text-gray-900">{{ $reply->message }}</p>
+                            </div>
+                        @endforeach
                     </div>
                 </div>
             @endforeach
@@ -145,4 +173,14 @@
             </div>
         @endif
     </div>
+    <script>
+        function toggleReplyForm(messageId) {
+            const form = document.getElementById(`replyForm${messageId}`);
+            form.classList.toggle('hidden');
+            const textarea = form.querySelector('textarea');
+            if (!form.classList.contains('hidden')) {
+                textarea.focus(); // 聚焦到 textarea
+            }
+        }
+    </script>
 </x-template-layout>
