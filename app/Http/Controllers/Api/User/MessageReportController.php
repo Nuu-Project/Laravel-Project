@@ -32,15 +32,12 @@ class MessageReportController extends Controller
                     }),
             ],
             'description' => 'required|string|max:255',
-        ], [
-            'report_type_id.unique' => '您已經針對此留言回報過此類型的問題。'
         ]);
 
         $message->reports()->create([
             'report_type_id' => $request->input('report_type_id'),
             'user_id' => Auth::id(),
             'description' => $request->input('description', null),
-            // 'status' => 'pending'
         ]);
 
         return response()->json([
