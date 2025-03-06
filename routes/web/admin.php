@@ -3,6 +3,7 @@
 use App\Http\Controllers\Web\Admin\MessageController;
 use App\Http\Controllers\Web\Admin\ProductController;
 use App\Http\Controllers\Web\Admin\ReportController;
+use App\Http\Controllers\Web\Admin\ReportTypeController;
 use App\Http\Controllers\Web\Admin\RoleController;
 use App\Http\Controllers\Web\Admin\TagController;
 use App\Http\Controllers\Web\Admin\UserController;
@@ -41,18 +42,12 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'verified', 'role:ad
     Route::resource('/reports', ReportController::class)
         ->only(['index', 'show']);
 
-    // 檢舉類型管理頁面(臨時路由)
-    Route::get('/report-categories', function () {
-        return view('admin.report-categories.index');
-    })->name('report-categories.index');
-
-    // 新增檢舉類型頁面(臨時路由)
-    Route::get('/report-categories/create', function () {
-        return view('admin.report-categories.create');
-    })->name('report-categories.create');
-
-    // 編輯檢舉類型頁面(臨時路由)
-    Route::get('/report-categories/edit', function () {
-        return view('admin.report-categories.edit');
-    })->name('report-categories.edit');
+    // 檢舉類型 頁面,新增,修改,刪除
+    Route::resource('report_types', ReportTypeController::class)
+        ->except(['show'])
+        ->withTrashed();
+    // 檢舉類型 啟用
+    Route::post('/report_types/{report_type}/restore', [ReportTypeController::class, 'restore'])
+        ->name('report_types.restore')
+        ->withTrashed();
 });

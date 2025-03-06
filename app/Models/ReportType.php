@@ -4,10 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\Translatable\HasTranslations;
 
 class ReportType extends Model
 {
-    use HasFactory;
+    use HasFactory,HasTranslations, SoftDeletes;
 
     public function products()
     {
@@ -24,8 +26,11 @@ class ReportType extends Model
         return $this->morphedByMany(User::class, 'reportable');
     }
 
+    public $translatable = ['name'];
+
     protected $fillable = [
         'name',
         'type',
+        'order_column',
     ];
 }
