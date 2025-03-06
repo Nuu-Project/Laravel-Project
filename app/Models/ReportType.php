@@ -31,5 +31,6 @@ class ReportType extends Model
     protected $fillable = [
         'name',
         'type',
+        'order_column',
     ];
 }
