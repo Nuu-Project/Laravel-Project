@@ -88,51 +88,51 @@
                     </svg>
                     <div class="flex-1">
                         <div class="flex justify-between items-center">
-                            <div>
-                                <span class="text-gray-800">{{ $message->user->name }}</span>
-                                <small
-                                    class="ml-2 text-sm text-gray-600">{{ $message->created_at->format('Y/m/d , H:i:s') }}</small>
+                            <span class="text-gray-800">{{ $message->user->name }}</span>
+                            <div class="flex items-center">
+                                <small class="text-sm text-gray-600">{{ $message->created_at->format('Y/m/d , H:i:s') }}</small>
+                                <span class="mx-1"> </span>
                                 @unless ($message->created_at->eq($message->updated_at))
                                     <small class="text-sm text-gray-600"> &middot; {{ __('edited') }}</small>
                                 @endunless
-                            </div>
-                            @if ($message->user->is(auth()->user()))
-                                <x-dropdown>
-                                    <x-slot name="trigger">
-                                        <button>
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-400"
-                                                viewBox="0 0 20 20" fill="currentColor">
-                                                <path
-                                                    d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z" />
-                                            </svg>
-                                        </button>
-                                    </x-slot>
-                                    <x-slot name="content">
-                                        <x-dropdown-link :href="route('user.products.messages.edit', [
-                                            'product' => $product->id,
-                                            'message' => $message->id,
-                                        ])">
-                                            {{ __('更改') }}
-                                        </x-dropdown-link>
-                                        <form method="POST"
-                                            action="{{ route('user.products.messages.destroy', ['product' => $product->id, 'message' => $message->id]) }}">
-                                            @csrf
-                                            @method('delete')
-                                            <x-dropdown-link :href="route('user.products.messages.destroy', [
+                                @if ($message->user->is(auth()->user()))
+                                    <x-dropdown class="ml-2">
+                                        <x-slot name="trigger">
+                                            <button>
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-400"
+                                                    viewBox="0 0 20 20" fill="currentColor">
+                                                    <path
+                                                        d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z" />
+                                                </svg>
+                                            </button>
+                                        </x-slot>
+                                        <x-slot name="content">
+                                            <x-dropdown-link :href="route('user.products.messages.edit', [
                                                 'product' => $product->id,
                                                 'message' => $message->id,
-                                            ])"
-                                                onclick="event.preventDefault(); this.closest('form').submit();">
-                                                {{ __('刪除') }}
+                                            ])">
+                                                {{ __('更改') }}
                                             </x-dropdown-link>
-                                        </form>
-                                        <x-dropdown-link href="#"
-                                            onclick="event.preventDefault(); reportMessage({{ $message->id }})">
-                                            {{ __('檢舉') }}
-                                        </x-dropdown-link>
-                                    </x-slot>
-                                </x-dropdown>
-                            @endif
+                                            <form method="POST"
+                                                action="{{ route('user.products.messages.destroy', ['product' => $product->id, 'message' => $message->id]) }}">
+                                                @csrf
+                                                @method('delete')
+                                                <x-dropdown-link :href="route('user.products.messages.destroy', [
+                                                    'product' => $product->id,
+                                                    'message' => $message->id,
+                                                ])"
+                                                    onclick="event.preventDefault(); this.closest('form').submit();">
+                                                    {{ __('刪除') }}
+                                                </x-dropdown-link>
+                                            </form>
+                                            <x-dropdown-link href="#"
+                                                onclick="event.preventDefault(); reportMessage({{ $message->id }})">
+                                                {{ __('檢舉') }}
+                                            </x-dropdown-link>
+                                        </x-slot>
+                                    </x-dropdown>
+                                @endif
+                            </div>
                         </div>
                         <p class="mt-4 text-lg text-gray-900 whitespace-pre-line">{{ $message->message }}</p>
 
