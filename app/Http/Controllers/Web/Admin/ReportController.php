@@ -27,6 +27,6 @@ class ReportController extends Controller
             ->paginate(10)
             ->withQueryString();
 
-        return view('admin.reportables.index', compact('reportables'));
+        return view('admin.reports.index', compact('reportables'));
     }
 }

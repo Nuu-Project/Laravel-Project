@@ -38,8 +38,8 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'verified', 'role:ad
         ->withTrashed();
 
     // 檢舉詳情頁
-    Route::get('/reports', [ReportController::class, 'index'])
-        ->name('reportables.index');
+    Route::resource('/reports', ReportController::class)
+        ->only(['index', 'show']);
 
     // 檢舉類型管理頁面(臨時路由)
     Route::get('/report-categories', function () {
@@ -55,9 +55,4 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'verified', 'role:ad
     Route::get('/report-categories/edit', function () {
         return view('admin.report-categories.edit');
     })->name('report-categories.edit');
-
-    // 留言檢舉頁面(臨時路由)
-    Route::get('/message-reportables', function () {
-        return view('admin.message-reportables.index');
-    })->name('message-reportables.index');
 });

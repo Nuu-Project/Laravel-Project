@@ -1,52 +1,29 @@
 <x-template-admin-layout>
-    <script src="{{ asset('js/admin/reportables/reportables.js') }}"></script>
 
     <!-- 主要內容 -->
     <x-flex-container>
         <x-div.container>
             <x-h.h3>檢舉詳情</x-h.h3>
 
-            <!-- 共用的頂部信息和標籤按鈕 -->
-            <x-div.flex-container>
-                <x-h.h2 id="reviews-title">Reviews</x-h.h2>
-                <div class="flex items-center">
-                    <!-- 標籤按鈕 -->
-                    <div class="flex mr-4">
-                        <button id="product-tab"
-                            class="cat-tab px-4 py-2 mr-2 font-medium text-sm bg-white rounded-lg border border-gray-200 active"
-                            onclick="switchTab('product')">商品檢舉詳情
-                        </button>
-                        <button id="message-tab"
-                            class="cat-tab px-4 py-2 font-medium text-sm bg-gray-100 rounded-lg border border-gray-200"
-                            onclick="switchTab('message')">留言檢舉詳情
-                        </button>
+            <form action="{{ route('admin.reports.index') }}" method="GET">
+                <x-div.flex-container>
+                    <x-h.h2 id="reviews-title">Reviews</x-h.h2>
+                    <div>
+                        <select name="filter[type]">
+                            <option value="">
+                                商品</option>
+                            <option value="">
+                                留言</option>
+                        </select>
+                        <x-input.search type="text" name="filter[name]" placeholder="搜尋商品名稱或訊息..."
+                            value="{{ request('filter.name') }}">
+                        </x-input.search>
+                        <x-button.search>
+                            搜尋
+                        </x-button.search>
                     </div>
-
-                    <!-- 搜尋功能 - 商品 -->
-                    <div id="product-search">
-                        <form action="{{ route('admin.reportables.index') }}" method="GET" class="flex">
-                            <x-input.search type="text" name="filter[name]" placeholder="搜尋商品名稱..."
-                                value="{{ request('filter.name') }}">
-                            </x-input.search>
-                            <x-button.search>
-                                搜尋
-                            </x-button.search>
-                        </form>
-                    </div>
-
-                    <!-- 搜尋功能 - 留言 -->
-                    <div id="message-search" class="hidden">
-                        <form action="{{ route('admin.message-reportables.index') }}" method="GET" class="flex">
-                            <x-input.search type="text" name="filter[name]" placeholder="搜尋留言內容..."
-                                value="{{ request('filter.name') }}">
-                            </x-input.search>
-                            <x-button.search>
-                                搜尋
-                            </x-button.search>
-                        </form>
-                    </div>
-                </div>
-            </x-div.flex-container>
+                </x-div.flex-container>
+            </form>
 
             <!-- 商品檢舉詳情內容 -->
             <div id="product-content" class="mb-8 mt-4">
