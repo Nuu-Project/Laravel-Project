@@ -9,10 +9,12 @@
                 <x-div.flex-container>
                     <x-h.h2 id="reviews-title">Reviews</x-h.h2>
                     <div>
-                        <select name="filter[type]">
-                            <option value="">
+                        <select name="filter[type]" class="bg-gray text-primary-foreground px-4 py-2 rounded-md">
+                            <option value="{{ App\Enums\ReportType::Product->value() }}"
+                                {{ request('filter.type') === App\Enums\ReportType::Product->value() ? 'selected' : '' }}>
                                 商品</option>
-                            <option value="">
+                            <option value="{{ App\Enums\ReportType::Message->value() }}"
+                                {{ request('filter.type') === App\Enums\ReportType::Message->value() ? 'selected' : '' }}>
                                 留言</option>
                         </select>
                         <x-input.search type="text" name="filter[name]" placeholder="搜尋商品名稱或訊息..."
@@ -62,11 +64,11 @@
                                 @if (isset($messageReportables))
                                     @foreach ($messageReportables as $reportable)
                                         <tr>
-                                            <x-gray-900>{{ $reportable->reportable ? $reportable->reportable->name : 'N/A' }}</x-gray-900>
-                                            <x-gray-900>{{ json_decode($reportable->report->reportType->name, true)['zh_TW'] }}</x-gray-900>
-                                            <x-gray-900>{{ $reportable->report->description }}</x-gray-900>
-                                            <x-gray-900>{{ $reportable->report->user->email }}</x-gray-900>
-                                            <x-gray-900>{{ $reportable->report->updated_at->format('Y-m-d') }}</x-gray-900>
+                                            <x-gray-900></x-gray-900>
+                                            <x-gray-900></x-gray-900>
+                                            <x-gray-900></x-gray-900>
+                                            <x-gray-900></x-gray-900>
+                                            <x-gray-900></x-gray-900>
                                         </tr>
                                     @endforeach
                                 @endif
