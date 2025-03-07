@@ -57,22 +57,26 @@ class RoleController extends Controller
     // 更新角色的方法
     public function update(Request $request, $role)
     {
-        // 驗證選中的角色
         $request->validate([
             'selected_ids' => 'required|array',
-            'selected_ids.*' => 'exists:users,id', // 確保用戶 ID 存在
+            'selected_ids.*' => 'exists:users,id',
         ]);
 
-        // 迭代選中的用戶 ID 並解除角色
         $users = User::whereIn('id', $request->selected_ids)->get();
+        $currentUserId = auth()->id(); // 獲取當前登入管理員 ID
+
         foreach ($users as $user) {
+            // 如果是當前管理員，跳過不移除角色
+            if ($user->id == $currentUserId) {
+                continue; // 或者 return back()->with('error', '你不能移除自己的管理員角色');
+            }
+
             // 檢查用戶是否有這個角色，並移除該角色
             if ($user->hasRole($role)) {
-                $user->removeRole($role); // 移除角色
+                $user->removeRole($role);
             }
         }
 
-        // 成功後重定向並顯示訊息
         return redirect()->route('admin.roles.index')->with('success', '角色已成功移除');
     }
 }
