@@ -90,7 +90,8 @@
                         <div class="flex justify-between items-center">
                             <span class="text-gray-800">{{ $message->user->name }}</span>
                             <div class="flex items-center">
-                                <small class="text-sm text-gray-600">{{ $message->created_at->format('Y/m/d , H:i:s') }}</small>
+                                <small
+                                    class="text-sm text-gray-600">{{ $message->created_at->format('Y/m/d , H:i:s') }}</small>
                                 <span class="mx-1"> </span>
                                 @unless ($message->created_at->eq($message->updated_at))
                                     <small class="text-sm text-gray-600"> &middot; {{ __('edited') }}</small>
