@@ -39,7 +39,7 @@ class ProductController extends Controller
         return view('guest.products.index', compact('products', 'allTags'));
     }
 
-    public function show(Product $product): View
+    public function show(Product $product)
     {
         $messages = $product->messages()->whereNull('reply_to_id')->with(['user', 'replies.user'])->oldest()->paginate(10);
 
