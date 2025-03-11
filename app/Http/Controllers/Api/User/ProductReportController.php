@@ -30,7 +30,7 @@ class ProductReportController extends Controller
                         });
                     }),
             ],
-            'description' => 'required|string|max:255',
+            'description' => ['required, string, max:255'],
         ]);
 
         $product->reports()->create([

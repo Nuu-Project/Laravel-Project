@@ -30,7 +30,7 @@ class MessageReportController extends Controller
                         });
                     }),
             ],
-            'description' => 'required|string|max:255',
+            'description' => ['required', 'string', 'max:255'],
         ]);
 
         $message->reports()->create([
