@@ -7,18 +7,19 @@
             <x-h.h3>用戶管理</x-h.h3>
 
             <div class="mb-8">
-                <x-div.flex-container>
-                    <x-h.h2 id="users-title">用戶</x-h.h2>
-                    <form action="{{ route('admin.users.index') }}" method="GET">
-                        <div>
+                <x-div.flex-container class="flex-col sm:flex-row space-y-4 sm:space-y-0">
+                    <x-h.h2 id="users-title" class="text-center sm:text-left">用戶</x-h.h2>
+                    <div class="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-4">
+                        <form action="{{ route('admin.users.index') }}" method="GET"
+                            class="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2">
                             <x-input.search type="text" name="filter[name]" placeholder="請輸入用戶名稱..."
-                                value="{{ request('filter.name') }}">
+                                value="{{ request('filter.name') }}" class="w-full sm:w-auto">
                             </x-input.search>
-                            <x-button.search>
+                            <x-button.search class="w-full sm:w-auto">
                                 搜尋
                             </x-button.search>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
                 </x-div.flex-container>
 
                 <x-div.bg-white id="search-results" style="display: none;">
