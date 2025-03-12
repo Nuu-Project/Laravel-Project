@@ -31,7 +31,7 @@
 </head>
 
 <body>
-    <div class="flex h-screen bg-gray-100">
+    <div class="flex flex-col md:flex-row h-screen bg-gray-100">
         <x-navbar.side-bar-admin />
 
         <!-- 主要內容區 -->
