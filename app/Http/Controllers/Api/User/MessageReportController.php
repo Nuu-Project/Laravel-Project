@@ -5,13 +5,14 @@ namespace App\Http\Controllers\Api\User;
 use App\Http\Controllers\Controller;
 use App\Models\Message;
 use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 
 class MessageReportController extends Controller
 {
-    public function store(Request $request, Message $message)
+    public function store(Request $request, Message $message): JsonResponse
     {
         $request->validate([
             'report_type_id' => [

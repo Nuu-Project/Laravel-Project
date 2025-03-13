@@ -5,10 +5,11 @@ namespace App\Http\Controllers\Api\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 
 class UserSuspendController extends Controller
 {
-    public function suspend(Request $request, User $user)
+    public function suspend(Request $request, User $user): JsonResponse
     {
         $request->validate([
             'duration' => ['required', 'integer', 'min:0'],
@@ -22,3 +23,4 @@ class UserSuspendController extends Controller
         return response()->json(['message' => '用戶已成功暫停']);
     }
 }
+

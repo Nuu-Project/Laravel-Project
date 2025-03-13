@@ -4,11 +4,12 @@ namespace App\Http\Controllers\Api\User;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Storage;
 
 class ProductProcessImageController extends Controller
 {
-    public function processImage(Request $request)
+    public function processImage(Request $request): JsonResponse
     {
         $image = $request->file('image');
 

@@ -15,7 +15,7 @@ class ProductMessageController extends Controller
 {
     use AuthorizesRequests;
 
-    public function store(Request $request, Product $product)
+    public function store(Request $request, Product $product): RedirectResponse
     {
         $validated = $request->validate([
             'message' => ['required', 'string', 'max:255'],
@@ -29,7 +29,7 @@ class ProductMessageController extends Controller
         return redirect()->route('products.show', ['product' => $product]);
     }
 
-    public function edit(Product $product, Message $message)
+    public function edit(Product $product, Message $message): View
     {
         Gate::authorize('update', $message);
 
@@ -39,7 +39,7 @@ class ProductMessageController extends Controller
         ]);
     }
 
-    public function update(Request $request, Product $product, Message $message)
+    public function update(Request $request, Product $product, Message $message): RedirectResponse
     {
         Gate::authorize('update', $message);
         $validated = $request->validate([
@@ -50,7 +50,7 @@ class ProductMessageController extends Controller
         return redirect()->route('products.show', ['product' => $product]);
     }
 
-    public function destroy(Product $product, Message $message)
+    public function destroy(Product $product, Message $message): RedirectResponse
     {
         $this->authorize('delete', $message);
         $message->delete();
@@ -59,7 +59,7 @@ class ProductMessageController extends Controller
             ->with('success', 'Review deleted successfully.');
     }
 
-    public function reply(Request $request, Product $product, Message $message)
+    public function reply(Request $request, Product $product, Message $message): RedirectResponse
     {
         $validated = $request->validate([
             'message' => ['required', 'string', 'max:255'],
