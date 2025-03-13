@@ -55,7 +55,7 @@
                 </div>
                 <button id="reportButton"
                     class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded flex-shrink-0"
-                    data-reports='@json($reports->toArray())'
+                    data-reports='@json($productReports)'
                     data-store-url="{{ route('api.products.reports.store', ['product' => $product->id]) }}"
                     data-product-id="{{ $product->id }}">
                     檢舉
@@ -127,7 +127,11 @@
                                                 </x-dropdown-link>
                                             </form>
                                             <x-dropdown-link href="#"
-                                                onclick="event.preventDefault(); reportMessage({{ $message->id }})">
+                                                onclick="event.preventDefault(); reportMessage(event, {{ $message->id }})"
+                                                data-report-type="message"
+                                                data-message-id="{{ $message->id }}"
+                                                data-reports="{{ json_encode($messageReports) }}"
+                                                data-store-url="{{ route('api.messages.reports.store', ['message' => $message->id]) }}">
                                                 {{ __('檢舉') }}
                                             </x-dropdown-link>
                                         </x-slot>
@@ -197,7 +201,11 @@
                                                         </x-dropdown-link>
                                                     </form>
                                                     <x-dropdown-link href="#"
-                                                        onclick="event.preventDefault(); reportMessage({{ $reply->id }})">
+                                                        onclick="event.preventDefault(); reportMessage(event, {{ $reply->id }})"
+                                                        data-report-type="message"
+                                                        data-message-id="{{ $reply->id }}"
+                                                        data-reports="{{ json_encode($messageReports) }}"
+                                                        data-store-url="{{ route('api.messages.reports.store', ['message' => $reply->id]) }}">
                                                         {{ __('檢舉') }}
                                                     </x-dropdown-link>
                                                 </x-slot>
