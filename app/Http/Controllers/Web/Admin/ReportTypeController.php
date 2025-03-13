@@ -24,12 +24,12 @@ class ReportTypeController extends Controller
             ->paginate(10)
             ->withQueryString();
 
-        return view('admin.report_types.index', compact('reportTypes'));
+        return view('admin.report-types.index', compact('reportTypes'));
     }
 
     public function create()
     {
-        return view('admin.report_types.create');
+        return view('admin.report-types.create');
     }
 
     public function store(Request $request)
@@ -50,13 +50,13 @@ class ReportTypeController extends Controller
         ReportType::create($validatedData);
 
         return redirect()
-            ->route('admin.report_types.index')
+            ->route('admin.report-types.index')
             ->with('message', '檢舉類型新增成功！');
     }
 
     public function edit(ReportType $reportType)
     {
-        return view('admin.report_types.edit', compact('reportType'));
+        return view('admin.report-types.edit', compact('reportType'));
     }
 
     public function update(Request $request, ReportType $reportType)
@@ -79,7 +79,7 @@ class ReportTypeController extends Controller
         $reportType->update($validatedData);
 
         return redirect()
-            ->route('admin.report_types.index')
+            ->route('admin.report-types.index')
             ->with('message', '檢舉類型更新成功！');
     }
 
@@ -88,7 +88,7 @@ class ReportTypeController extends Controller
         $reportType->delete();
 
         return redirect()
-            ->route('admin.report_types.index')
+            ->route('admin.report-types.index')
             ->with('success', '檢舉類型已刪除');
     }
 
@@ -97,7 +97,7 @@ class ReportTypeController extends Controller
         $reportType->restore();
 
         return redirect()
-            ->route('admin.report_types.index')
+            ->route('admin.report-types.index')
             ->with('success', '檢舉類型已恢復');
     }
 }
