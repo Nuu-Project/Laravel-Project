@@ -9,10 +9,10 @@
             <div class="mb-8">
                 <x-div.flex-container>
                     <div class="p-4">
-                        <a href="{{ route('admin.report_types.create') }}"><x-button.search>新增標籤</x-button.search></a>
+                        <a href="{{ route('admin.report-types.create') }}"><x-button.search>新增標籤</x-button.search></a>
                     </div>
                     <div class="flex space-x-4">
-                        <form action="{{ route('admin.report_types.index') }}" method="GET"
+                        <form action="{{ route('admin.report-types.index') }}" method="GET"
                             class="flex items-center space-x-2">
                             <x-input.search type="text" name="filter[name]" placeholder="搜尋檢舉類型名稱..."
                                 value="{{ request('filter.name') }}">
@@ -66,7 +66,7 @@
                                         <x-div.gray-900>{{ $reportType->updated_at }}</x-div.gray-900>
                                     </x-gray-900>
                                     <x-gray-900>
-                                        <a href="{{ route('admin.report_types.edit', $reportType->id) }}">
+                                        <a href="{{ route('admin.report-types.edit', $reportType->id) }}">
                                             <x-button.blue-short>
                                                 編輯
                                             </x-button.blue-short>
@@ -80,7 +80,7 @@
                                                 </x-button.blue-short>
                                             </form>
                                         @else
-                                            <form action="{{ route('admin.report_types.destroy', $reportType->id) }}"
+                                            <form action="{{ route('admin.report-types.destroy', $reportType->id) }}"
                                                 method="POST" style="display:inline;">
                                                 @csrf
                                                 @method('DELETE')
