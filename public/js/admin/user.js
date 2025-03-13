@@ -36,7 +36,7 @@ function showSuspendDialog(userId, userName) {
             var suspendReason = document.getElementById('suspend-reason').value;
             var duration = parseInt(result.value);
             $.ajax({
-                url: `/admin/users/${userId}/suspend`,
+                url: `/api/users/${userId}/suspend`,
                 method: 'POST',
                 data: {
                     user_id: userId,

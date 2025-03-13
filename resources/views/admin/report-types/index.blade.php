@@ -6,14 +6,16 @@
             <x-h.h3>檢舉類型管理</x-h.h3>
 
             <!-- 搜尋區塊在表格之前 -->
-            <div class="mb-8">
-                <x-div.flex-container>
-                    <div class="p-4">
-                        <a href="{{ route('admin.report-types.create') }}"><x-button.search>新增標籤</x-button.search></a>
+            <div class="mb-8 px-4 sm:px-0">
+                <div class="flex flex-col lg:flex-row justify-between items-center space-y-4 lg:space-y-0">
+                    <div class="w-full lg:w-auto">
+                        <a href="{{ route('admin.report-types.create') }}" class="block">
+                            <x-button.search class="w-full lg:w-auto">新增標籤</x-button.search>
+                        </a>
                     </div>
-                    <div class="flex space-x-4">
+                    <div class="w-full lg:w-auto">
                         <form action="{{ route('admin.report-types.index') }}" method="GET"
-                            class="flex items-center space-x-2">
+                            class="flex flex-col lg:flex-row space-y-4 lg:space-y-0 lg:space-x-4">
                             <x-input.search type="text" name="filter[name]" placeholder="搜尋檢舉類型名稱..."
                                 value="{{ request('filter.name') }}">
                             </x-input.search>
@@ -22,7 +24,7 @@
                             </x-button.search>
                         </form>
                     </div>
-                </x-div.flex-container>
+                </div>
             </div>
 
             <!-- 表格區塊在搜尋區塊之後 -->
@@ -31,26 +33,11 @@
                     <x-table.gray-200>
                         <thead class="bg-gray-50">
                             <tr>
-                                <th scope="col"
-                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    檢舉類型名稱
-                                </th>
-                                <th scope="col"
-                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    上傳時間
-                                </th>
-                                <th scope="col"
-                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    最後修改時間
-                                </th>
-                                <th scope="col"
-                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    操作
-                                </th>
-                                <th scope="col"
-                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    狀態
-                                </th>
+                                <x-gray-900>檢舉類型名稱</x-gray-900>
+                                <x-gray-900>上傳時間</x-gray-900>
+                                <x-gray-900>最後修改時間</x-gray-900>
+                                <x-gray-900>操作</x-gray-900>
+                                <x-gray-900>狀態</x-gray-900>
                             </tr>
                         </thead>
                         <x-gray-200>
@@ -66,6 +53,7 @@
                                         <x-div.gray-900>{{ $reportType->updated_at }}</x-div.gray-900>
                                     </x-gray-900>
                                     <x-gray-900>
+                                    <div class="flex items-center space-x-2">
                                         <a href="{{ route('admin.report-types.edit', $reportType->id) }}">
                                             <x-button.blue-short>
                                                 編輯
@@ -89,6 +77,7 @@
                                                 </x-button.red-short>
                                             </form>
                                         @endif
+                                    </div>
                                     </x-gray-900>
                                     <x-gray-900>
                                         {{ is_null($reportType->deleted_at) ? '啟用中' : '已停用' }}
