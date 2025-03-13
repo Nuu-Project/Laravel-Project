@@ -14,7 +14,7 @@ use Spatie\QueryBuilder\QueryBuilder;
 
 class ProductController extends Controller
 {
-    public function index(Request $request)
+    public function index(Request $request): View
     {
         $tagIds = array_filter($request->input('filter.tags', [])); // 過濾掉 null 值
 

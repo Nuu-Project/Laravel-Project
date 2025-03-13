@@ -25,7 +25,7 @@
             <x-a.block-hover href="{{ route('admin.roles.index') }}">角色管理</x-a.block-hover>
             <x-a.block-hover href="{{ route('admin.reports.index') }}">檢舉管理</x-a.block-hover>
             <x-a.block-hover href="{{ route('admin.tags.index') }}">新增與停用標籤</x-a.block-hover>
-            <x-a.block-hover href="{{ route('admin.report_types.index') }}">新增與停用檢舉類型</x-a.block-hover>
+            <x-a.block-hover href="{{ route('admin.report-types.index') }}">新增與停用檢舉類型</x-a.block-hover>
         </div>
     </nav>
 </div>

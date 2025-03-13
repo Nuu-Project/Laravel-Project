@@ -43,7 +43,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'verified', 'role:ad
         ->only(['index', 'show']);
 
     // 檢舉類型 頁面,新增,修改,刪除
-    Route::resource('report_types', ReportTypeController::class)
+    Route::resource('report-types', ReportTypeController::class)
         ->except(['show'])
         ->withTrashed();
     // 檢舉類型 啟用

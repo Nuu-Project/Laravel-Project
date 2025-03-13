@@ -56,7 +56,7 @@
                 <button id="reportButton"
                     class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded flex-shrink-0"
                     data-reports='@json($reports->toArray())'
-                    data-store-url="{{ route('api.products.report.store', ['product' => $product->id]) }}"
+                    data-store-url="{{ route('api.products.reports.store', ['product' => $product->id]) }}"
                     data-product-id="{{ $product->id }}">
                     檢舉
                 </button>
@@ -88,53 +88,54 @@
                     </svg>
                     <div class="flex-1">
                         <div class="flex justify-between items-center">
-                            <div>
-                                <span class="text-gray-800">{{ $message->user->name }}</span>
+                            <span class="text-gray-800">{{ $message->user->name }}</span>
+                            <div class="flex items-center">
                                 <small
-                                    class="ml-2 text-sm text-gray-600">{{ $message->created_at->format('Y/m/d , H:i:s') }}</small>
+                                    class="text-sm text-gray-600">{{ $message->created_at->format('Y/m/d , H:i:s') }}</small>
+                                <span class="mx-1"> </span>
                                 @unless ($message->created_at->eq($message->updated_at))
                                     <small class="text-sm text-gray-600"> &middot; {{ __('edited') }}</small>
                                 @endunless
-                            </div>
-                            @if ($message->user->is(auth()->user()))
-                                <x-dropdown>
-                                    <x-slot name="trigger">
-                                        <button>
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-400"
-                                                viewBox="0 0 20 20" fill="currentColor">
-                                                <path
-                                                    d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z" />
-                                            </svg>
-                                        </button>
-                                    </x-slot>
-                                    <x-slot name="content">
-                                        <x-dropdown-link :href="route('user.products.messages.edit', [
-                                            'product' => $product->id,
-                                            'message' => $message->id,
-                                        ])">
-                                            {{ __('更改') }}
-                                        </x-dropdown-link>
-                                        <form method="POST"
-                                            action="{{ route('user.products.messages.destroy', ['product' => $product->id, 'message' => $message->id]) }}">
-                                            @csrf
-                                            @method('delete')
-                                            <x-dropdown-link :href="route('user.products.messages.destroy', [
+                                @if ($message->user->is(auth()->user()))
+                                    <x-dropdown class="ml-2">
+                                        <x-slot name="trigger">
+                                            <button>
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-400"
+                                                    viewBox="0 0 20 20" fill="currentColor">
+                                                    <path
+                                                        d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z" />
+                                                </svg>
+                                            </button>
+                                        </x-slot>
+                                        <x-slot name="content">
+                                            <x-dropdown-link :href="route('user.products.messages.edit', [
                                                 'product' => $product->id,
                                                 'message' => $message->id,
-                                            ])"
-                                                onclick="event.preventDefault(); this.closest('form').submit();">
-                                                {{ __('刪除') }}
+                                            ])">
+                                                {{ __('更改') }}
                                             </x-dropdown-link>
-                                        </form>
-                                        <x-dropdown-link href="#"
-                                            onclick="event.preventDefault(); reportMessage({{ $message->id }})">
-                                            {{ __('檢舉') }}
-                                        </x-dropdown-link>
-                                    </x-slot>
-                                </x-dropdown>
-                            @endif
+                                            <form method="POST"
+                                                action="{{ route('user.products.messages.destroy', ['product' => $product->id, 'message' => $message->id]) }}">
+                                                @csrf
+                                                @method('delete')
+                                                <x-dropdown-link :href="route('user.products.messages.destroy', [
+                                                    'product' => $product->id,
+                                                    'message' => $message->id,
+                                                ])"
+                                                    onclick="event.preventDefault(); this.closest('form').submit();">
+                                                    {{ __('刪除') }}
+                                                </x-dropdown-link>
+                                            </form>
+                                            <x-dropdown-link href="#"
+                                                onclick="event.preventDefault(); reportMessage({{ $message->id }})">
+                                                {{ __('檢舉') }}
+                                            </x-dropdown-link>
+                                        </x-slot>
+                                    </x-dropdown>
+                                @endif
+                            </div>
                         </div>
-                        <p class="mt-4 text-lg text-gray-900">{{ $message->message }}</p>
+                        <p class="mt-4 text-lg text-gray-900 whitespace-pre-line">{{ $message->message }}</p>
 
                         <!-- 回覆按鈕 -->
                         <button onclick="toggleReplyForm({{ $message->id }})" class="mt-2 text-sm text-blue-500">
@@ -157,10 +158,54 @@
                             <div class="ml-8 mt-4 p-4 bg-gray-50 rounded-lg">
                                 <div class="flex justify-between items-center">
                                     <span class="text-gray-800">{{ $reply->user->name }}</span>
-                                    <small
-                                        class="ml-2 text-sm text-gray-600">{{ $reply->created_at->format('Y/m/d , H:i:s') }}</small>
+                                    <div class="flex items-center">
+                                        <small
+                                            class="text-sm text-gray-600">{{ $reply->created_at->format('Y/m/d , H:i:s') }}</small>
+                                        <span class="mx-1">　</span><!-- 全形空白 -->
+                                        @unless ($reply->created_at->eq($reply->updated_at))
+                                            <small class="text-sm text-gray-600"> &middot; {{ __('edited') }}</small>
+                                        @endunless
+                                        @if ($reply->user->is(auth()->user()))
+                                            <x-dropdown class="ml-2">
+                                                <x-slot name="trigger">
+                                                    <button>
+                                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                                            class="h-4 w-4 text-gray-400" viewBox="0 0 20 20"
+                                                            fill="currentColor">
+                                                            <path
+                                                                d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z" />
+                                                        </svg>
+                                                    </button>
+                                                </x-slot>
+                                                <x-slot name="content">
+                                                    <x-dropdown-link :href="route('user.products.messages.edit', [
+                                                        'product' => $product->id,
+                                                        'message' => $reply->id,
+                                                    ])">
+                                                        {{ __('更改') }}
+                                                    </x-dropdown-link>
+                                                    <form method="POST"
+                                                        action="{{ route('user.products.messages.destroy', ['product' => $product->id, 'message' => $reply->id]) }}">
+                                                        @csrf
+                                                        @method('delete')
+                                                        <x-dropdown-link :href="route('user.products.messages.destroy', [
+                                                            'product' => $product->id,
+                                                            'message' => $reply->id,
+                                                        ])"
+                                                            onclick="event.preventDefault(); this.closest('form').submit();">
+                                                            {{ __('刪除') }}
+                                                        </x-dropdown-link>
+                                                    </form>
+                                                    <x-dropdown-link href="#"
+                                                        onclick="event.preventDefault(); reportMessage({{ $reply->id }})">
+                                                        {{ __('檢舉') }}
+                                                    </x-dropdown-link>
+                                                </x-slot>
+                                            </x-dropdown>
+                                        @endif
+                                    </div>
                                 </div>
-                                <p class="mt-2 text-gray-900">{{ $reply->message }}</p>
+                                <p class="mt-2 text-gray-900 whitespace-pre-line">{{ $reply->message }}</p>
                             </div>
                         @endforeach
                     </div>

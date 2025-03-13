@@ -11,11 +11,13 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
+use Illuminate\View\View;
 use Spatie\QueryBuilder\QueryBuilder;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class ProductController extends Controller
 {
-    public function index()
+    public function index(): View
     {
         $userId = Auth::user()->id;
         $userProducts = QueryBuilder::for(Product::class)
@@ -31,14 +33,14 @@ class ProductController extends Controller
         return view('user.products.index', compact('userProducts'));
     }
 
-    public function create()
+    public function create(): View
     {
         $tags = Tag::whereIn('type', [Tagtype::Grade, Tagtype::Semester, Tagtype::Subject, Tagtype::Category])->get();
 
         return view('user.products.create', ['tags' => $tags]);
     }
 
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
         // 基本驗證規則
         $rules = [
@@ -71,20 +73,9 @@ class ProductController extends Controller
             // 遍歷所有的加密圖片
             foreach ($encryptedPaths as $encryptedPath) {
                 // 解密圖片路徑
-                $decryptedImagePath = 'temp/'.decrypt($encryptedPath);
+                $decryptedImagePath = decrypt($encryptedPath);
 
-                // 讀取圖片內容
-                $fileContent = Storage::disk('local')->get($decryptedImagePath);
-
-                // 生成新路徑
-                $newImagePath = 'compressed_'.uniqid().'.jpg';
-
-                // 存儲圖片到 public 目錄
-                Storage::disk('public_images')->put($newImagePath, $fileContent);
-
-                // 將圖片添加到媒體庫
-                $fullPath = Storage::disk($mediaDisk)->path($newImagePath);
-                $product->addMedia($fullPath)->toMediaCollection('images');
+                $product->addMediaFromDisk($decryptedImagePath, 'temp')->toMediaCollection('images', $mediaDisk);
 
                 // 刪除臨時圖片
                 Storage::disk('local')->delete($decryptedImagePath);
@@ -105,7 +96,7 @@ class ProductController extends Controller
         return redirect()->route('user.products.create')->with('success', '產品已成功創建！');
     }
 
-    public function edit(Request $request, Product $product)
+    public function edit(Request $request, Product $product): View
     {
         abort_unless($product->user_id == auth()->id(), 403, '您無權編輯此商品。');
 
@@ -119,7 +110,7 @@ class ProductController extends Controller
         return view('user.products.edit', compact('product', 'tags', 'gradeTag', 'semesterTag', 'categoryTag', 'subjectTag'));
     }
 
-    public function update(Request $request, Product $product)
+    public function update(Request $request, Product $product): RedirectResponse
     {
         abort_unless($product->user_id == auth()->id(), 403, '您無權編輯此商品。');
 
@@ -168,21 +159,11 @@ class ProductController extends Controller
 
         if ($request->has('encrypted_image_path')) {
             foreach ($request->input('encrypted_image_path') as $encryptedPath) {
-                try {
-                    $decryptedImagePath = 'temp/'.decrypt($encryptedPath);
-                    if (Storage::disk('local')->exists($decryptedImagePath)) {
-                        $fileContent = Storage::disk('local')->get($decryptedImagePath);
-                        $newImagePath = 'compressed_'.uniqid().'.jpg';
-                        Storage::disk($mediaDisk)->put($newImagePath, $fileContent);
-                        $fullPath = Storage::disk($mediaDisk)->path($newImagePath);
-                        $product->addMedia($fullPath)->toMediaCollection('images');
-                        Storage::disk('local')->delete($decryptedImagePath);
-                    } else {
-                        \Log::error("解密後的圖片不存在：{$decryptedImagePath}");
-                    }
-                } catch (\Exception $e) {
-                    \Log::error('圖片處理失敗：'.$e->getMessage());
-                }
+                $decryptedImagePath = decrypt($encryptedPath);
+
+                $product->addMediaFromDisk($decryptedImagePath, 'temp')->toMediaCollection('images', $mediaDisk);
+
+                Storage::disk('temp')->delete($decryptedImagePath);
             }
         }
 
@@ -211,16 +192,7 @@ class ProductController extends Controller
         return redirect()->route('user.products.index')->with('success', '商品更新成功！');
     }
 
-    public function destroy(Product $product)
-    {
-        // 軟刪除產品，保留記錄但標記為已刪除
-        $product->delete();
-
-        // 重新導向到產品清單頁面，並標註成功訊息
-        return redirect()->route('user.products.index')->with('success', '產品已成功刪除');
-    }
-
-    public function inactive(Product $product)
+    public function inactive(Product $product): RedirectResponse
     {
         // 根據當前狀態切換到相反的狀態
         $newStatus = $product->status === ProductStatus::Active

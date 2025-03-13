@@ -2,7 +2,6 @@
     <x-thead.gray-50>
         <tr>
             <x-th>用戶名稱</x-th>
-            <x-th>檢舉</x-th>
             <x-th>權限</x-th>
             <x-th>停用</x-th>
         </tr>

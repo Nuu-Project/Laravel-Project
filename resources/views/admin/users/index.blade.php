@@ -55,14 +55,7 @@
                                             </div>
                                         </div>
                                     </td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                        <div class="flex items-center space-x-2">
-                                            <span>{{ $user->reports_count ?? 0 }}次</span>
-                                            <x-button.red-short>
-                                                檢舉詳情
-                                            </x-button.red-short>
-                                        </div>
-                                    </td>
+
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         <div class="text-sm text-gray-900">
                                             @if ($user->hasRole('admin'))
