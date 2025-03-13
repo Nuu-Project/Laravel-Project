@@ -4,10 +4,10 @@
     <!-- 主要內容 -->
     <x-flex-container>
         <x-div.container>
-            <x-h.h3 class="text-center sm:text-left">留言管理</x-h.h3>
+            <x-h.h3>留言管理</x-h.h3>
             <div class="mb-8">
-                <x-div.flex-container class="flex-col sm:flex-row space-y-4 sm:space-y-0">
-                    <x-h.h2 id="reviews-title" class="text-center sm:text-left">留言</x-h.h2>
+                <x-div.flex-container>
+                    <x-h.h2 id="reviews-title">留言</x-h.h2>
                     <div class="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-4">
                         <form action="{{ route('admin.messages.index') }}" method="GET"
                             class="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2">
@@ -30,7 +30,7 @@
                     </div>
 
                     <!-- 分頁導航 -->
-                    <x-div.gray-200 class="px-4 sm:px-6">
+                    <x-div.gray-200>
                         {{ $messages->links() }}
                     </x-div.gray-200>
                 </x-div.bg-white>
