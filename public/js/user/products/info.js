@@ -21,16 +21,13 @@ document.addEventListener('DOMContentLoaded', function () {
         updateDisplay(newIndex);
     }
 
-    // 為縮略圖添加點擊事件
     thumbnails.forEach((thumbnail, index) => {
         thumbnail.addEventListener('click', () => updateDisplay(index));
     });
 
-    // 為左右箭頭添加點擊事件
     document.getElementById('leftArrow')?.addEventListener('click', () => changeImage(-1));
     document.getElementById('rightArrow')?.addEventListener('click', () => changeImage(1));
 
-    // 初始化第一張圖片的縮略圖邊框
     updateDisplay(0);
 });
 
@@ -39,156 +36,94 @@ window.addEventListener('load', function () {
     var reportButton = document.getElementById('reportButton');
     if (reportButton) {
         console.log('找到檢舉按鈕');
-        reportButton.addEventListener('click', function () {
-            console.log('檢舉按鈕被點擊');
-            var inputOptions = JSON.parse(reportButton.dataset.reports);
-            try {
-                Swal.fire({
-                    title: '檢舉',
-                    html: `
-                        <select id="reportReason" class="swal2-input">
-                            <option value="" disabled selected>選擇檢舉原因</option>
-                            ${Object.entries(inputOptions).map(([key, value]) => `<option value="${key}">${value}</option>`).join('')}
-                        </select>
-                        <textarea id="customReason" class="swal2-textarea" placeholder="輸入自定義原因" style="width: 80%; height: 80px; resize: none; margin: 1rem auto 0; display: block; overflow-x: hidden; padding: 0.75rem; box-sizing: border-box;"></textarea>
-                    `,
-                    showCancelButton: true,
-                    confirmButtonText: '送出檢舉',
-                    cancelButtonText: '取消',
-                    preConfirm: () => {
-                        const reportId = document.getElementById('reportReason').value;
-                        const customReason = document.getElementById('customReason').value;
-                        if (!reportId && !customReason) {
-                            Swal.showValidationMessage('請選擇一個選項或輸入自定義原因');
-                        }
-                        return { reportId, customReason };
-                    }
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        const { reportId, customReason } = result.value;
-                        const description = customReason || '描述信息';
-
-                        $.ajax({
-                            url: reportButton.dataset.storeUrl,
-                            method: 'POST',
-                            data: {
-                                report_type_id: reportId,
-                                description: description,
-                                _token: document.querySelector('meta[name="csrf-token"]').content,
-                                product: reportButton.dataset.productId,
-                            },
-                            success: function (response) {
-                                if (response.status === 'success') {
-                                    Swal.fire({
-                                        title: '檢舉已成功提交',
-                                        text: '感謝您的回報，我們會盡快處理',
-                                        icon: 'success'
-                                    });
-                                }
-                            },
-                            error: function (xhr) {
-                                if (xhr.status === 422 && xhr.responseJSON.errors?.report_type_id) {
-                                    Swal.fire({
-                                        title: '你已經檢舉過此商品',
-                                        text: '請勿重複檢舉',
-                                        icon: 'info'
-                                    });
-                                    return;
-                                }
-
-                                // 處理其他所有錯誤
-                                Swal.fire({
-                                    title: '系統錯誤',
-                                    text: '無法提交檢舉，請稍後再試',
-                                    icon: 'error'
-                                });
-                            }
-                        });
-                    }
-                });
-            } catch (error) {
-                console.error('SweetAlert2 錯誤:', error);
-            }
+        reportButton.addEventListener('click', function (e) {
+            handleReport(e, '商品', this.dataset.productId);
         });
     } else {
         console.error('未找到檢舉按鈕');
     }
 });
 
-// 留言檢舉功能
-window.reportMessage = function(messageId) {
-    console.log('留言檢舉被點擊，留言ID:', messageId);
+function handleReport(event, entityType, entityId) {
+    event.preventDefault();
+    console.log(`處理檢舉: ${entityType}, ID: ${entityId}`);
 
-    // 從DOM中獲取檢舉數據
-    var reportLink = event.target.closest('x-dropdown-link');
-    var reports = JSON.parse(document.getElementById('reportButton').dataset.reports);
-    var storeUrl = `/api/messages/${messageId}/reports`;
-
-    try {
-        Swal.fire({
-            title: '檢舉留言',
-            html: `
-                <select id="reportReason" class="swal2-input">
-                    <option value="" disabled selected>選擇檢舉原因</option>
-                    ${Object.entries(reports).map(([key, value]) => `<option value="${key}">${value}</option>`).join('')}
-                </select>
-                <textarea id="customReason" class="swal2-textarea" placeholder="輸入自定義原因" style="width: 80%; height: 80px; resize: none; margin: 1rem auto 0; display: block; overflow-x: hidden; padding: 0.75rem; box-sizing: border-box;"></textarea>
-            `,
-            showCancelButton: true,
-            confirmButtonText: '送出檢舉',
-            cancelButtonText: '取消',
-            preConfirm: () => {
-                const reportId = document.getElementById('reportReason').value;
-                const customReason = document.getElementById('customReason').value;
-                if (!reportId && !customReason) {
-                    Swal.showValidationMessage('請選擇一個選項或輸入自定義原因');
-                }
-                return { reportId, customReason };
-            }
-        }).then((result) => {
-            if (result.isConfirmed) {
-                const { reportId, customReason } = result.value;
-                const description = customReason || '描述信息';
-
-                $.ajax({
-                    url: storeUrl,
-                    method: 'POST',
-                    data: {
-                        report_type_id: reportId,
-                        description: description,
-                        _token: document.querySelector('meta[name="csrf-token"]').content,
-                        message_id: messageId,
-                    },
-                    success: function (response) {
-                        if (response.status === 'success') {
-                            Swal.fire({
-                                title: '檢舉已成功提交',
-                                text: '感謝您的回報，我們會盡快處理',
-                                icon: 'success'
-                            });
-                        }
-                    },
-                    error: function (xhr) {
-                        if (xhr.status === 422 && xhr.responseJSON.errors?.report_type_id) {
-                            Swal.fire({
-                                title: '你已經檢舉過此留言',
-                                text: '請勿重複檢舉',
-                                icon: 'info'
-                            });
-                            return;
-                        }
-
-                        // 處理其他所有錯誤
-                        Swal.fire({
-                            title: '系統錯誤',
-                            text: '無法提交檢舉，請稍後再試',
-                            icon: 'error'
-                        });
-                    }
-                });
-            }
-        });
-    } catch (error) {
-        console.error('SweetAlert2 錯誤:', error);
+    const reportLink = event.target.closest('[data-reports]');
+    if (!reportLink) {
+        console.error('未找到 data-reports 的元素');
+        return;
     }
-};
+
+    const reports = JSON.parse(reportLink.dataset.reports || '{}');
+    const storeUrl = reportLink.dataset.storeUrl;
+    console.log('檢舉資料:', { reports, storeUrl });
+
+    Swal.fire({
+        title: `檢舉${entityType}`,
+        html: `
+            <select id="reportReason" class="swal2-input">
+                <option value="" disabled selected>選擇檢舉原因</option>
+                ${Object.entries(reports).map(([key, value]) =>
+                    `<option value="${key}">${value.zh_TW || value}</option>`
+                ).join('')}
+            </select>
+            <textarea id="customReason" class="swal2-textarea" placeholder="輸入自定義原因"
+                      style="width:80%;height:80px;margin-top:1rem;"></textarea>
+        `,
+        preConfirm: () => {
+            const reportId = document.getElementById('reportReason').value;
+            const customReason = document.getElementById('customReason').value;
+            if (!reportId && !customReason) {
+                Swal.showValidationMessage('請選擇原因或輸入自定義內容');
+            }
+            return { reportId, customReason };
+        }
+    }).then((result) => {
+        if (result.isConfirmed) {
+            const { reportId, customReason } = result.value;
+            console.log('送出檢舉:', { reportId, customReason, storeUrl });
+
+            fetch(storeUrl, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${localStorage.getItem("token")}`, // 加入 Token
+                    "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').content
+                },
+                body: JSON.stringify({
+                    report_type_id: reportId,
+                    description: customReason || '無補充說明'
+                })
+            })
+            .then(res => {
+                console.log('Response Status:', res.status);
+                if (res.status === 401) {
+                    throw new Error('未登入');
+                }
+                return res.json();
+            })
+            .then(data => {
+                Swal.fire('成功', '檢舉已提交', 'success');
+            })
+            .catch(err => {
+                Swal.fire('錯誤', '請稍後再試', 'error');
+                console.error("檢舉錯誤:", err);
+            });
+        }
+    });
+}
+
+document.getElementById('reportButton')?.addEventListener('click', function(e) {
+    handleReport(e, '商品', this.dataset.productId);
+});
+
+document.body.addEventListener('click', function(e) {
+    console.log('點擊元素:', e.target);
+    const trigger = e.target.closest('[data-report-type="message"]');
+    if (trigger) {
+        console.log('偵測到留言檢舉點擊:', trigger);
+        e.preventDefault();
+        const messageId = trigger.dataset.messageId;
+        handleReport(e, '留言', messageId);
+    }
+});
