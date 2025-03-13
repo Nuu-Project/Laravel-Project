@@ -3,11 +3,8 @@
 @endphp
 
 <x-template-admin-layout>
-
-    <!-- 主要內容 -->
     <x-flex-container>
         <x-div.container>
-            {{-- 添加提示訊息顯示 --}}
             @if (session('success'))
                 <x-div.green role="alert">
                     <span class="block sm:inline">{{ session('success') }}</span>
@@ -22,13 +19,13 @@
 
             <x-h.h3>商品管理</x-h.h3>
 
-            <!-- 新增搜尋區塊 -->
+            <!-- 搜尋區塊 -->
             <div class="mb-8">
-                <x-div.flex-container>
+                <x-div.flex-container class="flex-col sm:flex-row space-y-4 sm:space-y-0">
                     <x-h.h2 id="products-title">商品</x-h.h2>
-                    <div class="flex space-x-4">
+                    <div class="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-4">
                         <form action="{{ route('admin.products.index') }}" method="GET"
-                            class="flex items-center space-x-2">
+                            class="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2">
                             <x-input.search type="text" name="filter[name]" placeholder="搜尋商品名稱..."
                                 value="{{ request('filter.name') }}">
                             </x-input.search>
@@ -44,41 +41,42 @@
             </div>
 
             <x-div.bg-white>
-                <div class="overflow-x-auto">
-                    <x-table.gray-200>
+                <div class="overflow-x-auto relative">
+                    <x-table.gray-200 class="min-w-full table-fixed whitespace-nowrap">
                         <x-thead.products />
                         <x-gray-200>
                             @foreach ($products as $product)
-                                <tr>
-                                    <x-gray-900>{{ $product->id }}</x-gray-900>
-                                    <x-gray-900>{{ $product->name }}</x-gray-900>
-                                    <x-gray-900>{{ $product->user->name }}</x-gray-900>
-                                    <x-gray-900>{{ $product->created_at->format('Y/m/d') }}</x-gray-900>
-                                    <x-gray-900>{{ $product->updated_at->format('Y/m/d') }}</x-gray-900>
-                                    <x-gray-900>{{ $product->reports_count }}</x-gray-900>
-                                    <x-gray-900>
-                                        <a href="{{ route('products.show', ['product' => $product->id]) }}">
-                                            <x-button.blue-short>
-                                                前往
-                                            </x-button.blue-short>
-                                        </a>
+                                <tr class="hover:bg-gray-50">
+                                    <x-gray-900 >{{ $product->id }}</x-gray-900>
+                                    <x-gray-900 >{{ $product->name }}</x-gray-900>
+                                    <x-gray-900 >{{ $product->user->name }}</x-gray-900>
+                                    <x-gray-900 >{{ $product->created_at->format('Y/m/d') }}</x-gray-900>
+                                    <x-gray-900 >{{ $product->updated_at->format('Y/m/d') }}</x-gray-900>
+                                    <x-gray-900 >{{ $product->reports_count }}</x-gray-900>
+                                    <x-gray-900 >
+                                        <div class="flex space-x-2">
+                                            <a href="{{ route('products.show', ['product' => $product->id]) }}">
+                                                <x-button.blue-short>
+                                                    前往
+                                                </x-button.blue-short>
+                                            </a>
 
-                                        <form
-                                            action="{{ route('admin.products.inactive', ['product' => $product->id]) }}"
-                                            method="POST" class="inline">
-                                            @csrf
-                                            @method('PUT')
-                                            <x-button.status :status="$product->status" />
-                                        </form>
+                                            <form
+                                                action="{{ route('admin.products.inactive', ['product' => $product->id]) }}"
+                                                method="POST" class="inline">
+                                                @csrf
+                                                @method('PUT')
+                                                <x-button.status :status="$product->status" />
+                                            </form>
 
-                                        <a
-                                            href="{{ route('admin.reports.index', ['filter[reportable_id]' => $product->id]) }}">
-                                            <x-button.red-short>
-                                                檢舉詳情
-                                            </x-button.red-short>
-                                        </a>
-                                        <x-gray-900>{{ $product->status->name() }}</x-gray-900>
+                                            <a href="{{ route('admin.reports.index', ['filter[reportable_id]' => $product->id]) }}">
+                                                <x-button.red-short>
+                                                    檢舉詳情
+                                                </x-button.red-short>
+                                            </a>
+                                        </div>
                                     </x-gray-900>
+                                    <x-gray-900 class="w-32 px-4 py-2">{{ $product->status->name() }}</x-gray-900>
                                 </tr>
                             @endforeach
                         </x-gray-200>

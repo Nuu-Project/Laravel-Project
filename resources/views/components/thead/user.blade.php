@@ -1,9 +1,9 @@
 <div>
     <x-thead.gray-50>
         <tr>
-            <x-th>用戶名稱</x-th>
-            <x-th>權限</x-th>
-            <x-th>停用</x-th>
+            <x-gray-900>用戶名稱</x-gray-900>
+            <x-gray-900>權限</x-gray-900>
+            <x-gray-900>停用</x-gray-900>
         </tr>
     </x-thead.gray-50>
 </div>

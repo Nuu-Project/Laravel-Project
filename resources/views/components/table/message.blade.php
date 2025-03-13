@@ -3,12 +3,12 @@
 <x-table.gray-200>
     <x-thead.gray-50>
         <tr>
-            <x-th>用戶名稱</x-th>
-            <x-th>商品</x-th>
-            <x-th>留言</x-th>
-            <x-th>留言日期</x-th>
-            <x-th>操作</x-th>
-            <x-th>刪除</x-th>
+            <x-gray-900>用戶名稱</x-gray-900>
+            <x-gray-900>商品</x-gray-900>
+            <x-gray-900>留言</x-gray-900>
+            <x-gray-900>留言日期</x-gray-900>
+            <x-gray-900>操作</x-gray-900>
+            <x-gray-900>刪除</x-gray-900>
         </tr>
     </x-thead.gray-50>
     <x-gray-200>
@@ -29,7 +29,7 @@
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                     {{ $message->product->name ?? 'No associated product' }}</td>
-                <td class="px-6 py-4 text-sm text-gray-500 max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg">
+                <td class="px-6 py-4 text-sm text-gray-500">
                     <div class="message-container">
                         <span class="message-content">{{ $message->message }}</span>
                         @if (mb_strlen($message->message) > 15)
@@ -47,13 +47,15 @@
                     {{ $message->created_at->format('Y-m-d H:i:s') }}</td>
 
                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    <x-button.blue-short>
-                        前往
-                    </x-button.blue-short>
+                    <div class="flex items-center space-x-2">
+                        <x-button.blue-short>
+                            前往
+                        </x-button.blue-short>
 
-                    <x-button.red-short>
-                        檢舉詳情
-                    </x-button.red-short>
+                        <x-button.red-short>
+                            檢舉詳情
+                        </x-button.red-short>
+                    </div>
                 </td>
 
                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
@@ -63,11 +65,11 @@
                             method="POST" class="inline">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="text-red-600 hover:text-red-900"
-                                onclick="return confirm('{{ __('確定要刪除這條評論嗎？') }}')">Delete</button>
+                            <button type="submit" class="text-red-600 hover:text-red-900 font-medium"
+                                onclick="return confirm('{{ __('確定要刪除這條評論嗎？') }}')">刪除</button>
                         </form>
                     @else
-                        <span class="text-gray-400">No action</span>
+                        <span class="text-gray-400">無法操作</span>
                     @endif
                 </td>
             </tr>
