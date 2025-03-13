@@ -11,11 +11,13 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
+use Illuminate\View\View;
 use Spatie\QueryBuilder\QueryBuilder;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class ProductController extends Controller
 {
-    public function index()
+    public function index(): View
     {
         $userId = Auth::user()->id;
         $userProducts = QueryBuilder::for(Product::class)
@@ -31,14 +33,14 @@ class ProductController extends Controller
         return view('user.products.index', compact('userProducts'));
     }
 
-    public function create()
+    public function create(): View
     {
         $tags = Tag::whereIn('type', [Tagtype::Grade, Tagtype::Semester, Tagtype::Subject, Tagtype::Category])->get();
 
         return view('user.products.create', ['tags' => $tags]);
     }
 
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
         // 基本驗證規則
         $rules = [
@@ -94,7 +96,7 @@ class ProductController extends Controller
         return redirect()->route('user.products.create')->with('success', '產品已成功創建！');
     }
 
-    public function edit(Request $request, Product $product)
+    public function edit(Request $request, Product $product): View
     {
         abort_unless($product->user_id == auth()->id(), 403, '您無權編輯此商品。');
 
@@ -108,7 +110,7 @@ class ProductController extends Controller
         return view('user.products.edit', compact('product', 'tags', 'gradeTag', 'semesterTag', 'categoryTag', 'subjectTag'));
     }
 
-    public function update(Request $request, Product $product)
+    public function update(Request $request, Product $product): RedirectResponse
     {
         abort_unless($product->user_id == auth()->id(), 403, '您無權編輯此商品。');
 
@@ -190,7 +192,7 @@ class ProductController extends Controller
         return redirect()->route('user.products.index')->with('success', '商品更新成功！');
     }
 
-    public function inactive(Product $product)
+    public function inactive(Product $product): RedirectResponse
     {
         // 根據當前狀態切換到相反的狀態
         $newStatus = $product->status === ProductStatus::Active

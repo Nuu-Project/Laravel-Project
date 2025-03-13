@@ -4,11 +4,12 @@ namespace App\Http\Controllers\Api\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class UserSuspendController extends Controller
 {
-    public function suspend(Request $request, User $user)
+    public function suspend(Request $request, User $user): JsonResponse
     {
         $request->validate([
             'duration' => ['required', 'integer', 'min:0'],
