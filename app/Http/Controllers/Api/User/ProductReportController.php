@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\User;
 
 use App\Http\Controllers\Controller;
 use App\Models\Product;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -11,7 +12,7 @@ use Illuminate\Validation\Rule;
 
 class ProductReportController extends Controller
 {
-    public function store(Request $request, Product $product)
+    public function store(Request $request, Product $product): JsonResponse
     {
         $request->validate([
             'report_type_id' => [
@@ -30,7 +31,7 @@ class ProductReportController extends Controller
                         });
                     }),
             ],
-            'description' => 'required|string|max:255',
+            'description' => ['required', 'string', 'max:255'],
         ]);
 
         $product->reports()->create([

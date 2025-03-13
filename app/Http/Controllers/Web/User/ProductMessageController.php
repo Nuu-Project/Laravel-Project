@@ -50,7 +50,7 @@ class ProductMessageController extends Controller
         return redirect()->route('products.show', ['product' => $product]);
     }
 
-    public function destroy(Product $product, Message $message)
+    public function destroy(Product $product, Message $message): RedirectResponse
     {
         $this->authorize('delete', $message);
         $message->delete();

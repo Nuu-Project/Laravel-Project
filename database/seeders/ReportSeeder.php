@@ -14,7 +14,7 @@ class ReportSeeder extends Seeder
     {
         $reports = [
 
-            //商品
+            // 商品
             [
                 'name' => ['zh_TW' => '圖片盜用'],
                 'type' => '商品',
@@ -31,7 +31,7 @@ class ReportSeeder extends Seeder
                 'order_column' => 3,
             ],
 
-            //留言
+            // 留言
             [
                 'name' => ['zh_TW' => '辱罵或騷擾'],
                 'type' => '留言',
@@ -43,7 +43,7 @@ class ReportSeeder extends Seeder
                 'order_column' => 2,
             ],
 
-            //用戶
+            // 用戶
             [
                 'name' => ['zh_TW' => '帳號冒用'],
                 'type' => '用戶',

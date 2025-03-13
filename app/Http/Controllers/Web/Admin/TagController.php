@@ -63,7 +63,7 @@ class TagController extends Controller
         return view('admin.tags.edit', compact('tag'));
     }
 
-    public function update(Request $request, Tag $tag)//排除自己
+    public function update(Request $request, Tag $tag)// 排除自己
     {
         $validatedData = $request->validate([
             'name' => [

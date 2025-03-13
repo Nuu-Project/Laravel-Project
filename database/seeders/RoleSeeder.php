@@ -8,12 +8,12 @@ use Spatie\Permission\Models\Role;
 
 class RoleSeeder extends Seeder
 {
-    use WithoutModelEvents; //避免觸發模型事件
+    use WithoutModelEvents; // 避免觸發模型事件
 
     public function run(): void
     {
 
-        Role::updateOrCreate(['name' => 'admin']);  //管理員
+        Role::updateOrCreate(['name' => 'admin']);  // 管理員
 
     }
 }

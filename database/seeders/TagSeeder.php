@@ -14,7 +14,7 @@ class TagSeeder extends Seeder
     {
         $tags = [
 
-            //年級
+            // 年級
             [
                 'name' => ['en' => 'Freshman', 'zh_TW' => '一年級'],
                 'slug' => ['en' => 'freshman', 'zh_TW' => 'freshman'],
@@ -46,7 +46,7 @@ class TagSeeder extends Seeder
                 'order_column' => 5,
             ],
 
-            //學期
+            // 學期
             [
                 'name' => ['en' => 'Firstsemester', 'zh_TW' => '上學期'],
                 'slug' => ['en' => 'firstsemester', 'zh_TW' => 'firstsemester'],
@@ -66,7 +66,7 @@ class TagSeeder extends Seeder
                 'order_column' => 3,
             ],
 
-            //課程
+            // 課程
             [
                 'name' => ['en' => 'Compulsory-course', 'zh_TW' => '必修課'],
                 'slug' => ['en' => 'compulsory-course', 'zh_TW' => 'compulsory-course'],
@@ -86,7 +86,7 @@ class TagSeeder extends Seeder
                 'order_column' => 3,
             ],
 
-            //科目
+            // 科目
             [
                 'name' => ['en' => 'Introduction to Computer Science', 'zh_TW' => '計算機概論'],
                 'slug' => ['en' => 'introduction-to-computer-science', 'zh_TW' => 'introduction-to-computer-science'],
