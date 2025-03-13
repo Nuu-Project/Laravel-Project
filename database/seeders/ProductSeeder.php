@@ -12,7 +12,7 @@ class ProductSeeder extends Seeder
      */
     public function run(): void
     {
-        //產生測試數據
+        // 產生測試數據
         Product::factory()->count(3)->create();
     }
 }

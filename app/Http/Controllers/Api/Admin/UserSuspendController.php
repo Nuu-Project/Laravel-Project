@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Api\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 class UserSuspendController extends Controller
 {
@@ -23,4 +23,3 @@ class UserSuspendController extends Controller
         return response()->json(['message' => '用戶已成功暫停']);
     }
 }
-

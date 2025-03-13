@@ -12,8 +12,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 use Illuminate\View\View;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Spatie\QueryBuilder\QueryBuilder;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class ProductController extends Controller
 {
