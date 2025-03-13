@@ -41,40 +41,42 @@
             </div>
 
             <x-div.bg-white>
-                <div class="overflow-x-auto -mx-4 sm:mx-0">
-                    <x-table.gray-200>
+                <div class="overflow-x-auto relative">
+                    <x-table.gray-200 class="min-w-full table-fixed whitespace-nowrap">
                         <x-thead.products />
                         <x-gray-200>
                             @foreach ($products as $product)
                                 <tr class="hover:bg-gray-50">
-                                    <x-gray-900>{{ $product->id }}</x-gray-900>
-                                    <x-gray-900>{{ $product->name }}</x-gray-900>
-                                    <x-gray-900>{{ $product->user->name }}</x-gray-900>
-                                    <x-gray-900>{{ $product->created_at->format('Y/m/d') }}</x-gray-900>
-                                    <x-gray-900>{{ $product->updated_at->format('Y/m/d') }}</x-gray-900>
-                                    <x-gray-900>{{ $product->reports_count }}</x-gray-900>
-                                    <x-gray-900>
-                                        <a href="{{ route('products.show', ['product' => $product->id]) }}">
-                                            <x-button.blue-short>
-                                                前往
-                                            </x-button.blue-short>
-                                        </a>
+                                    <x-gray-900 >{{ $product->id }}</x-gray-900>
+                                    <x-gray-900 >{{ $product->name }}</x-gray-900>
+                                    <x-gray-900 >{{ $product->user->name }}</x-gray-900>
+                                    <x-gray-900 >{{ $product->created_at->format('Y/m/d') }}</x-gray-900>
+                                    <x-gray-900 >{{ $product->updated_at->format('Y/m/d') }}</x-gray-900>
+                                    <x-gray-900 >{{ $product->reports_count }}</x-gray-900>
+                                    <x-gray-900 >
+                                        <div class="flex space-x-2">
+                                            <a href="{{ route('products.show', ['product' => $product->id]) }}">
+                                                <x-button.blue-short>
+                                                    前往
+                                                </x-button.blue-short>
+                                            </a>
 
-                                        <form
-                                            action="{{ route('admin.products.inactive', ['product' => $product->id]) }}"
-                                            method="POST" class="inline">
-                                            @csrf
-                                            @method('PUT')
-                                            <x-button.status :status="$product->status" />
-                                        </form>
+                                            <form
+                                                action="{{ route('admin.products.inactive', ['product' => $product->id]) }}"
+                                                method="POST" class="inline">
+                                                @csrf
+                                                @method('PUT')
+                                                <x-button.status :status="$product->status" />
+                                            </form>
 
-                                        <a href="{{ route('admin.reports.index', ['filter[reportable_id]' => $product->id]) }}">
-                                            <x-button.red-short>
-                                                檢舉詳情
-                                            </x-button.red-short>
-                                        </a>
+                                            <a href="{{ route('admin.reports.index', ['filter[reportable_id]' => $product->id]) }}">
+                                                <x-button.red-short>
+                                                    檢舉詳情
+                                                </x-button.red-short>
+                                            </a>
+                                        </div>
                                     </x-gray-900>
-                                    <x-gray-900>{{ $product->status->name() }}</x-gray-900>
+                                    <x-gray-900 class="w-32 px-4 py-2">{{ $product->status->name() }}</x-gray-900>
                                 </tr>
                             @endforeach
                         </x-gray-200>
