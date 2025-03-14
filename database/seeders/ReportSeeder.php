@@ -13,48 +13,46 @@ class ReportSeeder extends Seeder
     public function run(): void
     {
         $reports = [
-
             // 商品
             [
-                'name' => ['zh_TW' => '圖片盜用'],
+                'name' => ['zh_TW' => '圖片盜用', 'en' => 'Image theft'],  // 添加英文翻譯
                 'type' => '商品',
                 'order_column' => 1,
             ],
             [
-                'name' => ['zh_TW' => '違法商品'],
+                'name' => ['zh_TW' => '違法商品', 'en' => 'Illegal product'],
                 'type' => '商品',
                 'order_column' => 2,
             ],
             [
-                'name' => ['zh_TW' => '其他'],
+                'name' => ['zh_TW' => '其他', 'en' => 'Other'],
                 'type' => '商品',
                 'order_column' => 3,
             ],
 
             // 留言
             [
-                'name' => ['zh_TW' => '辱罵或騷擾'],
+                'name' => ['zh_TW' => '辱罵或騷擾', 'en' => 'Abuse or harassment'],
                 'type' => '留言',
                 'order_column' => 1,
             ],
             [
-                'name' => ['zh_TW' => '重複留言'],
+                'name' => ['zh_TW' => '重複留言', 'en' => 'Duplicate message'],
                 'type' => '留言',
                 'order_column' => 2,
             ],
 
             // 用戶
             [
-                'name' => ['zh_TW' => '帳號冒用'],
+                'name' => ['zh_TW' => '帳號冒用', 'en' => 'Account impersonation'],
                 'type' => '用戶',
                 'order_column' => 1,
             ],
             [
-                'name' => ['zh_TW' => '用戶名稱'],
+                'name' => ['zh_TW' => '用戶名稱', 'en' => 'Username'],
                 'type' => '用戶',
                 'order_column' => 2,
             ],
-
         ];
 
         foreach ($reports as $reportData) {
@@ -64,7 +62,7 @@ class ReportSeeder extends Seeder
                     'order_column' => $reportData['order_column'],
                 ],
                 [
-                    'name' => json_encode($reportData['name']),
+                    'name' => $reportData['name'],  // 直接存儲為 JSON 格式
                 ]
             );
         }
