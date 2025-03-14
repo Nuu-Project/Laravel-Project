@@ -5,13 +5,14 @@ namespace App\Http\Controllers\Web\Admin;
 use App\Enums\ReportType;
 use App\Http\Controllers\Controller;
 use App\Models\Reportable;
+use Illuminate\View\View;
 use Illuminate\Database\Eloquent\Builder;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 
 class ReportController extends Controller
 {
-    public function index()
+    public function index(): View
     {
         $reportables = QueryBuilder::for(Reportable::class)
             ->allowedFilters([

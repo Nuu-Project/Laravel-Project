@@ -7,12 +7,14 @@ use App\Models\ReportType;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Illuminate\View\View;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 
 class ReportTypeController extends Controller
 {
-    public function index()
+    public function index(): View
     {
         $reportTypes = QueryBuilder::for(ReportType::class)
             ->allowedFilters([
@@ -27,19 +29,19 @@ class ReportTypeController extends Controller
         return view('admin.report-types.index', compact('reportTypes'));
     }
 
-    public function create()
+    public function create(): View
     {
         return view('admin.report-types.create');
     }
 
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
         $validatedData = $request->validate([
             'name' => [
                 'required', 'string', 'max:255',
                 Rule::unique('report_types', 'name->zh_TW'),
             ],
-            'type' => 'required|string|max:255',
+            'type' => ['required', 'string', 'max:255'],
             'order_column' => [
                 'required', 'integer',
                 Rule::unique('report_types')
@@ -54,12 +56,12 @@ class ReportTypeController extends Controller
             ->with('message', '檢舉類型新增成功！');
     }
 
-    public function edit(ReportType $reportType)
+    public function edit(ReportType $reportType): View
     {
         return view('admin.report-types.edit', compact('reportType'));
     }
 
-    public function update(Request $request, ReportType $reportType)
+    public function update(Request $request, ReportType $reportType): RedirectResponse
     {
         $validatedData = $request->validate([
             'name' => [
@@ -67,7 +69,7 @@ class ReportTypeController extends Controller
                 Rule::unique('report_types', 'name->zh_TW')
                     ->ignore($reportType->id),
             ],
-            'type' => 'required|string|max:255',
+            'type' => ['required', 'string', 'max:255'],
             'order_column' => [
                 'required', 'integer',
                 Rule::unique('report_types')
@@ -83,7 +85,7 @@ class ReportTypeController extends Controller
             ->with('message', '檢舉類型更新成功！');
     }
 
-    public function destroy(ReportType $reportType)
+    public function destroy(ReportType $reportType): RedirectResponse
     {
         $reportType->delete();
 
@@ -92,7 +94,7 @@ class ReportTypeController extends Controller
             ->with('success', '檢舉類型已刪除');
     }
 
-    public function restore(ReportType $reportType)
+    public function restore(ReportType $reportType): RedirectResponse
     {
         $reportType->restore();
 
