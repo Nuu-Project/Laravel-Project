@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Web\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use Illuminate\View\View;
 use Illuminate\Database\Eloquent\Builder;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
@@ -11,7 +12,7 @@ use Spatie\QueryBuilder\QueryBuilder;
 class UserController extends Controller
 {
     // 方法示例
-    public function index()
+    public function index(): View
     {
         $users = QueryBuilder::for(User::class)
             ->allowedFilters([

@@ -7,12 +7,14 @@ use App\Models\Tag;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Illuminate\View\View;
+use Illuminate\Http\RedirectResponse;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 
 class TagController extends Controller
 {
-    public function index()
+    public function index(): View
     {
         $tags = QueryBuilder::for(Tag::class)
             ->allowedFilters([
@@ -27,12 +29,12 @@ class TagController extends Controller
         return view('admin.tags.index', compact('tags'));
     }
 
-    public function create()
+    public function create(): View
     {
         return view('admin.tags.create');
     }
 
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
         $validatedData = $request->validate([
             'name' => [
@@ -43,7 +45,7 @@ class TagController extends Controller
                 'required', 'string', 'max:255', 'regex:/^[a-z]+$/',
                 Rule::unique('tags', 'slug->zh_TW'),
             ],
-            'type' => 'required|string|max:255',
+            'type' => ['required', 'string', 'max:255'],
             'order_column' => [
                 'required', 'integer',
                 Rule::unique('tags')
@@ -58,12 +60,12 @@ class TagController extends Controller
             ->with('message', '標籤新增成功！');
     }
 
-    public function edit(Tag $tag)
+    public function edit(Tag $tag): View
     {
         return view('admin.tags.edit', compact('tag'));
     }
 
-    public function update(Request $request, Tag $tag)// 排除自己
+    public function update(Request $request, Tag $tag): RedirectResponse // 排除自己
     {
         $validatedData = $request->validate([
             'name' => [
@@ -76,7 +78,7 @@ class TagController extends Controller
                 Rule::unique('tags', 'slug->zh_TW')
                     ->ignore($tag->id),
             ],
-            'type' => 'required|string|max:255',
+            'type' => ['required', 'string', 'max:255'],
             'order_column' => [
                 'required', 'integer',
                 Rule::unique('tags')
@@ -92,7 +94,7 @@ class TagController extends Controller
             ->with('message', '標籤更新成功！');
     }
 
-    public function destroy(Tag $tag)
+    public function destroy(Tag $tag): RedirectResponse
     {
         $tag->delete();
 
@@ -101,7 +103,7 @@ class TagController extends Controller
             ->with('success', '標籤已刪除');
     }
 
-    public function restore(Tag $tag)
+    public function restore(Tag $tag): RedirectResponse
     {
         $tag->restore();
 

@@ -9,6 +9,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Builder;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
+use Illuminate\Http\RedirectResponse;
 
 class ProductController extends Controller
 {
@@ -34,7 +35,7 @@ class ProductController extends Controller
         return view('admin.products.index', compact('products'));
     }
 
-    public function inactive(Product $product)
+    public function inactive(Product $product): RedirectResponse
     {
         // 根據當前狀態切換到相反的狀態
         $newStatus = $product->status === ProductStatus::Active

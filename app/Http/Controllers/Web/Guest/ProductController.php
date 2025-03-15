@@ -41,12 +41,24 @@ class ProductController extends Controller
 
     public function show(Product $product): View
     {
-        $messages = $product->messages()->whereNull('reply_to_id')->with(['user', 'replies.user'])->oldest()->paginate(10);
+        // 獲取商品留言
+        $messages = $product->messages()
+            ->whereNull('reply_to_id')
+            ->with(['user', 'replies.user'])
+            ->oldest()
+            ->paginate(10);
 
-        $reports = ReportType::where('type', '商品')->get()->mapWithKeys(function ($item) {
+        // 獲取商品檢舉類型
+        $productReports = ReportType::where('type', '商品')->get()->mapWithKeys(function ($item) {
             return [$item->id => $item->name];
         });
 
-        return view('guest.products.show', compact('messages', 'product', 'reports'));
+        // 獲取留言檢舉類型
+        $messageReports = ReportType::where('type', '留言')->get()->mapWithKeys(function ($item) {
+            return [$item->id => $item->name];
+        });
+
+        // 將資料傳遞到視圖
+        return view('guest.products.show', compact('messages', 'product', 'productReports', 'messageReports'));
     }
 }

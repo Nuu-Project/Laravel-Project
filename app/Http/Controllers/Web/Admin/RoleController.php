@@ -7,19 +7,21 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
+use Illuminate\Http\RedirectResponse;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 
 class RoleController extends Controller
 {
-    public function index()
+    public function index(): View
     {
         $users = User::role(['admin'])->paginate(10);
 
         return view('admin.roles.index', compact('users'));
     }
 
-    public function create(Request $request)
+    public function create(Request $request): View
     {
         $users = QueryBuilder::for(User::class)
             ->whereDoesntHave('roles')
@@ -37,11 +39,11 @@ class RoleController extends Controller
         return view('admin.roles.create', compact('users'));
     }
 
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
         $validated = $request->validate([
-            'user_ids' => 'required|array',
-            'user_ids.*' => 'exists:users,id',
+            'user_ids' => ['required', 'array'],
+            'user_ids.*' => ['exists:users,id'],
         ]);
 
         $roleType = RoleType::Admin;
@@ -55,11 +57,11 @@ class RoleController extends Controller
     }
 
     // 更新角色的方法
-    public function update(Request $request, $role)
+    public function update(Request $request, $role): RedirectResponse
     {
         $request->validate([
-            'selected_ids' => 'required|array',
-            'selected_ids.*' => 'exists:users,id',
+            'selected_ids' => ['required', 'array'],
+            'selected_ids.*' => ['exists:users,id'],
         ]);
 
         $users = User::whereIn('id', $request->selected_ids)->get();
