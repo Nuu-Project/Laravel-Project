@@ -47,7 +47,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'verified', 'role:ad
         ->except(['show'])
         ->withTrashed();
     // 檢舉類型 啟用
-    Route::post('/report_types/{report_type}/restore', [ReportTypeController::class, 'restore'])
-        ->name('report_types.restore')
+    Route::post('/report-types/{report_type}/restore', [ReportTypeController::class, 'restore'])
+        ->name('report-types.restore')
         ->withTrashed();
 });
