@@ -8,9 +8,9 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\View\View;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class ReportTypeController extends Controller
 {
@@ -26,7 +26,7 @@ class ReportTypeController extends Controller
             ->paginate(10)
             ->withQueryString();
 
-        return view('admin.report-types.index', compact('reportTypes'));
+        return view('admin.report-types.index', ['reportTypes' => $reportTypes]);
     }
 
     public function create(): View
@@ -58,7 +58,7 @@ class ReportTypeController extends Controller
 
     public function edit(ReportType $reportType): View
     {
-        return view('admin.report-types.edit', compact('reportType'));
+        return view('admin.report-types.edit', ['reportType' => $reportType]);
     }
 
     public function update(Request $request, ReportType $reportType): RedirectResponse
