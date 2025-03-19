@@ -5,10 +5,10 @@ namespace App\Http\Controllers\Web\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Tag;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\View\View;
-use Illuminate\Http\RedirectResponse;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 
@@ -26,7 +26,7 @@ class TagController extends Controller
             ->paginate(10)
             ->withQueryString();
 
-        return view('admin.tags.index', compact('tags'));
+        return view('admin.tags.index', ['tags' => $tags]);
     }
 
     public function create(): View
@@ -62,7 +62,7 @@ class TagController extends Controller
 
     public function edit(Tag $tag): View
     {
-        return view('admin.tags.edit', compact('tag'));
+        return view('admin.tags.edit', ['tag' => $tag]);
     }
 
     public function update(Request $request, Tag $tag): RedirectResponse // 排除自己
