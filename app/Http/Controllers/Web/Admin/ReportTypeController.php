@@ -26,7 +26,7 @@ class ReportTypeController extends Controller
             ->paginate(10)
             ->withQueryString();
 
-        return view('admin.report-types.index', [$reportTypes => 'reportTypes']);
+        return view('admin.report-types.index', ['reportTypes' => $reportTypes]);
     }
 
     public function create(): View
@@ -58,7 +58,7 @@ class ReportTypeController extends Controller
 
     public function edit(ReportType $reportType): View
     {
-        return view('admin.report-types.edit', [$reportType => 'reportType']);
+        return view('admin.report-types.edit', ['reportType' => $reportType]);
     }
 
     public function update(Request $request, ReportType $reportType): RedirectResponse

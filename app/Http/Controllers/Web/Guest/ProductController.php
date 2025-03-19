@@ -36,7 +36,7 @@ class ProductController extends Controller
 
         $allTags = Tag::get();
 
-        return view('guest.products.index', [$products => 'products', $allTags => 'allTags']);
+        return view('guest.products.index', ['products' => $products, 'allTags' => $allTags]);
     }
 
     public function show(Product $product): View
@@ -60,7 +60,8 @@ class ProductController extends Controller
 
         // 將資料傳遞到視圖
         return view('guest.products.show', [
-            $messages => 'messages', $product => 'product',
-            $productReports => 'productReports', $messageReports => 'messageReports']);
+            'messages' => $messages, 'product' => $product,
+            'productReports' => $productReports, 'messageReports' => $messageReports,
+        ]);
     }
 }

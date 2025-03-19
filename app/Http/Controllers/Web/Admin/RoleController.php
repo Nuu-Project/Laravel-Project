@@ -18,7 +18,7 @@ class RoleController extends Controller
     {
         $users = User::role(['admin'])->paginate(10);
 
-        return view('admin.roles.index', [$users => 'users']);
+        return view('admin.roles.index', ['users' => $users]);
     }
 
     public function create(Request $request): View
@@ -36,7 +36,7 @@ class RoleController extends Controller
             ->paginate(10)
             ->withQueryString();
 
-        return view('admin.roles.create', [$users => 'users']);
+        return view('admin.roles.create', ['users' => $users]);
     }
 
     public function store(Request $request): RedirectResponse

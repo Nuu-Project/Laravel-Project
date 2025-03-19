@@ -32,7 +32,7 @@ class ProductController extends Controller
             ->withQueryString();
 
         // 返回到視圖，並傳遞商品資料
-        return view('admin.products.index', [$products => 'products']);
+        return view('admin.products.index', ['products' => $products]);
     }
 
     public function inactive(Product $product): RedirectResponse

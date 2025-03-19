@@ -30,7 +30,7 @@ class ProductController extends Controller
             ->paginate(3)
             ->withQueryString();
 
-        return view('user.products.index', [$userProducts => 'userProducts']);
+        return view('user.products.index', ['userProducts' => $userProducts]);
     }
 
     public function create(): View
@@ -108,8 +108,9 @@ class ProductController extends Controller
         $tags = Tag::get();
 
         return view('user.products.edit', [
-            $product => 'product', $tags => 'tags', $gradeTag => 'gradeTag',
-            $semesterTag => 'semesterTag', $categoryTag => 'categoryTag', $subjectTag => 'subjectTag']);
+            'product' => $product, 'tags' => $tags, 'gradeTag' => $gradeTag,
+            'semesterTag' => $semesterTag, 'categoryTag' => $categoryTag, 'subjectTag' => $subjectTag,
+        ]);
     }
 
     public function update(Request $request, Product $product): RedirectResponse

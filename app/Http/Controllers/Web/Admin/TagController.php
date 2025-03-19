@@ -26,7 +26,7 @@ class TagController extends Controller
             ->paginate(10)
             ->withQueryString();
 
-        return view('admin.tags.index', [$tags => 'tages']);
+        return view('admin.tags.index', ['tags' => $tags]);
     }
 
     public function create(): View
@@ -62,7 +62,7 @@ class TagController extends Controller
 
     public function edit(Tag $tag): View
     {
-        return view('admin.tags.edit', [$tag => 'tag']);
+        return view('admin.tags.edit', ['tag' => $tag]);
     }
 
     public function update(Request $request, Tag $tag): RedirectResponse // 排除自己
