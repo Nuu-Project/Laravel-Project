@@ -26,6 +26,6 @@ class MessageController extends Controller
             ->paginate(10)
             ->withQueryString();
 
-        return view('admin.messages.index', compact('messages'));
+        return view('admin.messages.index', [$messages => 'messages']);
     }
 }

@@ -7,9 +7,9 @@ use App\Http\Controllers\Controller;
 use App\Models\Product;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\RedirectResponse;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
-use Illuminate\Http\RedirectResponse;
 
 class ProductController extends Controller
 {
@@ -32,7 +32,7 @@ class ProductController extends Controller
             ->withQueryString();
 
         // 返回到視圖，並傳遞商品資料
-        return view('admin.products.index', compact('products'));
+        return view('admin.products.index', [$products => 'products']);
     }
 
     public function inactive(Product $product): RedirectResponse

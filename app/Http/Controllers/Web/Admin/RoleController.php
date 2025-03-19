@@ -6,9 +6,9 @@ use App\Enums\RoleType;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
-use Illuminate\Http\RedirectResponse;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 
@@ -18,7 +18,7 @@ class RoleController extends Controller
     {
         $users = User::role(['admin'])->paginate(10);
 
-        return view('admin.roles.index', compact('users'));
+        return view('admin.roles.index', [$users => 'users']);
     }
 
     public function create(Request $request): View
@@ -36,7 +36,7 @@ class RoleController extends Controller
             ->paginate(10)
             ->withQueryString();
 
-        return view('admin.roles.create', compact('users'));
+        return view('admin.roles.create', [$users => 'users']);
     }
 
     public function store(Request $request): RedirectResponse
