@@ -6,7 +6,6 @@ use App\Enums\ReportType as ReportTypeEnum;
 use App\Models\ReportType;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-
 class ReportTypeFactory extends Factory
 {
     protected $model = ReportType::class;
