@@ -20,6 +20,8 @@ class ProfileController extends Controller
     {
         $request->user()->fill($request->validated());
 
+        abort_unless($user->id === auth()->id(), 403, '您無權修改此資料。');
+
         $request->user()->save();
 
         return Redirect::route('user.profile.edit')->with('status', 'profile-updated');
