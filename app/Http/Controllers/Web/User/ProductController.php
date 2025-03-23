@@ -35,7 +35,7 @@ class ProductController extends Controller
 
     public function create(): View
     {
-        $tags = Tag::whereIn('type', [Tagtype::Grade, Tagtype::Semester, Tagtype::Subject, Tagtype::Category])->get();
+        $tags = Tag::whereIn('type', Tagtype::cases())->get();
 
         return view('user.products.create', ['tags' => $tags]);
     }
