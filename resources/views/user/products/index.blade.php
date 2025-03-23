@@ -118,7 +118,7 @@
                                         @csrf
                                         @method('DELETE')
                                         <x-button.red-short>
-                                            刪除
+                                            測試刪除
                                         </x-button.red-short>
                                     </form>
                                 </div>
