@@ -40,7 +40,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'verified', 'role:ad
 
     // 檢舉詳情頁
     Route::resource('/reports', ReportController::class)
-        ->only(['index', 'show']);
+        ->only(['index']);
 
     // 檢舉類型 頁面,新增,修改,刪除
     Route::resource('report-types', ReportTypeController::class)
