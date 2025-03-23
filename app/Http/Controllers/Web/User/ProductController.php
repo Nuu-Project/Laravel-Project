@@ -195,6 +195,14 @@ class ProductController extends Controller
         return redirect()->route('user.products.index')->with('success', '商品更新成功！');
     }
 
+    public function destroy(Product $product)
+    {
+        // 軟刪除產品，保留記錄但標記為已刪除
+        $product->delete();
+
+        // 重新導向到產品清單頁面，並標註成功訊息
+        return redirect()->route('user.products.index')->with('success', '產品已成功刪除');
+    }
     public function inactive(Product $product): RedirectResponse
     {
         // 根據當前狀態切換到相反的狀態
