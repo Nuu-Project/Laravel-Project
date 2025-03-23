@@ -203,6 +203,7 @@ class ProductController extends Controller
         // 重新導向到產品清單頁面，並標註成功訊息
         return redirect()->route('user.products.index')->with('success', '產品已成功刪除');
     }
+
     public function inactive(Product $product): RedirectResponse
     {
         // 根據當前狀態切換到相反的狀態
