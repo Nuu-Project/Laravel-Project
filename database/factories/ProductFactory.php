@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Enums\Tagtype;
 use App\Models\Product;
+use App\Models\Report;
 use App\Models\Tag;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -46,6 +47,16 @@ class ProductFactory extends Factory
 
             // 同步標籤到產品
             $product->tags()->sync($tagIds);
+        });
+    }
+
+    public function withReports(int $count = 0)
+    {
+        return $this->afterCreating(function (Product $product) use ($count) {
+            if ($count > 0) {
+                $reports = Report::factory()->count($count)->forProduct()->create();
+                $product->reports()->sync($reports->pluck('id'));
+            }
         });
     }
 }
