@@ -197,6 +197,8 @@ class ProductController extends Controller
 
     public function destroy(Product $product)
     {
+        abort_unless($product->user_id == auth()->id(), 403, '您無權編輯此商品。');
+
         // 軟刪除產品，保留記錄但標記為已刪除
         $product->delete();
 
@@ -206,6 +208,8 @@ class ProductController extends Controller
 
     public function inactive(Product $product): RedirectResponse
     {
+        abort_unless($product->user_id == auth()->id(), 403, '您無權編輯此商品。');
+
         // 根據當前狀態切換到相反的狀態
         $newStatus = $product->status === ProductStatus::Active
             ? ProductStatus::Inactive
