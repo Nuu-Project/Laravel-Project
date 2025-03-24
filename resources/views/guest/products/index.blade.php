@@ -14,7 +14,7 @@
             </x-button.search>
         </div>
         <div class="flex flex-wrap gap-2 justify-center">
-            @foreach ([Tagtype::Subject->value, Tagtype::Category->value, Tagtype::Grade->value, Tagtype::Semester->value] as $type)
+            @foreach (collect(Tagtype::cases())->pluck('value') as $type)
                 <select name="filter[tags][]" class="bg-gray text-primary-foreground px-4 py-2 rounded-md">
                     <option value="">選擇{{ $type }}...</option>
                     @foreach ($allTags as $tag)

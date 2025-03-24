@@ -31,6 +31,8 @@ class ProductMessageController extends Controller
 
     public function edit(Product $product, Message $message): View
     {
+        abort_unless($message->user_id == auth()->id(), 403, '您無權編輯此留言。');
+
         Gate::authorize('update', $message);
 
         return view('messages.edit', [
@@ -41,6 +43,8 @@ class ProductMessageController extends Controller
 
     public function update(Request $request, Product $product, Message $message): RedirectResponse
     {
+        abort_unless($message->user_id == auth()->id(), 403, '您無權編輯此留言。');
+
         Gate::authorize('update', $message);
         $validated = $request->validate([
             'message' => ['required', 'string', 'max:255'],
@@ -52,6 +56,8 @@ class ProductMessageController extends Controller
 
     public function destroy(Product $product, Message $message): RedirectResponse
     {
+        abort_unless($message->user_id == auth()->id(), 403, '您無權編輯此留言。');
+
         $this->authorize('delete', $message);
         $message->delete();
 

@@ -35,7 +35,7 @@ class ProductController extends Controller
 
     public function create(): View
     {
-        $tags = Tag::whereIn('type', [Tagtype::Grade, Tagtype::Semester, Tagtype::Subject, Tagtype::Category])->get();
+        $tags = Tag::whereIn('type', Tagtype::cases())->get();
 
         return view('user.products.create', ['tags' => $tags]);
     }
@@ -197,14 +197,19 @@ class ProductController extends Controller
 
     public function destroy(Product $product)
     {
+        abort_unless($product->user_id == auth()->id(), 403, '您無權編輯此商品。');
+
         // 軟刪除產品，保留記錄但標記為已刪除
         $product->delete();
 
         // 重新導向到產品清單頁面，並標註成功訊息
         return redirect()->route('user.products.index')->with('success', '產品已成功刪除');
     }
+
     public function inactive(Product $product): RedirectResponse
     {
+        abort_unless($product->user_id == auth()->id(), 403, '您無權編輯此商品。');
+
         // 根據當前狀態切換到相反的狀態
         $newStatus = $product->status === ProductStatus::Active
             ? ProductStatus::Inactive

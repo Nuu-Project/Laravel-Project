@@ -16,7 +16,7 @@
                             class="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2">
                             <div class="w-full sm:w-auto">
                                 <select name="filter[type]" class="w-full sm:w-auto bg-gray text-primary-foreground px-4 py-2 rounded-md mb-2 sm:mb-0">
-                                    @foreach ([ReportType::Product->value(), ReportType::Message->value()] as $reportType)
+                                    @foreach (ReportType::cases() as $reportType)
                                         <option value="{{ $reportType }}"
                                             {{ request('filter.type') === $reportType ? 'selected' : '' }}>
                                             {{ $reportType }}

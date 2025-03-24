@@ -18,6 +18,8 @@ class ProfileController extends Controller
 
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
+        abort_unless($user->id === auth()->id(), 403, '您無權修改此資料。');
+
         $request->user()->fill($request->validated());
 
         $request->user()->save();
