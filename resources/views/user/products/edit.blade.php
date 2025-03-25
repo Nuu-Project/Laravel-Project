@@ -361,10 +361,15 @@
 
                             // 更新圖片順序
                             updatePositions();
-
-                            // 檢查表單數據
-                            const formData = new FormData(this);
-                            console.log('Form data:', Object.fromEntries(formData)); // 調試用
+                            
+                            // 完全移除所有 file input 元素，這樣它們就不會被包含在表單提交中
+                            const fileInputs = Array.from(this.querySelectorAll('input[type="file"]'));
+                            fileInputs.forEach(input => {
+                                // 保存父元素引用
+                                const parent = input.parentNode;
+                                // 從 DOM 中移除元素
+                                parent.removeChild(input);
+                            });
 
                             // 提交表單
                             this.submit();
