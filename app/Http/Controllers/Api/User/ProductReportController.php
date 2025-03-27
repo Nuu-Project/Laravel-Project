@@ -15,7 +15,7 @@ class ProductReportController extends Controller
 {
     public function store(Request $request, Product $product): JsonResponse
     {
-        $request->validate([
+        $validatedData = $request->validate([
             'report_type_id' => [
                 'required',
                 'exists:report_types,id',
@@ -41,10 +41,8 @@ class ProductReportController extends Controller
             'description' => ['required', 'string', 'max:255'],
         ]);
 
-        $product->reports()->create([
-            'report_type_id' => $request->input('report_type_id'),
+        $product->reports()->create($validatedData + [
             'user_id' => Auth::id(),
-            'description' => $request->input('description'),
         ]);
 
         return response()->json(['status' => 'success']);
