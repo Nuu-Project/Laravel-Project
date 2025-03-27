@@ -142,8 +142,7 @@
                                         <x-slot name="content">
                                             <x-dropdown-link href="#"
                                                 onclick="event.preventDefault(); reportMessage(event, {{ $message->id }})"
-                                                data-report-type="message"
-                                                data-message-id="{{ $message->id }}"
+                                                data-report-type="message" data-message-id="{{ $message->id }}"
                                                 data-reports="{{ json_encode($messageReports) }}"
                                                 data-store-url="{{ route('api.messages.reports.store', ['message' => $message->id]) }}">
                                                 {{ __('檢舉') }}

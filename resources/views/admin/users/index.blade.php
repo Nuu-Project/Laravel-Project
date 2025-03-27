@@ -66,18 +66,27 @@
                                         </div>
                                     </td>
                                     <td class="px-4 py-3 whitespace-nowrap text-sm font-medium">
-                                        <x-button.red-short
-                                            onclick="showSuspendDialog({{ $user->id }}, {{ json_encode($user->name) }})">
-                                            停用
-                                        </x-button.red-short>
-                                        <form action="{{ route('admin.users.active', ['user' => $user->id]) }}"
-                                            method="POST" class="inline">
-                                            @csrf
-                                            <x-button.blue-short>
-                                                啟用
-                                            </x-button.blue-short>
-                                        </form>
-                                        {{ $user->time_limit }}
+                                        @if ($user->time_limit && \Carbon\Carbon::parse($user->time_limit)->isFuture())
+                                            <div class="flex items-center space-x-2">
+                                                <x-button.red-short
+                                                    onclick="showSuspendDialog({{ $user->id }}, {{ json_encode($user->name) }})">
+                                                    停用
+                                                </x-button.red-short>
+                                                <form action="{{ route('admin.users.active', ['user' => $user->id]) }}"
+                                                    method="POST" class="inline">
+                                                    @csrf
+                                                    <x-button.blue-short title="停用到期時間：{{ $user->time_limit }}">
+                                                        ({{ \Carbon\Carbon::parse($user->time_limit)->diffForHumans() }})
+                                                        啟用
+                                                    </x-button.blue-short>
+                                                </form>
+                                            </div>
+                                        @else
+                                            <x-button.red-short
+                                                onclick="showSuspendDialog({{ $user->id }}, {{ json_encode($user->name) }})">
+                                                停用
+                                            </x-button.red-short>
+                                        @endif
                                     </td>
                                 </tr>
                             @endforeach
