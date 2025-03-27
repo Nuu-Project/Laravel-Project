@@ -37,7 +37,7 @@
             <div class="flex flex-col w-full min-h-screen">
                 <main class="flex min-h-[calc(100vh_-_theme(spacing.16))] flex-1 flex-col gap-4 p-4 md:gap-8 md:p-10">
                     <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-                        @foreach ($userProducts as $product)
+                        @forelse ($userProducts as $product)
                             <div class="rounded-lg border bg-white text-card-foreground shadow-sm p-6" data-v0-t="card">
                                 <div class="space-y-2">
                                     <h4 class="font-semibold text-xl">商品名稱:{{ $product->name }}</h4>
@@ -123,7 +123,16 @@
                                     </form>
                                 </div>
                             </div>
-                        @endforeach
+                        @empty
+                            <div class="col-span-full text-center py-10">
+                                <h3 class="text-2xl font-medium text-gray-600 mb-4">來刊登一個新商品吧！</h3>
+                                <a href="{{ route('user.products.create') }}">
+                                    <x-button.search>
+                                        開始刊登
+                                    </x-button.search>
+                                </a>
+                            </div>
+                        @endforelse
                     </div>
 
                     <div class="mt-6">

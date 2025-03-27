@@ -240,7 +240,7 @@
 
                             // 重置預覽圖片並隱藏整個預覽區域
                             const previewImg = preview.querySelector('img');
-                            previewImg.removeAttribute('src');  // 移除 src 屬性而不是設置為 '#'
+                            previewImg.removeAttribute('src'); // 移除 src 屬性而不是設置為 '#'
                             preview.classList.add('hidden');
 
                             // 顯示原本的 placeholder
@@ -361,10 +361,14 @@
 
                             // 更新圖片順序
                             updatePositions();
-
-                            // 檢查表單數據
-                            const formData = new FormData(this);
-                            console.log('Form data:', Object.fromEntries(formData)); // 調試用
+                            // 完全移除所有 file input 元素，這樣它們就不會被包含在表單提交中
+                            const fileInputs = Array.from(this.querySelectorAll('input[type="file"]'));
+                            fileInputs.forEach(input => {
+                                // 保存父元素引用
+                                const parent = input.parentNode;
+                                // 從 DOM 中移除元素
+                                parent.removeChild(input);
+                            });
 
                             // 提交表單
                             this.submit();
