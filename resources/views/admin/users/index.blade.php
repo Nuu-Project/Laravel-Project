@@ -70,6 +70,14 @@
                                             onclick="showSuspendDialog({{ $user->id }}, {{ json_encode($user->name) }})">
                                             停用
                                         </x-button.red-short>
+                                        <form action="{{ route('admin.users.active', ['user' => $user->id]) }}"
+                                            method="POST" class="inline">
+                                            @csrf
+                                            <x-button.blue-short>
+                                                啟用
+                                            </x-button.blue-short>
+                                        </form>
+                                        {{ $user->time_limit }}
                                     </td>
                                 </tr>
                             @endforeach
