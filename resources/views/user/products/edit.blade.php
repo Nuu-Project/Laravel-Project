@@ -36,7 +36,7 @@
                     <input type="hidden" name="deleted_image_ids" id="deletedImageIds" value="[]">
                     <x-div.grid>
                         <x-label.form for="name">
-                            書名我叫測試
+                            書名
                         </x-label.form>
                         <x-input.tags id="name" name="name" placeholder="請輸入書名" value="{{ $product->name }}"
                             maxlength="50" />
