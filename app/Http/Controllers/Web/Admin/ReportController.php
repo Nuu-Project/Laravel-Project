@@ -16,7 +16,7 @@ class ReportController extends Controller
     {
         $reportables = QueryBuilder::for(Reportable::class)
             ->allowedFilters([
-                'reportable_id',
+                AllowedFilter::exact('reportable_id'),
                 AllowedFilter::callback('type', function (Builder $query, string $type) {
                     if ($type === ReportType::Product->value()) {
                         $query->whereHas('report.reportType', function ($query) {
