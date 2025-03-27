@@ -36,7 +36,7 @@
                     <input type="hidden" name="deleted_image_ids" id="deletedImageIds" value="[]">
                     <x-div.grid>
                         <x-label.form for="name">
-                            書名
+                            書名我叫測試
                         </x-label.form>
                         <x-input.tags id="name" name="name" placeholder="請輸入書名" value="{{ $product->name }}"
                             maxlength="50" />
@@ -240,7 +240,7 @@
 
                             // 重置預覽圖片並隱藏整個預覽區域
                             const previewImg = preview.querySelector('img');
-                            previewImg.removeAttribute('src');  // 移除 src 屬性而不是設置為 '#'
+                            previewImg.removeAttribute('src'); // 移除 src 屬性而不是設置為 '#'
                             preview.classList.add('hidden');
 
                             // 顯示原本的 placeholder
@@ -361,7 +361,7 @@
 
                             // 更新圖片順序
                             updatePositions();
-                            
+
                             // 完全移除所有 file input 元素，這樣它們就不會被包含在表單提交中
                             const fileInputs = Array.from(this.querySelectorAll('input[type="file"]'));
                             fileInputs.forEach(input => {
