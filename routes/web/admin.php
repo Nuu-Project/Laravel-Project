@@ -21,6 +21,9 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'verified', 'role:ad
     Route::get('/users', [UserController::class, 'index'])
         ->name('users.index');
 
+    Route::post('/users/{user}/active', [UserController::class, 'active'])
+        ->name('users.active');
+
     // 留言管理頁 controller要改
     Route::get('/messages', [MessageController::class, 'index'])
         ->name('messages.index');
