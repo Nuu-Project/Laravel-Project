@@ -151,7 +151,7 @@
                                             </svg>
                                             <p class="mb-2 text-sm text-gray-500"><span
                                                     class="font-semibold">點擊上傳</span> 或拖曳</p>
-                                            <p class="text-xs text-gray-500">PNG,JPG,JPEG,GIF(最大.
+                                            <p class="text-xs text-gray-500">PNG,JPG,JPEG(最大.
                                                 3200x3200px 2MB)</p>
                                         </div>
                                         <div id="preview{{ $i }}"
@@ -176,6 +176,8 @@
                         <x-input-error :messages="$errors->get('images')" class="mt-2" />
                     </x-div.grid>
 
+                    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
                     <script>
                         // 全局變量
                         let processedImagePaths = {};
@@ -194,20 +196,19 @@
                                     const formData = new FormData();
                                     formData.append('image', file);
 
-                                    const response = await fetch('/api/products/process-image', {
-                                        method: 'POST',
-                                        body: formData,
+                                    console.log('準備發送圖片處理請求');
+
+                                    const response = await axios.post('/api/products/process-image', formData, {
                                         headers: {
                                             'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
-                                        },
-                                        credentials: 'include'
+                                        }
                                     });
 
-                                    const result = await response.json();
+                                    console.log('收到圖片處理響應', response.data);
 
-                                    if (result.success) {
+                                    if (response.data.success) {
                                         // 儲存處理後的圖片路徑
-                                        processedImagePaths[number] = result.path;
+                                        processedImagePaths[number] = response.data.path;
 
                                         const reader = new FileReader();
                                         reader.onloadend = function() {
@@ -218,7 +219,7 @@
                                         }
                                         reader.readAsDataURL(file);
                                     } else {
-                                        console.error('圖片處理失敗:', result);
+                                        console.error('圖片處理失敗:', response.data);
                                         removeImage(number);
                                     }
                                 } catch (error) {

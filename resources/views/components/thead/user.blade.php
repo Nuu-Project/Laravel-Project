@@ -3,7 +3,7 @@
         <tr>
             <x-gray-900>用戶名稱</x-gray-900>
             <x-gray-900>權限</x-gray-900>
-            <x-gray-900>停用</x-gray-900>
+            <x-gray-900>停用/啟用</x-gray-900>
         </tr>
     </x-thead.gray-50>
 </div>

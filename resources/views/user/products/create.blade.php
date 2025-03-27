@@ -115,7 +115,7 @@
                         </x-label.form>
                         <textarea
                             class="flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                            id="description" name="description" placeholder="請填寫有關該書的書況or使用情況等等~~" rows="4" maxlength="50">{{ old('description') }}</textarea>
+                            id="description" name="description" placeholder="請填寫有關該書的書況or使用情況等等~~" rows="4" maxlength = "50">{{ old('description') }}</textarea>
                         <x-input-error :messages="$errors->get('description')" class="mt-2" />
                     </x-div.grid>
                     <x-div.grid>
@@ -142,8 +142,8 @@
                                             </svg>
                                             <p class="mb-2 text-sm text-gray-500"><span
                                                     class="font-semibold">點擊上傳</span>或拖曳</p>
-                                            <p class="text-xs text-gray-500">PNG,JPG,JPEG,GIF (最大.
-                                                3200x3200px, 2MB)</p>
+                                            <p class="text-xs text-gray-500">PNG,JPG,JPEG(最大.
+                                                3200x3200px 2MB)</p>
                                         </div>
                                         <div id="preview{{ $i }}"
                                             class="absolute inset-0 flex items-center justify-center hidden">
@@ -176,6 +176,8 @@
     </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
     <script>
         // 儲存已處理的圖片路徑
         let processedImagePaths = new Array(5).fill(null);
@@ -193,19 +195,18 @@
                     const formData = new FormData();
                     formData.append('image', file);
 
-                    const response = await fetch('/api/products/process-image', {
-                        method: 'POST',
-                        body: formData,
+                    console.log('準備發送圖片處理請求');
+
+                    const response = await axios.post('/api/products/process-image', formData, {
                         headers: {
                             'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
-                        },
-                        credentials: 'include'
+                        }
                     });
 
-                    const result = await response.json();
+                    console.log('收到圖片處理響應', response.data);
 
-                    if (result.success) {
-                        processedImagePaths[number] = result.path;
+                    if (response.data.success) {
+                        processedImagePaths[number] = response.data.path;
 
                         const reader = new FileReader();
                         reader.onloadend = function() {
@@ -215,8 +216,12 @@
                             deleteButton.classList.remove('hidden');
                         }
                         reader.readAsDataURL(file);
+                    } else {
+                        console.error('圖片處理失敗:', response.data);
+                        removeImage(number);
                     }
                 } catch (error) {
+                    console.error('上傳過程出錯:', error);
                     removeImage(number);
                 }
             } else {
