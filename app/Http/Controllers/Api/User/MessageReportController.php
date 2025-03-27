@@ -15,7 +15,7 @@ class MessageReportController extends Controller
 {
     public function store(Request $request, Message $message): JsonResponse
     {
-        $request->validate([
+        $validatedData = $request->validate([
             'report_type_id' => [
                 'required',
                 'exists:report_types,id',
@@ -41,10 +41,8 @@ class MessageReportController extends Controller
             'description' => ['required', 'string', 'max:255'],
         ]);
 
-        $message->reports()->create([
-            'report_type_id' => $request->input('report_type_id'),
+        $message->reports()->create($validatedData + [
             'user_id' => Auth::id(),
-            'description' => $request->input('description', null),
         ]);
 
         return response()->json([
