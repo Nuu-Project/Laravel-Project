@@ -26,7 +26,7 @@
                         <div class="overflow-x-auto -mx-4 sm:mx-0">
                             <x-table.gray-200>
                                 <x-thead.roles />
-                                <x-gray-200>
+                                <x-tbody>
                                     @foreach ($users as $user)
                                         @if (!$user->hasRole('admin') && !$user->hasRole('user'))
                                             <tr class="hover:bg-gray-50">
@@ -35,16 +35,16 @@
                                                     <input type="checkbox" name="user_ids[]" value="{{ $user->id }}"
                                                         class="form-checkbox h-4 w-4 text-blue-600">
                                                 </td>
-                                                <x-gray-900>
+                                                <x-td>
                                                     {{ $user->name }}
-                                                </x-gray-900>
-                                                <x-gray-900>
+                                                </x-td>
+                                                <x-td>
                                                     {{ $user->email }}
-                                                </x-gray-900>
+                                                </x-td>
                                             </tr>
                                         @endif
                                     @endforeach
-                                </x-gray-200>
+                                    </x-gray-200>
                             </x-table.gray-200>
                         </div>
 

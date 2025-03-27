@@ -3,26 +3,26 @@
 <x-table.gray-200>
     <x-thead.gray-50>
         <tr>
-            <x-gray-900>標籤名稱</x-gray-900>
-            <x-gray-900>上傳時間</x-gray-900>
-            <x-gray-900>最後修改時間</x-gray-900>
-            <x-gray-900>操作</x-gray-900>
-            <x-gray-900>狀態</x-gray-900>
+            <x-td>標籤名稱</x-td>
+            <x-td>上傳時間</x-td>
+            <x-td>最後修改時間</x-td>
+            <x-td>操作</x-td>
+            <x-td>狀態</x-td>
         </tr>
     </x-thead.gray-50>
-    <x-gray-200>
+    <x-tbody>
         @foreach ($tags as $tag)
             <tr>
-                <x-gray-900>
+                <x-td>
                     <x-div.gray-900>{{ $tag->name }}</x-div.gray-900>
-                </x-gray-900>
-                <x-gray-900>
+                </x-td>
+                <x-td>
                     <x-div.gray-900>{{ $tag->created_at }}</x-div.gray-900>
-                </x-gray-900>
-                <x-gray-900>
+                </x-td>
+                <x-td>
                     <x-div.gray-900>{{ $tag->updated_at }}</x-div.gray-900>
-                </x-gray-900>
-                <x-gray-900>
+                </x-td>
+                <x-td>
                     <div class="flex items-center space-x-2">
                         <a href="{{ route('admin.tags.edit', $tag->id) }}">
                             <x-button.blue-short>
@@ -46,10 +46,10 @@
                             </form>
                         @endif
                     </div>
-                </x-gray-900>
+                </x-td>
                 <x-gray-900 class="min-w-[100px]">
                     {{ is_null($tag->deleted_at) ? '啟用中' : '已停用' }}
-                </x-gray-900>
+                </x-td>
             </tr>
         @endforeach
     </x-gray-200>
