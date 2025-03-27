@@ -11,14 +11,15 @@ class UserSuspendController extends Controller
 {
     public function suspend(Request $request, User $user): JsonResponse
     {
-        $request->validate([
+        $validatedData = $request->validate([
             'duration' => ['required', 'integer', 'min:0'],
             'reason' => ['nullable', 'string', 'max:255'],
         ]);
 
-        $user->time_limit = now()->addSeconds($request->integer('duration'));
-        $user->suspend_reason = $request->input('reason'); // 保存暫停原因
-        $user->save();
+        $user->update([
+            'time_limit' => now()->addSeconds((int) $validatedData['duration']),
+            'suspend_reason' => $validatedData['reason'] ?? null,
+        ]);
 
         return response()->json(['message' => '用戶已成功暫停']);
     }
