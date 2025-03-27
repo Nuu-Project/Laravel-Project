@@ -6,39 +6,39 @@
             <x-h.h3>標籤管理</x-h.h3>
 
             <!-- 搜尋區塊 -->
-            <div class="mb-8 px-4 sm:px-0">
-                <div class="flex flex-col lg:flex-row justify-between items-center space-y-4 lg:space-y-0">
-                    <div class="w-full lg:w-auto">
+            <div class="mb-6">
+                <x-div.flex-container>
+                    <div class="w-full sm:w-auto">
                         <a href="{{ route('admin.tags.create') }}" class="block">
-                            <x-button.search class="w-full lg:w-auto">新增標籤</x-button.search>
+                            <x-button.search>新增標籤</x-button.search>
                         </a>
                     </div>
-                    <div class="w-full lg:w-auto">
+                    <div class="w-full sm:w-auto">
                         <form action="{{ route('admin.tags.index') }}" method="GET"
-                            class="flex flex-col lg:flex-row space-y-4 lg:space-y-0 lg:space-x-4">
+                            class="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2">
                             <x-input.search type="text" name="filter[name]" placeholder="搜尋標籤..."
-                                value="{{ request('filter.name') }}" class="w-full lg:w-auto">
+                                value="{{ request('filter.name') }}">
                             </x-input.search>
-                            <x-button.search class="w-full lg:w-auto">
+                            <x-button.search>
                                 搜尋
                             </x-button.search>
                         </form>
                     </div>
-                </div>
+                </x-div.flex-container>
             </div>
 
             <!-- 表格區塊 -->
-            <div class="bg-white rounded-lg shadow">
+            <x-div.bg-white>
                 <div class="overflow-x-auto">
                     <div class="min-w-full">
                         <x-table.tags :tags="$tags">
                         </x-table.tags>
                     </div>
                 </div>
-                <div class="bg-white px-4 py-3 border-t border-gray-200">
+                <x-div.gray-200>
                     {{ $tags->links() }}
-                </div>
-            </div>
+                </x-div.gray-200>
+            </x-div.bg-white>
         </x-div.container>
     </x-flex-container>
 </x-template-admin-layout>

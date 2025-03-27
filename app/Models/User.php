@@ -73,4 +73,9 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->morphToMany(Report::class, 'reportable');
     }
+
+    public function isAdmin()
+    {
+        return $this->hasRole('admin'); // 檢查 role 欄位是否為 'admin'
+    }
 }
