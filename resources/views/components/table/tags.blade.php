@@ -47,7 +47,7 @@
                         @endif
                     </div>
                 </x-td>
-                <x-gray-900 class="min-w-[100px]">
+                <x-td>
                     {{ is_null($tag->deleted_at) ? '啟用中' : '已停用' }}
                 </x-td>
             </tr>

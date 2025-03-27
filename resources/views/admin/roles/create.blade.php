@@ -44,7 +44,7 @@
                                             </tr>
                                         @endif
                                     @endforeach
-                                    </x-gray-200>
+                                </x-tbody>
                             </x-table.gray-200>
                         </div>
 
