@@ -48,13 +48,18 @@
 
                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                     <div class="flex items-center space-x-2">
-                        <x-button.blue-short>
-                            前往
-                        </x-button.blue-short>
+                        <a href="{{ route('products.show', ['product' => $message->product_id]) }}">
+                            <x-button.blue-short>
+                                前往
+                            </x-button.blue-short>
+                        </a>
 
-                        <x-button.red-short>
-                            檢舉詳情
-                        </x-button.red-short>
+                        <a
+                            href="{{ route('admin.reports.index', ['filter[reportable_id]' => $message->id, 'filter[type]' => '留言']) }}">
+                            <x-button.red-short>
+                                檢舉詳情
+                            </x-button.red-short>
+                        </a>
                     </div>
                 </td>
 

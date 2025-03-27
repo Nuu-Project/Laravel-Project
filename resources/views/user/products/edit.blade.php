@@ -143,7 +143,7 @@
                                     <label for="image{{ $i }}"
                                         class="flex flex-col items-center justify-center w-full h-40 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
                                         <div id="placeholder{{ $i }}"
-                                            class="flex flex-col items-center justify-center pt-5 pb-6" 
+                                            class="flex flex-col items-center justify-center pt-5 pb-6"
                                             x-show="!uploading || error"
                                             :class="{'hidden': hasExistingImage && !error}">
                                             <template x-if="!processing">
@@ -181,12 +181,12 @@
                                     <div class="absolute bottom-0 left-0 right-0 pb-2">
                                         <!-- 進度條 (顯示在上傳時) -->
                                         <div class="mt-2 relative h-2 rounded-full overflow-hidden transition-opacity duration-300"
-                                            x-show="uploading && !error" 
+                                            x-show="uploading && !error"
                                             x-transition:enter="transition ease-out duration-300"
-                                            x-transition:enter-start="opacity-0" 
+                                            x-transition:enter-start="opacity-0"
                                             x-transition:enter-end="opacity-100"
                                             x-transition:leave="transition ease-in duration-200"
-                                            x-transition:leave-start="opacity-100" 
+                                            x-transition:leave-start="opacity-100"
                                             x-transition:leave-end="opacity-0">
                                             <!-- 進度條背景 -->
                                             <div class="absolute inset-0 bg-gray-200 rounded-full"></div>
@@ -197,12 +197,12 @@
 
                                         <!-- 上傳狀態顯示 -->
                                         <div class="text-xs mt-1 font-semibold flex items-center justify-center h-4 transition-opacity duration-300"
-                                            x-show="uploading && !error" 
+                                            x-show="uploading && !error"
                                             x-transition:enter="transition ease-out duration-300"
-                                            x-transition:enter-start="opacity-0" 
+                                            x-transition:enter-start="opacity-0"
                                             x-transition:enter-end="opacity-100"
                                             x-transition:leave="transition ease-in duration-200"
-                                            x-transition:leave-start="opacity-100" 
+                                            x-transition:leave-start="opacity-100"
                                             x-transition:leave-end="opacity-0">
                                             <span x-text="`${progress}%`" class="mr-1"></span>
                                             <span x-show="progress < 100">上傳中...</span>
@@ -231,6 +231,8 @@
                         </div>
                         <x-input-error :messages="$errors->get('images')" class="mt-2" />
                     </x-div.grid>
+
+                    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
                     <x-button.create-edit>
                         儲存修改

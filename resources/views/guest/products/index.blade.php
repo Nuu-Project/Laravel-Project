@@ -6,8 +6,7 @@
 
     <form action="{{ route('products.index') }}" method="GET">
         <div class="flex items-center justify-center gap-2 mb-4">
-            <x-input.search type="text" name="filter[name]" placeholder="搜尋商品名稱..."
-                value="{{ request('filter.name') }}">
+            <x-input.search type="text" name="filter[name]" placeholder="搜尋商品名稱..." value="{{ request('filter.name') }}">
             </x-input.search>
             <x-button.search>
                 搜尋
@@ -38,7 +37,8 @@
         <main class="py-6">
             <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3 max-w-7xl mx-auto px-4">
                 @foreach ($products as $product)
-                    <div class="rounded-lg border bg-card text-card-foreground shadow-sm max-w-sm mx-auto w-full" data-v0-t="card">
+                    <div class="rounded-lg border bg-card text-card-foreground shadow-sm max-w-sm mx-auto w-full"
+                        data-v0-t="card">
                         <div class="space-y-1.5 p-6">
                             <h4 class="font-semibold text-2xl mb-2">商品名稱:{{ $product->name }}</h4>
                             <div>
