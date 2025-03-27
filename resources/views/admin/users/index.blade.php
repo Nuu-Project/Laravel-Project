@@ -26,7 +26,7 @@
                     <div class="overflow-x-auto">
                         <x-table.gray-200>
                             <x-thead.user />
-                            <x-gray-200>
+                            <x-tbody>
                                 <!-- Search results will be dynamically inserted here -->
                             </x-gray-200>
                         </x-table.gray-200>
@@ -39,7 +39,7 @@
                 <div class="overflow-x-auto">
                     <x-table.gray-200>
                         <x-thead.user />
-                        <x-gray-200>
+                        <x-tbody>
                             @foreach ($users as $user)
                                 <tr>
                                     <td class="px-4 py-3 whitespace-nowrap">
