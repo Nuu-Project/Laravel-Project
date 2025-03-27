@@ -126,6 +126,20 @@
                                                     {{ __('刪除') }}
                                                 </x-dropdown-link>
                                             </form>
+                                        </x-slot>
+                                    </x-dropdown>
+                                @else
+                                    <x-dropdown class="ml-2">
+                                        <x-slot name="trigger">
+                                            <button>
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-400"
+                                                    viewBox="0 0 20 20" fill="currentColor">
+                                                    <path
+                                                        d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z" />
+                                                </svg>
+                                            </button>
+                                        </x-slot>
+                                        <x-slot name="content">
                                             <x-dropdown-link href="#"
                                                 onclick="event.preventDefault(); reportMessage(event, {{ $message->id }})"
                                                 data-report-type="message"
@@ -200,6 +214,21 @@
                                                             {{ __('刪除') }}
                                                         </x-dropdown-link>
                                                     </form>
+                                                </x-slot>
+                                            </x-dropdown>
+                                        @else
+                                            <x-dropdown class="ml-2">
+                                                <x-slot name="trigger">
+                                                    <button>
+                                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                                            class="h-4 w-4 text-gray-400" viewBox="0 0 20 20"
+                                                            fill="currentColor">
+                                                            <path
+                                                                d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z" />
+                                                        </svg>
+                                                    </button>
+                                                </x-slot>
+                                                <x-slot name="content">
                                                     <x-dropdown-link href="#"
                                                         onclick="event.preventDefault(); reportMessage(event, {{ $reply->id }})"
                                                         data-report-type="message"
