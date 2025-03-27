@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\User;
 
+use App\Enums\ReportType as ReportTypeEnum;
 use App\Http\Controllers\Controller;
 use App\Models\Message;
 use Illuminate\Http\JsonResponse;
@@ -14,10 +15,16 @@ class MessageReportController extends Controller
 {
     public function store(Request $request, Message $message): JsonResponse
     {
-        $request->validate([
+        $validatedData = $request->validate([
             'report_type_id' => [
                 'required',
                 'exists:report_types,id',
+                function ($attribute, $value, $fail) {
+                    $type = DB::table('report_types')->where('id', $value)->value('type');
+                    if ($type !== ReportTypeEnum::Message->value) {
+                        $fail('檢舉類型錯誤。');
+                    }
+                },
                 Rule::unique('reports')
                     ->where('report_type_id', $request->input('report_type_id'))
                     ->where('user_id', Auth::id())
@@ -34,10 +41,8 @@ class MessageReportController extends Controller
             'description' => ['required', 'string', 'max:255'],
         ]);
 
-        $message->reports()->create([
-            'report_type_id' => $request->input('report_type_id'),
+        $message->reports()->create($validatedData + [
             'user_id' => Auth::id(),
-            'description' => $request->input('description', null),
         ]);
 
         return response()->json([

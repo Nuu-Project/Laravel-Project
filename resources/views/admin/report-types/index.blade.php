@@ -60,7 +60,7 @@
                                             </x-button.blue-short>
                                         </a>
                                         @if (!is_null($reportType->deleted_at))
-                                            <form action="{{ route('admin.report_types.restore', $reportType->id) }}"
+                                            <form action="{{ route('admin.report-types.restore', $reportType->id) }}"
                                                 method="POST" style="display:inline;">
                                                 @csrf
                                                 <x-button.blue-short>

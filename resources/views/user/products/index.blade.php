@@ -113,6 +113,14 @@
                                             編輯
                                         </x-button.blue-short>
                                     </a>
+                                    <form action="{{ route('user.products.destroy', $product->id) }}" method="POST"
+                                        onsubmit="return confirm('確定要刪除這個商品嗎？');">
+                                        @csrf
+                                        @method('DELETE')
+                                        <x-button.red-short>
+                                            刪除
+                                        </x-button.red-short>
+                                    </form>
                                 </div>
                             </div>
                         @endforeach

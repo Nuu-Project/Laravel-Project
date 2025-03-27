@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Web\Admin;
 use App\Enums\ReportType;
 use App\Http\Controllers\Controller;
 use App\Models\Reportable;
-use Illuminate\View\View;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\View\View;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 
@@ -16,7 +16,7 @@ class ReportController extends Controller
     {
         $reportables = QueryBuilder::for(Reportable::class)
             ->allowedFilters([
-                'reportable_id',
+                AllowedFilter::exact('reportable_id'),
                 AllowedFilter::callback('type', function (Builder $query, string $type) {
                     if ($type === ReportType::Product->value()) {
                         $query->whereHas('report.reportType', function ($query) {
@@ -45,6 +45,6 @@ class ReportController extends Controller
             ->paginate(10)
             ->withQueryString();
 
-        return view('admin.reports.index', compact('reportables'));
+        return view('admin.reports.index', ['reportables' => $reportables]);
     }
 }

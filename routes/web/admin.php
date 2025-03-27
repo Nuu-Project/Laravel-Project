@@ -21,6 +21,9 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'verified', 'role:ad
     Route::get('/users', [UserController::class, 'index'])
         ->name('users.index');
 
+    Route::post('/users/{user}/active', [UserController::class, 'active'])
+        ->name('users.active');
+
     // 留言管理頁 controller要改
     Route::get('/messages', [MessageController::class, 'index'])
         ->name('messages.index');
@@ -40,14 +43,14 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'verified', 'role:ad
 
     // 檢舉詳情頁
     Route::resource('/reports', ReportController::class)
-        ->only(['index', 'show']);
+        ->only(['index']);
 
     // 檢舉類型 頁面,新增,修改,刪除
     Route::resource('report-types', ReportTypeController::class)
         ->except(['show'])
         ->withTrashed();
     // 檢舉類型 啟用
-    Route::post('/report_types/{report_type}/restore', [ReportTypeController::class, 'restore'])
-        ->name('report_types.restore')
+    Route::post('/report-types/{report_type}/restore', [ReportTypeController::class, 'restore'])
+        ->name('report-types.restore')
         ->withTrashed();
 });

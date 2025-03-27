@@ -6,16 +6,16 @@
         <x-div.container>
             <x-h.h3>用戶管理</x-h.h3>
 
-            <div class="mb-8">
-                <x-div.flex-container class="flex-col sm:flex-row space-y-4 sm:space-y-0">
-                    <x-h.h2 id="users-title" class="text-center sm:text-left">用戶</x-h.h2>
-                    <div class="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-4">
+            <div class="mb-6">
+                <x-div.flex-container>
+                    <x-h.h2 id="users-title" class="mb-3 sm:mb-0">用戶</x-h.h2>
+                    <div class="w-full sm:w-auto">
                         <form action="{{ route('admin.users.index') }}" method="GET"
                             class="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2">
                             <x-input.search type="text" name="filter[name]" placeholder="請輸入用戶名稱..."
-                                value="{{ request('filter.name') }}" class="w-full sm:w-auto">
+                                value="{{ request('filter.name') }}">
                             </x-input.search>
-                            <x-button.search class="w-full sm:w-auto">
+                            <x-button.search>
                                 搜尋
                             </x-button.search>
                         </form>
@@ -35,20 +35,20 @@
             </div>
 
             <!-- All users 部分 -->
-            <div class="bg-white rounded-lg shadow">
+            <x-div.bg-white>
                 <div class="overflow-x-auto">
                     <x-table.gray-200>
                         <x-thead.user />
                         <x-gray-200>
                             @foreach ($users as $user)
                                 <tr>
-                                    <td class="px-6 py-4 whitespace-nowrap">
+                                    <td class="px-4 py-3 whitespace-nowrap">
                                         <div class="flex items-center">
                                             <div class="flex-shrink-0 h-10 w-10">
                                                 <img class="h-10 w-10 rounded-full"
                                                     src="{{ asset('images/account.png') }}" alt="{{ $user->name }}">
                                             </div>
-                                            <div class="ml-4">
+                                            <div class="ml-3">
                                                 <div class="text-sm font-medium text-gray-900">
                                                     {{ $user->name }}</div>
                                                 <div class="text-sm text-gray-500">{{ $user->email }}</div>
@@ -56,7 +56,7 @@
                                         </div>
                                     </td>
 
-                                    <td class="px-6 py-4 whitespace-nowrap">
+                                    <td class="px-4 py-3 whitespace-nowrap">
                                         <div class="text-sm text-gray-900">
                                             @if ($user->hasRole('admin'))
                                                 管理者
@@ -65,11 +65,19 @@
                                             @endif
                                         </div>
                                     </td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                    <td class="px-4 py-3 whitespace-nowrap text-sm font-medium">
                                         <x-button.red-short
                                             onclick="showSuspendDialog({{ $user->id }}, {{ json_encode($user->name) }})">
                                             停用
                                         </x-button.red-short>
+                                        <form action="{{ route('admin.users.active', ['user' => $user->id]) }}"
+                                            method="POST" class="inline">
+                                            @csrf
+                                            <x-button.blue-short>
+                                                啟用
+                                            </x-button.blue-short>
+                                        </form>
+                                        {{ $user->time_limit }}
                                     </td>
                                 </tr>
                             @endforeach
@@ -80,7 +88,7 @@
                         {{ $users->links() }}
                     </x-div.gray-200>
                 </div>
-            </div>
+            </x-div.bg-white>
         </x-div.container>
     </x-flex-container>
 </x-template-admin-layout>

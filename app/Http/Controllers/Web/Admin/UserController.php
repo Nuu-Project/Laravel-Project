@@ -4,8 +4,9 @@ namespace App\Http\Controllers\Web\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use Illuminate\View\View;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\View\View;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 
@@ -26,6 +27,17 @@ class UserController extends Controller
             ->paginate(10)
             ->withQueryString();
 
-        return view('admin.users.index', compact('users'));
+        return view('admin.users.index', ['users' => $users]);
+    }
+
+    public function active(User $user): RedirectResponse
+    {
+        $user->update([
+            'time_limit' => now(),
+        ]);
+
+        $message = "用戶{$user->name}重新啟用！";
+
+        return redirect()->route('admin.users.index')->with('success', $message);
     }
 }
