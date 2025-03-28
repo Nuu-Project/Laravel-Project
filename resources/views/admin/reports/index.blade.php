@@ -15,7 +15,8 @@
                         <form action="{{ route('admin.reports.index') }}" method="GET"
                             class="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2">
                             <div class="w-full sm:w-auto">
-                                <select name="filter[type]" class="w-full sm:w-auto bg-gray text-primary-foreground px-4 py-2 rounded-md mb-2 sm:mb-0">
+                                <select name="filter[type]"
+                                    class="w-full sm:w-auto bg-gray text-primary-foreground px-4 py-2 rounded-md mb-2 sm:mb-0">
                                     @foreach (ReportType::cases() as $reportType)
                                         <option value="{{ $reportType }}"
                                             {{ request('filter.type') === $reportType ? 'selected' : '' }}>
@@ -43,18 +44,18 @@
                     <x-div.bg-white>
                         <div class="overflow-x-auto -mx-4 sm:mx-0">
                             <x-table.gray-200>
-                                <x-thead.reportable />
-                                <x-gray-200>
+                                <x-thead.products-reportable />
+                                <x-tbody>
                                     @foreach ($reportables as $reportable)
                                         <tr>
-                                            <x-gray-900>{{ $reportable->reportable ? $reportable->reportable->name : 'N/A' }}</x-gray-900>
-                                            <x-gray-900>{{ $reportable->report->reportType->name }}</x-gray-900>
-                                            <x-gray-900>{{ $reportable->report->description }}</x-gray-900>
-                                            <x-gray-900>{{ $reportable->report->user->email }}</x-gray-900>
-                                            <x-gray-900>{{ $reportable->report->updated_at->format('Y-m-d') }}</x-gray-900>
+                                            <x-td>{{ $reportable->reportable ? $reportable->reportable->name : 'N/A' }}</x-td>
+                                            <x-td>{{ $reportable->report->reportType->name }}</x-td>
+                                            <x-td>{{ $reportable->report->description }}</x-td>
+                                            <x-td>{{ $reportable->report->user->email }}</x-td>
+                                            <x-td>{{ $reportable->report->updated_at->format('Y-m-d') }}</x-td>
                                         </tr>
                                     @endforeach
-                                </x-gray-200>
+                                </x-tbody>
                             </x-table.gray-200>
                         </div>
 
@@ -72,18 +73,18 @@
                     <x-div.bg-white>
                         <div class="overflow-x-auto -mx-4 sm:mx-0">
                             <x-table.gray-200>
-                                <x-thead.reportable />
-                                <x-gray-200>
+                                <x-thead.messages-reportable />
+                                <x-tbody>
                                     @foreach ($reportables as $reportable)
                                         <tr>
-                                            <x-gray-900>{{ $reportable->reportable ? $reportable->reportable->message : 'N/A' }}</x-gray-900>
-                                            <x-gray-900>{{ $reportable->report->reportType->name }}</x-gray-900>
-                                            <x-gray-900>{{ $reportable->report->description }}</x-gray-900>
-                                            <x-gray-900>{{ $reportable->report->user->email }}</x-gray-900>
-                                            <x-gray-900>{{ $reportable->report->updated_at->format('Y-m-d') }}</x-gray-900>
+                                            <x-td>{{ $reportable->reportable ? $reportable->reportable->message : 'N/A' }}</x-td>
+                                            <x-td>{{ $reportable->report->reportType->name }}</x-td>
+                                            <x-td>{{ $reportable->report->description }}</x-td>
+                                            <x-td>{{ $reportable->report->user->email }}</x-td>
+                                            <x-td>{{ $reportable->report->updated_at->format('Y-m-d') }}</x-td>
                                         </tr>
                                     @endforeach
-                                </x-gray-200>
+                                </x-tbody>
                             </x-table.gray-200>
                         </div>
 

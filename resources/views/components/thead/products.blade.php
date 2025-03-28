@@ -1,14 +1,14 @@
 <div>
     <x-thead.gray-50>
         <tr>
-            <x-gray-900>商品編號</x-gray-900>
-            <x-gray-900>商品名稱</x-gray-900>
-            <x-gray-900>刊登者</x-gray-900>
-            <x-gray-900>刊登時間</x-gray-900>
-            <x-gray-900>最後修改時間</x-gray-900>
-            <x-gray-900>檢舉次數</x-gray-900>
-            <x-gray-900>操作</x-gray-900>
-            <x-gray-900>狀態</x-gray-900>
+            <x-td>商品編號</x-td>
+            <x-td>商品名稱</x-td>
+            <x-td>刊登者</x-td>
+            <x-td>刊登時間</x-td>
+            <x-td>最後修改時間</x-td>
+            <x-td>檢舉次數</x-td>
+            <x-td>操作</x-td>
+            <x-td>狀態</x-td>
         </tr>
     </x-thead.gray-50>
 </div>

@@ -44,16 +44,16 @@
                 <div class="overflow-x-auto relative">
                     <x-table.gray-200 class="min-w-full table-fixed whitespace-nowrap">
                         <x-thead.products />
-                        <x-gray-200>
+                        <x-tbody>
                             @foreach ($products as $product)
                                 <tr class="hover:bg-gray-50">
-                                    <x-gray-900 >{{ $product->id }}</x-gray-900>
-                                    <x-gray-900 >{{ $product->name }}</x-gray-900>
-                                    <x-gray-900 >{{ $product->user->name }}</x-gray-900>
-                                    <x-gray-900 >{{ $product->created_at->format('Y/m/d') }}</x-gray-900>
-                                    <x-gray-900 >{{ $product->updated_at->format('Y/m/d') }}</x-gray-900>
-                                    <x-gray-900 >{{ $product->reports_count }}</x-gray-900>
-                                    <x-gray-900 >
+                                    <x-td>{{ $product->id }}</x-td>
+                                    <x-td>{{ $product->name }}</x-td>
+                                    <x-td>{{ $product->user->name }}</x-td>
+                                    <x-td>{{ $product->created_at->format('Y/m/d') }}</x-td>
+                                    <x-td>{{ $product->updated_at->format('Y/m/d') }}</x-td>
+                                    <x-td>{{ $product->reports_count }}</x-td>
+                                    <x-td>
                                         <div class="flex space-x-2">
                                             <a href="{{ route('products.show', ['product' => $product->id]) }}">
                                                 <x-button.blue-short>
@@ -75,8 +75,8 @@
                                                 </x-button.red-short>
                                             </a>
                                         </div>
-                                    </x-gray-900>
-                                    <x-gray-900 class="w-32 px-4 py-2">{{ $product->status->name() }}</x-gray-900>
+                                    </x-td>
+                                    <x-td>{{ $product->status->name() }}</x-td>
                                 </tr>
                             @endforeach
                         </x-gray-200>

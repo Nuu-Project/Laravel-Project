@@ -3,15 +3,15 @@
 <x-table.gray-200>
     <x-thead.gray-50>
         <tr>
-            <x-gray-900>用戶名稱</x-gray-900>
-            <x-gray-900>商品</x-gray-900>
-            <x-gray-900>留言</x-gray-900>
-            <x-gray-900>留言日期</x-gray-900>
-            <x-gray-900>操作</x-gray-900>
-            <x-gray-900>刪除</x-gray-900>
+            <x-td>用戶名稱</x-td>
+            <x-td>商品</x-td>
+            <x-td>留言</x-td>
+            <x-td>留言日期</x-td>
+            <x-td>操作</x-td>
+            <x-td>刪除</x-td>
         </tr>
     </x-thead.gray-50>
-    <x-gray-200>
+    <x-tbody>
         @foreach ($messages as $message)
             <tr>
                 <td class="px-6 py-4 whitespace-nowrap">
