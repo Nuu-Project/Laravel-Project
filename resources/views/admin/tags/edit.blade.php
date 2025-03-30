@@ -37,9 +37,10 @@
                     <x-input-error :messages="$errors->get('order_column')" class="mt-2" />
                 </x-div.grid>
 
-                <x-button.create-edit>
+                <!-- 提交按鈕 -->
+                <x-button.submit>
                     確定修改標籤
-                </x-button.create-edit>
+                </x-button.submit>
             </form>
         </x-div.container>
     </x-flex-container>
