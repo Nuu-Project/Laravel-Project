@@ -44,9 +44,9 @@
                 </x-div.grid>
 
                 <!-- 提交按鈕 -->
-                <x-button.create-edit>
+                <x-button.submit>
                     確定修改標籤
-                </x-button.create-edit>
+                </x-button.submit>
             </form>
         </x-div.container>
     </x-flex-container>
