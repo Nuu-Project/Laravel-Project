@@ -234,9 +234,9 @@
 
                     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
-                    <x-button.create-edit>
+                    <x-button.submit>
                         儲存修改
-                    </x-button.create-edit>
+                    </x-button.submit>
                 </form>
             </div>
         </x-div.container>
