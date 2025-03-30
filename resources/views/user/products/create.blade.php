@@ -208,9 +208,9 @@
                         </div>
                         <x-input-error :messages="$errors->get('images')" class="mt-2" />
                     </x-div.grid>
-                    <x-button.create-edit>
+                    <x-button.submit>
                         刊登商品
-                    </x-button.create-edit>
+                    </x-button.submit>
                 </form>
             </div>
         </x-div.container>
