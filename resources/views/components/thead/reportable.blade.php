@@ -1,11 +1,11 @@
 <div>
     <x-thead.gray-50>
         <tr>
-            <x-gray-900>商品名稱</x-gray-900>
-            <x-gray-900>檢舉原因</x-gray-900>
-            <x-gray-900>自定義原因</x-gray-900>
-            <x-gray-900>檢舉人</x-gray-900>
-            <x-gray-900>檢舉日期</x-gray-900>
+            <x-td>商品名稱</x-td>
+            <x-td>檢舉原因</x-td>
+            <x-td>自定義原因</x-td>
+            <x-td>檢舉人</x-td>
+            <x-td>檢舉日期</x-td>
         </tr>
     </x-thead.gray-50>
 </div>
