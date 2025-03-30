@@ -1,11 +1,9 @@
 <x-template-admin-layout>
 
-    <!-- 主要內容 -->
     <x-flex-container>
         <x-div.container>
             <x-h.h3>編輯檢舉類型</x-h.h3>
 
-            <!-- 表單內容 -->
             <form class="mt-8 space-y-6" action="{{ route('admin.report-types.update', $reportType->id) }}" method="POST"
                 enctype="multipart/form-data">
                 @csrf
