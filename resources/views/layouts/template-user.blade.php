@@ -10,18 +10,15 @@
     <link rel="icon" type="image/png" href="{{ asset('images/icon.png') }}">
     <title>{{ $title ?? '聯大二手書交易平台' }}</title>
 
-    <!-- Styles -->
     <link rel="stylesheet" href="{{ asset('css/tailwind.css') }}">
     <link rel="stylesheet" href="{{ asset('css/message.css') }}">
     <link rel="stylesheet" href="{{ asset('css/info.css') }}">
 
-    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap"
         rel="stylesheet">
 
-    <!-- Scripts -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js"
         integrity="sha512-7x3zila4t2qNycrtZ31HO0NnJr8kg2VI67YLoRSyi9hGhRN66FHYWr7Axa9Y1J9tGYHVBPqIjSE1ogHrJTz51g=="
@@ -34,7 +31,6 @@
     <div class="flex flex-col md:flex-row h-screen bg-gray-100">
         <x-navbar.side-bar-user />
 
-        <!-- 主要內容區 -->
         <div class="flex-1 flex flex-col overflow-hidden">
             <x-navbar.user />
             {{ $slot }}
