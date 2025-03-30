@@ -1,11 +1,9 @@
 <x-template-admin-layout>
 
-    <!-- 主要內容 -->
     <x-flex-container>
         <x-div.container>
             <x-h.h3>檢舉類型管理</x-h.h3>
 
-            <!-- 搜尋區塊在表格之前 -->
             <div class="mb-8 px-4 sm:px-0">
                 <div class="flex flex-col lg:flex-row justify-between items-center space-y-4 lg:space-y-0">
                     <div class="w-full lg:w-auto">
@@ -27,7 +25,6 @@
                 </div>
             </div>
 
-            <!-- 表格區塊在搜尋區塊之後 -->
             <x-div.bg-white>
                 <div class="overflow-x-auto">
                     <x-table.gray-200>

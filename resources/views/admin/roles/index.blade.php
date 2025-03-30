@@ -5,9 +5,7 @@
         <x-div.container>
             <x-h.h3>角色管理</x-h.h3>
 
-            <!-- Admin 表格 -->
             <div class="bg-white rounded-lg shadow-md p-4 sm:p-6 mb-6">
-                <!-- Admin 表格 -->
                 <form id="adminForm" action="{{ route('admin.roles.update', ['role' => 'admin']) }}" method="POST">
                     @csrf
                     @method('PUT')
@@ -66,12 +64,10 @@
                         '.role-checkbox[data-role="admin"]:checked');
                     const modifyBtn = document.querySelector('#modifyAdminBtn');
 
-                    // 顯示或隱藏按鈕
                     modifyBtn.classList.toggle('hidden', checkedBoxes.length === 0);
                 });
             });
 
-            // 當修改按鈕被點擊時提交表單
             const modifyAdminBtn = document.getElementById('modifyAdminBtn');
             modifyAdminBtn?.addEventListener('click', function() {
                 document.getElementById('adminForm').submit();

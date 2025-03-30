@@ -1,11 +1,9 @@
 <x-template-admin-layout>
 
-    <!-- 主要內容 -->
     <x-flex-container>
         <x-div.container>
             <x-h.h3>新增標籤</x-h.h3>
 
-            <!-- 這裡放置原有的表單內容 -->
             <form id="tagForm" class="mt-8 space-y-6" action="{{ route('admin.tags.store') }}" method="POST"
                 enctype="multipart/form-data">
                 @csrf
