@@ -41,6 +41,10 @@ class ProductController extends Controller
 
     public function show(Product $product): View
     {
+        // 如果商品不存在或狀態不是啟用，則返回 404
+        if ($product->status !== ProductStatus::Active) {
+            abort(404);
+        }
         // 獲取商品留言
         $messages = $product->messages()
             ->whereNull('reply_to_id')

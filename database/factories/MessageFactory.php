@@ -15,7 +15,7 @@ class MessageFactory extends Factory
     public function definition()
     {
         return [
-            'message' => $this->faker->sentence,
+            'message' => $this->faker->sentence(),
             'product_id' => Product::factory(),
             'user_id' => User::factory(),
         ];
