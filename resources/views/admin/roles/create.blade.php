@@ -20,9 +20,8 @@
                 </x-div.flex-container>
 
                 <div class="bg-white rounded-lg shadow-md p-4 sm:p-6 mt-4">
-                    <!-- 表單開始 -->
                     <form action="{{ route('admin.roles.store') }}" method="POST">
-                        @csrf <!-- CSRF 保護 -->
+                        @csrf
                         <div class="overflow-x-auto -mx-4 sm:mx-0">
                             <x-table.gray-200>
                                 <x-thead.roles />
@@ -48,12 +47,10 @@
                             </x-table.gray-200>
                         </div>
 
-                        <!-- 分頁 -->
                         <x-div.gray-200>
                             {{ $users->links() }}
                         </x-div.gray-200>
 
-                        <!-- 提交按鈕 -->
                         <div class="mt-6 flex flex-col sm:flex-row justify-end space-y-2 sm:space-y-0 sm:space-x-4">
                             <x-button.roles type="button" id="cancelBtn">
                                 取消
@@ -66,7 +63,6 @@
                 </div>
 
                 <script>
-                    // 取消按鈕
                     document.getElementById('cancelBtn').addEventListener('click', function() {
                         window.location.href = '{{ route('admin.roles.index') }}';
                     });

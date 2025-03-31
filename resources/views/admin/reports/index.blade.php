@@ -3,7 +3,6 @@
 @endphp
 
 <x-template-admin-layout>
-    <!-- 主要內容 -->
     <x-flex-container>
         <x-div.container>
             <x-h.h3>檢舉詳情</x-h.h3>
@@ -38,7 +37,6 @@
                 </x-div.flex-container>
             </div>
 
-            <!-- 商品檢舉詳情內容 -->
             @if (request('filter.type') === ReportType::Product->value())
                 <div id="product-content" class="mb-8 mt-4">
                     <x-div.bg-white>
@@ -59,7 +57,6 @@
                             </x-table.gray-200>
                         </div>
 
-                        <!-- 分頁導航 -->
                         <x-div.gray-200>
                             {{ $reportables->links() }}
                         </x-div.gray-200>
@@ -67,7 +64,6 @@
                 </div>
             @endif
 
-            <!-- 留言檢舉詳情內容 -->
             @if (request('filter.type') === ReportType::Message->value())
                 <div id="message-content" class="mb-8 mt-4">
                     <x-div.bg-white>
@@ -88,7 +84,6 @@
                             </x-table.gray-200>
                         </div>
 
-                        <!-- 分頁導航 -->
                         <x-div.gray-200>
                             {{ $reportables->links() }}
                         </x-div.gray-200>

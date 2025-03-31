@@ -1,7 +1,6 @@
 <x-template-admin-layout>
     <script src="{{ asset('js/admin/message/message.js') }}"></script>
 
-    <!-- 主要內容 -->
     <x-flex-container>
         <x-div.container>
             <x-h.h3>留言管理</x-h.h3>
@@ -22,14 +21,13 @@
                         </form>
                     </div>
                 </x-div.flex-container>
-                <!-- Reviews 列表 -->
+
                 <x-div.bg-white id="reviews-table">
                     <div class="overflow-x-auto -mx-4 sm:mx-0">
                         <x-table.message :messages="$messages->items()">
                         </x-table.message>
                     </div>
 
-                    <!-- 分頁導航 -->
                     <x-div.gray-200>
                         {{ $messages->links() }}
                     </x-div.gray-200>

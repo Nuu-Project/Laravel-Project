@@ -1,11 +1,9 @@
 <x-template-admin-layout>
 
-    <!-- 主要內容 -->
     <x-flex-container>
         <x-div.container>
             <x-h.h3>標籤管理</x-h.h3>
 
-            <!-- 搜尋區塊 -->
             <div class="mb-6">
                 <x-div.flex-container>
                     <div class="w-full sm:w-auto">
@@ -27,7 +25,6 @@
                 </x-div.flex-container>
             </div>
 
-            <!-- 表格區塊 -->
             <x-div.bg-white>
                 <div class="overflow-x-auto">
                     <div class="min-w-full">
