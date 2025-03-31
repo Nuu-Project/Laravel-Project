@@ -7,14 +7,13 @@ use App\Models\Role;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
-use Illuminate\Support\Facades\Route;
 
 class RoleControllerTest extends TestCase
 {
-
     use RefreshDatabase;
 
-    public function test_admin_can_view_admin_users_list(){
+    public function test_admin_can_view_admin_users_list()
+    {
 
         $adminRole = Role::firstOrCreate(['name' => RoleType::Admin->value()]);
         $adminUser1 = User::factory()->create()->assignRole($adminRole);
@@ -48,7 +47,8 @@ class RoleControllerTest extends TestCase
         $this->assertFalse($users->contains($noadmin));
     }
 
-    public function test_admin_can_view_users_without_roles_page(){
+    public function test_admin_can_view_users_without_roles_page()
+    {
 
         $adminRole = Role::firstOrCreate(['name' => RoleType::Admin->value()]);
 
@@ -75,12 +75,13 @@ class RoleControllerTest extends TestCase
         $this->assertFalse($users->contains($adminUser2));
     }
 
-    public function test_admin_can_find_users_without_roles_by_name_or_email(){
+    public function test_admin_can_find_users_without_roles_by_name_or_email()
+    {
         $adminRole = Role::firstOrCreate(['name' => RoleType::Admin->value()]);
 
         $adminUser1 = User::factory()->create()->assignRole($adminRole);
 
-        $userwithNameMatch = User::factory()->create(['name' => "john"]);
+        $userwithNameMatch = User::factory()->create(['name' => 'john']);
         $userwithEmailMatch = User::factory()->create(['email' => 'john@gamil.com']);
         $userWithout = User::factory()->create(['name' => 'ted']);
         $userhasRole = User::factory()->create()->assignRole($adminRole);
@@ -101,7 +102,8 @@ class RoleControllerTest extends TestCase
         $this->assertFalse($users->contains($userhasRole));
     }
 
-    public function test_admin_can_assign_roles_to_users(){
+    public function test_admin_can_assign_roles_to_users()
+    {
         $adminRole = Role::firstOrCreate(['name' => RoleType::Admin->value()]);
         $adminUser = User::factory()->create()->assignRole($adminRole);
 
@@ -170,7 +172,8 @@ class RoleControllerTest extends TestCase
         $response->assertSessionHasErrors('user_ids');
     }
 
-    public function test_admin_cannot_assign_role_with_nonexistent_user_ids(){
+    public function test_admin_cannot_assign_role_with_nonexistent_user_ids()
+    {
         // Arrange (準備階段)
         // 1. 確保 admin 角色存在
         $adminRole = Role::firstOrCreate(['name' => RoleType::Admin->value()]);
@@ -199,7 +202,8 @@ class RoleControllerTest extends TestCase
         $response->assertSessionHasErrors('user_ids.*'); // 使用 `user_ids.*` 因為錯誤會針對陣列中的每個元素
     }
 
-    public function test_admin_can_rmove_role_from_user(){
+    public function test_admin_can_rmove_role_from_user()
+    {
         $adminRole = Role::firstOrCreate(['name' => RoleType::Admin->value()]);
 
         $adminUser = User::factory()->create()->assignRole($adminRole);
@@ -357,5 +361,3 @@ class RoleControllerTest extends TestCase
         $this->assertFalse($userWithoutRole->hasRole('admin'));
     }
 }
-
-
