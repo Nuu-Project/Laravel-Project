@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Controllers\Api\User;
+namespace Tests\Feature\Api\User;
 
 use App\Enums\ReportType as ReportTypeEnum;
 use App\Http\Controllers\Api\User\ProductReportController;

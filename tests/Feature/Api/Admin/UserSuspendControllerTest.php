@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Controllers\Api\Admin;
+namespace Tests\Feature\Api\Admin;
 
 use App\Http\Controllers\Api\Admin\UserSuspendController;
 use App\Models\User;
