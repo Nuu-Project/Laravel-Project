@@ -3,14 +3,12 @@
 namespace App\Http\Controllers\Web\User;
 
 use App\Http\Controllers\Controller;
-use App\Mail\CommentDeletedNotification;
 use App\Models\Message;
 use App\Models\Product;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\View\View;
 
 class ProductMessageController extends Controller
@@ -59,20 +57,6 @@ class ProductMessageController extends Controller
     {
 
         $this->authorize('delete', $message);
-
-        // 取得留言創建者的資訊
-        $recipientEmail = $message->user->email;
-        $commentContent = $message->message; // 取得被刪除的留言內容
-        $userName = $message->user->name;   // 取得留言創建者的名稱 (假設 User 模型有 name 屬性)
-
-        // 建立 Mailable 實例
-        $mailable = new CommentDeletedNotification($commentContent, null, $userName); // 這裡沒有提供刪除原因
-
-        // 發送郵件
-        Mail::to($recipientEmail)->send($mailable);
-
-        // 或者使用隊列來異步發送郵件
-        // Mail::to($recipientEmail)->queue($mailable);
 
         $message->delete();
 
