@@ -28,7 +28,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'verified', 'role:ad
     Route::get('/messages', [MessageController::class, 'index'])
         ->name('messages.index');
 
-    Route::delete('/messages/{product}/{message}', [MessageController::class, 'destroy'])
+    Route::delete('/messages/{message}', [MessageController::class, 'destroy'])
         ->name('messages.destroy');
 
     // 角色管理路由

@@ -5,9 +5,9 @@ namespace Tests\Feature\Web\Admin;
 use App\Models\Message;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
 use PHPUnit\Framework\Attributes\Test;
 use Spatie\Permission\Models\Role;
+use Tests\TestCase;
 
 class MessageControllerTest extends TestCase
 {
@@ -27,8 +27,8 @@ class MessageControllerTest extends TestCase
         $admin = User::factory()->create()->assignRole('admin');
 
         $this->actingAs($admin)
-             ->get(route('admin.messages.index'))
-             ->assertStatus(200);
+            ->get(route('admin.messages.index'))
+            ->assertStatus(200);
     }
 
     #[Test]
@@ -38,9 +38,9 @@ class MessageControllerTest extends TestCase
         $message = Message::factory()->create();
 
         $this->actingAs($admin)
-             ->get(route('admin.messages.index'))
-             ->assertViewIs('admin.messages.index')
-             ->assertSee($message->content);
+            ->get(route('admin.messages.index'))
+            ->assertViewIs('admin.messages.index')
+            ->assertSee($message->content);
     }
 
     #[Test]
@@ -54,17 +54,17 @@ class MessageControllerTest extends TestCase
         $message2 = Message::factory()->create(['user_id' => $user2->id]);
 
         $this->actingAs($admin)
-             ->get(route('admin.messages.index', ['filter[name]' => 'Alice']))
-             ->assertSuccessful()
-             ->assertSee($message1->content)
-             ->assertDontSee($message2->content);
+            ->get(route('admin.messages.index', ['filter[name]' => 'Alice']))
+            ->assertSuccessful()
+            ->assertSee($message1->content)
+            ->assertDontSee($message2->content);
     }
 
     #[Test]
     public function guest_cannot_access_messages_page()
     {
         $this->get(route('admin.messages.index'))
-             ->assertRedirect(route('login'));
+            ->assertRedirect(route('login'));
     }
 
     #[Test]
@@ -73,8 +73,8 @@ class MessageControllerTest extends TestCase
         /** @var \App\Models\User $user */
         $user = User::factory()->create();
         $this->actingAs($user)
-             ->get(route('admin.messages.index'))
-             ->assertForbidden();
+            ->get(route('admin.messages.index'))
+            ->assertForbidden();
     }
 
     #[Test]
@@ -84,10 +84,10 @@ class MessageControllerTest extends TestCase
         Message::factory()->count(25)->create();
 
         $this->actingAs($admin)
-             ->get(route('admin.messages.index'))
-             ->assertViewHas('messages', function ($paginator) {
-                 return $paginator->count() === 10; // 假設每頁 10 筆
-             });
+            ->get(route('admin.messages.index'))
+            ->assertViewHas('messages', function ($paginator) {
+                return $paginator->count() === 10; // 假設每頁 10 筆
+            });
     }
 
     #[Test]
@@ -96,7 +96,7 @@ class MessageControllerTest extends TestCase
         $admin = User::factory()->create()->assignRole('admin');
 
         $this->actingAs($admin)
-             ->get(route('admin.messages.index', ['filter[invalid]' => 'test']))
-             ->assertStatus(400); // 改為預期回傳 400 Bad Request
+            ->get(route('admin.messages.index', ['filter[invalid]' => 'test']))
+            ->assertStatus(400); // 改為預期回傳 400 Bad Request
     }
 }

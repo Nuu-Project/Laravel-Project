@@ -4,14 +4,13 @@ namespace App\Http\Controllers\Web\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Message;
-use App\Models\Product;
 use App\Notifications\CommentDeletedNotification;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
-use Illuminate\Support\Facades\Auth;
 
 class MessageController extends Controller
 {
@@ -32,7 +31,7 @@ class MessageController extends Controller
         return view('admin.messages.index', ['messages' => $messages]);
     }
 
-    public function destroy(Product $product, Message $message)
+    public function destroy(Message $message)
     {
         abort_unless(Auth::check(), 403, '您無權編輯此留言。');
 
