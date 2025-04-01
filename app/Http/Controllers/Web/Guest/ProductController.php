@@ -41,6 +41,9 @@ class ProductController extends Controller
 
     public function show(Product $product): View
     {
+        if ($product->status !== ProductStatus::Active) {
+            abort(404);
+        }
         // 獲取商品留言
         $messages = $product->messages()
             ->whereNull('reply_to_id')

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\RoleType;
 use App\Mail\CustomVerifyMail;
 use Carbon\Carbon;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -51,6 +52,7 @@ class User extends Authenticatable implements MustVerifyEmail
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'time_limit' => 'datetime',
         ];
     }
 
@@ -77,6 +79,6 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function isAdmin()
     {
-        return $this->hasRole('admin'); // 檢查 role 欄位是否為 'admin'
+        return $this->hasRole(RoleType::Admin->value());
     }
 }

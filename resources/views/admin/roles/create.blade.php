@@ -48,7 +48,6 @@
                             </x-table.gray-200>
                         </div>
 
-                        <!-- 分頁 -->
                         <x-div.gray-200>
                             {{ $users->links() }}
                         </x-div.gray-200>
@@ -66,7 +65,6 @@
                 </form>
 
                 <script>
-                    // 取消按鈕
                     document.getElementById('cancelBtn').addEventListener('click', function() {
                         window.location.href = '{{ route('admin.roles.index') }}';
                     });
