@@ -28,6 +28,9 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'verified', 'role:ad
     Route::get('/messages', [MessageController::class, 'index'])
         ->name('messages.index');
 
+    Route::delete('/messages/{product}/{message}', [MessageController::class, 'destroy'])
+        ->name('messages.destroy');
+
     // 角色管理路由
     Route::resource('roles', RoleController::class)
         ->only(['index', 'store', 'update', 'create']);
