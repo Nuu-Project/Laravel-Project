@@ -5,11 +5,11 @@ namespace App\Http\Controllers\Api\User;
 use App\Enums\ReportType as ReportTypeEnum;
 use App\Http\Controllers\Controller;
 use App\Models\Message;
+use App\Rules\Report\ReportTypeRule;
+use App\Rules\Report\UniqueReportRule;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Rules\Report\UniqueReportRule;
-use App\Rules\Report\ReportTypeRule;
 
 class MessageReportController extends Controller
 {

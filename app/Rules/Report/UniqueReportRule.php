@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\DB;
 class UniqueReportRule implements ValidationRule
 {
     private $reportableId;
+
     private $reportableType;
 
     public function __construct($reportableId, $reportableType)
