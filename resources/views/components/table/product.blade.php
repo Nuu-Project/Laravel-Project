@@ -1,3 +1,7 @@
+@php
+    use App\Enums\ReportType;
+@endphp
+
 @props(['products'])
 
 <x-table.gray-200 class="min-w-full table-fixed whitespace-nowrap">
@@ -19,16 +23,15 @@
                             </x-button.blue-short>
                         </a>
 
-                        <form
-                            action="{{ route('admin.products.inactive', ['product' => $product->id]) }}"
-                            method="POST" class="inline">
+                        <form action="{{ route('admin.products.inactive', ['product' => $product->id]) }}" method="POST"
+                            class="inline">
                             @csrf
                             @method('PUT')
                             <x-button.status :status="$product->status" />
                         </form>
 
                         <a
-                            href="{{ route('admin.reports.index', ['filter[reportable_id]' => $product->id, 'filter[type]' => '商品']) }}">
+                            href="{{ route('admin.reports.index', ['filter[reportable_id]' => $product->id, 'filter[type]' => ReportType::Product->value]) }}">
                             <x-button.red-short>
                                 檢舉詳情
                             </x-button.red-short>
@@ -39,4 +42,4 @@
             </tr>
         @endforeach
     </x-tbody>
-</x-table.gray-200> 
+</x-table.gray-200>
