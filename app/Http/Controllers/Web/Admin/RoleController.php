@@ -16,7 +16,7 @@ class RoleController extends Controller
 {
     public function index(): View
     {
-        $users = User::role(['admin'])->paginate(10);
+        $users = User::role(RoleType::Admin->value())->with('roles')->paginate(10);
 
         return view('admin.roles.index', ['users' => $users]);
     }
@@ -47,7 +47,7 @@ class RoleController extends Controller
         ]);
 
         $roleType = RoleType::Admin;
-        $users = User::whereIn('id', $validated['user_ids'])->get();
+        $users = User::whereIn('id', $validated['user_ids'])->with('roles')->get();
 
         foreach ($users as $user) {
             $user->assignRole($roleType);

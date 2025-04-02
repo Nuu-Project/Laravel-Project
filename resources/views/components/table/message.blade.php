@@ -66,7 +66,7 @@
                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                     @if ($message->product)
                         <form
-                            action="{{ route('user.products.messages.destroy', ['product' => $message->product->id, 'message' => $message->id]) }}"
+                            action="{{ route('admin.messages.destroy', ['message' => $message->id]) }}"
                             method="POST" class="inline">
                             @csrf
                             @method('DELETE')

@@ -8,7 +8,7 @@
     </div>
     <nav class="mt-4" x-data="{ open: true }">
         <div @click="open = !open" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">
-            <div class="flex justify-between items-center">
+            <x-div.side-bar-admin>
                 <span>商品管理系統</span>
                 <svg :class="{ 'transform rotate-180': open }" class="w-4 h-4 transition-transform duration-200"
                     fill="currentColor" viewBox="0 0 20 20">
@@ -16,7 +16,7 @@
                         d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
                         clip-rule="evenodd"></path>
                 </svg>
-            </div>
+            </x-div.side-bar-admin>
         </div>
         <div x-show="open" class="pl-4">
             <x-a.block-hover href="{{ route('user.products.index') }}">我的商品</x-a.block-hover>
