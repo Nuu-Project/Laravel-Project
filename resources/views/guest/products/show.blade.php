@@ -85,7 +85,7 @@
                             <span class="text-gray-800">{{ $message->user->name }}</span>
                             <div class="flex items-center">
                                 @unless ($message->created_at->eq($message->updated_at))
-                                    <small class="text-sm text-gray-600"> &middot; {{ __('已編輯　') }}</small>
+                                    <small class="text-sm text-gray-600"> &middot; {{ __('Edited.　') }}</small>
                                 @endunless
                                 <small
                                     class="text-sm text-gray-600">{{ $message->created_at->format('Y/m/d　H:i:s') }}</small>
@@ -169,10 +169,10 @@
                                     <span class="text-gray-800">{{ $reply->user->name }}</span>
                                     <div class="flex items-center">
                                         @unless ($reply->created_at->eq($reply->updated_at))
-                                            <small class="text-sm text-gray-600"> &middot; {{ __('已編輯　') }}</small>
+                                            <small class="text-sm text-gray-600"> &middot; {{ __('Edited') }}</small>
                                         @endunless
                                         <small
-                                            class="text-sm text-gray-600">{{ $reply->created_at->format('Y/m/d　H:i:s') }}</small>
+                                            class="text-sm text-gray-600">{{ $reply->created_at->format('　Y/m/d　H:i:s') }}</small>
                                         <span class="mx-1">　</span>
 
                                         @if ($reply->user->is(auth()->user()))
