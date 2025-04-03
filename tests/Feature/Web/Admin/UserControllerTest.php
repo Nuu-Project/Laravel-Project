@@ -2,11 +2,11 @@
 
 namespace Tests\Feature\Web\Admin;
 
-use Tests\TestCase;
+use App\Enums\RoleType;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Spatie\Permission\Models\Role;
-use App\Enums\RoleType;
+use Tests\TestCase;
 
 class UserControllerTest extends TestCase
 {
@@ -31,7 +31,7 @@ class UserControllerTest extends TestCase
         $response->assertStatus(200);
         $response->assertViewIs('admin.users.index');
         $response->assertViewHas('users', function ($users) use ($user1) {
-            return $users->contains($user1) && !$users->contains(User::where('name', 'Bob')->first());
+            return $users->contains($user1) && ! $users->contains(User::where('name', 'Bob')->first());
         });
     }
 
