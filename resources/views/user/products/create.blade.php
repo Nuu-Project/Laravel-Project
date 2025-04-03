@@ -40,7 +40,7 @@
                     </x-div.grid>
                     <x-div.grid>
                         <x-label.form for="price">
-                            價格 (不可修改)
+                            價格 (不可重複修改)
                         </x-label.form>
                         <x-input.tags id="price" name="price" placeholder="輸入價格" type="number"
                             value="{{ old('price') }}" />
