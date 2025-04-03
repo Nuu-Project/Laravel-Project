@@ -21,7 +21,7 @@
             @endif
 
             <div class="flex items-center justify-between mb-6">
-                <h3 id="users-title" class="text-2xl font-medium text-gray-900">我的商品</h3>
+                <h1 class="text-2xl sm:text-3xl font-bold">我的商品</h1>
                 <form action="{{ route('user.products.index') }}" method="GET">
                     <div>
                         <x-input.search type="text" name="filter[name]" placeholder="搜尋商品名稱..."
