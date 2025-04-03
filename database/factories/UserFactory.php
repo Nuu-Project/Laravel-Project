@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Enums\RoleType;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -40,5 +42,12 @@ class UserFactory extends Factory
         return $this->state(fn (array $attributes) => [
             'email_verified_at' => null,
         ]);
+    }
+
+    public function hasAdmin(): self
+    {
+        return $this->afterCreating(function (User $user) {
+            $user->assignRole(RoleType::Admin->value()); // 使用枚舉分配角色
+        });
     }
 }
