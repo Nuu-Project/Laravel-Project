@@ -17,8 +17,8 @@
                                 <select name="filter[type]"
                                     class="w-full sm:w-auto bg-gray text-primary-foreground px-4 py-2 rounded-md mb-2 sm:mb-0">
                                     @foreach (ReportType::cases() as $reportType)
-                                        <option value="{{ $reportType }}"
-                                            {{ request('filter.type') === $reportType ? 'selected' : '' }}>
+                                        <option value="{{ $reportType->value }}"
+                                            {{ request('filter.type') == $reportType->value ? 'selected' : '' }}>
                                             {{ $reportType }}
                                         </option>
                                     @endforeach
