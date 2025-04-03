@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Web\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Message;
-use App\Notifications\CommentDeletedNotification;
+use App\Notifications\ProductMessageDeletedNotification;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -38,8 +38,8 @@ class MessageController extends Controller
         $user = $message->user;
 
         if ($user) {
-            // 发送通知
-            $user->notify(new CommentDeletedNotification($message));
+
+            $user->notify(new ProductMessageDeletedNotification($message));
         }
 
         $message->delete();
