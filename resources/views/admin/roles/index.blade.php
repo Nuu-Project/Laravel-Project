@@ -22,7 +22,7 @@
                     @method('PUT')
 
                     <x-div.bg-white>
-                        <x-table.overflow-container>
+                        <x-table.overflow-container class="w-full">
                             <x-table.roles :users="$users" />
                         </x-table.overflow-container>
                         <x-div.gray-200>
