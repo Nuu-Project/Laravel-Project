@@ -7,42 +7,42 @@
         <x-div.container>
             <x-h.h3>檢舉詳情</x-h.h3>
 
-            <div class="mb-8">
-                <x-div.flex-container class="flex-col sm:flex-row space-y-4 sm:space-y-0">
+            <div>
+                <x-div.flex-container>
                     <x-h.h2 id="reviews-title">Reviews</x-h.h2>
-                    <div class="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-4">
-                        <form action="{{ route('admin.reports.index') }}" method="GET"
-                            class="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2">
-                            <div class="w-full sm:w-auto">
-                                <select name="filter[type]"
-                                    class="w-full sm:w-auto bg-gray text-primary-foreground px-4 py-2 rounded-md mb-2 sm:mb-0">
-                                    @foreach (ReportType::cases() as $reportType)
-                                        <option value="{{ $reportType->value }}"
-                                            {{ request('filter.type') == $reportType->value ? 'selected' : '' }}>
-                                            {{ $reportType }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="w-full sm:w-auto">
-                                <x-input.search type="text" name="filter[name]" placeholder="搜尋商品名稱或訊息..."
-                                    value="{{ request('filter.name') }}" class="w-full">
-                                </x-input.search>
-                            </div>
-                            <x-button.search class="w-full sm:w-auto">
-                                搜尋
-                            </x-button.search>
+                    <div>
+                        <form action="{{ route('admin.reports.index') }}" method="GET">
+                            <x-form.search-layout>
+                                <x-responsive.container>
+                                    <x-input.select name="filter[type]">
+                                        @foreach (ReportType::cases() as $reportType)
+                                            <option value="{{ $reportType->value }}"
+                                                {{ request('filter.type') == $reportType->value ? 'selected' : '' }}>
+                                                {{ $reportType }}
+                                            </option>
+                                        @endforeach
+                                    </x-input.select>
+                                </x-responsive.container>
+                                <x-responsive.container>
+                                    <x-input.search type="text" name="filter[name]" placeholder="搜尋商品名稱或訊息..."
+                                        value="{{ request('filter.name') }}">
+                                    </x-input.search>
+                                </x-responsive.container>
+                                <x-button.search>
+                                    搜尋
+                                </x-button.search>
+                            </x-form.search-layout>
                         </form>
                     </div>
                 </x-div.flex-container>
             </div>
 
             @if (request('filter.type') === ReportType::Product->value())
-                <div id="product-content" class="mb-8 mt-4">
+                <div id="product-content">
                     <x-div.bg-white>
-                        <div class="overflow-x-auto -mx-4 sm:mx-0">
+                        <x-table.overflow-container>
                             <x-table.report-product :reportables="$reportables" />
-                        </div>
+                        </x-table.overflow-container>
 
                         <x-div.gray-200>
                             {{ $reportables->links() }}
@@ -52,11 +52,11 @@
             @endif
 
             @if (request('filter.type') === ReportType::Message->value())
-                <div id="message-content" class="mb-8 mt-4">
+                <div id="message-content">
                     <x-div.bg-white>
-                        <div class="overflow-x-auto -mx-4 sm:mx-0">
+                        <x-table.overflow-container>
                             <x-table.report-message :reportables="$reportables" />
-                        </div>
+                        </x-table.overflow-container>
 
                         <x-div.gray-200>
                             {{ $reportables->links() }}
