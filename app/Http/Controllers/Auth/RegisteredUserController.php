@@ -5,27 +5,21 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
+use Illuminate\Http\RedirectResponse; // 修改這裡
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;    // 新增這行
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
 
 class RegisteredUserController extends Controller
 {
-    /**
-     * Display the registration view.
-     */
     public function create(): View
     {
         return view('auth.register');
     }
 
-    /**
-     * Handle an incoming registration request.
-     *
-     * @throws \Illuminate\Validation\ValidationException
-     */
-    public function store(Request $request): View
+    public function store(Request $request): RedirectResponse // 修改返回類型
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
@@ -41,6 +35,8 @@ class RegisteredUserController extends Controller
 
         event(new Registered($user));
 
-        return view('auth.verify-email');
+        Auth::login($user); // 改用 Facade 靜態調用
+
+        return redirect()->route('verification.notice');
     }
 }
