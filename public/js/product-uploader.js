@@ -3,7 +3,7 @@ let processedImagePaths = new Array(5).fill(null);
 
 // 為每個上傳元素創建Alpine.js元件
 for (let i = 0; i < 5; i++) {
-    window[`imageUploader${i}`] = function() {
+    window[`imageUploader${i}`] = function () {
         return {
             uploading: false,  // 是否正在上傳
             processing: false, // 是否正在處理
@@ -17,7 +17,6 @@ for (let i = 0; i < 5; i++) {
             startUpload(event) {
                 const file = event.target.files[0];
                 if (!file) return;
-
                 this.reset();
                 this.uploading = true;
                 this.processing = true;
@@ -122,8 +121,8 @@ for (let i = 0; i < 5; i++) {
                     if (this.progress === lastProgress) {
                         // 進度越高，增加越慢
                         const increment = this.progress < 30 ? 5 :
-                                         this.progress < 70 ? 3 :
-                                         this.progress < 90 ? 1 : 0.5;
+                            this.progress < 70 ? 3 :
+                                this.progress < 90 ? 1 : 0.5;
 
                         if (this.progress < 95) {
                             this.progress = Math.min(95, this.progress + increment);
@@ -140,7 +139,7 @@ for (let i = 0; i < 5; i++) {
                 const placeholder = document.getElementById(`placeholder${this.imageIndex}`);
 
                 const reader = new FileReader();
-                reader.onloadend = function() {
+                reader.onloadend = function () {
                     preview.querySelector('img').src = reader.result;
                     preview.classList.remove('hidden');
                     placeholder.classList.add('hidden');
@@ -199,25 +198,81 @@ for (let i = 0; i < 5; i++) {
 }
 
 // 監聽表單提交
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const productForm = document.getElementById('productForm');
     if (productForm) {
-        productForm.addEventListener('submit', function(e) {
+        productForm.addEventListener('submit', function (e) {
             e.preventDefault();
 
-            // 過濾掉 null 值
-            const validPaths = processedImagePaths.filter(path => path !== null);
+            // 清除之前可能存在的錯誤提示區域
+            const oldErrorContainer = document.querySelector('.frontend-error-container');
+            if (oldErrorContainer) {
+                oldErrorContainer.remove();
+            }
 
+            // 收集所有的驗證錯誤
+            const errors = [];
+
+            // 驗證所有必填欄位
+            const requiredFields = {
+                'name': '書名不能留空',
+                'price': '價格不能留空',
+                'description': '描述不能留空',
+                'grade': '年級不能留空',
+                'semester': '學期不能留空',
+                'subject': '科目不能留空',
+                'category': '課程類別不能留空'
+            };
+
+            // 檢查每個必填欄位
+            Object.entries(requiredFields).forEach(([fieldId, errorMessage]) => {
+                const field = document.getElementById(fieldId);
+                if (!field.value.trim()) {
+                    errors.push(errorMessage);
+                }
+            });
+
+            // 檢查圖片
+            const validPaths = processedImagePaths.filter(path => path !== null);
             if (validPaths.length === 0) {
-                alert('請至少上傳一張商品圖片');
+                errors.push('請至少上傳一張商品圖片');
+            }
+
+            // 如果有錯誤，顯示錯誤訊息
+            if (errors.length > 0) {
+                // 創建錯誤容器
+                const errorContainer = document.createElement('div');
+                errorContainer.className = 'bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4 frontend-error-container';
+                errorContainer.setAttribute('role', 'alert');
+
+                // 添加錯誤標題
+                const errorTitle = document.createElement('strong');
+                errorTitle.className = 'font-bold';
+                errorTitle.textContent = '驗證錯誤！';
+                errorContainer.appendChild(errorTitle);
+
+                // 添加錯誤列表
+                const errorList = document.createElement('ul');
+                errors.forEach(error => {
+                    const errorItem = document.createElement('li');
+                    errorItem.textContent = error;
+                    errorList.appendChild(errorItem);
+                });
+                errorContainer.appendChild(errorList);
+
+                // 將錯誤容器插入到表單前面
+                const form = document.getElementById('productForm');
+                form.parentNode.insertBefore(errorContainer, form);
+
+                // 滾動到錯誤訊息
+                errorContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 return;
             }
 
-            // 移除所有舊的隱藏輸入欄位
+            // 如果沒有錯誤，處理圖片路徑並提交表單
             const oldInputs = this.querySelectorAll('input[name^="encrypted_image_path"]');
             oldInputs.forEach(input => input.remove());
 
-            // 為每個處理過的圖片創建隱藏的輸入欄位
             validPaths.forEach((path, index) => {
                 const input = document.createElement('input');
                 input.type = 'hidden';
@@ -248,7 +303,7 @@ function initializeDragAndDrop() {
     Array.from(items).forEach(item => {
         item.setAttribute('draggable', 'true');
 
-        item.addEventListener('dragstart', function(e) {
+        item.addEventListener('dragstart', function (e) {
             draggedItem = this;
 
             // 創建拖拽時的佔位元素，保持相同高度避免跳動
@@ -264,12 +319,12 @@ function initializeDragAndDrop() {
             }, 10);
         });
 
-        item.addEventListener('dragover', function(e) {
+        item.addEventListener('dragover', function (e) {
             e.preventDefault();
             e.dataTransfer.dropEffect = 'move';
         });
 
-        item.addEventListener('drop', function(e) {
+        item.addEventListener('drop', function (e) {
             e.preventDefault();
             if (this !== draggedItem) {
                 const parent = this.parentNode;
@@ -288,7 +343,7 @@ function initializeDragAndDrop() {
             }
         });
 
-        item.addEventListener('dragend', function() {
+        item.addEventListener('dragend', function () {
             this.classList.remove('opacity-50');
             draggedItem = null;
 
@@ -316,4 +371,4 @@ function updatePositions() {
     }).filter(item => item.id !== '');
 
     document.getElementById('imageOrder').value = JSON.stringify(orderData);
-} 
+}

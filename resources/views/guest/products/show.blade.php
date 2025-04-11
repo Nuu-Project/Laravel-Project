@@ -3,7 +3,6 @@
 
     <div class="grid md:grid-cols-2 gap-6 lg:gap-12 items-start max-w-6xl px-4 mx-auto py-6">
         <div>
-            {{-- 主圖片顯示區域 --}}
             @if ($product->media->isNotEmpty())
                 <div class="relative mb-4">
                     @foreach ($product->getMedia('images') as $index => $media)
@@ -13,7 +12,6 @@
                             data-index="{{ $index }}" />
                     @endforeach
 
-                    {{-- 左右箭頭 --}}
                     <x-button.arrow-r id="leftArrow">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
                             class="w-6 h-6">
@@ -31,7 +29,6 @@
                 <div>沒有圖片</div>
             @endif
 
-            {{-- 縮略圖區域 --}}
             <div class="flex justify-start mt-4 space-x-4">
                 @foreach ($product->getMedia('images') as $index => $media)
                     <div class="w-24 h-24 border-2 border-gray-300 flex items-center justify-center cursor-pointer thumbnail"
@@ -43,9 +40,7 @@
             </div>
         </div>
 
-        {{-- 商品信息 --}}
         <div class="grid gap-4 md:gap-10 items-start">
-            <!-- 商品名稱和檢舉按鈕 -->
             <div class="flex items-start justify-between">
                 <div class="flex-grow pr-4">
                     <h1 class="text-3xl font-bold break-words">商品名稱:{{ $product->name }}</h1>
@@ -61,7 +56,6 @@
                     檢舉
                 </button>
             </div>
-            <!-- 其他商品信息 -->
             <p class="text-2xl font-bold">${{ $product->price }}</p>
             <p>上架時間: {{ $product->created_at->format('Y-m-d H:i:s') }}</p>
             <p class="text-muted-foreground text-2xl">商品介紹: {{ $product->description }}</p>
@@ -87,15 +81,16 @@
                             d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
                     </svg>
                     <div class="flex-1">
-                        <div class="flex justify-between items-center">
+                        <x-div.side-bar-admin>
                             <span class="text-gray-800">{{ $message->user->name }}</span>
                             <div class="flex items-center">
-                                <small
-                                    class="text-sm text-gray-600">{{ $message->created_at->format('Y/m/d , H:i:s') }}</small>
-                                <span class="mx-1"> </span>
                                 @unless ($message->created_at->eq($message->updated_at))
-                                    <small class="text-sm text-gray-600"> &middot; {{ __('edited') }}</small>
+                                    <small class="text-sm text-gray-600"> &middot; {{ __('Edited') }}</small>
                                 @endunless
+                                <small
+                                    class="text-sm text-gray-600">{{ $message->created_at->format('　Y/m/d　H:i:s') }}</small>
+                                <span class="mx-1"> </span>
+
                                 @if ($message->user->is(auth()->user()))
                                     <x-dropdown class="ml-2">
                                         <x-slot name="trigger">
@@ -151,15 +146,13 @@
                                     </x-dropdown>
                                 @endif
                             </div>
-                        </div>
+                        </x-div.side-bar-admin>
                         <p class="mt-4 text-lg text-gray-900 whitespace-pre-line">{{ $message->message }}</p>
 
-                        <!-- 回覆按鈕 -->
                         <button onclick="toggleReplyForm({{ $message->id }})" class="mt-2 text-sm text-blue-500">
                             回覆
                         </button>
 
-                        <!-- 回覆表單 (預設隱藏) -->
                         <form id="replyForm{{ $message->id }}" method="POST"
                             action="{{ route('user.products.messages.reply', ['product' => $product->id, 'message' => $message->id]) }}"
                             class="mt-2 hidden">
@@ -170,18 +163,18 @@
                             <x-primary-button class="mt-2">{{ __('提交回覆') }}</x-primary-button>
                         </form>
 
-                        <!-- 顯示回覆的留言 -->
                         @foreach ($message->replies as $reply)
                             <div class="ml-8 mt-4 p-4 bg-gray-50 rounded-lg">
-                                <div class="flex justify-between items-center">
+                                <x-div.side-bar-admin>
                                     <span class="text-gray-800">{{ $reply->user->name }}</span>
                                     <div class="flex items-center">
-                                        <small
-                                            class="text-sm text-gray-600">{{ $reply->created_at->format('Y/m/d , H:i:s') }}</small>
-                                        <span class="mx-1">　</span><!-- 全形空白 -->
                                         @unless ($reply->created_at->eq($reply->updated_at))
-                                            <small class="text-sm text-gray-600"> &middot; {{ __('edited') }}</small>
+                                            <small class="text-sm text-gray-600"> &middot; {{ __('Edited') }}</small>
                                         @endunless
+                                        <small
+                                            class="text-sm text-gray-600">{{ $reply->created_at->format('　Y/m/d　H:i:s') }}</small>
+                                        <span class="mx-1">　</span>
+
                                         @if ($reply->user->is(auth()->user()))
                                             <x-dropdown class="ml-2">
                                                 <x-slot name="trigger">
@@ -240,7 +233,7 @@
                                             </x-dropdown>
                                         @endif
                                     </div>
-                                </div>
+                                </x-div.side-bar-admin>
                                 <p class="mt-2 text-gray-900 whitespace-pre-line">{{ $reply->message }}</p>
                             </div>
                         @endforeach
@@ -260,7 +253,7 @@
             form.classList.toggle('hidden');
             const textarea = form.querySelector('textarea');
             if (!form.classList.contains('hidden')) {
-                textarea.focus(); // 聚焦到 textarea
+                textarea.focus();
             }
         }
     </script>

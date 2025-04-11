@@ -19,10 +19,11 @@
                     </div>
                 </x-div.flex-container>
 
-                <div class="bg-white rounded-lg shadow-md p-4 sm:p-6 mt-4">
-                    <form action="{{ route('admin.roles.store') }}" method="POST">
-                        @csrf
-                        <div class="overflow-x-auto -mx-4 sm:mx-0">
+                <!-- 表單開始 -->
+                <form action="{{ route('admin.roles.store') }}" method="POST">
+                    @csrf <!-- CSRF 保護 -->
+                    <x-div.bg-white>
+                        <div class="w-full overflow-x-auto">
                             <x-table.gray-200>
                                 <x-thead.roles />
                                 <x-tbody>
@@ -50,17 +51,18 @@
                         <x-div.gray-200>
                             {{ $users->links() }}
                         </x-div.gray-200>
+                    </x-div.bg-white>
 
-                        <div class="mt-6 flex flex-col sm:flex-row justify-end space-y-2 sm:space-y-0 sm:space-x-4">
-                            <x-button.roles type="button" id="cancelBtn">
-                                取消
-                            </x-button.roles>
-                            <x-button.roles type="submit">
-                                確認
-                            </x-button.roles>
-                        </div>
-                    </form>
-                </div>
+                    <!-- 提交按鈕 -->
+                    <div class="mt-6 flex flex-col sm:flex-row justify-end space-y-2 sm:space-y-0 sm:space-x-4">
+                        <x-button.roles type="button" id="cancelBtn">
+                            取消
+                        </x-button.roles>
+                        <x-button.roles type="submit">
+                            確認
+                        </x-button.roles>
+                    </div>
+                </form>
 
                 <script>
                     document.getElementById('cancelBtn').addEventListener('click', function() {

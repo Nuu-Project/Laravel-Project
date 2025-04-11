@@ -1,3 +1,7 @@
+@php
+    use App\Enums\ReportType;
+@endphp
+
 @props(['messages'])
 
 <x-table.gray-200>
@@ -55,7 +59,7 @@
                         </a>
 
                         <a
-                            href="{{ route('admin.reports.index', ['filter[reportable_id]' => $message->id, 'filter[type]' => '留言']) }}">
+                            href="{{ route('admin.reports.index', ['filter[reportable_id]' => $message->id, 'filter[type]' => ReportType::Message->value]) }}">
                             <x-button.red-short>
                                 檢舉詳情
                             </x-button.red-short>

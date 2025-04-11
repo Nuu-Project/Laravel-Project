@@ -17,8 +17,8 @@
                                 <select name="filter[type]"
                                     class="w-full sm:w-auto bg-gray text-primary-foreground px-4 py-2 rounded-md mb-2 sm:mb-0">
                                     @foreach (ReportType::cases() as $reportType)
-                                        <option value="{{ $reportType }}"
-                                            {{ request('filter.type') === $reportType ? 'selected' : '' }}>
+                                        <option value="{{ $reportType->value }}"
+                                            {{ request('filter.type') == $reportType->value ? 'selected' : '' }}>
                                             {{ $reportType }}
                                         </option>
                                     @endforeach
@@ -41,20 +41,7 @@
                 <div id="product-content" class="mb-8 mt-4">
                     <x-div.bg-white>
                         <div class="overflow-x-auto -mx-4 sm:mx-0">
-                            <x-table.gray-200>
-                                <x-thead.products-reportable />
-                                <x-tbody>
-                                    @foreach ($reportables as $reportable)
-                                        <tr>
-                                            <x-td>{{ $reportable->reportable ? $reportable->reportable->name : 'N/A' }}</x-td>
-                                            <x-td>{{ $reportable->report->reportType->name }}</x-td>
-                                            <x-td>{{ $reportable->report->description }}</x-td>
-                                            <x-td>{{ $reportable->report->user->email }}</x-td>
-                                            <x-td>{{ $reportable->report->updated_at->format('Y-m-d') }}</x-td>
-                                        </tr>
-                                    @endforeach
-                                </x-tbody>
-                            </x-table.gray-200>
+                            <x-table.report-product :reportables="$reportables" />
                         </div>
 
                         <x-div.gray-200>
@@ -68,20 +55,7 @@
                 <div id="message-content" class="mb-8 mt-4">
                     <x-div.bg-white>
                         <div class="overflow-x-auto -mx-4 sm:mx-0">
-                            <x-table.gray-200>
-                                <x-thead.messages-reportable />
-                                <x-tbody>
-                                    @foreach ($reportables as $reportable)
-                                        <tr>
-                                            <x-td>{{ $reportable->reportable ? $reportable->reportable->message : 'N/A' }}</x-td>
-                                            <x-td>{{ $reportable->report->reportType->name }}</x-td>
-                                            <x-td>{{ $reportable->report->description }}</x-td>
-                                            <x-td>{{ $reportable->report->user->email }}</x-td>
-                                            <x-td>{{ $reportable->report->updated_at->format('Y-m-d') }}</x-td>
-                                        </tr>
-                                    @endforeach
-                                </x-tbody>
-                            </x-table.gray-200>
+                            <x-table.report-message :reportables="$reportables" />
                         </div>
 
                         <x-div.gray-200>

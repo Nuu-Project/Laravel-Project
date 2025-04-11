@@ -5,7 +5,6 @@
 <x-template-user-layout>
     <script src="{{ asset('js/product-uploader.js') }}"></script>
 
-    <!-- 主要內容 -->
     <x-flex-container>
         <x-div.container>
             <div class="grid gap-6 md:gap-8">
@@ -15,7 +14,6 @@
                     <p class="text-sm sm:text-base text-muted-foreground">圖片最左邊將會是商品首圖。</p>
                 </x-div.grid>
 
-                <!-- 驗證錯誤顯示 -->
                 @if ($errors->any())
                     <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4"
                         role="alert">
@@ -42,7 +40,7 @@
                     </x-div.grid>
                     <x-div.grid>
                         <x-label.form for="price">
-                            價格 (不可修改)
+                            價格 (不可重複修改)
                         </x-label.form>
                         <x-input.tags id="price" name="price" placeholder="輸入價格" type="number"
                             value="{{ old('price') }}" />
@@ -159,23 +157,18 @@
                                         </div>
                                     </label>
 
-                                    <!-- 進度條區域 (固定高度) -->
                                     <div class="absolute bottom-0 left-0 right-0 pb-2">
-                                        <!-- 進度條 (顯示在上傳時) -->
                                         <div class="mt-2 relative h-2 rounded-full overflow-hidden transition-opacity duration-300"
                                             x-show="uploading && !error"
                                             x-transition:enter="transition ease-out duration-300"
                                             x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
                                             x-transition:leave="transition ease-in duration-200"
                                             x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0">
-                                            <!-- 進度條背景 -->
                                             <div class="absolute inset-0 bg-gray-200 rounded-full"></div>
-                                            <!-- 進度條指示器 -->
                                             <div class="absolute inset-y-0 left-0 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full transition-all duration-300"
                                                 :style="`width: ${progress}%`"></div>
                                         </div>
 
-                                        <!-- 上傳狀態顯示 -->
                                         <div class="text-xs mt-1 font-semibold flex items-center justify-center h-4 transition-opacity duration-300"
                                             x-show="uploading && !error"
                                             x-transition:enter="transition ease-out duration-300"
@@ -189,7 +182,6 @@
                                         </div>
                                     </div>
 
-                                    <!-- 刪除按鈕 -->
                                     <button type="button"
                                         class="absolute top-0 right-0 bg-red-500 text-white rounded-full p-1 m-1 shadow-md transition-all duration-300 hover:bg-red-600"
                                         id="deleteButton{{ $i }}" x-show="success"
