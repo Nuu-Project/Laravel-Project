@@ -3,18 +3,19 @@
         <x-div.container>
             <x-h.h3>新增管理員</x-h.h3>
 
-            <div class="mb-8">
+            <div>
                 <x-div.flex-container>
                     <x-h.h2 id="users-title">一般用戶</x-h.h2>
-                    <div class="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-4">
-                        <form action="{{ route('admin.roles.create') }}" method="GET"
-                            class="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2">
-                            <x-input.search type="text" name="filter[name]" placeholder="搜尋用戶名稱或email..."
-                                value="{{ request('filter.name') }}">
-                            </x-input.search>
-                            <x-button.search>
-                                搜尋
-                            </x-button.search>
+                    <div>
+                        <form action="{{ route('admin.roles.create') }}" method="GET">
+                            <x-form.search-layout>
+                                <x-input.search type="text" name="filter[name]" placeholder="搜尋用戶名稱或email..."
+                                    value="{{ request('filter.name') }}">
+                                </x-input.search>
+                                <x-button.search>
+                                    搜尋
+                                </x-button.search>
+                            </x-form.search-layout>
                         </form>
                     </div>
                 </x-div.flex-container>
@@ -23,30 +24,28 @@
                 <form action="{{ route('admin.roles.store') }}" method="POST">
                     @csrf <!-- CSRF 保護 -->
                     <x-div.bg-white>
-                        <div class="w-full overflow-x-auto">
+                        <x-table.overflow-container class="w-full">
                             <x-table.gray-200>
                                 <x-thead.roles />
                                 <x-tbody>
                                     @foreach ($users as $user)
                                         @if (!$user->hasRole('admin') && !$user->hasRole('user'))
-                                            <tr class="hover:bg-gray-50">
-                                                <td
-                                                    class="px-6 py-4 whitespace-normal sm:whitespace-nowrap text-center sm:text-left">
-                                                    <input type="checkbox" name="user_ids[]" value="{{ $user->id }}"
-                                                        class="form-checkbox h-4 w-4 text-blue-600">
-                                                </td>
+                                            <x-tr.hover>
+                                                <x-td.center-left>
+                                                    <x-input.checkbox name="user_ids[]" value="{{ $user->id }}" />
+                                                </x-td.center-left>
                                                 <x-td>
                                                     {{ $user->name }}
                                                 </x-td>
                                                 <x-td>
                                                     {{ $user->email }}
                                                 </x-td>
-                                            </tr>
+                                            </x-tr.hover>
                                         @endif
                                     @endforeach
                                 </x-tbody>
                             </x-table.gray-200>
-                        </div>
+                        </x-table.overflow-container>
 
                         <x-div.gray-200>
                             {{ $users->links() }}
@@ -54,21 +53,24 @@
                     </x-div.bg-white>
 
                     <!-- 提交按鈕 -->
-                    <div class="mt-6 flex flex-col sm:flex-row justify-end space-y-2 sm:space-y-0 sm:space-x-4">
+                    <x-form.button-group>
                         <x-button.roles type="button" id="cancelBtn">
                             取消
                         </x-button.roles>
                         <x-button.roles type="submit">
                             確認
                         </x-button.roles>
-                    </div>
+                    </x-form.button-group>
                 </form>
-
-                <script>
-                    document.getElementById('cancelBtn').addEventListener('click', function() {
-                        window.location.href = '{{ route('admin.roles.index') }}';
-                    });
-                </script>
+            </div>
         </x-div.container>
     </x-flex-container>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('cancelBtn').addEventListener('click', function() {
+                window.location.href = '{{ route('admin.roles.index') }}';
+            });
+        });
+    </script>
 </x-template-admin-layout>
