@@ -10,15 +10,18 @@ class ProfileControllerTest extends TestCase
 {
     use RefreshDatabase;
 
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->actingAsUser();
+    }
+
     public function test_edit_page_is_accessible_by_authenticated_user()
     {
-        $user = User::factory()->create();
-
-        $response = $this->actingAs($user)->get(route('user.profile.edit'));
-
-        $response->assertStatus(200);
-        $response->assertViewIs('profile.edit');
-        $response->assertViewHas('user', $user);
+        $this->get(route('user.profile.edit'))
+            ->assertStatus(200)
+            ->assertViewIs('profile.edit')
+            ->assertViewHas('user', auth()->user());
     }
 
     public function test_update_profile_succeeds_with_valid_data()

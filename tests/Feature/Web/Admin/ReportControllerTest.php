@@ -7,7 +7,6 @@ use App\Enums\RoleType;
 use App\Models\Message;
 use App\Models\Product;
 use App\Models\ReportType;
-use App\Models\Role;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -25,9 +24,11 @@ class ReportControllerTest extends TestCase
         ReportType::factory()->create(['type' => ReportTypeEnum::Message->value()]);
 
         // 初始化 admin 角色
-        Role::create(['name' => RoleType::Admin->value()]);
+        $this->actingAsAdmin();
     }
 
+/*************  ✨ Windsurf Command ⭐  *************/
+/*******  8141604c-f555-489e-b99f-87f0381cdbea  *******/
     public function test_index_displays_filtered_reportables_by_type()
     {
         // 創建管理員並登入

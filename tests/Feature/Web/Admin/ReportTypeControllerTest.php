@@ -6,7 +6,6 @@ use App\Enums\RoleType;
 use App\Models\ReportType;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Spatie\Permission\Models\Role;
 use Tests\TestCase;
 
 class ReportTypeControllerTest extends TestCase
@@ -18,14 +17,7 @@ class ReportTypeControllerTest extends TestCase
         parent::setUp();
 
         // 初始化 admin 角色
-        Role::create(['name' => RoleType::Admin->value()]);
-    }
-
-    private function actingAsAdmin()
-    {
-        $admin = User::factory()->create();
-        $admin->assignRole(RoleType::Admin->value());
-        $this->actingAs($admin);
+        $this->actingAsAdmin();
     }
 
     public function test_admin_can_view_report_types_index()

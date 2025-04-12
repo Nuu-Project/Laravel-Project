@@ -10,7 +10,6 @@ use App\Models\Tag;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use PHPUnit\Framework\Attributes\Test;
-use Spatie\Permission\Models\Role;
 use Tests\TestCase;
 
 class TagControllerTest extends TestCase
@@ -22,7 +21,7 @@ class TagControllerTest extends TestCase
         parent::setUp();
 
         // 只建立管理員角色
-        Role::create(['name' => 'admin']);
+        $this->actingAsAdmin();
     }
 
     #[Test]
