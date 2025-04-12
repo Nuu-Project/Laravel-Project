@@ -11,13 +11,13 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call([
-            ReportSeeder::class,
             RoleSeeder::class,
         ]);
 
         if (app()->isLocal()) {
             $this->call([
                 TagSeeder::class,
+                ReportSeeder::class,
                 ProductSeeder::class,
             ]);
         }

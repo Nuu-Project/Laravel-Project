@@ -23,7 +23,6 @@ class ReportControllerTest extends TestCase
         ReportType::factory()->create(['type' => ReportTypeEnum::Product->value()]);
         ReportType::factory()->create(['type' => ReportTypeEnum::Message->value()]);
 
-        // 初始化 admin 角色
         $this->actingAsAdmin();
     }
 

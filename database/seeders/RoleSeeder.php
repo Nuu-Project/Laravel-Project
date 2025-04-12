@@ -13,11 +13,9 @@ class RoleSeeder extends Seeder
 
     public function run(): void
     {
-        foreach (RoleType::cases() as $role) {
-            Role::updateOrCreate(
-                ['name' => $role->value],
-                ['guard_name' => 'web']
-            );
-        }
+        Role::updateOrCreate(
+            ['name' => RoleType::Admin->value],
+            ['guard_name' => 'web']
+        );
     }
 }
