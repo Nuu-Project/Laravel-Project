@@ -27,8 +27,8 @@ class ReportControllerTest extends TestCase
         $this->actingAsAdmin();
     }
 
-/*************  ✨ Windsurf Command ⭐  *************/
-/*******  8141604c-f555-489e-b99f-87f0381cdbea  *******/
+    /*************  ✨ Windsurf Command ⭐  *************/
+    /*******  8141604c-f555-489e-b99f-87f0381cdbea  *******/
     public function test_index_displays_filtered_reportables_by_type()
     {
         // 創建管理員並登入

@@ -2,7 +2,6 @@
 
 namespace Tests\Feature\Web\Admin;
 
-use App\Enums\RoleType;
 use App\Models\ReportType;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
