@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use App\Models\ReportType;
 use Illuminate\Database\Seeder;
 
-class ReportSeeder extends Seeder
+class ReportTypeSeeder extends Seeder
 {
     /**
      * Run the database seeds.
