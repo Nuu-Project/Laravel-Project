@@ -23,7 +23,6 @@ class ProductProcessImageController extends Controller
 
         $validatedData = $request->validate($rules);
 
-
         $image = $request->file('image');
 
         $compressedImage = (new \App\Services\CompressedImage)->uploadCompressedImage($image);
