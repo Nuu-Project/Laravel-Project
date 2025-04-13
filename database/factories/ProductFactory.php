@@ -33,7 +33,7 @@ class ProductFactory extends Factory
         ];
     }
 
-    public function withTags()
+    public function hasTags()
     {
         return $this->afterCreating(function (Product $product) {
             // 動態獲取每種枚舉類型的標籤
@@ -50,7 +50,7 @@ class ProductFactory extends Factory
         });
     }
 
-    public function withReports(int $count = 0)
+    public function hasReports(int $count = 0)
     {
         return $this->afterCreating(function (Product $product) use ($count) {
             if ($count > 0) {
