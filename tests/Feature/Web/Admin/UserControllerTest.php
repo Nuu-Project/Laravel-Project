@@ -40,7 +40,7 @@ class UserControllerTest extends TestCase
         $user = User::factory()->create(['time_limit' => null]);
         $admin = User::factory()->hasAdmin()->create();
 
-        $response = $this->actingAs($admin)->post(route('admin.users.active', $user));
+        $response = $this->actingAs($admin)->patch(route('admin.users.active', $user));
 
         $response->assertRedirect(route('admin.users.index'));
         $response->assertSessionHas('success', "用戶{$user->name}重新啟用！");

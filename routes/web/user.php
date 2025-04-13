@@ -10,7 +10,7 @@ Route::prefix('user')->name('user.')->middleware(['auth', 'verified'])->group(fu
     Route::resource('products', ProductController::class)
         ->except(['show']);
     // 商品上下架
-    Route::put('/products/{product}/inactive', [ProductController::class, 'inactive'])
+    Route::patch('/products/{product}/inactive', [ProductController::class, 'inactive'])
         ->name('products.inactive');
 
     // 留言 建立,編輯頁,更新留言,刪除

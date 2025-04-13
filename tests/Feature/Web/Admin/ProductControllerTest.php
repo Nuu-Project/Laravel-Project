@@ -65,7 +65,7 @@ class ProductControllerTest extends TestCase
         $product = Product::factory()->create(['status' => ProductStatus::Active]);
 
         $this->actingAs($admin)
-            ->put(route('admin.products.inactive', $product))
+            ->patch(route('admin.products.inactive', $product))
             ->assertRedirect(route('admin.products.index'))
             ->assertSessionHas('success');
 

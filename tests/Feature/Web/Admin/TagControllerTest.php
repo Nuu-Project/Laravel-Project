@@ -164,7 +164,7 @@ class TagControllerTest extends TestCase
         $this->actingAs($admin);
 
         // 發送請求恢復標籤
-        $response = $this->post(route('admin.tags.restore', $tag));
+        $response = $this->patch(route('admin.tags.restore', $tag));
 
         // 驗證是否重導向到標籤列表
         $response->assertRedirect(route('admin.tags.index'));

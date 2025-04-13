@@ -115,7 +115,7 @@ class ReportTypeControllerTest extends TestCase
         $reportType = ReportType::factory()->create();
         $reportType->delete();
 
-        $response = $this->post(route('admin.report-types.restore', $reportType->id));
+        $response = $this->patch(route('admin.report-types.restore', $reportType->id));
 
         $response->assertRedirect(route('admin.report-types.index'));
         $response->assertSessionHas('success', '檢舉類型已恢復');
