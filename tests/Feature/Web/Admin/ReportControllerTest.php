@@ -7,7 +7,6 @@ use App\Enums\RoleType;
 use App\Models\Message;
 use App\Models\Product;
 use App\Models\ReportType;
-use App\Models\Role;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -24,8 +23,7 @@ class ReportControllerTest extends TestCase
         ReportType::factory()->create(['type' => ReportTypeEnum::Product->value()]);
         ReportType::factory()->create(['type' => ReportTypeEnum::Message->value()]);
 
-        // 初始化 admin 角色
-        Role::create(['name' => RoleType::Admin->value()]);
+        $this->actingAsAdmin();
     }
 
     public function test_index_displays_filtered_reportables_by_type()

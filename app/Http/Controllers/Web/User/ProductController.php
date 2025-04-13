@@ -93,7 +93,7 @@ class ProductController extends Controller
         // 同步標籤到產品
         $product->tags()->sync($tagIds);
 
-        return redirect()->route('user.products.create')->with('success', '產品已成功創建！');
+        return redirect()->route('user.products.create')->with('success', '商品已成功創建！');
     }
 
     public function edit(Request $request, Product $product): View
