@@ -11,6 +11,18 @@ class ProductProcessImageController extends Controller
 {
     public function processImage(Request $request): JsonResponse
     {
+        $rules = [
+            'image' => [
+                'required',
+                'image',
+                'mimes:png,jpg,jpeg',
+                'max:2048',
+                'dimensions:max_width=3200,max_height=3200',
+            ],
+        ];
+
+        $validatedData = $request->validate($rules);
+
         $image = $request->file('image');
 
         $compressedImage = (new \App\Services\CompressedImage)->uploadCompressedImage($image);
