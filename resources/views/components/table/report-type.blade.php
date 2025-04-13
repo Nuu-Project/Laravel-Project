@@ -34,6 +34,7 @@
                                 action="{{ route('admin.report-types.restore', $reportType->id) }}"
                                 method="POST" style="display:inline;">
                                 @csrf
+                                @method('PATCH')
                                 <x-button.blue-short>
                                     啟用
                                 </x-button.blue-short>
@@ -57,4 +58,4 @@
             </tr>
         @endforeach
     </x-tbody>
-</x-table.gray-200> 
+</x-table.gray-200>

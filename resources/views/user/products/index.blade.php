@@ -104,7 +104,7 @@
                                 <div class="flex justify-center space-x-4 mt-6">
                                     <form action="{{ route('user.products.inactive', $product->id) }}" method="POST">
                                         @csrf
-                                        @method('PUT')
+                                        @method('PATCH')
                                         <input type="hidden" name="product_id" value="{{ $product->id }}">
                                         <x-button.status :status="$product->status" />
                                     </form>
