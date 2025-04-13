@@ -34,8 +34,8 @@ class ReportControllerTest extends TestCase
         $this->actingAs($admin);
 
         // 創建產品和訊息
-        $product = Product::factory()->withReports(1)->create(['name' => 'Product A']);
-        $message = Message::factory()->withReports(1)->create(['message' => 'This is a message.']);
+        $product = Product::factory()->hasReports(1)->create(['name' => 'Product A']);
+        $message = Message::factory()->hasReports(1)->create(['message' => 'This is a message.']);
 
         // 測試篩選產品類型
         $response = $this->get(route('admin.reports.index', ['filter[type]' => ReportTypeEnum::Product->value()]));
@@ -68,8 +68,8 @@ class ReportControllerTest extends TestCase
         $this->actingAs($admin);
 
         // 創建產品和訊息
-        $product = Product::factory()->withReports(1)->create(['name' => 'Specific Product']);
-        $message = Message::factory()->withReports(1)->create(['message' => 'Specific Message']);
+        $product = Product::factory()->hasReports(1)->create(['name' => 'Specific Product']);
+        $message = Message::factory()->hasReports(1)->create(['message' => 'Specific Message']);
 
         // 測試篩選產品名稱
         $response = $this->get(route('admin.reports.index', [
