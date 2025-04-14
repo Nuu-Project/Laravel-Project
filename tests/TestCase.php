@@ -17,10 +17,9 @@ abstract class TestCase extends BaseTestCase
 
     protected function createBasicTags(): void
     {
-        Tag::factory()->create(['type' => Tagtype::Grade->value]);
-        Tag::factory()->create(['type' => Tagtype::Semester->value]);
-        Tag::factory()->create(['type' => Tagtype::Subject->value]);
-        Tag::factory()->create(['type' => Tagtype::Category->value]);
+        foreach (Tagtype::cases() as $type) {
+            Tag::factory()->create(['type' => $type->value]);
+        }
     }
 
     public function createUser(): User
