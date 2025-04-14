@@ -2,6 +2,8 @@
 
 namespace Tests;
 
+use App\Enums\Tagtype;
+use App\Models\Tag;
 use App\Models\User;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 
@@ -10,8 +12,14 @@ abstract class TestCase extends BaseTestCase
     protected function setUp(): void
     {
         parent::setUp();
-
         $this->seed();
+    }
+
+    protected function createBasicTags(): void
+    {
+        foreach (Tagtype::cases() as $type) {
+            Tag::factory()->create(['type' => $type->value]);
+        }
     }
 
     public function createUser(): User

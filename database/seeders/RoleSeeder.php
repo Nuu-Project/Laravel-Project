@@ -9,13 +9,15 @@ use Spatie\Permission\Models\Role;
 
 class RoleSeeder extends Seeder
 {
-    use WithoutModelEvents; // 避免觸發模型事件
+    use WithoutModelEvents;
 
     public function run(): void
     {
-        Role::updateOrCreate(
-            ['name' => RoleType::Admin->value],
-            ['guard_name' => 'web']
-        );
+        foreach (RoleType::cases() as $role) {
+            Role::updateOrCreate(
+                ['name' => $role->value],
+                ['guard_name' => 'web']
+            );
+        }
     }
 }
