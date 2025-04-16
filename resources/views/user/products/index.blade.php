@@ -5,7 +5,6 @@
 
 <x-template-user-layout>
 
-    <!-- 主要內容 -->
     <x-flex-container>
         <x-div.container>
             @if (session('success'))
