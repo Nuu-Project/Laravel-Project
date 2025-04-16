@@ -38,6 +38,7 @@
                             <form action="{{ route('admin.users.active', ['user' => $user->id]) }}"
                                 method="POST" class="inline">
                                 @csrf
+                                @method('PATCH')
                                 <x-button.blue-short title="停用到期時間：{{ $user->time_limit }}">
                                     ({{ \Carbon\Carbon::parse($user->time_limit)->diffForHumans() }})
                                     啟用
@@ -54,4 +55,4 @@
             </tr>
         @endforeach
     </x-tbody>
-</x-table.gray-200> 
+</x-table.gray-200>

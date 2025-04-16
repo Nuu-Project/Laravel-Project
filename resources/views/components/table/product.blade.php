@@ -26,7 +26,7 @@
                         <form action="{{ route('admin.products.inactive', ['product' => $product->id]) }}" method="POST"
                             class="inline">
                             @csrf
-                            @method('PUT')
+                            @method('PATCH')
                             <x-button.status :status="$product->status" />
                         </form>
 

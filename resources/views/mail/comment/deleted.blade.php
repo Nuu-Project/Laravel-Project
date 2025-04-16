@@ -4,13 +4,13 @@
     <title>留言已刪除通知</title>
 </head>
 <body>
-    <p>親愛的 {{ $userName ?? '使用者' }} 您好，</p>
+    <p>親愛的 {{ $name ?? '使用者' }} 您好，</p>
 
     <p>我們很抱歉地通知您，您在我們平台上的留言已被管理員刪除。</p>
 
-    @if ($commentContent)
+    @if ($message)
         <p><strong>被刪除的留言內容：</strong></p>
-        <p>{{ $commentContent }}</p>
+        <p>{{ $message }}</p>
     @endif
 
     <p>如果您對此有任何疑問，請聯繫我們的客服團隊。</p>

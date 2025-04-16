@@ -21,7 +21,7 @@ class MessageFactory extends Factory
         ];
     }
 
-    public function withReports(int $count = 0)
+    public function hasReports(int $count = 0)
     {
         return $this->afterCreating(function (Message $message) use ($count) {
             if ($count > 0) {

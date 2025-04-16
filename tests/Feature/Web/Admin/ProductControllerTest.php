@@ -7,7 +7,6 @@ use App\Models\Product;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use PHPUnit\Framework\Attributes\Test;
-use Spatie\Permission\Models\Role;
 use Tests\TestCase;
 
 class ProductControllerTest extends TestCase
@@ -18,8 +17,7 @@ class ProductControllerTest extends TestCase
     {
         parent::setUp();
 
-        // 只建立管理員角色
-        Role::create(['name' => 'admin']);
+        $this->actingAsAdmin();
     }
 
     #[Test]
@@ -67,7 +65,7 @@ class ProductControllerTest extends TestCase
         $product = Product::factory()->create(['status' => ProductStatus::Active]);
 
         $this->actingAs($admin)
-            ->put(route('admin.products.inactive', $product))
+            ->patch(route('admin.products.inactive', $product))
             ->assertRedirect(route('admin.products.index'))
             ->assertSessionHas('success');
 

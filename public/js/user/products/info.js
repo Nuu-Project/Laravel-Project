@@ -29,6 +29,48 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('rightArrow')?.addEventListener('click', () => changeImage(1));
 
     updateDisplay(0);
+    
+    // 圖片模態視窗功能
+    const imageContainer = document.querySelector('.relative.mb-4');
+    if (imageContainer) {
+        imageContainer.addEventListener('click', function(event) {
+            // 找到目前可見的圖片
+            const visibleImage = imageContainer.querySelector('img:not(.hidden)');
+
+            if (visibleImage && event.target.tagName === 'IMG') {
+                // 建立覆蓋層
+                const overlay = document.createElement('div');
+                overlay.classList.add('image-modal-overlay');
+
+                // 建立模態視窗的圖片元素
+                const modalImage = document.createElement('img');
+                modalImage.src = visibleImage.src;
+                modalImage.alt = '放大圖片';
+                modalImage.classList.add('image-modal-content');
+
+                // 建立關閉按鈕
+                const closeButton = document.createElement('span');
+                closeButton.innerHTML = '&times;';
+                closeButton.classList.add('image-modal-close');
+
+                // 附加元素
+                overlay.appendChild(modalImage);
+                overlay.appendChild(closeButton);
+                document.body.appendChild(overlay);
+
+                // 防止背景滾動
+                document.body.style.overflow = 'hidden';
+
+                // 點擊覆蓋層或關閉按鈕時關閉模態視窗
+                overlay.addEventListener('click', function(e) {
+                    if (e.target === overlay || e.target === closeButton) {
+                        document.body.removeChild(overlay);
+                        document.body.style.overflow = ''; // 恢復背景滾動
+                    }
+                });
+            }
+        });
+    }
 });
 
 window.addEventListener('load', function () {
@@ -127,3 +169,13 @@ document.body.addEventListener('click', function(e) {
         handleReport(e, '留言', messageId);
     }
 });
+
+// 留言回覆表單切換功能
+function toggleReplyForm(messageId) {
+    const form = document.getElementById(`replyForm${messageId}`);
+    form.classList.toggle('hidden');
+    const textarea = form.querySelector('textarea');
+    if (!form.classList.contains('hidden')) {
+        textarea.focus();
+    }
+}

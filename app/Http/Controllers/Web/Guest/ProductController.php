@@ -46,8 +46,15 @@ class ProductController extends Controller
         }
         // 獲取商品留言
         $messages = $product->messages()
+            ->withTrashed()
             ->whereNull('reply_to_id')
-            ->with(['user', 'replies.user'])
+            ->with([
+                'user',
+                'replies' => function ($query) {
+                    $query->withTrashed();
+                },
+                'replies.user',
+            ])
             ->oldest()
             ->paginate(10);
 

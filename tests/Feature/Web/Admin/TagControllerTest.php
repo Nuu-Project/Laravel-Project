@@ -10,7 +10,6 @@ use App\Models\Tag;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use PHPUnit\Framework\Attributes\Test;
-use Spatie\Permission\Models\Role;
 use Tests\TestCase;
 
 class TagControllerTest extends TestCase
@@ -22,7 +21,7 @@ class TagControllerTest extends TestCase
         parent::setUp();
 
         // 只建立管理員角色
-        Role::create(['name' => 'admin']);
+        $this->actingAsAdmin();
     }
 
     #[Test]
@@ -165,7 +164,7 @@ class TagControllerTest extends TestCase
         $this->actingAs($admin);
 
         // 發送請求恢復標籤
-        $response = $this->post(route('admin.tags.restore', $tag));
+        $response = $this->patch(route('admin.tags.restore', $tag));
 
         // 驗證是否重導向到標籤列表
         $response->assertRedirect(route('admin.tags.index'));

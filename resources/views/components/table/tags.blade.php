@@ -32,6 +32,7 @@
                         @if (!is_null($tag->deleted_at))
                             <form action="{{ route('admin.tags.restore', $tag->id) }}" method="POST" class="inline">
                                 @csrf
+                                @method('PATCH')
                                 <x-button.blue-short>
                                     啟用
                                 </x-button.blue-short>
