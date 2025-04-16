@@ -5,7 +5,9 @@
 
             <nav class="flex-wrap lg:flex items-center" x-data="{ navbarOpen: false }">
                 <div class="flex items-center mb-10 lg:mb-0">
-                    <img src="{{ asset('images/book-4-fix.png') }}" alt="Logo">
+                    <a href="{{ route('dashboard') }}">
+                        <img src="{{ asset('images/book-4-fix.png') }}" alt="Logo">
+                    </a>
 
                     <button
                         class="lg:hidden w-10 h-10 ml-auto flex items-center justify-center border border-blue-500 text-blue-500 rounded-md"
