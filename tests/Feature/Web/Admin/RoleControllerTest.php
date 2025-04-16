@@ -3,7 +3,6 @@
 namespace Tests\Feature\Web\Admin;
 
 use App\Enums\RoleType;
-use App\Models\Role;
 use App\Models\User;
 use Tests\TestCase;
 
