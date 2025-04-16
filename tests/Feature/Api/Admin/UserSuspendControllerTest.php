@@ -2,166 +2,96 @@
 
 namespace Tests\Feature\Api\Admin;
 
-use App\Http\Controllers\Api\Admin\UserSuspendController;
 use App\Models\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
-use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class UserSuspendControllerTest extends TestCase
 {
-    use RefreshDatabase;
+    private User $user;
 
-    #[Test]
-    public function it_can_suspend_a_user_successfully(): void
+    protected function setUp(): void
     {
-        // 建立一個測試用戶
-        $user = User::factory()->create();
+        parent::setUp();
 
-        // 建立一個模擬的請求
-        $request = new Request([
-            'duration' => 3600, // 暫停 1 小時
+        $this->actingAsAdmin();
+
+        $this->user = User::factory()->create();
+    }
+
+    public function test_user_can_be_suspended_with_reason(): void
+    {
+        $this->suspendUser([
+            'duration' => 3600,
             'reason' => '違反社群規範',
-        ]);
+        ])->assertOk()
+            ->assertJson([
+                'message' => '用戶已成功暫停',
+            ]);
 
-        // 建立控制器實例
-        $controller = new UserSuspendController;
+        $this->user->refresh();
 
-        // 執行暫停方法
-        $response = $controller->suspend($request, $user);
-
-        // 斷言回應是成功的 JSON
-        $this->assertInstanceOf(JsonResponse::class, $response);
-        $this->assertEquals(200, $response->getStatusCode());
-        $this->assertEquals(['message' => '用戶已成功暫停'], $response->getData(true));
-
-        // 重新載入用戶模型以檢查資料庫是否已更新
-        $user->refresh();
-
-        // 斷言用戶的 time_limit 已正確設定
         $expectedTimeLimit = now()->addSeconds(3600);
-        $this->assertEquals($expectedTimeLimit->toDateTimeString(), $user->time_limit->toDateTimeString());
+        $this->assertEquals($expectedTimeLimit->toDateTimeString(), $this->user->time_limit->toDateTimeString());
 
-        // 斷言用戶的 suspend_reason 已正確設定
-        $this->assertEquals('違反社群規範', $user->suspend_reason);
+        $this->assertEquals('違反社群規範', $this->user->suspend_reason);
     }
 
-    #[Test]
-    public function it_can_suspend_a_user_without_a_reason(): void
+    public function test_user_can_be_suspended_without_reason(): void
     {
-        // 建立一個測試用戶
-        $user = User::factory()->create();
+        $this->suspendUser([
+            'duration' => 7200,
+        ])->assertOk()
+            ->assertJson([
+                'message' => '用戶已成功暫停',
+            ]);
 
-        // 建立一個模擬的請求，沒有 reason
-        $request = new Request([
-            'duration' => 7200, // 暫停 2 小時
-        ]);
+        $this->user->refresh();
 
-        // 建立控制器實例
-        $controller = new UserSuspendController;
-
-        // 執行暫停方法
-        $response = $controller->suspend($request, $user);
-
-        // 斷言回應是成功的 JSON
-        $this->assertInstanceOf(JsonResponse::class, $response);
-        $this->assertEquals(200, $response->getStatusCode());
-        $this->assertEquals(['message' => '用戶已成功暫停'], $response->getData(true));
-
-        // 重新載入用戶模型以檢查資料庫是否已更新
-        $user->refresh();
-
-        // 斷言用戶的 time_limit 已正確設定
         $expectedTimeLimit = now()->addSeconds(7200);
-        $this->assertEquals($expectedTimeLimit->toDateTimeString(), $user->time_limit->toDateTimeString());
+        $this->assertEquals($expectedTimeLimit->toDateTimeString(), $this->user->time_limit->toDateTimeString());
 
-        // 斷言用戶的 suspend_reason 是 null
-        $this->assertNull($user->suspend_reason);
+        $this->assertNull($this->user->suspend_reason);
     }
 
-    #[Test]
-    public function it_validates_the_duration_field_is_required(): void
+    public function test_duration_is_required(): void
     {
-        // 建立一個測試用戶
-        $user = User::factory()->create();
-
-        // 建立一個模擬的請求，沒有 duration
-        $request = new Request([
+        $this->suspendUser([
             'reason' => '測試原因',
-        ]);
-
-        // 建立控制器實例
-        $controller = new UserSuspendController;
-
-        // 執行暫停方法並預期會拋出驗證異常
-        $this->expectException(\Illuminate\Validation\ValidationException::class);
-
-        $controller->suspend($request, $user);
+        ])->assertStatus(422)
+            ->assertJsonValidationErrors('duration');
     }
 
-    #[Test]
-    public function it_validates_the_duration_field_is_an_integer(): void
+    public function test_duration_must_be_integer(): void
     {
-        // 建立一個測試用戶
-        $user = User::factory()->create();
-
-        // 建立一個模擬的請求，duration 不是整數
-        $request = new Request([
+        $this->suspendUser([
             'duration' => 'not an integer',
             'reason' => '測試原因',
-        ]);
-
-        // 建立控制器實例
-        $controller = new UserSuspendController;
-
-        // 執行暫停方法並預期會拋出驗證異常
-        $this->expectException(\Illuminate\Validation\ValidationException::class);
-
-        $controller->suspend($request, $user);
+        ])->assertStatus(422)
+            ->assertJsonValidationErrors('duration');
     }
 
-    #[Test]
-    public function it_validates_the_duration_field_is_not_negative(): void
+    public function test_duration_must_not_be_negative(): void
     {
-        // 建立一個測試用戶
-        $user = User::factory()->create();
-
-        // 建立一個模擬的請求，duration 是負數
-        $request = new Request([
+        $this->suspendUser([
             'duration' => -10,
             'reason' => '測試原因',
-        ]);
-
-        // 建立控制器實例
-        $controller = new UserSuspendController;
-
-        // 執行暫停方法並預期會拋出驗證異常
-        $this->expectException(\Illuminate\Validation\ValidationException::class);
-
-        $controller->suspend($request, $user);
+        ])->assertStatus(422)
+            ->assertJsonValidationErrors('duration');
     }
 
-    #[Test]
-    public function it_validates_the_reason_field_is_a_string_and_max_length(): void
+    public function test_reason_must_be_under_255_characters(): void
     {
-        // 建立一個測試用戶
-        $user = User::factory()->create();
-
-        // 建立一個模擬的請求，reason 超過最大長度
         $longReason = str_repeat('a', 256);
-        $request = new Request([
+
+        $this->suspendUser([
             'duration' => 3600,
             'reason' => $longReason,
-        ]);
+        ])->assertStatus(422)
+            ->assertJsonValidationErrors('reason');
+    }
 
-        // 建立控制器實例
-        $controller = new UserSuspendController;
-
-        // 執行暫停方法並預期會拋出驗證異常
-        $this->expectException(\Illuminate\Validation\ValidationException::class);
-
-        $controller->suspend($request, $user);
+    private function suspendUser(array $data): \Illuminate\Testing\TestResponse
+    {
+        return $this->postJson(route('admin.users.suspend', $this->user), $data);
     }
 }
