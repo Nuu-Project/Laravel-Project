@@ -17,7 +17,6 @@ class RoleControllerTest extends TestCase
     {
         parent::setUp();
 
-        $this->adminRole = Role::firstOrCreate(['name' => RoleType::Admin->value()]);
         $this->adminUser = $this->createAdmin();
         $this->actingAs($this->adminUser);
     }
