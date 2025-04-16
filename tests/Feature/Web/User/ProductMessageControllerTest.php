@@ -90,7 +90,7 @@ class ProductMessageControllerTest extends TestCase
     public function test_authenticated_user_can_update_their_own_message(): void
     {
         $message = $this->createMessage([
-            'message' => 'Original message'
+            'message' => 'Original message',
         ]);
         $data = $this->getDate();
 
@@ -108,7 +108,7 @@ class ProductMessageControllerTest extends TestCase
 
         $message = $this->createMessage([
             'user_id' => $otherUser->id,
-            'message' => 'Original message'
+            'message' => 'Original message',
         ]);
         $data = $this->getDate();
 
@@ -126,7 +126,7 @@ class ProductMessageControllerTest extends TestCase
         $this->logout();
 
         $message = $this->createMessage([
-            'message' => 'Original message'
+            'message' => 'Original message',
         ]);
         $data = $this->getDate();
 
@@ -142,7 +142,7 @@ class ProductMessageControllerTest extends TestCase
     public function test_message_field_is_required_when_updating_a_message(): void
     {
         $message = $this->createMessage([
-            'message' => 'Original message'
+            'message' => 'Original message',
         ]);
 
         $this->put(route('user.products.messages.update', [$this->product, $message]))
