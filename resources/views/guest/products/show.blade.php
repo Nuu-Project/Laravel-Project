@@ -1,5 +1,6 @@
 <x-template-layout>
     <script src="{{ asset('js/user/products/info.js') }}"></script>
+    <link rel="stylesheet" href="{{ asset('css/info.css') }}">
 
     <div class="grid md:grid-cols-2 gap-6 lg:gap-12 items-start max-w-6xl px-4 mx-auto py-6">
         <div>
@@ -7,7 +8,7 @@
                 <div class="relative mb-4">
                     @foreach ($product->getMedia('images') as $index => $media)
                         <img src="{{ $media->getUrl() }}" alt="Product Image {{ $index + 1 }}" width="1200"
-                            height="900" style="aspect-ratio: 900 / 1200; object-fit: cover;"
+                            height="900" style="aspect-ratio"
                             class="w-full rounded-md object-cover {{ $index === 0 ? '' : 'hidden' }}"
                             data-index="{{ $index }}" />
                     @endforeach
@@ -29,9 +30,9 @@
                 <div>沒有圖片</div>
             @endif
 
-            <div class="flex justify-start mt-4 space-x-4">
+            <div class="mt-4 flex flex-wrap justify-start gap-4 md:grid md:grid-cols-5 md:gap-3">
                 @foreach ($product->getMedia('images') as $index => $media)
-                    <div class="w-24 h-24 border-2 border-gray-300 flex items-center justify-center cursor-pointer thumbnail"
+                    <div class="w-24 h-24 md:w-auto md:h-auto aspect-square border-2 border-gray-300 flex items-center justify-center cursor-pointer thumbnail"
                         data-index="{{ $index }}">
                         <img src="{{ $media->getUrl() }}" alt="Thumbnail {{ $index + 1 }}"
                             class="max-w-full max-h-full object-cover" />
@@ -247,14 +248,4 @@
             </div>
         @endif
     </div>
-    <script>
-        function toggleReplyForm(messageId) {
-            const form = document.getElementById(`replyForm${messageId}`);
-            form.classList.toggle('hidden');
-            const textarea = form.querySelector('textarea');
-            if (!form.classList.contains('hidden')) {
-                textarea.focus();
-            }
-        }
-    </script>
 </x-template-layout>
