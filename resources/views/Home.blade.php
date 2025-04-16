@@ -65,7 +65,7 @@
     <!-- feature section //end -->
 
     <!-- donation section -->
-    <x-product.card />
+    <x-product.card :products="$products"  />
     <x-page.last />
 
 
