@@ -18,7 +18,7 @@ class RoleControllerTest extends TestCase
         parent::setUp();
 
         $this->adminRole = Role::firstOrCreate(['name' => RoleType::Admin->value()]);
-        $this->adminUser = User::factory()->create()->assignRole($this->adminRole);
+        $this->adminUser = $this->createAdmin();
         $this->actingAs($this->adminUser);
     }
 
@@ -94,8 +94,9 @@ class RoleControllerTest extends TestCase
 
         $this->put(route('admin.roles.update', ['role' => 'admin']), ['selected_ids' => [$target->id]])
             ->assertRedirect(route('admin.roles.index'))
-            ->assertSessionHas('success')
-            ->assertFalse($target->fresh()->hasRole('admin'));
+            ->assertSessionHas('success');
+
+        $this->assertFalse($target->fresh()->hasRole('admin'));
     }
 
     public function test_remove_validation_fails_without_selected_ids()
@@ -125,17 +126,21 @@ class RoleControllerTest extends TestCase
     public function test_admin_cannot_remove_own_role()
     {
         $this->put(route('admin.roles.update', ['role' => 'admin']), ['selected_ids' => [$this->adminUser->id]])
-            ->assertRedirect(route('admin.roles.index'))
-            ->assertTrue($this->adminUser->fresh()->hasRole(RoleType::Admin));
+            ->assertRedirect(route('admin.roles.index'));
+
+        $this->assertTrue($this->adminUser->fresh()->hasRole(RoleType::Admin));
     }
 
     public function test_removing_role_from_user_without_role_succeeds()
     {
         $user = User::factory()->create();
 
+        $this->assertFalse($user->hasRole('admin'));
+
         $this->put(route('admin.roles.update', ['role' => 'admin']), ['selected_ids' => [$user->id]])
             ->assertRedirect(route('admin.roles.index'))
-            ->assertSessionHas('success')
-            ->assertFalse($user->fresh()->hasRole('admin'));
+            ->assertSessionHas('success');
+
+        $this->assertFalse($user->fresh()->hasRole('admin'));
     }
 }
