@@ -148,7 +148,11 @@
                                 @endif
                             </div>
                         </x-div.side-bar-admin>
-                        <p class="mt-4 text-lg text-gray-900 whitespace-pre-line">{{ $message->message }}</p>
+                        @if ($message->trashed())
+                            <p class="mt-4 text-lg text-gray-400 italic">（此留言已被刪除）</p>
+                        @else
+                            <p class="mt-4 text-lg text-gray-900 whitespace-pre-line">{{ $message->message }}</p>
+                        @endif
 
                         <button onclick="toggleReplyForm({{ $message->id }})" class="mt-2 text-sm text-blue-500">
                             回覆
@@ -235,7 +239,11 @@
                                         @endif
                                     </div>
                                 </x-div.side-bar-admin>
-                                <p class="mt-2 text-gray-900 whitespace-pre-line">{{ $reply->message }}</p>
+                                @if ($reply->trashed())
+                                    <p class="mt-2 text-gray-400 italic">（此回覆已被刪除）</p>
+                                @else
+                                    <p class="mt-2 text-gray-900 whitespace-pre-line">{{ $reply->message }}</p>
+                                @endif
                             </div>
                         @endforeach
                     </div>

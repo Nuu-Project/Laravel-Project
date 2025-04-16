@@ -2,11 +2,9 @@
 
 namespace Tests\Feature\Web\Admin;
 
-use App\Enums\RoleType;
 use App\Models\ReportType;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Spatie\Permission\Models\Role;
 use Tests\TestCase;
 
 class ReportTypeControllerTest extends TestCase
@@ -18,14 +16,7 @@ class ReportTypeControllerTest extends TestCase
         parent::setUp();
 
         // 初始化 admin 角色
-        Role::create(['name' => RoleType::Admin->value()]);
-    }
-
-    private function actingAsAdmin()
-    {
-        $admin = User::factory()->create();
-        $admin->assignRole(RoleType::Admin->value());
-        $this->actingAs($admin);
+        $this->actingAsAdmin();
     }
 
     public function test_admin_can_view_report_types_index()
@@ -124,7 +115,7 @@ class ReportTypeControllerTest extends TestCase
         $reportType = ReportType::factory()->create();
         $reportType->delete();
 
-        $response = $this->post(route('admin.report-types.restore', $reportType->id));
+        $response = $this->patch(route('admin.report-types.restore', $reportType->id));
 
         $response->assertRedirect(route('admin.report-types.index'));
         $response->assertSessionHas('success', '檢舉類型已恢復');

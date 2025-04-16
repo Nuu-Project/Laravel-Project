@@ -7,7 +7,6 @@ use App\Enums\RoleType;
 use App\Models\Message;
 use App\Models\Product;
 use App\Models\ReportType;
-use App\Models\Role;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -24,8 +23,7 @@ class ReportControllerTest extends TestCase
         ReportType::factory()->create(['type' => ReportTypeEnum::Product->value()]);
         ReportType::factory()->create(['type' => ReportTypeEnum::Message->value()]);
 
-        // 初始化 admin 角色
-        Role::create(['name' => RoleType::Admin->value()]);
+        $this->actingAsAdmin();
     }
 
     public function test_index_displays_filtered_reportables_by_type()
@@ -36,8 +34,8 @@ class ReportControllerTest extends TestCase
         $this->actingAs($admin);
 
         // 創建產品和訊息
-        $product = Product::factory()->withReports(1)->create(['name' => 'Product A']);
-        $message = Message::factory()->withReports(1)->create(['message' => 'This is a message.']);
+        $product = Product::factory()->hasReports(1)->create(['name' => 'Product A']);
+        $message = Message::factory()->hasReports(1)->create(['message' => 'This is a message.']);
 
         // 測試篩選產品類型
         $response = $this->get(route('admin.reports.index', ['filter[type]' => ReportTypeEnum::Product->value()]));
@@ -70,8 +68,8 @@ class ReportControllerTest extends TestCase
         $this->actingAs($admin);
 
         // 創建產品和訊息
-        $product = Product::factory()->withReports(1)->create(['name' => 'Specific Product']);
-        $message = Message::factory()->withReports(1)->create(['message' => 'Specific Message']);
+        $product = Product::factory()->hasReports(1)->create(['name' => 'Specific Product']);
+        $message = Message::factory()->hasReports(1)->create(['message' => 'Specific Message']);
 
         // 測試篩選產品名稱
         $response = $this->get(route('admin.reports.index', [

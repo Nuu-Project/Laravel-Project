@@ -14,14 +14,14 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'verified', 'role:ad
     Route::get('/products', [ProductController::class, 'index'])
         ->name('products.index');
     // 商品管理下架 未返回畫面
-    Route::put('/products/{product}/inactive', [ProductController::class, 'inactive'])
+    Route::patch('/products/{product}/inactive', [ProductController::class, 'inactive'])
         ->name('products.inactive');
 
     // 用戶管理頁
     Route::get('/users', [UserController::class, 'index'])
         ->name('users.index');
 
-    Route::post('/users/{user}/active', [UserController::class, 'active'])
+    Route::patch('/users/{user}/active', [UserController::class, 'active'])
         ->name('users.active');
 
     // 留言管理頁 controller要改
@@ -40,7 +40,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'verified', 'role:ad
         ->except(['show'])
         ->withTrashed();
     // 標籤 啟用
-    Route::post('/tags/{tag}/restore', [TagController::class, 'restore'])
+    Route::patch('/tags/{tag}/restore', [TagController::class, 'restore'])
         ->name('tags.restore')
         ->withTrashed();
 
@@ -53,7 +53,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'verified', 'role:ad
         ->except(['show'])
         ->withTrashed();
     // 檢舉類型 啟用
-    Route::post('/report-types/{report_type}/restore', [ReportTypeController::class, 'restore'])
+    Route::patch('/report-types/{report_type}/restore', [ReportTypeController::class, 'restore'])
         ->name('report-types.restore')
         ->withTrashed();
 });
