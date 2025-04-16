@@ -55,7 +55,6 @@ class ProductMessageController extends Controller
 
     public function destroy(Product $product, Message $message): RedirectResponse
     {
-
         $this->authorize('delete', $message);
 
         $message->delete();
@@ -70,10 +69,9 @@ class ProductMessageController extends Controller
             'message' => ['required', 'string', 'max:255'],
         ]);
 
-        // 建立回覆留言，並關聯到原始留言
         $request->user()->messages()->create($validated + [
             'product_id' => $product->id,
-            'reply_to_id' => $message->id, // 設定回覆的留言 ID
+            'reply_to_id' => $message->id,
         ]);
 
         return redirect()->route('products.show', ['product' => $product]);
