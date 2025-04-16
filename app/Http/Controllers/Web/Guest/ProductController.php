@@ -31,6 +31,7 @@ class ProductController extends Controller
             ])
             ->with(['media', 'user', 'tags'])
             ->where('status', ProductStatus::Active->value)
+            ->orderBy('updated_at', 'desc')
             ->paginate(6)
             ->withQueryString();
 
