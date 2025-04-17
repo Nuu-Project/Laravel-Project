@@ -63,7 +63,6 @@
                                     </x-dropdown-link>
                                 @endrole
 
-                                <!-- Authentication -->
                                 <form method="POST" action="{{ route('logout') }}">
                                     @csrf
                                     <x-dropdown-link :href="route('logout')"

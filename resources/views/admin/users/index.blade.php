@@ -1,7 +1,6 @@
 <x-template-admin-layout>
     <script src="{{ asset('js/admin/user.js') }}"></script>
 
-    <!-- 主要內容 -->
     <x-flex-container>
         <x-div.container>
             <x-h.h3>用戶管理</x-h.h3>
@@ -28,13 +27,12 @@
                     <x-table.gray-200>
                         <x-thead.user />
                         <x-tbody>
-                            <!-- Search results will be dynamically inserted here -->
                         </x-tbody>
                     </x-table.gray-200>
                 </x-table.overflow-container>
             </x-div.bg-white>
 
-            <!-- All users 部分 -->
+            {{-- All users 部分 --}}
             <x-div.bg-white>
                 <x-table.overflow-container>
                     <x-table.users :users="$users" />
