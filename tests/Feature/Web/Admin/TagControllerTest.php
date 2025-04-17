@@ -3,7 +3,6 @@
 namespace Tests\Feature\Web\Admin;
 
 use App\Models\Tag;
-use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 

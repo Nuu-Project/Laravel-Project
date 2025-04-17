@@ -5,7 +5,6 @@ namespace Tests\Feature\Web\Admin;
 use App\Models\Message;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class MessageControllerTest extends TestCase
