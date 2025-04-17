@@ -20,9 +20,8 @@
                     </div>
                 </x-div.flex-container>
 
-                <!-- 表單開始 -->
                 <form action="{{ route('admin.roles.store') }}" method="POST">
-                    @csrf <!-- CSRF 保護 -->
+                    @csrf
                     <x-div.bg-white>
                         <x-table.overflow-container class="w-full">
                             <x-table.gray-200>
@@ -52,7 +51,6 @@
                         </x-div.gray-200>
                     </x-div.bg-white>
 
-                    <!-- 提交按鈕 -->
                     <x-form.button-group>
                         <x-button.roles type="button" id="cancelBtn">
                             取消
