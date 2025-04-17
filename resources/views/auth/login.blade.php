@@ -46,8 +46,9 @@
         <section class="mt-5">
             <x-div.container-screen>
                 <x-div.image>
-                    <img class="w-12 h-12 mr-2" src="images/sign.png" alt="logo">
-                    登入
+                    <x-img.icon src="images/sign.png" alt="logo">
+                        登入
+                    </x-img.icon>
                 </x-div.image>
                 @if ($errors->has('message'))
                     <div class="text-sm text-red-600 space-y-1">
@@ -70,7 +71,7 @@
 
                         <!-- Email Address -->
                         <x-div.mt-4>
-                            <x-input.auth-label for="email">{{ __('Your email') }}</x-input.auth-label>
+                            <x-input-label for="email">{{ __('Your email') }}</x-input-label>
                             <x-input.auth id="email" type="email" name="email" :value="old('email')" required
                                 autofocus placeholder="name@o365.nuu.edu.tw" />
                             <x-input-error :messages="$errors->get('email')" class="mt-2" />
@@ -79,7 +80,7 @@
 
                         <!-- Password -->
                         <x-div.mt-4>
-                            <x-input.auth-label for="password">{{ __('Password') }}</x-input.auth-label>
+                            <x-input-label for="password">{{ __('Password') }}</x-input-label>
                             <x-input.auth id="password" type="password" name="password" required
                                 autocomplete="current-password" />
                             <x-input-error :messages="$errors->get('password')" class="mt-2" />
