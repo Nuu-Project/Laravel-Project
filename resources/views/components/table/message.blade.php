@@ -52,7 +52,7 @@
 
                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                     <div class="flex items-center space-x-2">
-                        <a href="{{ route('products.show', ['product' => $message->product_id]) }}">
+                        <a href="{{ route('products.show', ['product' => $message->product_id]) }}#message-{{ $message->id }}">
                             <x-button.blue-short>
                                 前往
                             </x-button.blue-short>

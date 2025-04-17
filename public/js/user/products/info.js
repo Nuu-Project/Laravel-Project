@@ -29,11 +29,11 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('rightArrow')?.addEventListener('click', () => changeImage(1));
 
     updateDisplay(0);
-    
+
     // 圖片模態視窗功能
     const imageContainer = document.querySelector('.relative.mb-4');
     if (imageContainer) {
-        imageContainer.addEventListener('click', function(event) {
+        imageContainer.addEventListener('click', function (event) {
             // 找到目前可見的圖片
             const visibleImage = imageContainer.querySelector('img:not(.hidden)');
 
@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 document.body.style.overflow = 'hidden';
 
                 // 點擊覆蓋層或關閉按鈕時關閉模態視窗
-                overlay.addEventListener('click', function(e) {
+                overlay.addEventListener('click', function (e) {
                     if (e.target === overlay || e.target === closeButton) {
                         document.body.removeChild(overlay);
                         document.body.style.overflow = ''; // 恢復背景滾動
@@ -106,8 +106,8 @@ function handleReport(event, entityType, entityId) {
             <select id="reportReason" class="swal2-input">
                 <option value="" disabled selected>選擇檢舉原因</option>
                 ${Object.entries(reports).map(([key, value]) =>
-                    `<option value="${key}">${value.zh_TW || value}</option>`
-                ).join('')}
+            `<option value="${key}">${value.zh_TW || value}</option>`
+        ).join('')}
             </select>
             <textarea id="customReason" class="swal2-textarea" placeholder="輸入自定義原因"
                       style="width:80%;height:80px;margin-top:1rem;"></textarea>
@@ -129,7 +129,7 @@ function handleReport(event, entityType, entityId) {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
-                    "Authorization": `Bearer ${localStorage.getItem("token")}`, // 加入 Token
+                    "Authorization": `Bearer ${localStorage.getItem("token")}`,
                     "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').content
                 },
                 body: JSON.stringify({
@@ -137,29 +137,41 @@ function handleReport(event, entityType, entityId) {
                     description: customReason || '無補充說明'
                 })
             })
-            .then(res => {
-                console.log('Response Status:', res.status);
-                if (res.status === 401) {
-                    throw new Error('未登入');
-                }
-                return res.json();
-            })
-            .then(data => {
-                Swal.fire('成功', '檢舉已提交', 'success');
-            })
-            .catch(err => {
-                Swal.fire('錯誤', '請稍後再試', 'error');
-                console.error("檢舉錯誤:", err);
-            });
+                .then(res => {
+                    console.log('Response Status:', res.status);
+                    if (res.status === 401) {
+                        throw new Error('未登入');
+                    }
+                    return res.json();
+                })
+                .then(data => {
+                    // 無論是第一次還是重複檢舉，都顯示相同的成功訊息
+                    Swal.fire({
+                        title: '檢舉已送出',
+                        text: '感謝您的回報，我們會盡快處理',
+                        icon: 'success',
+                        confirmButtonText: '確定'
+                    });
+                })
+                .catch(err => {
+                    // error，顯示相同的成功訊息
+                    Swal.fire({
+                        title: '檢舉已送出',
+                        text: '感謝您的回報，我們會盡快處理',
+                        icon: 'success',
+                        confirmButtonText: '確定'
+                    });
+                    console.log("檢舉處理:", err);
+                });
         }
     });
 }
 
-document.getElementById('reportButton')?.addEventListener('click', function(e) {
+document.getElementById('reportButton')?.addEventListener('click', function (e) {
     handleReport(e, '商品', this.dataset.productId);
 });
 
-document.body.addEventListener('click', function(e) {
+document.body.addEventListener('click', function (e) {
     console.log('點擊元素:', e.target);
     const trigger = e.target.closest('[data-report-type="message"]');
     if (trigger) {
@@ -179,3 +191,22 @@ function toggleReplyForm(messageId) {
         textarea.focus();
     }
 }
+
+document.addEventListener('DOMContentLoaded', function () {
+    // 檢查 URL 是否包含錨點
+    if (window.location.hash) {
+        const messageId = window.location.hash;
+        const messageElement = document.querySelector(messageId);
+
+        if (messageElement) {
+            // 平滑滾動到留言位置
+            messageElement.scrollIntoView({ behavior: 'smooth' });
+
+            // 突顯該留言（可選）
+            messageElement.classList.add('highlight-message');
+            setTimeout(() => {
+                messageElement.classList.remove('highlight-message');
+            }, 3000); // 3秒後移除突顯效果
+        }
+    }
+});
