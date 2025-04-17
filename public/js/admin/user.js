@@ -1,4 +1,4 @@
-// 設置 AJAX 的默認 headers
+// AJAX 的默認 headers
 $.ajaxSetup({
     headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -16,7 +16,7 @@ function showSuspendDialog(userId, userName) {
         { value: '604800', label: '1週' }
     ];
 
-    // 生成選項的 HTML
+    // 選項的 HTML
     const optionsHtml = durationOptions.map(option => `
         <label class="duration-option">
             <input type="radio" name="duration" value="${option.value}" class="hidden">
