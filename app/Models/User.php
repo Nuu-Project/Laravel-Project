@@ -4,7 +4,6 @@ namespace App\Models;
 
 use App\Enums\RoleType;
 use App\Mail\CustomVerifyMail;
-use Carbon\Carbon;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -12,6 +11,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\URL;
 use Spatie\Permission\Traits\HasRoles;
 
@@ -58,9 +58,21 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function sendEmailVerificationNotification()
     {
+        $key = 'verify_email:'.$this->id;
+
+        $maxAttempts = 3;
+        $decaySeconds = 60;
+
+        if (RateLimiter::tooManyAttempts($key, $maxAttempts)) {
+            $seconds = RateLimiter::availableIn($key);
+            abort(429, "請等待 {$seconds} 秒後再試");
+        }
+
+        RateLimiter::hit($key, $decaySeconds);
+
         $verificationUrl = URL::temporarySignedRoute(
             'verification.verify',
-            Carbon::now()->addMinutes(60),
+            now()->addMinutes(5), // 驗證連結有效期
             ['id' => $this->id, 'hash' => sha1($this->email)]
         );
 
