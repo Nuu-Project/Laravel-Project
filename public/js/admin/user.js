@@ -32,7 +32,7 @@ function showSuspendDialog(userId, userName) {
                 ${optionsHtml}
             </div>
             <div class="mt-4">
-                <input type="text" id="suspend-reason" class="w-full px-3 py-2 border rounded" placeholder="請輸入停用原因" style="max-width: 400px">
+                <input type="text" id="suspend-reason" class="w-full px-3 py-2 border rounded" placeholder="請輸入停用原因" required style="max-width: 400px">
             </div>
             <style>
                 .duration-option {
@@ -82,10 +82,15 @@ function showSuspendDialog(userId, userName) {
         },
         preConfirm: () => {
             const selectedDuration = document.querySelector('input[name="duration"]:checked')?.value;
-            const reason = document.getElementById('suspend-reason').value;
+            const reason = document.getElementById('suspend-reason').value.trim();
 
             if (!selectedDuration) {
                 Swal.showValidationMessage('請選擇停用時間');
+                return false;
+            }
+
+            if (!reason) {
+                Swal.showValidationMessage('請輸入停用原因');
                 return false;
             }
 

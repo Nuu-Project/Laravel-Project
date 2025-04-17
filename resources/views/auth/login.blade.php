@@ -14,8 +14,14 @@
                     </div>
                 @endif
                 @if ($errors->has('time_limit'))
+                    @php
+                        $user = \App\Models\User::where('email', old('email'))->first();
+                    @endphp
                     <div class="text-sm text-red-600 space-y-1 text-center">
-                        您的帳號已被暫時停用，<br>
+                        您的帳號已被暫時停用<br>
+                        @if ($user && $user->suspend_reason)
+                            原因：{{ $user->suspend_reason }}<br>
+                        @endif
                         請於 {{ $errors->first('time_limit') }} 後再嘗試。
                     </div>
                 @endif
