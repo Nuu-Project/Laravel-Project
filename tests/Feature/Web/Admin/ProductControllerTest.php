@@ -77,7 +77,8 @@ class ProductControllerTest extends TestCase
 
     public function test_non_admin_user_cannot_access_products_page()
     {
-        $user = User::factory()->create()->assignRole('user');
+        /** @var User $user */
+        $user = User::factory()->create();
         $this->actingAs($user)
             ->get(route('admin.products.index'))
             ->assertForbidden();

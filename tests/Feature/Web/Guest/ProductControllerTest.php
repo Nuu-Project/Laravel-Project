@@ -15,14 +15,6 @@ class ProductControllerTest extends TestCase
 {
     use RefreshDatabase;
 
-    private function createProductWithStatus(ProductStatus $status): Product
-    {
-        return Product::factory()->create([
-            'status' => $status,
-            'user_id' => User::factory()->create()->id,
-        ]);
-    }
-
     private function createProductWithTag(array $tagData = []): Product
     {
         $product = $this->createProductWithStatus(ProductStatus::Active);
@@ -80,5 +72,13 @@ class ProductControllerTest extends TestCase
     {
         $product = $this->createProductWithStatus(ProductStatus::Inactive);
         $this->get(route('products.show', $product))->assertNotFound();
+    }
+
+    private function createProductWithStatus(ProductStatus $status): Product
+    {
+        return Product::factory()->create([
+            'status' => $status,
+            'user_id' => User::factory()->create()->id,
+        ]);
     }
 }

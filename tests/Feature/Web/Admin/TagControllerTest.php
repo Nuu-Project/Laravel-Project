@@ -19,16 +19,6 @@ class TagControllerTest extends TestCase
         $this->createBasicTags();
     }
 
-    private function createTag(array $attributes = []): Tag
-    {
-        return Tag::factory()->create(array_merge([
-            'name' => ['zh_TW' => '測試標籤'],
-            'slug' => ['zh_TW' => 'test'],
-            'type' => 'test',
-            'order_column' => 1,
-        ], $attributes));
-    }
-
     public function test_admin_can_view_tags_list(): void
     {
         $this->createTag(['name' => ['zh_TW' => '測試標籤']]);
@@ -95,5 +85,15 @@ class TagControllerTest extends TestCase
             ->assertRedirect(route('admin.tags.index'));
 
         $this->assertNotSoftDeleted($tag);
+    }
+
+    private function createTag(array $attributes = []): Tag
+    {
+        return Tag::factory()->create(array_merge([
+            'name' => ['zh_TW' => '測試標籤'],
+            'slug' => ['zh_TW' => 'test'],
+            'type' => 'test',
+            'order_column' => 1,
+        ], $attributes));
     }
 }
