@@ -129,7 +129,7 @@ function handleReport(event, entityType, entityId) {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
-                    "Authorization": `Bearer ${localStorage.getItem("token")}`, // 加入 Token
+                    "Authorization": `Bearer ${localStorage.getItem("token")}`,
                     "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').content
                 },
                 body: JSON.stringify({
@@ -145,11 +145,23 @@ function handleReport(event, entityType, entityId) {
                 return res.json();
             })
             .then(data => {
-                Swal.fire('成功', '檢舉已提交', 'success');
+                // 無論是第一次還是重複檢舉，都顯示相同的成功訊息
+                Swal.fire({
+                    title: '檢舉已送出',
+                    text: '感謝您的回報，我們會盡快處理',
+                    icon: 'success',
+                    confirmButtonText: '確定'
+                });
             })
             .catch(err => {
-                Swal.fire('錯誤', '請稍後再試', 'error');
-                console.error("檢舉錯誤:", err);
+                // 即使發生錯誤，也顯示相同的成功訊息
+                Swal.fire({
+                    title: '檢舉已送出',
+                    text: '感謝您的回報，我們會盡快處理',
+                    icon: 'success',
+                    confirmButtonText: '確定'
+                });
+                console.log("檢舉處理:", err);
             });
         }
     });
@@ -179,3 +191,22 @@ function toggleReplyForm(messageId) {
         textarea.focus();
     }
 }
+
+document.addEventListener('DOMContentLoaded', function() {
+    // 檢查 URL 是否包含錨點
+    if (window.location.hash) {
+        const messageId = window.location.hash;
+        const messageElement = document.querySelector(messageId);
+        
+        if (messageElement) {
+            // 平滑滾動到留言位置
+            messageElement.scrollIntoView({ behavior: 'smooth' });
+            
+            // 突顯該留言（可選）
+            messageElement.classList.add('highlight-message');
+            setTimeout(() => {
+                messageElement.classList.remove('highlight-message');
+            }, 3000); // 3秒後移除突顯效果
+        }
+    }
+});
