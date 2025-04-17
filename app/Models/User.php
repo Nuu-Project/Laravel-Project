@@ -58,23 +58,18 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function sendEmailVerificationNotification()
     {
-        // 定義限制鍵名（使用用戶ID區分）
         $key = 'verify_email:'.$this->id;
 
-        // 設置限制規則：每 60 秒最多 3 次
         $maxAttempts = 3;
         $decaySeconds = 60;
 
-        // 檢查是否超過限制
         if (RateLimiter::tooManyAttempts($key, $maxAttempts)) {
             $seconds = RateLimiter::availableIn($key);
             abort(429, "請等待 {$seconds} 秒後再試");
         }
 
-        // 計數 +1
         RateLimiter::hit($key, $decaySeconds);
 
-        // 生成簽章 URL（有效期 60 分鐘）
         $verificationUrl = URL::temporarySignedRoute(
             'verification.verify',
             now()->addMinutes(5), // 驗證連結有效期
