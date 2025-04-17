@@ -20,8 +20,7 @@ class ProductControllerTest extends TestCase
         $this->actingAsAdmin();
     }
 
-    #[Test]
-    public function admin_can_view_products_list()
+    public function test_admin_can_view_products_list()
     {
         $admin = User::factory()->create()->assignRole('admin');
         $product = Product::factory()->create(['status' => ProductStatus::Active]);
@@ -33,8 +32,7 @@ class ProductControllerTest extends TestCase
             ->assertSee($product->name);
     }
 
-    #[Test]
-    public function admin_can_filter_products_by_name()
+    public function test_admin_can_filter_products_by_name()
     {
         $admin = User::factory()->create()->assignRole('admin');
         $productA = Product::factory()->create(['name' => 'Test Product A']);
@@ -46,8 +44,7 @@ class ProductControllerTest extends TestCase
             ->assertDontSee($productB->name);
     }
 
-    #[Test]
-    public function admin_can_filter_products_by_user_name()
+    public function test_admin_can_filter_products_by_user_name()
     {
         $admin = User::factory()->create(['name' => 'Admin'])->assignRole('admin');
         $user = User::factory()->create(['name' => 'John Doe']);
@@ -58,8 +55,7 @@ class ProductControllerTest extends TestCase
             ->assertSee($product->name);
     }
 
-    #[Test]
-    public function admin_can_toggle_product_status()
+    public function test_admin_can_toggle_product_status()
     {
         $admin = User::factory()->create()->assignRole('admin');
         $product = Product::factory()->create(['status' => ProductStatus::Active]);
@@ -72,25 +68,23 @@ class ProductControllerTest extends TestCase
         $this->assertEquals(ProductStatus::Inactive, $product->fresh()->status);
     }
 
-    #[Test]
-    public function guest_cannot_access_products_page()
+    public function test_guest_cannot_access_products_page()
     {
+        $this->logout();
+
         $this->get(route('admin.products.index'))
             ->assertRedirect(route('login'));
     }
 
-    #[Test]
-    public function non_admin_user_cannot_access_products_page()
+    public function test_non_admin_user_cannot_access_products_page()
     {
-        /** @var \App\Models\User $user */
-        $user = User::factory()->create();
+        $user = User::factory()->create()->assignRole('user');
         $this->actingAs($user)
             ->get(route('admin.products.index'))
             ->assertForbidden();
     }
 
-    #[Test]
-    public function products_are_paginated()
+    public function test_products_are_paginated()
     {
         $admin = User::factory()->create()->assignRole('admin');
         Product::factory()->count(25)->create();
@@ -102,8 +96,7 @@ class ProductControllerTest extends TestCase
             });
     }
 
-    #[Test]
-    public function invalid_filter_parameter_does_not_break_page()
+    public function test_invalid_filter_parameter_does_not_break_page()
     {
         $admin = User::factory()->create()->assignRole('admin');
 

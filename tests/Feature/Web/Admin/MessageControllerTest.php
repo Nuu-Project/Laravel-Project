@@ -19,8 +19,7 @@ class MessageControllerTest extends TestCase
         $this->actingAsAdmin();
     }
 
-    #[Test]
-    public function admin_can_view_messages_page()
+    public function test_admin_can_view_messages_page()
     {
         $admin = User::factory()->create()->assignRole('admin');
 
@@ -29,8 +28,7 @@ class MessageControllerTest extends TestCase
             ->assertStatus(200);
     }
 
-    #[Test]
-    public function admin_can_see_messages_on_index_page()
+    public function test_admin_can_see_messages_on_index_page()
     {
         $admin = User::factory()->create()->assignRole('admin');
         $message = Message::factory()->create();
@@ -41,8 +39,7 @@ class MessageControllerTest extends TestCase
             ->assertSee($message->content);
     }
 
-    #[Test]
-    public function admin_can_filter_messages_by_user_name()
+    public function test_admin_can_filter_messages_by_user_name()
     {
         $user1 = User::factory()->create(['name' => 'Alice']);
         $user2 = User::factory()->create(['name' => 'Bob']);
@@ -58,25 +55,23 @@ class MessageControllerTest extends TestCase
             ->assertDontSee($message2->content);
     }
 
-    #[Test]
-    public function guest_cannot_access_messages_page()
+    public function test_guest_cannot_access_messages_page()
     {
+        $this->logout();
+
         $this->get(route('admin.messages.index'))
             ->assertRedirect(route('login'));
     }
 
-    #[Test]
-    public function non_admin_user_cannot_access_messages_page()
+    public function test_non_admin_user_cannot_access_messages_page()
     {
-        /** @var \App\Models\User $user */
-        $user = User::factory()->create();
+        $user = User::factory()->create()->assignRole('user');
         $this->actingAs($user)
             ->get(route('admin.messages.index'))
             ->assertForbidden();
     }
 
-    #[Test]
-    public function messages_are_paginated()
+    public function test_messages_are_paginated()
     {
         $admin = User::factory()->create()->assignRole('admin');
         Message::factory()->count(25)->create();
@@ -88,8 +83,7 @@ class MessageControllerTest extends TestCase
             });
     }
 
-    #[Test]
-    public function invalid_filter_parameter_does_not_break_page()
+    public function test_invalid_filter_parameter_does_not_break_page()
     {
         $admin = User::factory()->create()->assignRole('admin');
 
