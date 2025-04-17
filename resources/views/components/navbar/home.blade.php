@@ -1,4 +1,3 @@
-    <!-- home section -->
     <section class="bg-white py-10 md:mb-10">
 
         <x-div.container-screen>
@@ -75,7 +74,6 @@
                                     </x-dropdown-link>
                                 @endrole
 
-                                <!-- Authentication -->
                                 <form method="POST" action="{{ route('logout') }}">
                                     @csrf
 

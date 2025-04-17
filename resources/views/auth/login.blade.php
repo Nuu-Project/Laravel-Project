@@ -1,6 +1,5 @@
 <x-template-login-register-layout>
     <x-guest-layout>
-        <!-- Session Status -->
         <x-auth-session-status class="mb-4" :status="session('status')" />
         <section class="mt-5">
             <x-div.container-screen>
@@ -33,7 +32,6 @@
                         @csrf
 
 
-                        <!-- Email Address -->
                         <x-div.mt-4>
                             <x-input.auth-label for="email">{{ __('Your email') }}</x-input.auth-label>
                             <x-input.auth id="email" type="email" name="email" :value="old('email')" required
@@ -42,7 +40,6 @@
                         </x-div.mt-4>
 
 
-                        <!-- Password -->
                         <x-div.mt-4>
                             <x-input.auth-label for="password">{{ __('Password') }}</x-input.auth-label>
                             <x-input.auth id="password" type="password" name="password" required
@@ -51,13 +48,11 @@
                         </x-div.mt-4>
 
 
-                        <!-- button -->
                         <x-primary-button>
                             {{ __('Log in') }}
                         </x-primary-button>
 
 
-                        <!-- Remember Me -->
                         <x-div.mt-4>
                             <div class="flex items-center justify-between">
                                 <x-input.checkbox-labeled id="remember_me" name="remember">
@@ -65,7 +60,6 @@
                                 </x-input.checkbox-labeled>
 
 
-                                <!-- Forgot your password -->
                                 @if (Route::has('password.request'))
                                     <x-a.form-link href="{{ route('password.request') }}">
                                         {{ __('Forgot your password?') }}
