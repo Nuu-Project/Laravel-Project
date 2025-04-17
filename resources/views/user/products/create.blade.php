@@ -74,21 +74,23 @@
                         </x-select.form>
                         <x-input-error :messages="$errors->get('semester')" class="mt-2" />
                     </x-div.grid>
+
                     <x-div.grid>
                         <label class="text-sm font-medium leading-none" for="subject">科目</label>
-                        <x-select.form id="subject" name="subject">
-                            <option value="">選擇科目...</option>
-                            @foreach ($tags as $tag)
-                                @if ($tag->type === Tagtype::Subject->value)
-                                    <option value="{{ $tag->id }}"
-                                        {{ old('subject') == $tag->id ? 'selected' : '' }}>
-                                        {{ $tag->name }}</option>
-                                @endif
-                            @endforeach
-                        </x-select.form>
+                        <x-input.tags 
+                            id="subject" 
+                            name="subject" 
+                            type="text"
+                            placeholder="選擇科目..." 
+                            value="{{ old('subject') }}"
+                        />
+                        <div id="searchResults" class="mt-2 bg-white border rounded-md shadow-lg hidden">
+                            <!-- 搜尋結果會動態顯示在這裡 -->
+                        </div>
                         <x-input-error :messages="$errors->get('subject')" class="mt-2" />
                     </x-div.grid>
                     <x-div.grid>
+
                         <label class="text-sm font-medium leading-none" for="category">課程類別</label>
                         <x-select.form id="category" name="category">
                             <option value="">選擇課程類別...</option>
@@ -228,3 +230,64 @@
         </script>
     @endif
 </x-template-user-layout>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const subjectInput = document.getElementById('subject');
+    const searchResults = document.getElementById('searchResults');
+    const subjects = @json($tags->where('type', Tagtype::Subject->value)->pluck('name', 'id'));
+
+    subjectInput.addEventListener('input', function() {
+        const searchTerm = this.value.toLowerCase();
+        if (searchTerm.length < 1) {
+            searchResults.classList.add('hidden');
+            return;
+        }
+
+        // 過濾符合的科目
+        const matches = Object.entries(subjects).filter(([id, name]) => 
+            name.toLowerCase().includes(searchTerm)
+        );
+
+        // 顯示搜尋結果
+        if (matches.length > 0) {
+            searchResults.innerHTML = matches.map(([id, name]) => `
+                <div class="p-2 hover:bg-gray-100 cursor-pointer" 
+                     onclick="selectSubject('${id}', '${name}')">
+                    ${name}
+                </div>
+            `).join('');
+            searchResults.classList.remove('hidden');
+        } else {
+            searchResults.innerHTML = '<div class="p-2 text-gray-500">找不到符合的科目</div>';
+            searchResults.classList.remove('hidden');
+        }
+    });
+
+    // 點擊其他地方時隱藏搜尋結果
+    document.addEventListener('click', function(e) {
+        if (!subjectInput.contains(e.target) && !searchResults.contains(e.target)) {
+            searchResults.classList.add('hidden');
+        }
+    });
+});
+
+function selectSubject(id, name) {
+    document.getElementById('subject').value = name;
+    document.getElementById('searchResults').classList.add('hidden');
+}
+</script>
+
+<style>
+#searchResults {
+    position: absolute;
+    width: 100%;
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 1000;
+}
+
+#searchResults div {
+    transition: background-color 0.2s;
+}
+</style>
