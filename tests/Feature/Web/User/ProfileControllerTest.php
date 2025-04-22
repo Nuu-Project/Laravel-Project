@@ -2,8 +2,8 @@
 
 namespace Tests\Feature\Web\User;
 
-use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;
 
 class ProfileControllerTest extends TestCase
@@ -16,32 +16,42 @@ class ProfileControllerTest extends TestCase
         $this->actingAsUser();
     }
 
-    public function test_edit_page_is_accessible_by_authenticated_user()
+    public function test_profile_edit_page_are_accessible_by_authenticated_user(): void
     {
         $this->get(route('user.profile.edit'))
-            ->assertStatus(200)
+            ->assertOk()
             ->assertViewIs('profile.edit')
             ->assertViewHas('user', auth()->user());
     }
 
-    public function test_update_profile_succeeds_with_valid_data()
+    public function test_profile_update_password_succeeds(): void
     {
-        $user = User::factory()->create(['email' => 'test@example.com']);
-        $validData = ['name' => 'New Name', 'email' => 'test@example.com'];
+        $data = $this->getData();
 
-        $response = $this->actingAs($user)->patch(route('user.profile.update'), $validData);
+        $this->patch(route('user.profile.update'), $data)
+            ->assertRedirect(route('user.profile.edit'))
+            ->assertSessionHas('status', 'profile-updated');
 
-        $response->assertRedirect(route('user.profile.edit'));
-        $response->assertSessionHas('status', 'profile-updated');
-        $this->assertDatabaseHas('users', $validData);
+        $user = auth()->user()->fresh();
+
+        $this->assertTrue(Hash::check($data['password'], $user->password));
     }
 
-    public function test_update_profile_fails_when_user_is_not_authenticated()
+    public function test_profile_update_fails_when_user_is_not_authenticated(): void
     {
-        $invalidData = ['name' => 'New Name'];
+        $this->logout();
 
-        $response = $this->patch(route('user.profile.update'), $invalidData);
+        $data = $this->getData();
 
-        $response->assertRedirect('/login');
+        $this->patch(route('user.profile.update'), $data)
+            ->assertRedirect('/login');
+    }
+
+    private function getData(): array
+    {
+        return [
+            'password' => 'NewSecretPassword123',
+            'password_confirmation' => 'NewSecretPassword123',
+        ];
     }
 }
