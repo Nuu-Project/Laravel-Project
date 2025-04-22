@@ -13,6 +13,7 @@ class UserControllerTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
+        $this->actingAsAdmin();
     }
 
     public function test_index_displays_users_with_filters(): void
@@ -26,23 +27,22 @@ class UserControllerTest extends TestCase
             'email' => 'bob@example.com',
         ]);
 
-        $response = $this->actingAsAdmin()->get(route('admin.users.index', ['filter[name]' => 'Alice']));
-
-        $response->assertOk();
-        $response->assertViewIs('admin.users.index');
-        $response->assertViewHas('users', function ($users) use ($user1) {
-            return $users->contains($user1) && ! $users->contains(User::where('name', 'Bob')->first());
-        });
+        $this->get(route('admin.users.index', ['filter[name]' => 'Alice']))
+            ->assertOk()
+            ->assertViewIs('admin.users.index')
+            ->assertViewHas('users', function ($users) use ($user1) {
+                return $users->contains($user1) && ! $users->contains(User::where('name', 'Bob')->first());
+            });
     }
 
     public function test_active_user(): void
     {
         $user = User::factory()->create(['time_limit' => null]);
 
-        $response = $this->actingAsAdmin()->patch(route('admin.users.active', $user));
+        $this->patch(route('admin.users.active', $user))
+            ->assertRedirect(route('admin.users.index'))
+            ->assertSessionHas('success', "用戶{$user->name}重新啟用！");
 
-        $response->assertRedirect(route('admin.users.index'));
-        $response->assertSessionHas('success', "用戶{$user->name}重新啟用！");
         $this->assertNotNull($user->fresh()->time_limit);
     }
 }
