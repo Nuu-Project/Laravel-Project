@@ -95,11 +95,10 @@ class UserSuspendControllerTest extends TestCase
     public function test_admin_cannot_suspend_themselves(): void
     {
         $response = $this->postJson(route('admin.users.suspend', $this->admin->id), [
-            'duration' => 3600, // 1小时
+            'duration' => 3600,
         ]);
 
-        // 断言返回的响应是 403 Forbidden，表示不能停用自己
-        $response->assertStatus(403);
+        $response->assertForbidden();
         $response->assertJson(['message' => '無法停用自己']);
     }
 
