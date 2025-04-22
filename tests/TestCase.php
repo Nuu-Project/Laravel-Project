@@ -35,14 +35,14 @@ abstract class TestCase extends BaseTestCase
         return User::factory()->hasAdmin()->create();
     }
 
-    public function actingAsUser(): void
+    public function actingAsUser(): TestCase
     {
-        $this->actingAs($this->createUser());
+        return $this->actingAs($this->createUser());
     }
 
-    public function actingAsAdmin(): void
+    public function actingAsAdmin(): TestCase
     {
-        $this->actingAs($this->createAdmin());
+        return $this->actingAs($this->createAdmin());
     }
 
     public function logout(): void
