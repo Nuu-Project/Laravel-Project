@@ -11,6 +11,10 @@ class UserSuspendController extends Controller
 {
     public function suspend(Request $request, User $user): JsonResponse
     {
+        if ($request->user()->id === $user->id) {
+            return response()->json(['message' => '無法停用自己'], 403);
+        }
+
         $validatedData = $request->validate([
             'duration' => ['required', 'integer', 'min:0'],
             'reason' => ['nullable', 'string', 'max:255'],
