@@ -9,11 +9,13 @@ class UserSuspendControllerTest extends TestCase
 {
     private User $user;
 
+    private $admin;
+
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->actingAsAdmin();
+        $this->admin = $this->actingAsAdmin();
 
         $this->user = User::factory()->create();
     }
@@ -88,6 +90,17 @@ class UserSuspendControllerTest extends TestCase
             'reason' => $longReason,
         ])->assertStatus(422)
             ->assertJsonValidationErrors('reason');
+    }
+
+    public function test_admin_cannot_suspend_themselves(): void
+    {
+        $response = $this->postJson(route('admin.users.suspend', $this->admin->id), [
+            'duration' => 3600, // 1小时
+        ]);
+
+        // 断言返回的响应是 403 Forbidden，表示不能停用自己
+        $response->assertStatus(403);
+        $response->assertJson(['message' => '無法停用自己']);
     }
 
     private function suspendUser(array $data): \Illuminate\Testing\TestResponse
