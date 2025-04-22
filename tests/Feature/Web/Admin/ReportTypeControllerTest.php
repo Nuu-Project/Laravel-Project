@@ -23,8 +23,6 @@ class ReportTypeControllerTest extends TestCase
 
     public function test_admin_can_view_report_types_index()
     {
-        ReportType::factory()->count(5)->create();
-
         $this->get(route('admin.report-types.index'))
             ->assertOk()
             ->assertViewIs('admin.report-types.index')
@@ -61,22 +59,18 @@ class ReportTypeControllerTest extends TestCase
 
     public function test_admin_can_update_report_type()
     {
-        $reportType = ReportType::factory()->create([
-            'name' => ['zh_TW' => '舊名稱'],
-        ]);
-
         $data = [
             'name' => '新名稱',
-            'type' => $reportType->type,
-            'order_column' => $reportType->order_column + 1,
+            'type' => $this->reportType->type,
+            'order_column' => $this->reportType->order_column + 1,
         ];
 
-        $this->put(route('admin.report-types.update', $reportType->id), $data)
+        $this->put(route('admin.report-types.update', $this->reportType->id), $data)
             ->assertRedirect(route('admin.report-types.index'))
             ->assertSessionHas('message', '檢舉類型更新成功！');
 
         $this->assertDatabaseHas('report_types', [
-            'id' => $reportType->id,
+            'id' => $this->reportType->id,
             'name->zh_TW' => $data['name'],
             'order_column' => $data['order_column'],
         ]);
