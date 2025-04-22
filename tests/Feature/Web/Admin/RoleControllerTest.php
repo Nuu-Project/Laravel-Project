@@ -16,8 +16,7 @@ class RoleControllerTest extends TestCase
     {
         parent::setUp();
 
-        $this->adminUser = $this->createAdmin();
-        $this->actingAs($this->adminUser);
+        $this->adminUser = $this->actingAsAdmin();
     }
 
     public function test_index_view_is_accessible_and_displays_admin_users()
