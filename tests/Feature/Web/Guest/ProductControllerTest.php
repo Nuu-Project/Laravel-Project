@@ -32,22 +32,38 @@ class ProductControllerTest extends TestCase
         $active = $this->createProductWithStatus(ProductStatus::Active);
         $inactive = $this->createProductWithStatus(ProductStatus::Inactive);
 
-        $this->get(route('products.index'))
+        $response = $this->get(route('products.index'))
             ->assertOk()
             ->assertViewIs('guest.products.index')
             ->assertSee($active->name)
             ->assertDontSee($inactive->name);
+
+        $products = $response->viewData('products');
+
+        $this->assertTrue($products->contains($active));
+        $this->assertFalse($products->contains($inactive));
     }
 
     public function test_can_filter_products_by_tags()
     {
-        $product1 = $this->createProductWithTag(['name' => ['zh_TW' => '標籤1']]);
-        $product2 = $this->createProductWithTag(['name' => ['zh_TW' => '標籤2']]);
+        $tag1 = Tag::factory()->create(['name' => ['zh_TW' => '標籤1']]);
+        $tag2 = Tag::factory()->create(['name' => ['zh_TW' => '標籤2']]);
 
-        $this->get(route('products.index', ['filter' => ['tags' => [$product1->tags->first()->id]]]))
-            ->assertOk()
-            ->assertSee($product1->name)
-            ->assertDontSee($product2->name);
+        $product1 = $this->createProductWithStatus(ProductStatus::Active);
+        $product2 = $this->createProductWithStatus(ProductStatus::Active);
+
+        $product1->tags()->attach($tag1);
+        $product2->tags()->attach($tag2);
+
+        $response = $this->get(route('products.index', ['filter' => ['tags' => [$tag1->id]]]))
+            ->assertOk();
+
+        $products = $response->viewData('products');
+        $this->assertTrue($products->contains($product1));
+        $this->assertFalse($products->contains($product2));
+
+        $response->assertSeeText($product1->name)
+            ->assertDontSeeText($product2->name);
     }
 
     public function test_can_view_product_details()
