@@ -14,7 +14,7 @@
         </div>
         <div class="flex flex-wrap gap-2 justify-center">
             @foreach (collect(Tagtype::cases())->pluck('value') as $type)
-                <select name="filter[tags][]" class="bg-gray text-primary-foreground px-4 py-2 rounded-md">
+                <x-input.select name="filter[tags][]">
                     <option value="">選擇{{ $type }}...</option>
                     @foreach ($allTags as $tag)
                         @if ($tag->type === $type)
@@ -24,7 +24,7 @@
                             </option>
                         @endif
                     @endforeach
-                </select>
+                </x-input.select>
             @endforeach
             <x-button.search>
                 搜尋
@@ -85,6 +85,14 @@
                                     </x-span.font-semibold>
                                 </x-h.h6>
                             </div>
+                            <x-h.h6>科目 :
+                                <x-span.font-semibold>
+                                    @php
+                                        $subjectTag = $product->tags->firstWhere('type', Tagtype::Subject->value);
+                                    @endphp
+                                    {{ $subjectTag ? $subjectTag->name : '無' }}
+                                </x-span.font-semibold>
+                            </x-h.h6>
                         </div>
                         <div class="flex items-center pt-2 p-6">
                             <a href= "{{ route('products.show', ['product' => $product->id]) }}">
