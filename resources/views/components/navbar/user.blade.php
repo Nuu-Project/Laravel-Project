@@ -35,7 +35,6 @@
                     {{ __('首頁') }}
                 </x-dropdown-link>
 
-                <!-- Authentication -->
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
                     <x-dropdown-link :href="route('logout')"

@@ -134,7 +134,19 @@
 
     @if (session('success'))
         <script>
-            alert('{{ session('success') }}');
+            Swal.fire({
+                title: '{{ config('app.name') }} 回應',
+                text: '{{ session('success') }}',
+                icon: 'success',
+                showCancelButton: true,
+                confirmButtonText: '查看商品列表',
+                cancelButtonText: '繼續刊登',
+                reverseButtons: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = '{{ route('user.products.index') }}';
+                }
+            });
         </script>
     @endif
 </x-template-user-layout>

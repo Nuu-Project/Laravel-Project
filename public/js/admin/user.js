@@ -1,4 +1,4 @@
-// 設置 AJAX 的默認 headers
+// AJAX 的默認 headers
 $.ajaxSetup({
     headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -16,7 +16,7 @@ function showSuspendDialog(userId, userName) {
         { value: '604800', label: '1週' }
     ];
 
-    // 生成選項的 HTML
+    // 選項的 HTML
     const optionsHtml = durationOptions.map(option => `
         <label class="duration-option">
             <input type="radio" name="duration" value="${option.value}" class="hidden">
@@ -32,7 +32,7 @@ function showSuspendDialog(userId, userName) {
                 ${optionsHtml}
             </div>
             <div class="mt-4">
-                <input type="text" id="suspend-reason" class="w-full px-3 py-2 border rounded" placeholder="請輸入停用原因" style="max-width: 400px">
+                <input type="text" id="suspend-reason" class="w-full px-3 py-2 border rounded" placeholder="請輸入停用原因" required style="max-width: 400px">
             </div>
             <style>
                 .duration-option {
@@ -82,10 +82,15 @@ function showSuspendDialog(userId, userName) {
         },
         preConfirm: () => {
             const selectedDuration = document.querySelector('input[name="duration"]:checked')?.value;
-            const reason = document.getElementById('suspend-reason').value;
+            const reason = document.getElementById('suspend-reason').value.trim();
 
             if (!selectedDuration) {
                 Swal.showValidationMessage('請選擇停用時間');
+                return false;
+            }
+
+            if (!reason) {
+                Swal.showValidationMessage('請輸入停用原因');
                 return false;
             }
 

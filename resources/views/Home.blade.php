@@ -1,6 +1,5 @@
 <x-template-layout>
 
-    <!-- feature section -->
     <section class="bg-white py-1 md:mt-10">
 
         <x-div.container-screen>
@@ -59,13 +58,11 @@
                 </x-div.center>
             </div>
 
-        </x-div.container-screen> <!-- container.// -->
+        </x-div.container-screen>
 
     </section>
-    <!-- feature section //end -->
 
-    <!-- donation section -->
-    <x-product.card />
+    <x-product.card :products="$products"  />
     <x-page.last />
 
 

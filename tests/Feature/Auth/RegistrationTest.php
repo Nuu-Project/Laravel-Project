@@ -20,12 +20,18 @@ class RegistrationTest extends TestCase
     {
         $response = $this->post('/register', [
             'name' => 'Test User',
-            'email' => 'test@example.com',
+            'email' => 'test@o365.nuu.edu.tw',
             'password' => 'password',
             'password_confirmation' => 'password',
         ]);
 
         $this->assertAuthenticated();
-        $response->assertRedirect(route('dashboard', absolute: false));
+        $response->assertRedirect(route('verification.notice', absolute: false));
+
+        // 新增資料庫驗證
+        $this->assertDatabaseHas('users', [
+            'name' => 'Test User',
+            'email' => 'test@o365.nuu.edu.tw',
+        ]);
     }
 }

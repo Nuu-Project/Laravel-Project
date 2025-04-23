@@ -37,7 +37,6 @@
                     <x-input-error :messages="$errors->get('order_column')" class="mt-2" />
                 </x-div.grid>
 
-                <!-- 提交按鈕 -->
                 <x-button.submit>
                     確定修改標籤
                 </x-button.submit>

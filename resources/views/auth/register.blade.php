@@ -1,6 +1,5 @@
 <x-template-login-register-layout>
 
-    <!-- home section -->
     <section class="bg-white py-10 md:mb-10">
         <x-div.container-screen>
             <nav class="flex-wrap lg:flex items-center" x-data="{ navbarOpen: false }">
@@ -56,7 +55,6 @@
                     <form method="POST" action="{{ route('register') }}">
                         @csrf
 
-                        <!-- Name -->
                         <div>
                             <x-input-label for="name">{{ __('Name') }}</x-input-label>
                             <x-input.auth id="name" type="text" name="name" :value="old('name')" required
@@ -64,7 +62,6 @@
                             <x-input-error :messages="$errors->get('name')" class="mt-2" />
                         </div>
 
-                        <!-- Email Address -->
                         <x-div.mt-4>
                             <x-input-label for="email">{{ __('Your email') }}</x-input-label>
                             <x-input.auth id="email" type="email" name="email" :value="old('email')" required
@@ -72,7 +69,6 @@
                             <x-input-error :messages="$errors->get('email')" class="mt-2" />
                         </x-div.mt-4>
 
-                        <!-- Password -->
                         <x-div.mt-4>
                             <x-input-label for="password">{{ __('Password') }}</x-input-label>
                             <x-input.auth id="password" type="password" name="password" required
@@ -80,7 +76,6 @@
                             <x-input-error :messages="$errors->get('password')" class="mt-2" />
                         </x-div.mt-4>
 
-                        <!-- Confirm Password -->
                         <x-div.mt-4>
                             <x-input-label for="password_confirmation">{{ __('Confirm Password') }}</x-input-label>
                             <x-input.auth id="password_confirmation" type="password" name="password_confirmation"

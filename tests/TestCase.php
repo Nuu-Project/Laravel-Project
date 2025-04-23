@@ -5,10 +5,13 @@ namespace Tests;
 use App\Enums\Tagtype;
 use App\Models\Tag;
 use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 
 abstract class TestCase extends BaseTestCase
 {
+    use RefreshDatabase;
+
     protected function setUp(): void
     {
         parent::setUp();
@@ -32,14 +35,20 @@ abstract class TestCase extends BaseTestCase
         return User::factory()->hasAdmin()->create();
     }
 
-    public function actingAsUser(): void
+    public function actingAsUser(): User
     {
-        $this->actingAs($this->createUser());
+        $user = $this->createUser();
+        $this->actingAs($user);
+
+        return $user;
     }
 
-    public function actingAsAdmin(): void
+    public function actingAsAdmin(): User
     {
-        $this->actingAs($this->createAdmin());
+        $admin = $this->createAdmin();
+        $this->actingAs($admin);
+
+        return $admin;
     }
 
     public function logout(): void
