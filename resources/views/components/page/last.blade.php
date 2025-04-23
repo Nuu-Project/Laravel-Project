@@ -41,6 +41,12 @@
                         <p>
                             回饋表單</p>
                     </x-a.block-font-black>
+
+                    <x-a.block-font-black
+                        href="https://docs.google.com/forms/d/1a16KiTCFUvTEQUObw-Xow3hKUyIi1Eh51hNY6f_EHZg/viewform?edit_requested=true">
+                        <p>
+                            申訴表單</p>
+                    </x-a.block-font-black>
                 </x-div.text-center>
 
             </div>
