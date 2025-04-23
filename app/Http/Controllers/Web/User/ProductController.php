@@ -168,7 +168,7 @@ class ProductController extends Controller
             // 創建圖片位置映射
             $imagePositionMap = [];
             foreach ($encryptedPaths as $index => $path) {
-                $position = isset($positions[$index]) ? (int)$positions[$index] : $index;
+                $position = isset($positions[$index]) ? (int) $positions[$index] : $index;
                 $imagePositionMap[$path] = $position;
             }
 
@@ -179,7 +179,7 @@ class ProductController extends Controller
 
                 $media = $product->addMediaFromDisk($decryptedImagePath, 'temp')
                     ->toMediaCollection('images', $mediaDisk);
-                
+
                 // 設置明確的順序，確保圖片位置保持不變
                 $media->order_column = $position;
                 $media->save();
@@ -191,12 +191,12 @@ class ProductController extends Controller
         // 如果有圖片順序數據，優先使用它
         if ($request->has('imageOrder')) {
             $imageOrderData = json_decode($request->input('imageOrder'), true);
-            if (is_array($imageOrderData) && !empty($imageOrderData)) {
+            if (is_array($imageOrderData) && ! empty($imageOrderData)) {
                 foreach ($imageOrderData as $item) {
-                    if (isset($item['id']) && isset($item['position']) && !str_starts_with($item['id'], 'new_')) {
+                    if (isset($item['id']) && isset($item['position']) && ! str_starts_with($item['id'], 'new_')) {
                         $mediaId = $item['id'];
                         $position = $item['position'];
-                        
+
                         $media = $product->getMedia('images')->firstWhere('id', $mediaId);
                         if ($media) {
                             $media->order_column = $position;
@@ -209,7 +209,7 @@ class ProductController extends Controller
             // 使用傳統方式處理圖片順序
             $imageIds = $request->input('image_ids', []);
             $validImageIds = array_filter($imageIds, function ($id) use ($deletedImageIds) {
-                return !in_array($id, $deletedImageIds);
+                return ! in_array($id, $deletedImageIds);
             });
 
             $product->getMedia('images')->each(function ($image) use ($validImageIds) {
