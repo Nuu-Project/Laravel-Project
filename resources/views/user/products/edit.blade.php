@@ -9,23 +9,22 @@
 
     <x-flex-container>
         <x-div.container>
-            <div class="grid gap-6 md:gap-8">
+            <x-div.grid>
                 <x-div.grid>
-                    <h1 class="text-2xl sm:text-3xl font-bold">修改刊登商品</h1>
+                    <x-h.h1-middle>修改刊登商品</x-h.h1-middle>
                     <x-p.text-muted>請依照下順序進行填寫，照片上傳張數最多五張。</x-p.text-muted>
                     <x-p.text-muted>圖片最左邊將會是商品首圖。</x-p.text-muted>
                 </x-div.grid>
 
                 @if ($errors->any())
-                    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4"
-                        role="alert">
-                        <strong class="font-bold">驗證錯誤！</strong>
+                    <x-div.red role="alert">
+                        <strong>驗證錯誤！</strong>
                         <ul>
                             @foreach ($errors->all() as $error)
                                 <li>{{ $error }}</li>
                             @endforeach
                         </ul>
-                    </div>
+                    </x-div.red>
                 @endif
 
                 <form id="productForm" class="grid gap-6"
@@ -137,8 +136,8 @@
                         <div id="imageContainer"
                             class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
                             @for ($i = 0; $i < 5; $i++)
-                                <x-product.image-uploader-edit 
-                                    :index="$i" 
+                                <x-product.image-uploader-edit
+                                    :index="$i"
                                     :product-id="$product->id"
                                     :image-id="$product->getMedia('images')->sortBy('order_column')->values()->get($i)?->id"
                                     :image-url="$product->getMedia('images')->sortBy('order_column')->values()->get($i)?->getUrl()"
@@ -152,7 +151,7 @@
                         儲存修改
                     </x-button.submit>
                 </form>
-            </div>
+            </x-div.grid>
         </x-div.container>
     </x-flex-container>
 

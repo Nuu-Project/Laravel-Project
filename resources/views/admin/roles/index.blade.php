@@ -1,5 +1,5 @@
 <x-template-admin-layout>
-    <script src="{{ asset('js/admin/roles.js') }}"></script>
+    <script src="{{ asset('js/admin/roles/index.js') }}"></script>
 
     <x-flex-container>
         <x-div.container>
@@ -37,25 +37,4 @@
             </div>
         </x-div.container>
     </x-flex-container>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const checkboxes = document.querySelectorAll('.role-checkbox');
-
-            checkboxes.forEach(checkbox => {
-                checkbox.addEventListener('change', function() {
-                    const checkedBoxes = document.querySelectorAll(
-                        '.role-checkbox[data-role="admin"]:checked');
-                    const modifyBtn = document.querySelector('#modifyAdminBtn');
-
-                    modifyBtn.classList.toggle('hidden', checkedBoxes.length === 0);
-                });
-            });
-
-            const modifyAdminBtn = document.getElementById('modifyAdminBtn');
-            modifyAdminBtn?.addEventListener('click', function() {
-                document.getElementById('adminForm').submit();
-            });
-        });
-    </script>
 </x-template-admin-layout>
