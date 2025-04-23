@@ -19,9 +19,12 @@ class ProductProcessImageController extends Controller
                 'max:2048',
                 'dimensions:max_width=3200,max_height=3200',
             ],
+            'position' => ['nullable', 'integer', 'min:0', 'max:4'],
         ];
 
         $validatedData = $request->validate($rules);
+
+        $position = $request->input('position', -1);
 
         $image = $request->file('image');
 
@@ -37,6 +40,7 @@ class ProductProcessImageController extends Controller
             'success' => true,
             'message' => '圖片上傳成功',
             'path' => $encryptedImagePath,
+            'position' => $position,
         ]);
     }
 }

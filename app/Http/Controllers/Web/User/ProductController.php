@@ -126,6 +126,8 @@ class ProductController extends Controller
             'category' => ['required', Rule::exists('tags', 'id')->where('type', Tagtype::Category)],
             'encrypted_image_path' => ['nullable', 'array'],
             'encrypted_image_path.*' => ['required', 'string'],
+            'image_positions' => ['nullable', 'array'],
+            'image_positions.*' => ['nullable', 'integer', 'min:0', 'max:4'],
             'image_ids' => ['nullable', 'array', 'max:5'],
             'deleted_image_ids' => ['nullable', 'string'],
         ];
@@ -133,26 +135,24 @@ class ProductController extends Controller
         $request->validate($rules, trans('product'));
         $mediaDisk = config('filesystems.media_disk', 'public_images');
 
+        // 處理刪除的圖片
         $deletedImageIds = json_decode($request->input('deleted_image_ids', '[]'), true);
         $existingImages = $product->getMedia('images');
-
         $remainingImages = $existingImages->whereNotIn('id', $deletedImageIds);
 
         // 檢查是否有新上傳的圖片
         $newImages = collect($request->file('images', []))->filter();
 
         // 計算最終的圖片數量
-        $totalImagesAfterUpdate = $remainingImages->count() + $newImages->count();
+        $totalImagesAfterUpdate = $remainingImages->count() + ($request->has('encrypted_image_path') ? count($request->input('encrypted_image_path', [])) : 0);
 
         // 如果沒有任何圖片，添加必填驗證
         if ($totalImagesAfterUpdate === 0) {
             $rules['images'] = ['required', 'array', 'min:1'];
             $messages['images.required'] = '請至少上傳一張商品圖片';
             $messages['images.min'] = '請至少上傳一張商品圖片';
+            $request->validate($rules, $messages);
         }
-
-        // 驗證
-        $request->validate($rules, trans('product'));
 
         // 更新產品資料
         $product->update($request->only(['name', 'description']));
@@ -160,27 +160,65 @@ class ProductController extends Controller
         // 刪除標記為刪除的圖片
         $existingImages->whereIn('id', $deletedImageIds)->each->delete();
 
+        // 處理新上傳的圖片，確保位置保持不變
         if ($request->has('encrypted_image_path')) {
-            foreach ($request->input('encrypted_image_path') as $encryptedPath) {
+            $encryptedPaths = $request->input('encrypted_image_path', []);
+            $positions = $request->input('image_positions', []);
+
+            // 創建圖片位置映射
+            $imagePositionMap = [];
+            foreach ($encryptedPaths as $index => $path) {
+                $position = isset($positions[$index]) ? (int)$positions[$index] : $index;
+                $imagePositionMap[$path] = $position;
+            }
+
+            // 按原始順序添加圖片
+            foreach ($encryptedPaths as $index => $encryptedPath) {
+                $position = $imagePositionMap[$encryptedPath];
                 $decryptedImagePath = decrypt($encryptedPath);
 
-                $product->addMediaFromDisk($decryptedImagePath, 'temp')->toMediaCollection('images', $mediaDisk);
+                $media = $product->addMediaFromDisk($decryptedImagePath, 'temp')
+                    ->toMediaCollection('images', $mediaDisk);
+                
+                // 設置明確的順序，確保圖片位置保持不變
+                $media->order_column = $position;
+                $media->save();
 
                 Storage::disk('temp')->delete($decryptedImagePath);
             }
         }
 
-        // 過濾已刪除的 ID
-        $imageIds = $request->input('image_ids', []);
-        $validImageIds = array_diff($imageIds, $deletedImageIds);
-
-        // 更新圖片的順序
-        $product->getMedia('images')->each(function ($image) use ($validImageIds) {
-            if (($index = array_search($image->id, $validImageIds)) !== false) {
-                $image->order_column = $index + 1;
-                $image->save();
+        // 如果有圖片順序數據，優先使用它
+        if ($request->has('imageOrder')) {
+            $imageOrderData = json_decode($request->input('imageOrder'), true);
+            if (is_array($imageOrderData) && !empty($imageOrderData)) {
+                foreach ($imageOrderData as $item) {
+                    if (isset($item['id']) && isset($item['position']) && !str_starts_with($item['id'], 'new_')) {
+                        $mediaId = $item['id'];
+                        $position = $item['position'];
+                        
+                        $media = $product->getMedia('images')->firstWhere('id', $mediaId);
+                        if ($media) {
+                            $media->order_column = $position;
+                            $media->save();
+                        }
+                    }
+                }
             }
-        });
+        } else {
+            // 使用傳統方式處理圖片順序
+            $imageIds = $request->input('image_ids', []);
+            $validImageIds = array_filter($imageIds, function ($id) use ($deletedImageIds) {
+                return !in_array($id, $deletedImageIds);
+            });
+
+            $product->getMedia('images')->each(function ($image) use ($validImageIds) {
+                if (($index = array_search($image->id, $validImageIds)) !== false) {
+                    $image->order_column = $index + 1;
+                    $image->save();
+                }
+            });
+        }
 
         // 更新標籤
         $tagIds = [
