@@ -1,4 +1,6 @@
 <x-template-admin-layout>
+    <script src="{{ asset('js/admin/roles/create.js') }}"></script>
+
     <x-flex-container>
         <x-div.container>
             <x-h.h3>新增管理員</x-h.h3>
@@ -54,7 +56,7 @@
 
                     <!-- 提交按鈕 -->
                     <x-form.button-group>
-                        <x-button.roles type="button" id="cancelBtn">
+                        <x-button.roles type="button" id="cancelBtn" data-url="{{ route('admin.roles.index') }}">
                             取消
                         </x-button.roles>
                         <x-button.roles type="submit">
@@ -66,11 +68,4 @@
         </x-div.container>
     </x-flex-container>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            document.getElementById('cancelBtn').addEventListener('click', function() {
-                window.location.href = '{{ route('admin.roles.index') }}';
-            });
-        });
-    </script>
 </x-template-admin-layout>
