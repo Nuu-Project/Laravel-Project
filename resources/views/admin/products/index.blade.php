@@ -7,13 +7,13 @@
         <x-div.container>
             @if (session('success'))
                 <x-div.green role="alert">
-                    <x-span.block-inline>{{ session('success') }}</x-span.block-inline>
+                    <x-span.inline>{{ session('success') }}</x-span.inline>
                 </x-div.green>
             @endif
 
             @if (session('error'))
                 <x-div.red role="alert">
-                    <x-span.block-inline>{{ session('error') }}</x-span.block-inline>
+                    <x-span.inline>{{ session('error') }}</x-span.inline>
                 </x-div.red>
             @endif
 
