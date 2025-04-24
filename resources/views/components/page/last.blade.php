@@ -52,7 +52,7 @@
                 <x-div.text-center>
                     <x-h.h4>更多資訊</x-h.h4>
                     <x-a.block-font-black
-                        href="https://docs.google.com/document/d/1__5Fg5KnFw_WHg4GkL08Z6mssgNb3ymphpe9wkzGGlo/edit?tab=t.0">
+                        href="https://docs.google.com/document/d/1BPaHSfZSu5uadUj3tI2TxGPXRokfgT5y3tE_cNFM4E0/edit?tab=t.0">
                         <p>
                             平台規範</p>
                     </x-a.block-font-black>

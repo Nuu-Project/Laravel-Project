@@ -37,26 +37,7 @@
                                 <div>沒有圖片</div>
                             @endif
                         </div>
-                        <div class="flex items-center justify-between mb-8">
-                            <x-h.h6>年級 :
-                                <x-span.font-semibold>
-                                    @php
-                                        $gradeTag = $product->tags->firstWhere('type', Tagtype::Grade->value);
-                                        $semesterTag = $product->tags->firstWhere('type', Tagtype::Semester->value);
-                                    @endphp
-                                    {{ $gradeTag ? $gradeTag->name : '無' }}
-                                    {{ $semesterTag ? $semesterTag->name : '學期:無' }}
-                                </x-span.font-semibold>
-                            </x-h.h6>
-                            <x-h.h6>課程 :
-                                <x-span.font-semibold>
-                                    @php
-                                        $categoryTag = $product->tags->firstWhere('type', Tagtype::Category->value);
-                                    @endphp
-                                    {{ $categoryTag ? $categoryTag->name : '無' }}
-                                </x-span.font-semibold>
-                            </x-h.h6>
-                        </div>
+                        <x-product.tags :product="$product" />
                     </div>
                     <div class="flex items-center pt-2 p-6">
                         <a href= "{{ route('products.show', ['product' => $product->id]) }}">
