@@ -1,4 +1,3 @@
-// AJAX 的默認 headers
 $.ajaxSetup({
     headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -6,7 +5,6 @@ $.ajaxSetup({
 });
 
 function showSuspendDialog(userId, userName) {
-    // 定義所有時間選項
     const durationOptions = [
         { value: '60', label: '60秒' },
         { value: '300', label: '5分' },
@@ -16,7 +14,6 @@ function showSuspendDialog(userId, userName) {
         { value: '604800', label: '1週' }
     ];
 
-    // 選項的 HTML
     const optionsHtml = durationOptions.map(option => `
         <label class="duration-option">
             <input type="radio" name="duration" value="${option.value}" class="hidden">
@@ -112,7 +109,6 @@ function showSuspendDialog(userId, userName) {
                         text: response.message,
                         icon: 'success'
                     }).then(() => {
-                        // 成功後重新載入頁面
                         window.location.reload();
                     });
                 },

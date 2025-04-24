@@ -1,19 +1,16 @@
-// 儲存已處理的圖片路徑
 let processedImagePaths = new Array(5).fill(null);
 
-// 為每個上傳元素創建Alpine.js元件
 for (let i = 0; i < 5; i++) {
     window[`imageUploader${i}`] = function () {
         return {
-            uploading: false,  // 是否正在上傳
-            processing: false, // 是否正在處理
-            progress: 0,       // 上傳進度
-            error: false,      // 是否有錯誤
-            errorMessage: '',  // 錯誤訊息
-            success: false,    // 是否上傳成功
-            imageIndex: i,     // 圖片索引
+            uploading: false,
+            processing: false,
+            progress: 0,
+            error: false,
+            errorMessage: '',
+            success: false,
+            imageIndex: i,
 
-            // 開始上傳流程
             startUpload(event) {
                 const file = event.target.files[0];
                 if (!file) return;
@@ -21,7 +18,6 @@ for (let i = 0; i < 5; i++) {
                 this.uploading = true;
                 this.processing = true;
 
-                // 檢查檔案類型
                 const validTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/jpg'];
                 if (!validTypes.includes(file.type)) {
                     this.error = true;
@@ -30,7 +26,6 @@ for (let i = 0; i < 5; i++) {
                     return;
                 }
 
-                // 檢查檔案大小 (不超過2MB)
                 if (file.size > 2 * 1024 * 1024) {
                     this.error = true;
                     this.errorMessage = '處理失敗! 檔案大小不能超過2MB';
@@ -41,7 +36,6 @@ for (let i = 0; i < 5; i++) {
                 this.uploadFile(file);
             },
 
-            // 執行實際上傳
             uploadFile(file) {
                 const formData = new FormData();
                 formData.append('image', file);
@@ -51,14 +45,12 @@ for (let i = 0; i < 5; i++) {
                 xhr.open('POST', '/api/products/process-image');
                 xhr.setRequestHeader('X-CSRF-TOKEN', document.querySelector('meta[name="csrf-token"]').content);
 
-                // 監聽上傳進度
                 xhr.upload.addEventListener('progress', (event) => {
                     if (event.lengthComputable) {
                         this.progress = Math.round((event.loaded / event.total) * 100);
                     }
                 });
 
-                // 處理響應
                 xhr.onload = () => {
                     if (xhr.status === 200) {
                         try {
@@ -69,10 +61,8 @@ for (let i = 0; i < 5; i++) {
                                 this.processing = false;
                                 processedImagePaths[this.imageIndex] = result.path;
 
-                                // 顯示預覽圖片
                                 this.showPreview(file);
 
-                                // 延遲後隱藏進度條
                                 setTimeout(() => {
                                     this.uploading = false;
                                 }, 1000);
@@ -101,14 +91,11 @@ for (let i = 0; i < 5; i++) {
                     this.handleError('上傳超時，請稍後再試');
                 };
 
-                // 發送請求
                 xhr.send(formData);
 
-                // 建立進度模擬
                 this.simulateProgressIfNeeded();
             },
 
-            // 當後端不回報進度時，模擬進度
             simulateProgressIfNeeded() {
                 let lastProgress = 0;
                 const interval = setInterval(() => {
@@ -117,9 +104,7 @@ for (let i = 0; i < 5; i++) {
                         return;
                     }
 
-                    // 如果進度停滯，則緩慢增加
                     if (this.progress === lastProgress) {
-                        // 進度越高，增加越慢
                         const increment = this.progress < 30 ? 5 :
                             this.progress < 70 ? 3 :
                                 this.progress < 90 ? 1 : 0.5;
@@ -133,7 +118,6 @@ for (let i = 0; i < 5; i++) {
                 }, 500);
             },
 
-            // 顯示圖片預覽
             showPreview(file) {
                 const preview = document.getElementById(`preview${this.imageIndex}`);
                 const placeholder = document.getElementById(`placeholder${this.imageIndex}`);
@@ -147,14 +131,12 @@ for (let i = 0; i < 5; i++) {
                 reader.readAsDataURL(file);
             },
 
-            // 處理錯誤
             handleError(message) {
                 this.error = true;
                 this.errorMessage = message;
                 this.success = false;
                 this.processing = false;
 
-                // 延遲後隱藏進度條
                 setTimeout(() => {
                     this.uploading = false;
                 }, 1500);
@@ -162,29 +144,23 @@ for (let i = 0; i < 5; i++) {
                 console.error('上傳錯誤:', message);
             },
 
-            // 移除圖片
             removeImage() {
                 const preview = document.getElementById(`preview${this.imageIndex}`);
                 const placeholder = document.getElementById(`placeholder${this.imageIndex}`);
                 const imageInput = document.getElementById(`image${this.imageIndex}`);
 
-                // 重置UI
                 preview.querySelector('img').src = '#';
                 preview.classList.add('hidden');
                 placeholder.classList.remove('hidden');
                 imageInput.value = '';
 
-                // 清除已處理的圖片路徑
                 processedImagePaths[this.imageIndex] = null;
 
-                // 重置狀態
                 this.reset();
 
-                // 更新圖片順序
                 updatePositions();
             },
 
-            // 重置所有狀態
             reset() {
                 this.uploading = false;
                 this.processing = false;
@@ -197,23 +173,19 @@ for (let i = 0; i < 5; i++) {
     }
 }
 
-// 監聽表單提交
 document.addEventListener('DOMContentLoaded', function () {
     const productForm = document.getElementById('productForm');
     if (productForm) {
         productForm.addEventListener('submit', function (e) {
             e.preventDefault();
 
-            // 清除之前可能存在的錯誤提示區域
             const oldErrorContainer = document.querySelector('.frontend-error-container');
             if (oldErrorContainer) {
                 oldErrorContainer.remove();
             }
 
-            // 收集所有的驗證錯誤
             const errors = [];
 
-            // 驗證所有必填欄位
             const requiredFields = {
                 'name': '書名不能留空',
                 'price': '價格不能留空',
@@ -224,7 +196,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 'category': '課程類別不能留空'
             };
 
-            // 檢查每個必填欄位
             Object.entries(requiredFields).forEach(([fieldId, errorMessage]) => {
                 const field = document.getElementById(fieldId);
                 if (!field.value.trim()) {
@@ -232,26 +203,21 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             });
 
-            // 檢查圖片
             const validPaths = processedImagePaths.filter(path => path !== null);
             if (validPaths.length === 0) {
                 errors.push('請至少上傳一張商品圖片');
             }
 
-            // 如果有錯誤，顯示錯誤訊息
             if (errors.length > 0) {
-                // 創建錯誤容器
                 const errorContainer = document.createElement('div');
                 errorContainer.className = 'bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4 frontend-error-container';
                 errorContainer.setAttribute('role', 'alert');
 
-                // 添加錯誤標題
                 const errorTitle = document.createElement('strong');
                 errorTitle.className = 'font-bold';
                 errorTitle.textContent = '驗證錯誤！';
                 errorContainer.appendChild(errorTitle);
 
-                // 添加錯誤列表
                 const errorList = document.createElement('ul');
                 errors.forEach(error => {
                     const errorItem = document.createElement('li');
@@ -260,16 +226,13 @@ document.addEventListener('DOMContentLoaded', function () {
                 });
                 errorContainer.appendChild(errorList);
 
-                // 將錯誤容器插入到表單前面
                 const form = document.getElementById('productForm');
                 form.parentNode.insertBefore(errorContainer, form);
 
-                // 滾動到錯誤訊息
                 errorContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 return;
             }
 
-            // 如果沒有錯誤，處理圖片路徑並提交表單
             const oldInputs = this.querySelectorAll('input[name^="encrypted_image_path"]');
             oldInputs.forEach(input => input.remove());
 
@@ -281,17 +244,14 @@ document.addEventListener('DOMContentLoaded', function () {
                 this.appendChild(input);
             });
 
-            // 提交表單
             this.submit();
         });
     }
 
-    // 初始化拖曳功能
     initializeDragAndDrop();
     updatePositions();
 });
 
-// 拖曳功能
 function initializeDragAndDrop() {
     const imageContainer = document.getElementById('imageContainer');
     if (!imageContainer) return;
@@ -306,14 +266,12 @@ function initializeDragAndDrop() {
         item.addEventListener('dragstart', function (e) {
             draggedItem = this;
 
-            // 創建拖拽時的佔位元素，保持相同高度避免跳動
             dragPlaceholder = document.createElement('div');
             dragPlaceholder.className = 'relative h-[192px] border-2 border-dashed border-blue-300 rounded-lg bg-blue-50';
 
             e.dataTransfer.effectAllowed = 'move';
             this.classList.add('opacity-50');
 
-            // 延遲設置拖拽圖像，確保能看到拖拽的視覺反饋
             setTimeout(() => {
                 e.dataTransfer.setDragImage(this, 0, 0);
             }, 10);
@@ -333,7 +291,6 @@ function initializeDragAndDrop() {
                 const droppedIndex = allItems.indexOf(this);
 
                 if (draggedIndex !== droppedIndex) {
-                    // 使用佔位元素進行替換，保持布局穩定
                     parent.replaceChild(dragPlaceholder, draggedItem);
                     parent.replaceChild(draggedItem, this);
                     parent.replaceChild(this, dragPlaceholder);
@@ -347,7 +304,6 @@ function initializeDragAndDrop() {
             this.classList.remove('opacity-50');
             draggedItem = null;
 
-            // 清理可能未被替換的佔位元素
             if (dragPlaceholder && dragPlaceholder.parentNode) {
                 dragPlaceholder.parentNode.removeChild(dragPlaceholder);
             }
