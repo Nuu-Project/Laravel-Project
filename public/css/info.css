@@ -79,3 +79,9 @@ body {
     cursor: pointer;
     line-height: 1; /* Adjust line height */
 }
+
+/* 留言突顯樣式 */
+.highlight-message {
+    transition: background-color 0.5s;
+    background-color: rgba(255, 255, 0, 0.3);
+}

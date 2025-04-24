@@ -52,7 +52,56 @@
 
                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                     <div class="flex items-center space-x-2">
-                        <a href="{{ route('products.show', ['product' => $message->product_id]) }}#message-{{ $message->id }}">
+                        @php
+                            $isReply = $message->reply_to_id !== null;
+
+                            if ($isReply) {
+                                $parentMessage = \App\Models\Message::find($message->reply_to_id);
+                                $parentId = $parentMessage ? $parentMessage->id : null;
+                                $position = \Illuminate\Support\Facades\DB::table('messages')
+                                    ->whereNull('reply_to_id')
+                                    ->where('product_id', $message->product_id)
+                                    ->where(function ($query) use ($parentMessage) {
+                                        $query
+                                            ->where('created_at', '<', $parentMessage->created_at)
+                                            ->orWhere(function ($q) use ($parentMessage) {
+                                                $q->where('created_at', '=', $parentMessage->created_at)->where(
+                                                    'id',
+                                                    '<=',
+                                                    $parentMessage->id,
+                                                );
+                                            });
+                                    })
+                                    ->count();
+                                $page = ceil(($position + 1) / 10);
+
+                                //
+                                $url =
+                                    route('products.show', ['product' => $message->product_id]) .
+                                    "?page={$page}&scrollCenter=true&highlight={$message->id}#message-{$parentId}";
+                            } else {
+                                $position = \Illuminate\Support\Facades\DB::table('messages')
+                                    ->whereNull('reply_to_id')
+                                    ->where('product_id', $message->product_id)
+                                    ->where(function ($query) use ($message) {
+                                        $query
+                                            ->where('created_at', '<', $message->created_at)
+                                            ->orWhere(function ($q) use ($message) {
+                                                $q->where('created_at', '=', $message->created_at)->where(
+                                                    'id',
+                                                    '<=',
+                                                    $message->id,
+                                                );
+                                            });
+                                    })
+                                    ->count();
+                                $page = ceil(($position + 1) / 10);
+                                $url =
+                                    route('products.show', ['product' => $message->product_id]) .
+                                    "?page={$page}&scrollCenter=true#message-{$message->id}";
+                            }
+                        @endphp
+                        <a href="{{ $url }}">
                             <x-button.blue-short>
                                 前往
                             </x-button.blue-short>
@@ -69,9 +118,8 @@
 
                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                     @if ($message->product)
-                        <form
-                            action="{{ route('admin.messages.destroy', ['message' => $message->id]) }}"
-                            method="POST" class="inline">
+                        <form action="{{ route('admin.messages.destroy', ['message' => $message->id]) }}" method="POST"
+                            class="inline">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="text-red-600 hover:text-red-900 font-medium"
@@ -83,5 +131,5 @@
                 </td>
             </tr>
         @endforeach
-    </x-gray-200>
+        </x-gray-200>
 </x-table.gray-200>
