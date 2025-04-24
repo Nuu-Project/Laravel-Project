@@ -202,7 +202,7 @@
                         </form>
 
                         @foreach ($message->replies as $reply)
-                            <div class="ml-8 mt-4 p-4 bg-gray-50 rounded-lg">
+                            <div id="reply-{{ $reply->id }}" class="ml-8 mt-4 p-4 bg-gray-50 rounded-lg">
                                 <x-div.side-bar-admin>
                                     <span class="text-gray-800">{{ $reply->user->name }}</span>
                                     <div class="flex items-center">

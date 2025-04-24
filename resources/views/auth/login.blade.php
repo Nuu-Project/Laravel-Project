@@ -31,15 +31,12 @@
                     </x-h.h1>
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
-
-
                         <x-div.mt-4>
                             <x-input-label for="email">{{ __('Your email') }}</x-input-label>
                             <x-input.auth id="email" type="email" name="email" :value="old('email')" required
                                 autofocus placeholder="name@o365.nuu.edu.tw" />
                             <x-input-error :messages="$errors->get('email')" class="mt-2" />
                         </x-div.mt-4>
-
 
                         <x-div.mt-4>
                             <x-input-label for="password">{{ __('Password') }}</x-input-label>
@@ -48,26 +45,27 @@
                             <x-input-error :messages="$errors->get('password')" class="mt-2" />
                         </x-div.mt-4>
 
-
                         <x-primary-button>
                             {{ __('Log in') }}
                         </x-primary-button>
 
+                        <div class="flex items-center justify-between mt-4">
+                            <x-input.checkbox-labeled id="remember_me" name="remember">
+                                {{ __('Remember me') }}
+                            </x-input.checkbox-labeled>
 
-                        <x-div.mt-4>
-                            <div class="flex items-center justify-between">
-                                <x-input.checkbox-labeled id="remember_me" name="remember">
-                                    {{ __('Remember me') }}
-                                </x-input.checkbox-labeled>
-
-
+                            <div class="flex flex-col items-end space-y-2">
                                 @if (Route::has('password.request'))
                                     <x-a.form-link href="{{ route('password.request') }}">
                                         {{ __('Forgot your password?') }}
                                     </x-a.form-link>
                                 @endif
+
+                                <x-a.form-link href="{{ route('register') }}">
+                                    {{ __('Have not registered?') }}
+                                </x-a.form-link>
                             </div>
-                        </x-div.mt-4>
+                        </div>
                     </form>
                 </div>
             </x-div.container-screen>

@@ -187,13 +187,70 @@ document.addEventListener('DOMContentLoaded', function () {
         const messageElement = document.querySelector(messageId);
 
         if (messageElement) {
-            messageElement.scrollIntoView({ behavior: 'smooth' });
+            const urlParams = new URLSearchParams(window.location.search);
+            const scrollCenter = urlParams.get('scrollCenter');
+            const highlightReplyId = urlParams.get('highlight');
 
+            if (highlightReplyId) {
+                const replyElement = document.getElementById(`reply-${highlightReplyId}`);
 
-            messageElement.classList.add('highlight-message');
-            setTimeout(() => {
-                messageElement.classList.remove('highlight-message');
-            }, 3000);
+                if (replyElement) {
+                    setTimeout(() => {
+                        if (scrollCenter === 'true') {
+                            const rect = messageElement.getBoundingClientRect();
+                            const windowHeight = window.innerHeight;
+                            const elementHeight = rect.height;
+                            const offsetY = rect.top + window.pageYOffset - (windowHeight / 4);
+
+                            window.scrollTo({
+                                top: offsetY,
+                                behavior: 'smooth'
+                            });
+                        } else {
+                            messageElement.scrollIntoView({ behavior: 'smooth' });
+                        }
+
+                        replyElement.style.transition = 'background-color 0.5s';
+                        replyElement.style.backgroundColor = 'rgba(255, 255, 0, 0.3)';
+
+                        setTimeout(() => {
+                            const replyRect = replyElement.getBoundingClientRect();
+                            if (replyRect.top < 0 || replyRect.bottom > window.innerHeight) {
+                                replyElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                            }
+
+                            setTimeout(() => {
+                                replyElement.style.backgroundColor = '';
+                            }, 2000);
+                        }, 300);
+                    }, 300);
+                }
+            } else if (scrollCenter === 'true') {
+                setTimeout(() => {
+                    const rect = messageElement.getBoundingClientRect();
+                    const windowHeight = window.innerHeight;
+                    const elementHeight = rect.height;
+                    const offsetY = rect.top + window.pageYOffset - (windowHeight / 2) + (elementHeight / 2);
+
+                    window.scrollTo({
+                        top: offsetY,
+                        behavior: 'smooth'
+                    });
+
+                    messageElement.style.transition = 'background-color 0.5s';
+                    messageElement.style.backgroundColor = 'rgba(255, 255, 0, 0.3)';
+                    setTimeout(() => {
+                        messageElement.style.backgroundColor = '';
+                    }, 2000);
+                }, 300);
+            } else {
+                messageElement.scrollIntoView({ behavior: 'smooth' });
+
+                messageElement.classList.add('highlight-message');
+                setTimeout(() => {
+                    messageElement.classList.remove('highlight-message');
+                }, 2000);
+            }
         }
     }
 });
