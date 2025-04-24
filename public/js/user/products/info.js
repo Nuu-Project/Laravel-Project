@@ -199,14 +199,81 @@ document.addEventListener('DOMContentLoaded', function () {
         const messageElement = document.querySelector(messageId);
 
         if (messageElement) {
-            // 平滑滾動到留言位置
-            messageElement.scrollIntoView({ behavior: 'smooth' });
+            // 檢查是否要滾動到中間
+            const urlParams = new URLSearchParams(window.location.search);
+            const scrollCenter = urlParams.get('scrollCenter');
+            const highlightReplyId = urlParams.get('highlight');
 
-            // 突顯該留言（可選）
-            messageElement.classList.add('highlight-message');
-            setTimeout(() => {
-                messageElement.classList.remove('highlight-message');
-            }, 3000); // 3秒後移除突顯效果
+            // 處理需要高亮的回覆
+            if (highlightReplyId) {
+                const replyElement = document.getElementById(`reply-${highlightReplyId}`);
+
+                if (replyElement) {
+                    setTimeout(() => {
+                        // 先滾動到主留言
+                        if (scrollCenter === 'true') {
+                            const rect = messageElement.getBoundingClientRect();
+                            const windowHeight = window.innerHeight;
+                            const elementHeight = rect.height;
+                            const offsetY = rect.top + window.pageYOffset - (windowHeight / 4); // 顯示在上方1/4處
+
+                            window.scrollTo({
+                                top: offsetY,
+                                behavior: 'smooth'
+                            });
+                        } else {
+                            messageElement.scrollIntoView({ behavior: 'smooth' });
+                        }
+
+                        // 然後高亮回覆
+                        replyElement.style.transition = 'background-color 0.5s';
+                        replyElement.style.backgroundColor = 'rgba(255, 255, 0, 0.3)';
+
+                        // 300ms後再滾動到回覆位置
+                        setTimeout(() => {
+                            const replyRect = replyElement.getBoundingClientRect();
+                            if (replyRect.top < 0 || replyRect.bottom > window.innerHeight) {
+                                replyElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                            }
+
+                            // 2秒後移除高亮
+                            setTimeout(() => {
+                                replyElement.style.backgroundColor = '';
+                            }, 2000);
+                        }, 300);
+                    }, 300);
+                }
+            } else if (scrollCenter === 'true') {
+                // 原有的中間滾動處理
+                setTimeout(() => {
+                    const rect = messageElement.getBoundingClientRect();
+                    const windowHeight = window.innerHeight;
+                    const elementHeight = rect.height;
+                    const offsetY = rect.top + window.pageYOffset - (windowHeight / 2) + (elementHeight / 2);
+
+                    // 滾動到計算出的位置
+                    window.scrollTo({
+                        top: offsetY,
+                        behavior: 'smooth'
+                    });
+
+                    // 突顯該留言
+                    messageElement.style.transition = 'background-color 0.5s';
+                    messageElement.style.backgroundColor = 'rgba(255, 255, 0, 0.3)';
+                    setTimeout(() => {
+                        messageElement.style.backgroundColor = '';
+                    }, 2000); // 2秒後移除突顯效果
+                }, 300); // 短暫延遲確保DOM已經渲染
+            } else {
+                // 原始的滾動行為
+                messageElement.scrollIntoView({ behavior: 'smooth' });
+
+                // 突顯該留言（可選）
+                messageElement.classList.add('highlight-message');
+                setTimeout(() => {
+                    messageElement.classList.remove('highlight-message');
+                }, 2000); // 3秒後移除突顯效果
+            }
         }
     }
 });

@@ -6,7 +6,10 @@
 
                 <div class="space-y-7 mb-10 lg:mb-0">
                     <div class="flex justify-center lg:justify-start">
-                        <img src="images/book-4-fix.png" alt="Image">
+                        <a href="#" onclick="$('html, body').animate({scrollTop: 0}, 100); return false;"
+                            class="pointer">
+                            <img src="images/book-4-fix.png" alt="Top" title="to Top">
+                        </a>
                     </div>
                     <p class="font-black text-gray-500 text-md md:text-xl mb-6 text-center lg:text-left">聯大二手書交易平台</p>
                 </div>
