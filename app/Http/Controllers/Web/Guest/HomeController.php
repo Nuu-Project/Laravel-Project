@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Web\Guest;
 
+use App\Enums\ProductStatus;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Models\Tag;
@@ -23,9 +24,10 @@ class HomeController extends Controller
 
         $products = collect();
         foreach ($topTags as $tag) {
-            $tagProducts = Product::whereHas('tags', function ($query) use ($tag) {
-                $query->where('id', $tag->id);
-            })
+            $tagProducts = Product::where('status', ProductStatus::Active->value)
+                ->whereHas('tags', function ($query) use ($tag) {
+                    $query->where('id', $tag->id);
+                })
                 ->with(['media', 'user', 'tags'])
                 ->where('created_at', '>', Carbon::now()->subDays(7))
                 ->orderByDesc('created_at')
@@ -37,7 +39,8 @@ class HomeController extends Controller
 
         $neededCount = 3 - $products->count();
         if ($neededCount > 0) {
-            $additionalProducts = Product::with(['media', 'user', 'tags'])
+            $additionalProducts = Product::where('status', ProductStatus::Active->value)
+                ->with(['media', 'user', 'tags'])
                 ->orderByDesc('created_at')
                 ->take($neededCount)
                 ->get();
