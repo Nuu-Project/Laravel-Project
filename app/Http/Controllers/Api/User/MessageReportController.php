@@ -37,7 +37,6 @@ class MessageReportController extends Controller
 
         return response()->json([
             'status' => $status,
-            'message' => $status === 'success' ? '留言檢舉成功' : '檢舉已更新',
         ]);
     }
 }

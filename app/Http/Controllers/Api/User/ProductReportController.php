@@ -35,6 +35,8 @@ class ProductReportController extends Controller
 
         $status = $report->wasRecentlyCreated ? 'success' : 'updated';
 
-        return response()->json(['status' => $status]);
+        return response()->json([
+            'status' => $status,
+        ]);
     }
 }
