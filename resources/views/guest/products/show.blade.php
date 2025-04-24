@@ -1,3 +1,7 @@
+@php
+    use App\Enums\Tagtype;
+@endphp
+
 <x-template-layout>
     <script src="{{ asset('js/user/products/info.js') }}"></script>
     <link rel="stylesheet" href="{{ asset('css/info.css') }}">
@@ -47,6 +51,35 @@
                     <h1 class="text-3xl font-bold break-words">商品名稱:{{ $product->name }}</h1>
                     <div class="mt-2">
                         <h2 class="font-semibold text-xl">用戶名稱:{{ $product->user->name }}</h2>
+
+                        <x-h.h6>年級 :
+                            <x-span.font-semibold>
+                                @php
+                                    $gradeTag = $product->tags->firstWhere('type', Tagtype::Grade->value);
+                                    $semesterTag = $product->tags->firstWhere('type', Tagtype::Semester->value);
+                                @endphp
+                                {{ $gradeTag ? $gradeTag->name : '無' }}
+                                {{ $semesterTag ? $semesterTag->name : '學期:無' }}
+                            </x-span.font-semibold>
+                        </x-h.h6>
+
+                        <x-h.h6>課程 :
+                            <x-span.font-semibold>
+                                @php
+                                    $categoryTag = $product->tags->firstWhere('type', Tagtype::Category->value);
+                                @endphp
+                                {{ $categoryTag ? $categoryTag->name : '無' }}
+                            </x-span.font-semibold>
+                        </x-h.h6>
+
+                        <x-h.h6>科目 :
+                            <x-span.font-semibold>
+                                @php
+                                    $subjectTag = $product->tags->firstWhere('type', Tagtype::Subject->value);
+                                @endphp
+                                {{ $subjectTag ? $subjectTag->name : '無' }}
+                            </x-span.font-semibold>
+                        </x-h.h6>
                     </div>
                 </div>
                 <button id="reportButton"

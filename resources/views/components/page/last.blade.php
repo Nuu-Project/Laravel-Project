@@ -37,12 +37,27 @@
                 </x-div.text-center>
 
                 <x-div.text-center>
-                    <x-h.h4>支持我們</x-h.h4>
+                    <x-h.h4>聯絡我們</x-h.h4>
 
                     <x-a.block-font-black
                         href="https://docs.google.com/forms/d/e/1FAIpQLSfJP4fi8V-8nQ0UgMyFncuDxUhzdtvfWmI050Z6F5y73ndhug/viewform?embedded=true">
                         <p>
                             回饋表單</p>
+                    </x-a.block-font-black>
+
+                    <x-a.block-font-black
+                        href="https://docs.google.com/forms/d/1a16KiTCFUvTEQUObw-Xow3hKUyIi1Eh51hNY6f_EHZg/viewform?edit_requested=true">
+                        <p>
+                            申訴表單</p>
+                    </x-a.block-font-black>
+                </x-div.text-center>
+
+                <x-div.text-center>
+                    <x-h.h4>更多資訊</x-h.h4>
+                    <x-a.block-font-black
+                        href="https://docs.google.com/document/d/1__5Fg5KnFw_WHg4GkL08Z6mssgNb3ymphpe9wkzGGlo/edit?tab=t.0">
+                        <p>
+                            平台規範</p>
                     </x-a.block-font-black>
                 </x-div.text-center>
 
