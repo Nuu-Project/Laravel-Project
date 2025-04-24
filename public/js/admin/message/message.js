@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', function () {
-    // 文字截斷功能
     function truncateText(text, length) {
         const characters = Array.from(text);
         if (characters.length <= length) return text;
@@ -17,7 +16,6 @@ document.addEventListener('DOMContentLoaded', function () {
         return result;
     }
 
-    // 展開/收合功能
     function initializeMessageExpansion() {
         document.querySelectorAll('.message-container').forEach(container => {
             const content = container.querySelector('.message-content');
@@ -40,7 +38,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // 響應式處理
     function handleResize() {
         document.querySelectorAll('.message-content').forEach(content => {
             if (!content.classList.contains('expanded')) {
@@ -50,7 +47,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // 初始化所有功能
+    // 
     initializeMessageExpansion();
     window.addEventListener('resize', handleResize);
 });
