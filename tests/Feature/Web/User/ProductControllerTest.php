@@ -9,6 +9,7 @@ use App\Models\Tag;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
@@ -135,5 +136,32 @@ class ProductControllerTest extends TestCase
             'id' => $product->id,
             'status' => ProductStatus::Inactive->value,
         ]);
+    }
+
+    public function test_cache_is_cleared_when_product_status_inactive()
+    {
+        $product = Product::factory()->create([
+            'user_id' => auth()->id(),
+            'status' => ProductStatus::Active,
+        ]);
+
+        Cache::put('top_tags_products', collect([
+            ['id' => $product->id, 'name' => $product->name],
+        ]));
+
+        $this->assertTrue(Cache::has('top_tags_products'));
+        $cachedProducts = Cache::get('top_tags_products');
+        $this->assertEquals($product->id, $cachedProducts->first()['id']);
+
+        $this->patch(route('user.products.inactive', $product))
+            ->assertRedirect()
+            ->assertSessionHas('success');
+
+        $this->assertDatabaseHas('products', [
+            'id' => $product->id,
+            'status' => ProductStatus::Inactive->value,
+        ]);
+
+        $this->assertFalse(Cache::has('top_tags_products'));
     }
 }
