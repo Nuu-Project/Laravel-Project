@@ -8,23 +8,22 @@
 
     <x-flex-container>
         <x-div.container>
-            <div class="grid gap-6 md:gap-8">
+            <x-div.grid>
                 <x-div.grid>
-                    <h1 class="text-2xl sm:text-3xl font-bold">新增刊登商品</h1>
+                    <x-h.h1-middle>新增刊登商品</x-h.h1-middle>
                     <x-p.text-muted>請依照下順序進行填寫，照片上傳張數最多五張。</x-p.text-muted>
                     <x-p.text-muted>圖片最左邊將會是商品首圖。</x-p.text-muted>
                 </x-div.grid>
 
                 @if ($errors->any())
-                    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4"
-                        role="alert">
-                        <strong class="font-bold">驗證錯誤！</strong>
+                    <x-div.red role="alert">
+                        <strong>驗證錯誤！</strong>
                         <ul>
                             @foreach ($errors->all() as $error)
                                 <li>{{ $error }}</li>
                             @endforeach
                         </ul>
-                    </div>
+                    </x-div.red>
                 @endif
 
                 <form class="grid gap-6" action="{{ route('user.products.store') }}" method="POST"
@@ -186,7 +185,7 @@
                         刊登商品
                     </x-button.submit>
                 </form>
-            </div>
+            </x-div.grid>
         </x-div.container>
     </x-flex-container>
     </div>
@@ -475,19 +474,7 @@
 
     @if (session('success'))
         <script>
-            Swal.fire({
-                title: '{{ config('app.name') }} 回應',
-                text: '{{ session('success') }}',
-                icon: 'success',
-                showCancelButton: true,
-                confirmButtonText: '查看商品列表',
-                cancelButtonText: '繼續刊登',
-                reverseButtons: true
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    window.location.href = '{{ route('user.products.index') }}';
-                }
-            });
+            alert('{{ session('success') }}');
         </script>
     @endif
 </x-template-user-layout>

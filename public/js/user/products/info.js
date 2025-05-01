@@ -30,42 +30,34 @@ document.addEventListener('DOMContentLoaded', function () {
 
     updateDisplay(0);
 
-    // 圖片模態視窗功能
     const imageContainer = document.querySelector('.relative.mb-4');
     if (imageContainer) {
         imageContainer.addEventListener('click', function (event) {
-            // 找到目前可見的圖片
             const visibleImage = imageContainer.querySelector('img:not(.hidden)');
 
             if (visibleImage && event.target.tagName === 'IMG') {
-                // 建立覆蓋層
                 const overlay = document.createElement('div');
                 overlay.classList.add('image-modal-overlay');
 
-                // 建立模態視窗的圖片元素
                 const modalImage = document.createElement('img');
                 modalImage.src = visibleImage.src;
                 modalImage.alt = '放大圖片';
                 modalImage.classList.add('image-modal-content');
 
-                // 建立關閉按鈕
                 const closeButton = document.createElement('span');
                 closeButton.innerHTML = '&times;';
                 closeButton.classList.add('image-modal-close');
 
-                // 附加元素
                 overlay.appendChild(modalImage);
                 overlay.appendChild(closeButton);
                 document.body.appendChild(overlay);
 
-                // 防止背景滾動
                 document.body.style.overflow = 'hidden';
 
-                // 點擊覆蓋層或關閉按鈕時關閉模態視窗
                 overlay.addEventListener('click', function (e) {
                     if (e.target === overlay || e.target === closeButton) {
                         document.body.removeChild(overlay);
-                        document.body.style.overflow = ''; // 恢復背景滾動
+                        document.body.style.overflow = '';
                     }
                 });
             }
@@ -137,7 +129,6 @@ function handleReport(event, entityType, entityId) {
                     return res.json();
                 })
                 .then(data => {
-                    // 無論是第一次還是重複檢舉，都顯示相同的成功訊息
                     Swal.fire({
                         title: '檢舉已送出',
                         text: '感謝您的回報，我們會盡快處理',
@@ -146,7 +137,6 @@ function handleReport(event, entityType, entityId) {
                     });
                 })
                 .catch(err => {
-                    // error，顯示相同的成功訊息
                     Swal.fire({
                         title: '檢舉已送出',
                         text: '感謝您的回報，我們會盡快處理',
@@ -171,7 +161,6 @@ document.body.addEventListener('click', function (e) {
     }
 });
 
-// 留言回覆表單切換功能
 function toggleReplyForm(messageId) {
     const form = document.getElementById(`replyForm${messageId}`);
     form.classList.toggle('hidden');
@@ -182,29 +171,25 @@ function toggleReplyForm(messageId) {
 }
 
 document.addEventListener('DOMContentLoaded', function () {
-    // 檢查 URL 是否包含錨點
     if (window.location.hash) {
         const messageId = window.location.hash;
         const messageElement = document.querySelector(messageId);
 
         if (messageElement) {
-            // 檢查是否要滾動到中間
             const urlParams = new URLSearchParams(window.location.search);
             const scrollCenter = urlParams.get('scrollCenter');
             const highlightReplyId = urlParams.get('highlight');
 
-            // 處理需要高亮的回覆
             if (highlightReplyId) {
                 const replyElement = document.getElementById(`reply-${highlightReplyId}`);
 
                 if (replyElement) {
                     setTimeout(() => {
-                        // 先滾動到主留言
                         if (scrollCenter === 'true') {
                             const rect = messageElement.getBoundingClientRect();
                             const windowHeight = window.innerHeight;
                             const elementHeight = rect.height;
-                            const offsetY = rect.top + window.pageYOffset - (windowHeight / 4); // 顯示在上方1/4處
+                            const offsetY = rect.top + window.pageYOffset - (windowHeight / 4);
 
                             window.scrollTo({
                                 top: offsetY,
@@ -214,18 +199,15 @@ document.addEventListener('DOMContentLoaded', function () {
                             messageElement.scrollIntoView({ behavior: 'smooth' });
                         }
 
-                        // 然後高亮回覆
                         replyElement.style.transition = 'background-color 0.5s';
                         replyElement.style.backgroundColor = 'rgba(255, 255, 0, 0.3)';
 
-                        // 300ms後再滾動到回覆位置
                         setTimeout(() => {
                             const replyRect = replyElement.getBoundingClientRect();
                             if (replyRect.top < 0 || replyRect.bottom > window.innerHeight) {
                                 replyElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
                             }
 
-                            // 2秒後移除高亮
                             setTimeout(() => {
                                 replyElement.style.backgroundColor = '';
                             }, 2000);
@@ -233,35 +215,30 @@ document.addEventListener('DOMContentLoaded', function () {
                     }, 300);
                 }
             } else if (scrollCenter === 'true') {
-                // 原有的中間滾動處理
                 setTimeout(() => {
                     const rect = messageElement.getBoundingClientRect();
                     const windowHeight = window.innerHeight;
                     const elementHeight = rect.height;
                     const offsetY = rect.top + window.pageYOffset - (windowHeight / 2) + (elementHeight / 2);
 
-                    // 滾動到計算出的位置
                     window.scrollTo({
                         top: offsetY,
                         behavior: 'smooth'
                     });
 
-                    // 突顯該留言
                     messageElement.style.transition = 'background-color 0.5s';
                     messageElement.style.backgroundColor = 'rgba(255, 255, 0, 0.3)';
                     setTimeout(() => {
                         messageElement.style.backgroundColor = '';
-                    }, 2000); // 2秒後移除突顯效果
-                }, 300); // 短暫延遲確保DOM已經渲染
+                    }, 2000);
+                }, 300);
             } else {
-                // 原始的滾動行為
                 messageElement.scrollIntoView({ behavior: 'smooth' });
 
-                // 突顯該留言（可選）
                 messageElement.classList.add('highlight-message');
                 setTimeout(() => {
                     messageElement.classList.remove('highlight-message');
-                }, 2000); // 2秒後移除突顯效果
+                }, 2000);
             }
         }
     }

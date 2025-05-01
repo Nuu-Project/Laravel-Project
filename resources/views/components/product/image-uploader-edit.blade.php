@@ -3,8 +3,8 @@
     'productId',
     'imageId' => null,
     'imageUrl' => null,
-    'maxSize' => '',
-    'maxDimensions' => ''
+    'maxSize' => '2MB',
+    'maxDimensions' => '3200x3200px'
 ])
 
 <div class="relative h-[192px]" x-data="imageUploader{{ $index }}">
@@ -33,7 +33,8 @@
                 <div class="text-center">
                     <p class="mb-2 text-sm text-gray-500"><span
                             class="font-semibold">點擊上傳</span>或拖曳</p>
-                    <p class="text-xs text-gray-500">PNG,JPG,JPEG</p>
+                    <p class="text-xs text-gray-500">PNG,JPG,JPEG (最大.
+                        {{ $maxDimensions }}, {{ $maxSize }})</p>
                 </div>
             </template>
             <template x-if="error">
