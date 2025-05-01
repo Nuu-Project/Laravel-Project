@@ -1,8 +1,8 @@
 // 儲存已處理的圖片路徑
 let processedImagePaths = new Array(5).fill(null);
 
-// 頁面載入時檢查現有圖片
-document.addEventListener('DOMContentLoaded', function() {
+// 頁面載入時檢查現有圖片和初始化功能
+document.addEventListener('DOMContentLoaded', function () {
     // 初始化每個上傳位置的現有圖片狀態
     for (let i = 0; i < 5; i++) {
         const preview = document.getElementById(`preview${i}`);
@@ -16,22 +16,43 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
     }
-    
-    // 初始化拖曳排序
+
+    // 修改表單提交
+    const form = document.getElementById('productForm');
+    if (form) {
+        form.addEventListener('submit', function (e) {
+            // 阻止默認提交
+            e.preventDefault();
+
+            // 處理圖片資料
+            addProcessedImagePathsToForm(this);
+
+            // 檢查是否有有效圖片
+            if (!hasAtLeastOneValidImage()) {
+                alert('請至少上傳一張商品圖片');
+                return;
+            }
+
+            // 提交表單
+            this.submit();
+        });
+    }
+
+    // 初始化拖曳功能
     initDragAndDrop();
-    
+
     // 初始化圖片順序
     updateImageOrder();
 });
 
 // 為每個上傳元素創建Alpine.js元件
 for (let i = 0; i < 5; i++) {
-    window[`imageUploader${i}`] = function() {
+    window[`imageUploader${i}`] = function () {
         // 檢查是否有現有圖片
         const preview = document.getElementById(`preview${i}`);
         const img = preview?.querySelector('img');
         const hasExistingImg = img && img.getAttribute('src') !== '#' && img.getAttribute('src') !== '';
-        
+
         return {
             uploading: false,  // 是否正在上傳
             processing: false, // 是否正在處理
@@ -166,8 +187,8 @@ for (let i = 0; i < 5; i++) {
                     if (this.progress === lastProgress) {
                         // 進度越高，增加越慢
                         const increment = this.progress < 30 ? 5 :
-                                         this.progress < 70 ? 3 :
-                                         this.progress < 90 ? 1 : 0.5;
+                            this.progress < 70 ? 3 :
+                                this.progress < 90 ? 1 : 0.5;
 
                         if (this.progress < 95) {
                             this.progress = Math.min(95, this.progress + increment);
@@ -205,8 +226,6 @@ for (let i = 0; i < 5; i++) {
                 setTimeout(() => {
                     this.uploading = false;
                 }, 1500);
-
-                console.error('上傳錯誤:', message);
             },
 
             // 移除圖片
@@ -233,11 +252,11 @@ for (let i = 0; i < 5; i++) {
                     if (img) img.src = '#';
                     preview.classList.add('hidden');
                 }
-                
+
                 if (placeholder) {
                     placeholder.classList.remove('hidden');
                 }
-                
+
                 if (imageInput) {
                     imageInput.value = '';
                 }
@@ -266,82 +285,8 @@ for (let i = 0; i < 5; i++) {
     }
 }
 
-// 監聽表單提交
-document.addEventListener('DOMContentLoaded', function() {
-    // 確保已有圖片正確顯示
-    for (let i = 0; i < 5; i++) {
-        const preview = document.getElementById(`preview${i}`);
-        const img = preview?.querySelector('img');
-        
-        if (img && img.getAttribute('src') !== '#' && img.getAttribute('src') !== '') {
-            preview.classList.remove('hidden');
-            
-            const placeholder = document.getElementById(`placeholder${i}`);
-            if (placeholder) {
-                placeholder.classList.add('hidden');
-            }
-        }
-    }
-
-    const productForm = document.getElementById('productForm');
-    if (productForm) {
-        productForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-
-            // 過濾掉 null 值獲取有效路徑
-            const validPaths = processedImagePaths.filter(path => path !== null);
-
-            // 獲取未被刪除的現有圖片ID
-            const deletedIds = JSON.parse(document.getElementById('deletedImageIds').value || '[]');
-            const existingImageInputs = document.querySelectorAll('input[name="image_ids[]"]');
-            let hasExistingImages = false;
-            
-            existingImageInputs.forEach(input => {
-                if (input.value && !deletedIds.includes(parseInt(input.value))) {
-                    hasExistingImages = true;
-                }
-            });
-            
-            // 如果沒有任何圖片，則顯示錯誤
-            if (validPaths.length === 0 && !hasExistingImages) {
-                alert('請至少上傳一張商品圖片');
-                return;
-            }
-
-            // 移除所有舊的隱藏輸入欄位
-            this.querySelectorAll('input[name="encrypted_image_path[]"]').forEach(input => input.remove());
-
-            // 為每個處理過的圖片創建隱藏的輸入欄位
-            validPaths.forEach((path, index) => {
-                const input = document.createElement('input');
-                input.type = 'hidden';
-                input.name = 'encrypted_image_path[]';
-                input.value = path;
-                this.appendChild(input);
-                
-                // 添加位置
-                const posInput = document.createElement('input');
-                posInput.type = 'hidden';
-                posInput.name = 'image_positions[]';
-                posInput.value = processedImagePaths.indexOf(path);
-                this.appendChild(posInput);
-            });
-
-            // 更新圖片順序
-            updatePositions();
-            
-            // 提交表單
-            this.submit();
-        });
-    }
-
-    // 初始化拖曳功能和更新圖片順序
-    initializeDragAndDrop();
-    updatePositions();
-});
-
 // 拖曳功能
-function initializeDragAndDrop() {
+function initDragAndDrop() {
     const imageContainer = document.getElementById('imageContainer');
     if (!imageContainer) return;
 
@@ -352,7 +297,7 @@ function initializeDragAndDrop() {
     Array.from(items).forEach(item => {
         item.setAttribute('draggable', 'true');
 
-        item.addEventListener('dragstart', function(e) {
+        item.addEventListener('dragstart', function (e) {
             draggedItem = this;
 
             // 創建拖拽時的佔位元素，保持相同高度避免跳動
@@ -368,12 +313,12 @@ function initializeDragAndDrop() {
             }, 10);
         });
 
-        item.addEventListener('dragover', function(e) {
+        item.addEventListener('dragover', function (e) {
             e.preventDefault();
             e.dataTransfer.dropEffect = 'move';
         });
 
-        item.addEventListener('drop', function(e) {
+        item.addEventListener('drop', function (e) {
             e.preventDefault();
             if (this !== draggedItem) {
                 const parent = this.parentNode;
@@ -388,11 +333,11 @@ function initializeDragAndDrop() {
                     parent.replaceChild(this, dragPlaceholder);
                 }
 
-                updatePositions();
+                updateImageOrder();
             }
         });
 
-        item.addEventListener('dragend', function() {
+        item.addEventListener('dragend', function () {
             this.classList.remove('opacity-50');
             draggedItem = null;
 
@@ -409,7 +354,7 @@ function initializeDragAndDrop() {
 function updatePositions() {
     const imageContainer = document.getElementById('imageContainer');
     if (!imageContainer) return;
-    
+
     const items = imageContainer.getElementsByClassName('relative');
     const deletedIds = JSON.parse(document.getElementById('deletedImageIds').value || '[]');
 
@@ -417,12 +362,12 @@ function updatePositions() {
         // 檢查是否為現有圖片
         const imageIdInput = item.querySelector('input[name="image_ids[]"]');
         const imageId = imageIdInput ? imageIdInput.value : null;
-        
+
         // 檢查是否為新上傳的圖片
         const fileInput = item.querySelector('input[type="file"]');
         const hasNewUpload = fileInput && fileInput.hasAttribute('data-has-new-upload');
         const position = index;
-        
+
         // 如果有現有圖片且未被刪除
         if (imageId && !deletedIds.includes(parseInt(imageId))) {
             return {
@@ -439,81 +384,21 @@ function updatePositions() {
                 isNew: true
             };
         }
-        
+
         return null;
     }).filter(item => item !== null);
 
     document.getElementById('imageOrder').value = JSON.stringify(orderData);
 }
 
-// 初始化拖曳排序
-function initDragAndDrop() {
-    console.log('初始化拖曳排序功能...');
-    
-    const imageContainer = document.getElementById('imageContainer');
-    if (!imageContainer) {
-        console.error('找不到圖片容器!');
-        return;
-    }
-    
-    const items = imageContainer.querySelectorAll('.relative');
-    let draggedItem = null;
-    
-    items.forEach(item => {
-        // 設置拖曳屬性
-        item.setAttribute('draggable', 'true');
-        
-        // 拖曳開始
-        item.addEventListener('dragstart', e => {
-            draggedItem = item;
-            setTimeout(() => {
-                item.classList.add('opacity-50');
-            }, 0);
-        });
-        
-        // 拖曳進入
-        item.addEventListener('dragover', e => {
-            e.preventDefault();
-        });
-        
-        // 放下
-        item.addEventListener('drop', e => {
-            e.preventDefault();
-            if (item !== draggedItem) {
-                // 獲取所有項目
-                const allItems = Array.from(imageContainer.querySelectorAll('.relative'));
-                
-                // 獲取索引
-                const fromIndex = allItems.indexOf(draggedItem);
-                const toIndex = allItems.indexOf(item);
-                
-                console.log(`拖曳排序: 從位置${fromIndex}到位置${toIndex}`);
-                
-                // 執行排序
-                if (fromIndex < toIndex) {
-                    imageContainer.insertBefore(draggedItem, item.nextElementSibling);
-                } else {
-                    imageContainer.insertBefore(draggedItem, item);
-                }
-            }
-        });
-        
-        // 拖曳結束
-        item.addEventListener('dragend', e => {
-            item.classList.remove('opacity-50');
-            draggedItem = null;
-        });
-    });
-}
-
 // 更新圖片順序
 function updateImageOrder() {
     const orderData = [];
-    
+
     // 獲取所有圖片ID輸入
     const imageIdInputs = document.querySelectorAll('input[name="image_ids[]"]');
     const deletedIds = JSON.parse(document.getElementById('deletedImageIds').value || '[]');
-    
+
     // 構建圖片順序數據
     imageIdInputs.forEach((input, index) => {
         // 只考慮有值且未被刪除的現有圖片
@@ -531,17 +416,48 @@ function updateImageOrder() {
             });
         }
     });
-    
+
     // 將順序數據寫入隱藏輸入
     document.getElementById('imageOrder').value = JSON.stringify(orderData);
-    console.log('圖片順序:', orderData);
+}
+
+// 處理圖片資料的函數
+function addProcessedImagePathsToForm(form) {
+    // 過濾掉 null 值獲取有效路徑
+    const validPaths = processedImagePaths.filter(path => path !== null);
+
+    // 獲取未被刪除的現有圖片ID
+    const deletedIds = JSON.parse(document.getElementById('deletedImageIds').value || '[]');
+    const existingImageInputs = document.querySelectorAll('input[name="image_ids[]"]');
+
+    // 移除所有舊的隱藏輸入欄位
+    form.querySelectorAll('input[name="encrypted_image_path[]"]').forEach(input => input.remove());
+
+    // 為每個處理過的圖片創建隱藏的輸入欄位
+    validPaths.forEach((path, index) => {
+        const input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = 'encrypted_image_path[]';
+        input.value = path;
+        form.appendChild(input);
+
+        // 添加位置
+        const posInput = document.createElement('input');
+        posInput.type = 'hidden';
+        posInput.name = 'image_positions[]';
+        posInput.value = processedImagePaths.indexOf(path);
+        form.appendChild(posInput);
+    });
+
+    // 更新圖片順序
+    updateImageOrder();
 }
 
 // 檢查是否有至少一張有效圖片
 function hasAtLeastOneValidImage() {
     // 檢查是否有新上傳的圖片
     const hasNewImages = Object.keys(processedImagePaths).length > 0;
-    
+
     // 檢查是否有未刪除的現有圖片
     const deletedIds = JSON.parse(document.getElementById('deletedImageIds').value || '[]');
     const hasExistingImages = Array.from(document.querySelectorAll('input[name="image_ids[]"]'))
@@ -549,60 +465,14 @@ function hasAtLeastOneValidImage() {
             if (!input.value) return false;
             return !deletedIds.includes(parseInt(input.value));
         });
-    
+
     // 額外檢查是否有顯示在預覽中的圖片
     const hasVisibleImages = Array.from({ length: 5 }, (_, i) => {
         const preview = document.getElementById(`preview${i}`);
         const img = preview?.querySelector('img');
-        return preview && !preview.classList.contains('hidden') && 
-               img && img.getAttribute('src') !== '#' && img.getAttribute('src') !== '';
+        return preview && !preview.classList.contains('hidden') &&
+            img && img.getAttribute('src') !== '#' && img.getAttribute('src') !== '';
     }).some(Boolean);
-    
-    return hasNewImages || hasExistingImages || hasVisibleImages;
-}
 
-// 只注冊一個DOMContentLoaded事件
-document.addEventListener('DOMContentLoaded', function() {
-    // 強制顯示已有圖片
-    for (let i = 0; i < 5; i++) {
-        const preview = document.getElementById(`preview${i}`);
-        const img = preview?.querySelector('img');
-        
-        if (img && img.getAttribute('src') !== '#' && img.getAttribute('src') !== '') {
-            preview.classList.remove('hidden');
-            const placeholder = document.getElementById(`placeholder${i}`);
-            if (placeholder) {
-                placeholder.classList.add('hidden');
-            }
-        }
-    }
-    
-    // 修改表單提交
-    const form = document.getElementById('productForm');
-    if (form) {
-        form.addEventListener('submit', function(e) {
-            // 阻止默認提交
-            e.preventDefault();
-            
-            // 處理圖片資料
-            addProcessedImagePathsToForm(this);
-            
-            // 檢查是否有有效圖片
-            if (!hasAtLeastOneValidImage()) {
-                alert('請至少上傳一張商品圖片');
-                return;
-            }
-            
-            // 提交表單
-            this.submit();
-        });
-    }
-    
-    // 初始化拖曳功能
-    initDragAndDrop();
-    
-    // 初始化圖片順序
-    updateImageOrder();
-    
-    console.log('頁面初始化完成');
-}); 
+    return hasNewImages || hasExistingImages || hasVisibleImages;
+} 

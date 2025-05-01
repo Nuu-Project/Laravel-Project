@@ -24,7 +24,7 @@
                 <div class="text-center">
                     <p class="mb-2 text-sm text-gray-500"><span
                             class="font-semibold">點擊上傳</span>或拖曳</p>
-                    <p class="text-xs text-gray-500">PNG,JPG,JPEG,GIF (最大.
+                    <p class="text-xs text-gray-500">PNG,JPG,JPEG (最大.
                         {{ $maxDimensions }}, {{ $maxSize }})</p>
                 </div>
             </template>
@@ -77,4 +77,4 @@
                 d="M6 18L18 6M6 6l12 12"></path>
         </svg>
     </button>
-</div> 
+</div>

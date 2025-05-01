@@ -33,7 +33,7 @@
                 <div class="text-center">
                     <p class="mb-2 text-sm text-gray-500"><span
                             class="font-semibold">點擊上傳</span>或拖曳</p>
-                    <p class="text-xs text-gray-500">PNG,JPG,JPEG,GIF</p>
+                    <p class="text-xs text-gray-500">PNG,JPG,JPEG</p>
                 </div>
             </template>
             <template x-if="error">
