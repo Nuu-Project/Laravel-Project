@@ -74,31 +74,24 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 window.addEventListener('load', function () {
-    console.log('頁面已完全加載');
     var reportButton = document.getElementById('reportButton');
     if (reportButton) {
-        console.log('找到檢舉按鈕');
         reportButton.addEventListener('click', function (e) {
             handleReport(e, '商品', this.dataset.productId);
         });
-    } else {
-        console.error('未找到檢舉按鈕');
     }
 });
 
 function handleReport(event, entityType, entityId) {
     event.preventDefault();
-    console.log(`處理檢舉: ${entityType}, ID: ${entityId}`);
 
     const reportLink = event.target.closest('[data-reports]');
     if (!reportLink) {
-        console.error('未找到 data-reports 的元素');
         return;
     }
 
     const reports = JSON.parse(reportLink.dataset.reports || '{}');
     const storeUrl = reportLink.dataset.storeUrl;
-    console.log('檢舉資料:', { reports, storeUrl });
 
     Swal.fire({
         title: `檢舉${entityType}`,
@@ -115,15 +108,15 @@ function handleReport(event, entityType, entityId) {
         preConfirm: () => {
             const reportId = document.getElementById('reportReason').value;
             const customReason = document.getElementById('customReason').value;
-            if (!reportId && !customReason) {
-                Swal.showValidationMessage('請選擇原因或輸入自定義內容');
+            if (!reportId) {
+                Swal.showValidationMessage('請選擇檢舉原因');
+                return false;
             }
             return { reportId, customReason };
         }
     }).then((result) => {
         if (result.isConfirmed) {
             const { reportId, customReason } = result.value;
-            console.log('送出檢舉:', { reportId, customReason, storeUrl });
 
             fetch(storeUrl, {
                 method: "POST",
@@ -138,7 +131,6 @@ function handleReport(event, entityType, entityId) {
                 })
             })
                 .then(res => {
-                    console.log('Response Status:', res.status);
                     if (res.status === 401) {
                         throw new Error('未登入');
                     }
@@ -161,7 +153,6 @@ function handleReport(event, entityType, entityId) {
                         icon: 'success',
                         confirmButtonText: '確定'
                     });
-                    console.log("檢舉處理:", err);
                 });
         }
     });
@@ -172,10 +163,8 @@ document.getElementById('reportButton')?.addEventListener('click', function (e) 
 });
 
 document.body.addEventListener('click', function (e) {
-    console.log('點擊元素:', e.target);
     const trigger = e.target.closest('[data-report-type="message"]');
     if (trigger) {
-        console.log('偵測到留言檢舉點擊:', trigger);
         e.preventDefault();
         const messageId = trigger.dataset.messageId;
         handleReport(e, '留言', messageId);
@@ -272,7 +261,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 messageElement.classList.add('highlight-message');
                 setTimeout(() => {
                     messageElement.classList.remove('highlight-message');
-                }, 2000); // 3秒後移除突顯效果
+                }, 2000); // 2秒後移除突顯效果
             }
         }
     }
