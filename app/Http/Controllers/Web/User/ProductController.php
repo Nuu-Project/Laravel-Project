@@ -9,6 +9,7 @@ use App\Models\Product;
 use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 use Illuminate\View\View;
@@ -259,6 +260,12 @@ class ProductController extends Controller
         ]);
 
         $message = "商品{$newStatus->name()}！";
+
+        $cachedProducts = Cache::get('top_tags_products', collect());
+
+        if ($cachedProducts->contains(fn ($cachedProduct) => $cachedProduct['id'] === $product->id)) {
+            Cache::forget('top_tags_products');
+        }
 
         return redirect()->route('user.products.index')->with('success', $message);
     }
