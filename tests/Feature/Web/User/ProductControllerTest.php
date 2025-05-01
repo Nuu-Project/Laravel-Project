@@ -137,7 +137,7 @@ class ProductControllerTest extends TestCase
             'status' => ProductStatus::Inactive->value,
         ]);
     }
-    
+
     public function test_cache_is_cleared_when_product_status_inactive()
     {
         $product = Product::factory()->create([
