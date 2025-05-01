@@ -175,7 +175,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const productForm = document.getElementById('productForm');
     if (productForm) {
         productForm.addEventListener('submit', function (e) {
-            // 預防表單提交
             e.preventDefault();
 
             const oldErrorContainer = document.querySelector('.frontend-error-container');
@@ -189,15 +188,15 @@ document.addEventListener('DOMContentLoaded', function () {
                 'name': '書名不能留空',
                 'price': '價格不能留空',
                 'description': '描述不能留空',
-                'grade-input': '年級不能留空',
-                'semester-input': '學期不能留空',
-                'subject-input': '科目不能留空',
-                'category-input': '課程類別不能留空'
+                'grade': '年級不能留空',
+                'semester': '學期不能留空',
+                'subject': '科目不能留空',
+                'category': '課程類別不能留空'
             };
 
             Object.entries(requiredFields).forEach(([fieldId, errorMessage]) => {
                 const field = document.getElementById(fieldId);
-                if (!field || !field.value.trim()) {
+                if (!field.value.trim()) {
                     errors.push(errorMessage);
                 }
             });
@@ -218,7 +217,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 errorContainer.appendChild(errorTitle);
 
                 const errorList = document.createElement('ul');
-                errorList.className = 'mt-2';
                 errors.forEach(error => {
                     const errorItem = document.createElement('li');
                     errorItem.textContent = error;
@@ -233,36 +231,18 @@ document.addEventListener('DOMContentLoaded', function () {
                 return;
             }
 
-            // 如果沒有錯誤，處理圖片路徑並提交表單
-            const oldInputs = document.querySelectorAll('input[name^="encrypted_image_path"]');
+            const oldInputs = this.querySelectorAll('input[name^="encrypted_image_path"]');
             oldInputs.forEach(input => input.remove());
 
-            // 添加有效的圖片路徑到表單
-            validPaths.forEach(path => {
+            validPaths.forEach((path, index) => {
                 const input = document.createElement('input');
                 input.type = 'hidden';
-                input.name = 'encrypted_image_path[]';
+                input.name = `encrypted_image_path[]`;
                 input.value = path;
                 this.appendChild(input);
             });
 
-            // 更新圖片順序
-            updatePositions();
-
-            // 顯示提交中的訊息
-            const submitButton = this.querySelector('button[type="submit"]');
-            const originalText = submitButton.innerHTML;
-            submitButton.disabled = true;
-            submitButton.innerHTML = '提交中...';
-
-            // 延遲一點時間再提交，確保所有處理都完成
-            setTimeout(() => {
-                // 取消監聽這個事件，避免無限遞迴
-                this.removeEventListener('submit', arguments.callee);
-
-                // 正式提交表單
-                this.submit();
-            }, 100);
+            this.submit();
         });
     }
 
