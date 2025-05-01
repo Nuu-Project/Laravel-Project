@@ -63,6 +63,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
     }
+
 });
 
 window.addEventListener('load', function () {
@@ -171,7 +172,6 @@ document.body.addEventListener('click', function (e) {
         handleReport(e, '留言', messageId);
     }
 });
-
 function toggleReplyForm(messageId) {
     const form = document.getElementById(`replyForm${messageId}`);
     form.classList.toggle('hidden');
@@ -254,3 +254,4 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 });
+
