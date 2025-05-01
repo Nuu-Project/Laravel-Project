@@ -30,14 +30,6 @@ class HomeController extends Controller
             return $this->retrieveTopTagsProducts($topTags);
         });
 
-        if ($products->contains(function ($product) {
-            return $product->status !== ProductStatus::Active->value;
-        })) {
-            Cache::forget('top_tags_products');
-            $products = $this->retrieveTopTagsProducts($topTags);
-            Cache::put('top_tags_products', $products, 3600);
-        }
-
         return view('Home', ['products' => $products]);
     }
 
