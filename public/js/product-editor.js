@@ -1,9 +1,7 @@
 const processedImagePaths = new Array(5).fill(null);
 
 
-document.addEventListener('DOMContentLoaded', function() {
-    console.log('圖片編輯器初始化...');
-
+document.addEventListener('DOMContentLoaded', function () {
     setupFormSubmission();
 
     showExistingImages();
@@ -23,7 +21,6 @@ function showExistingImages() {
             if (placeholder) {
                 placeholder.classList.add('hidden');
             }
-            console.log(`位置 ${i} 已顯示現有圖片`);
         }
     }
 }
@@ -33,7 +30,7 @@ function setupFormSubmission() {
     const form = document.getElementById('productForm');
     if (!form) return;
 
-    form.addEventListener('submit', function(e) {
+    form.addEventListener('submit', function (e) {
         e.preventDefault();
 
         processImagesBeforeSubmit(form);
@@ -43,7 +40,6 @@ function setupFormSubmission() {
             return;
         }
 
-        console.log('提交表單...');
         form.submit();
     });
 }
@@ -56,15 +52,11 @@ function processImagesBeforeSubmit(form) {
     const imageOrderData = [];
     const deletedIds = JSON.parse(document.getElementById('deletedImageIds').value || '[]');
 
-    console.log('處理圖片位置，當前圖片路徑:', processedImagePaths);
-
     for (let i = 0; i < 5; i++) {
         const uploadBox = document.querySelector(`[x-data="imageUploader${i}"]`);
         if (!uploadBox) continue;
 
         if (processedImagePaths[i]) {
-            console.log(`處理位置 ${i} 的新上傳圖片`);
-
             const pathInput = document.createElement('input');
             pathInput.type = 'hidden';
             pathInput.name = 'encrypted_image_path[]';
@@ -82,8 +74,6 @@ function processImagesBeforeSubmit(form) {
                 position: i,
                 isNew: true
             });
-
-            console.log(`新上傳圖片已添加到位置 ${i}`);
         }
 
         const imageIdInput = uploadBox.querySelector('input[name="image_ids[]"]');
@@ -93,14 +83,11 @@ function processImagesBeforeSubmit(form) {
                 position: i,
                 isNew: false
             });
-
-            console.log(`現有圖片 ID:${imageIdInput.value} 保持在位置 ${i}`);
         }
     }
 
 
     document.getElementById('imageOrder').value = JSON.stringify(imageOrderData);
-    console.log('最終圖片順序數據:', JSON.stringify(imageOrderData));
 }
 
 
@@ -109,14 +96,12 @@ function hasAtLeastOneValidImage() {
 
     for (let i = 0; i < 5; i++) {
         if (processedImagePaths[i]) {
-            console.log(`位置 ${i} 有新上傳圖片: ${processedImagePaths[i]}`);
             return true;
         }
 
         const imageIdInput = document.querySelectorAll('input[name="image_ids[]"]')[i];
         if (imageIdInput && imageIdInput.value && imageIdInput.value !== '' &&
             !deletedIds.includes(parseInt(imageIdInput.value))) {
-            console.log(`位置 ${i} 有有效圖片 ID: ${imageIdInput.value}`);
             return true;
         }
 
@@ -124,18 +109,16 @@ function hasAtLeastOneValidImage() {
         const img = preview?.querySelector('img');
         if (preview && !preview.classList.contains('hidden') &&
             img && img.src && img.src !== location.href + '#') {
-            console.log(`位置 ${i} 有有效預覽圖片: ${img.src}`);
             return true;
         }
     }
 
-    console.log('未找到有效圖片');
     return false;
 }
 
 
 for (let i = 0; i < 5; i++) {
-    window[`imageUploader${i}`] = function() {
+    window[`imageUploader${i}`] = function () {
         const preview = document.getElementById(`preview${i}`);
         const img = preview?.querySelector('img');
         const hasExistingImage = img && img.getAttribute('src') !== '#' && img.getAttribute('src') !== '';
@@ -153,8 +136,6 @@ for (let i = 0; i < 5; i++) {
             startUpload(event) {
                 const file = event.target.files[0];
                 if (!file) return;
-
-                console.log(`開始上傳新圖片到位置 ${this.imageIndex}`);
 
                 this.reset();
                 this.uploading = true;
@@ -193,7 +174,6 @@ for (let i = 0; i < 5; i++) {
                 if (!deletedIds.includes(existingId)) {
                     deletedIds.push(existingId);
                     document.getElementById('deletedImageIds').value = JSON.stringify(deletedIds);
-                    console.log(`標記圖片 ID:${existingId} 為刪除`);
                 }
             },
 
@@ -228,7 +208,6 @@ for (let i = 0; i < 5; i++) {
                                     : this.imageIndex;
 
                                 processedImagePaths[position] = result.path;
-                                console.log(`保存新圖片路徑到位置 ${position}: ${result.path}`);
 
                                 this.showPreview(file);
 
@@ -265,8 +244,8 @@ for (let i = 0; i < 5; i++) {
 
                     if (this.progress === lastProgress) {
                         const increment = this.progress < 30 ? 5 :
-                                         this.progress < 70 ? 3 :
-                                         this.progress < 90 ? 1 : 0.5;
+                            this.progress < 70 ? 3 :
+                                this.progress < 90 ? 1 : 0.5;
 
                         if (this.progress < 95) {
                             this.progress = Math.min(95, this.progress + increment);
@@ -288,7 +267,6 @@ for (let i = 0; i < 5; i++) {
                     preview.classList.remove('hidden');
                     placeholder.classList.add('hidden');
                     this.hasExistingImage = true;
-                    console.log(`顯示預覽圖片 - 位置 ${this.imageIndex}`);
                 };
                 reader.readAsDataURL(file);
             },
@@ -299,7 +277,6 @@ for (let i = 0; i < 5; i++) {
                 this.errorMessage = message;
                 this.success = false;
                 this.processing = false;
-                console.error(`錯誤 (位置 ${this.imageIndex}): ${message}`);
 
                 setTimeout(() => {
                     this.uploading = false;
@@ -309,7 +286,6 @@ for (let i = 0; i < 5; i++) {
 
             removeImage(productId, imageId) {
                 const currentPosition = this.imageIndex;
-                console.log(`開始移除位置 ${currentPosition} 的圖片 (ID: ${imageId})`);
 
                 if (imageId && imageId !== 'null') {
                     const numId = parseInt(imageId);
@@ -318,7 +294,6 @@ for (let i = 0; i < 5; i++) {
                         if (!deletedIds.includes(numId)) {
                             deletedIds.push(numId);
                             document.getElementById('deletedImageIds').value = JSON.stringify(deletedIds);
-                            console.log(`圖片 ID:${numId} 已添加到刪除列表`);
                         }
                     }
                 }
@@ -326,7 +301,6 @@ for (let i = 0; i < 5; i++) {
                 const imageIdInput = document.querySelectorAll('input[name="image_ids[]"]')[currentPosition];
                 if (imageIdInput) {
                     imageIdInput.value = '';
-                    console.log(`位置 ${currentPosition} 的 image_ids[] 已清空`);
                 }
 
                 const preview = document.getElementById(`preview${currentPosition}`);
@@ -348,14 +322,11 @@ for (let i = 0; i < 5; i++) {
                 }
 
                 processedImagePaths[currentPosition] = null;
-                console.log(`位置 ${currentPosition} 的圖片路徑已清除`);
 
                 this.reset();
                 this.hasExistingImage = false;
 
                 safeUpdateAlpineState(currentPosition, false);
-
-                console.log(`位置 ${currentPosition} 的圖片已成功移除`);
             },
 
 
@@ -380,22 +351,20 @@ function initDragAndDrop() {
         preview.setAttribute('draggable', 'true');
         preview.dataset.position = i;
 
-        preview.addEventListener('dragstart', function(e) {
+        preview.addEventListener('dragstart', function (e) {
             e.dataTransfer.setData('text/plain', i);
-            console.log(`開始拖曳位置 ${i} 的圖片`);
         });
 
-        preview.addEventListener('dragover', function(e) {
+        preview.addEventListener('dragover', function (e) {
             e.preventDefault();
         });
 
-        preview.addEventListener('drop', function(e) {
+        preview.addEventListener('drop', function (e) {
             e.preventDefault();
             const sourcePosition = parseInt(e.dataTransfer.getData('text/plain'));
             const targetPosition = parseInt(this.dataset.position);
 
             if (sourcePosition === targetPosition) return;
-            console.log(`交換位置 ${sourcePosition} 和 ${targetPosition} 的圖片`);
 
             swapImages(sourcePosition, targetPosition);
         });
@@ -404,15 +373,12 @@ function initDragAndDrop() {
 
 
 function swapImages(sourcePos, targetPos) {
-    console.log(`嘗試交換位置 ${sourcePos} 和 ${targetPos}`);
-
     const sourcePreview = document.getElementById(`preview${sourcePos}`);
     const targetPreview = document.getElementById(`preview${targetPos}`);
     const sourcePlaceholder = document.getElementById(`placeholder${sourcePos}`);
     const targetPlaceholder = document.getElementById(`placeholder${targetPos}`);
 
     if (!sourcePreview || !targetPreview || !sourcePlaceholder || !targetPlaceholder) {
-        console.error("交換中止：缺少預覽或佔位符元素。");
         return;
     }
 
@@ -424,15 +390,11 @@ function swapImages(sourcePos, targetPos) {
     const targetUploaderElement = document.querySelector(`[x-data="imageUploader${targetPos}"]`);
 
     if (!sourceImg || !targetImg || !sourceIdInput || !targetIdInput) {
-        console.error("交換中止：缺少圖片或 ID 輸入元素。");
         return;
     }
 
     const sourceHasValidImage = sourceImg.src && sourceImg.src !== location.href + '#';
     const targetHasValidImage = targetImg.src && targetImg.src !== location.href + '#';
-
-    console.log(`位置 ${sourcePos} 有效圖片: ${sourceHasValidImage}`);
-    console.log(`位置 ${targetPos} 有效圖片: ${targetHasValidImage}`);
 
     if (sourceHasValidImage || targetHasValidImage) {
         const tempSrc = sourceImg.src;
@@ -446,7 +408,6 @@ function swapImages(sourcePos, targetPos) {
         const tempPath = processedImagePaths[sourcePos];
         processedImagePaths[sourcePos] = processedImagePaths[targetPos];
         processedImagePaths[targetPos] = tempPath;
-        console.log('已交換 processedImagePaths:', processedImagePaths);
 
         updateVisibility(sourcePos, targetHasValidImage);
         updateVisibility(targetPos, sourceHasValidImage);
@@ -457,24 +418,18 @@ function swapImages(sourcePos, targetPos) {
         if (!sourceUpdated && sourceUploaderElement && sourceUploaderElement.__x) {
             try {
                 sourceUploaderElement.__x.getUnobservedData().hasExistingImage = targetHasValidImage;
-                console.log(`直接更新位置 ${sourcePos} 的狀態為 ${targetHasValidImage}`);
             } catch (e) {
-                console.warn(`無法直接更新位置 ${sourcePos} 的狀態: ${e.message}`);
+                // 錯誤處理
             }
         }
 
         if (!targetUpdated && targetUploaderElement && targetUploaderElement.__x) {
             try {
                 targetUploaderElement.__x.getUnobservedData().hasExistingImage = sourceHasValidImage;
-                console.log(`直接更新位置 ${targetPos} 的狀態為 ${sourceHasValidImage}`);
             } catch (e) {
-                console.warn(`無法直接更新位置 ${targetPos} 的狀態: ${e.message}`);
+                // 錯誤處理
             }
         }
-
-        console.log(`位置 ${sourcePos} 和 ${targetPos} 的圖片已交換`);
-    } else {
-        console.log("交換中止：兩個位置都沒有有效圖片。");
     }
 }
 
@@ -489,8 +444,7 @@ function updateVisibility(position, hasImage) {
 
             const img = preview.querySelector('img');
             if (img && img.src === location.href + '#') {
-                 console.warn(`位置 ${position} 的 preview 可見，但 img src 無效。`);
-
+                // 處理無效圖片源
             }
         } else {
             preview.classList.add('hidden');
@@ -503,17 +457,13 @@ function updateVisibility(position, hasImage) {
 }
 
 document.addEventListener('alpine:init', () => {
-    console.log('初始化 Alpine store...');
-
     Alpine.store('imageUploaders', {
         states: Array(5).fill(false),
         setState(index, hasImage) {
             if (index < 0 || index >= this.states.length) {
-                console.warn(`嘗試設置無效索引 ${index} 的狀態`);
                 return;
             }
 
-            console.log(`設置位置 ${index} 的狀態為 ${hasImage}`);
             this.states[index] = hasImage;
 
             const el = document.querySelector(`[x-data="imageUploader${index}"]`);
@@ -521,26 +471,23 @@ document.addEventListener('alpine:init', () => {
                 try {
                     el.__x.getUnobservedData().hasExistingImage = hasImage;
                 } catch (e) {
-                    console.warn(`無法更新 imageUploader${index} 的 hasExistingImage 狀態: ${e.message}`);
+                    // 處理錯誤
                 }
             }
         },
         getState(index) {
             if (index < 0 || index >= this.states.length) {
-                console.warn(`嘗試獲取無效索引 ${index} 的狀態`);
                 return false;
             }
             return this.states[index];
         }
     });
 
-    console.log('初始化圖片上傳器狀態...');
     for (let i = 0; i < 5; i++) {
         const preview = document.getElementById(`preview${i}`);
         const img = preview?.querySelector('img');
         const hasExistingImage = img && img.getAttribute('src') !== '#' && img.getAttribute('src') !== '';
         Alpine.store('imageUploaders').setState(i, hasExistingImage);
-        console.log(`位置 ${i} 的初始狀態: ${hasExistingImage}`);
     }
 });
 
@@ -551,7 +498,7 @@ function safeUpdateAlpineState(index, hasImage) {
             return true;
         }
     } catch (e) {
-        console.warn(`安全更新 Alpine 狀態時出錯: ${e.message}`);
+        // 處理錯誤
     }
     return false;
 }

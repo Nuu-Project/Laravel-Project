@@ -140,8 +140,6 @@ for (let i = 0; i < 5; i++) {
                 setTimeout(() => {
                     this.uploading = false;
                 }, 1500);
-
-                console.error('上傳錯誤:', message);
             },
 
             removeImage() {
