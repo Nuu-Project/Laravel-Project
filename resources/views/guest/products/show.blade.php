@@ -157,7 +157,8 @@
                                             </form>
                                         </x-slot>
                                     </x-dropdown>
-                                @elseif (!$message->trashed())
+                                @else
+                                    @unless ($message->trashed())
                                     <x-dropdown class="ml-2">
                                         <x-slot name="trigger">
                                             <button>
@@ -178,6 +179,7 @@
                                             </x-dropdown-link>
                                         </x-slot>
                                     </x-dropdown>
+                                    @endunless
                                 @endif
                             </div>
                         </x-div.side-bar-admin>
@@ -246,7 +248,8 @@
                                                     </form>
                                                 </x-slot>
                                             </x-dropdown>
-                                        @elseif (!$reply->trashed())
+                                        @else
+                                            @unless ($reply->trashed())
                                             <x-dropdown class="ml-2">
                                                 <x-slot name="trigger">
                                                     <button>
@@ -269,6 +272,7 @@
                                                     </x-dropdown-link>
                                                 </x-slot>
                                             </x-dropdown>
+                                            @endunless
                                         @endif
                                     </div>
                                 </x-div.side-bar-admin>
