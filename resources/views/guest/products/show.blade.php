@@ -157,7 +157,7 @@
                                             </form>
                                         </x-slot>
                                     </x-dropdown>
-                                @else
+                                @elseif (!$message->trashed())
                                     <x-dropdown class="ml-2">
                                         <x-slot name="trigger">
                                             <button>
@@ -246,7 +246,7 @@
                                                     </form>
                                                 </x-slot>
                                             </x-dropdown>
-                                        @else
+                                        @elseif (!$reply->trashed())
                                             <x-dropdown class="ml-2">
                                                 <x-slot name="trigger">
                                                     <button>
