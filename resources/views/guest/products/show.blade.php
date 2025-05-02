@@ -118,8 +118,10 @@
                         <x-div.side-bar-admin>
                             <span class="text-gray-800">{{ $message->user->name }}</span>
                             <div class="flex items-center">
-                                @unless ($message->created_at->eq($message->updated_at))
-                                    <small class="text-sm text-gray-600"> &middot; {{ __('Edited') }}</small>
+                                @unless ($message->trashed())
+                                    @unless ($message->created_at->eq($message->updated_at))
+                                        <small class="text-sm text-gray-600"> &middot; {{ __('Edited') }}</small>
+                                    @endunless
                                 @endunless
                                 <small
                                     class="text-sm text-gray-600">{{ $message->created_at->format('　Y/m/d　H:i:s') }}</small>
@@ -210,8 +212,10 @@
                                 <x-div.side-bar-admin>
                                     <span class="text-gray-800">{{ $reply->user->name }}</span>
                                     <div class="flex items-center">
-                                        @unless ($reply->created_at->eq($reply->updated_at))
-                                            <small class="text-sm text-gray-600"> &middot; {{ __('Edited') }}</small>
+                                        @unless ($reply->trashed())
+                                            @unless ($reply->created_at->eq($reply->updated_at))
+                                                <small class="text-sm text-gray-600"> &middot; {{ __('Edited') }}</small>
+                                            @endunless
                                         @endunless
                                         <small
                                             class="text-sm text-gray-600">{{ $reply->created_at->format('　Y/m/d　H:i:s') }}</small>
