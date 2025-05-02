@@ -126,6 +126,7 @@
                                 <span class="mx-1"> </span>
 
                                 @if ($message->user->is(auth()->user()))
+                                    @unless ($message->trashed())
                                     <x-dropdown class="ml-2">
                                         <x-slot name="trigger">
                                             <button>
@@ -157,6 +158,7 @@
                                             </form>
                                         </x-slot>
                                     </x-dropdown>
+                                    @endunless
                                 @else
                                     @unless ($message->trashed())
                                     <x-dropdown class="ml-2">
@@ -216,6 +218,7 @@
                                         <span class="mx-1">　</span>
 
                                         @if ($reply->user->is(auth()->user()))
+                                            @unless ($reply->trashed())
                                             <x-dropdown class="ml-2">
                                                 <x-slot name="trigger">
                                                     <button>
@@ -248,6 +251,7 @@
                                                     </form>
                                                 </x-slot>
                                             </x-dropdown>
+                                            @endunless
                                         @else
                                             @unless ($reply->trashed())
                                             <x-dropdown class="ml-2">
