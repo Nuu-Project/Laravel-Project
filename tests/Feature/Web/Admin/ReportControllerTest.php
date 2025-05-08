@@ -17,8 +17,10 @@ class ReportControllerTest extends TestCase
     {
         parent::setUp();
 
-        ReportType::factory()->create(['type' => ReportTypeEnum::Product->value()]);
-        ReportType::factory()->create(['type' => ReportTypeEnum::Message->value()]);
+        $this->createReportType();
+        $this->createReportType([
+            'type' => ReportTypeEnum::Message->value(),
+        ]);
 
         $this->actingAsAdmin();
     }
@@ -79,6 +81,14 @@ class ReportControllerTest extends TestCase
                 return $reportable->reportable_type === Message::class && $reportable->reportable_id === $message->id;
             });
         });
+    }
+
+    private function createReportType(array $stase = []): ReportType
+    {
+        return ReportType::factory()
+            ->state($stase + [
+                'type' => ReportTypeEnum::Product->value,
+            ])->create();
     }
 
     private function createProduct(array $state = []): Product
