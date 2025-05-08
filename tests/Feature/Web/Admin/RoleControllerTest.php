@@ -8,8 +8,6 @@ use Tests\TestCase;
 
 class RoleControllerTest extends TestCase
 {
-    private $adminRole;
-
     private $adminUser;
 
     protected function setUp(): void
@@ -37,8 +35,14 @@ class RoleControllerTest extends TestCase
 
     public function test_create_view_filters_users_by_name_or_email()
     {
-        $matching = $this->makeUser(['name' => 'John Doe']);
-        $nonMatching = $this->makeUser(['name' => 'Jane Doe']);
+        $matching = $this->createUser([
+            'name' => 'John Doe',
+            'email' => 'buud@gamil.com',
+        ]);
+        $nonMatching = $this->createUser([
+            'name' => 'Jane Doe',
+            'email' => 'uu@gamil.com',
+        ]);
 
         $matching->roles()->detach();
         $nonMatching->roles()->detach();
@@ -50,7 +54,7 @@ class RoleControllerTest extends TestCase
 
     public function test_roles_can_be_assigned_to_users()
     {
-        $users = $this->makeUsers(2);
+        $users = User::factory()->count(2)->create();
 
         $this->post(route('admin.roles.store'), ['user_ids' => $users->pluck('id')->toArray()])
             ->assertRedirect(route('admin.roles.index'))
@@ -77,7 +81,7 @@ class RoleControllerTest extends TestCase
 
     public function test_assign_validation_fails_with_invalid_user_ids()
     {
-        $valid = $this->makeUser();
+        $valid = $this->createUser();
         $invalidId = 999999;
 
         $this->post(route('admin.roles.store'), ['user_ids' => [$valid->id, $invalidId]])
@@ -87,7 +91,7 @@ class RoleControllerTest extends TestCase
 
     public function test_roles_can_be_removed_from_users()
     {
-        $target = $this->makeUser()->assignRole($this->adminRole);
+        $target = $this->createAdmin();
 
         $this->put(route('admin.roles.update', ['role' => 'admin']), ['selected_ids' => [$target->id]])
             ->assertRedirect(route('admin.roles.index'))
@@ -112,7 +116,7 @@ class RoleControllerTest extends TestCase
 
     public function test_remove_validation_fails_with_invalid_selected_ids()
     {
-        $valid = $this->makeUser();
+        $valid = $this->createUser();
         $invalidId = 999999;
 
         $this->put(route('admin.roles.update', ['role' => 'admin']), ['selected_ids' => [$valid->id, $invalidId]])
@@ -130,7 +134,7 @@ class RoleControllerTest extends TestCase
 
     public function test_removing_role_from_user_without_role_succeeds()
     {
-        $user = $this->makeUser();
+        $user = $this->createUser();
 
         $this->assertFalse($user->hasRole('admin'));
 
@@ -139,15 +143,5 @@ class RoleControllerTest extends TestCase
             ->assertSessionHas('success');
 
         $this->assertFalse($user->fresh()->hasRole('admin'));
-    }
-
-    private function makeUser(array $attributes = []): User
-    {
-        return User::factory()->create($attributes);
-    }
-
-    private function makeUsers(int $count): \Illuminate\Support\Collection
-    {
-        return User::factory()->count($count)->create();
     }
 }
