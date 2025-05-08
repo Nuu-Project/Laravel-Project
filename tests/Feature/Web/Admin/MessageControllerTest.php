@@ -35,13 +35,25 @@ class MessageControllerTest extends TestCase
 
     public function test_admin_can_filter_messages_by_user_name()
     {
-        $user1 = User::factory()->create(['name' => 'Alice']);
-        $user2 = User::factory()->create(['name' => 'Bob']);
+        $user1 = $this->createUser([
+            'name' => 'Alice',
+        ]);
 
-        $message1 = $this->createMessage(['user_id' => $user1->id]);
-        $message2 = $this->createMessage(['user_id' => $user2->id]);
+        $user2 = $this->createUser([
+            'name' => 'Bob',
+        ]);
 
-        $this->get(route('admin.messages.index', ['filter[name]' => 'Alice']))
+        $message1 = $this->createMessage([
+            'user_id' => $user1->id,
+        ]);
+
+        $message2 = $this->createMessage([
+            'user_id' => $user2->id,
+        ]);
+
+        $this->get(route('admin.messages.index', [
+            'filter[name]' => 'Alice',
+        ]))
             ->assertOk()
             ->assertSee($message1->content)
             ->assertDontSee($message2->content);
@@ -58,7 +70,10 @@ class MessageControllerTest extends TestCase
     public function test_non_admin_user_cannot_access_messages_page()
     {
         /** @var User $user */
-        $user = User::factory()->create();
+        $user = User::factory()->create([
+            'name' => 'John Doe',
+        ]);
+
         $this->actingAs($user)
             ->get(route('admin.messages.index'))
             ->assertForbidden();
@@ -76,7 +91,9 @@ class MessageControllerTest extends TestCase
 
     public function test_invalid_filter_parameter_does_not_break_page()
     {
-        $this->get(route('admin.messages.index', ['filter[invalid]' => 'test']))
+        $this->get(route('admin.messages.index', [
+            'filter[invalid]' => 'test',
+        ]))
             ->assertStatus(400);
     }
 

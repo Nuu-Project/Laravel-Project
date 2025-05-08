@@ -25,7 +25,9 @@ class ProductControllerTest extends TestCase
 
     public function test_user_can_view_their_products(): void
     {
-        $this->createProduct(['user_id' => auth()->id()], 3);
+        $this->createProduct([
+            'user_id' => auth()->id(),
+        ], 3);
 
         $this->get(route('user.products.index'))
             ->assertOk()
@@ -45,10 +47,18 @@ class ProductControllerTest extends TestCase
 
         // 創建必要的標籤
         $tags = [
-            'grade' => Tag::factory()->create(['type' => TagType::Grade->value]),
-            'semester' => Tag::factory()->create(['type' => TagType::Semester->value]),
-            'subject' => Tag::factory()->create(['type' => TagType::Subject->value]),
-            'category' => Tag::factory()->create(['type' => TagType::Category->value]),
+            'grade' => Tag::factory()->create([
+                'type' => TagType::Grade->value,
+            ]),
+            'semester' => Tag::factory()->create([
+                'type' => TagType::Semester->value,
+            ]),
+            'subject' => Tag::factory()->create([
+                'type' => TagType::Subject->value,
+            ]),
+            'category' => Tag::factory()->create([
+                'type' => TagType::Category->value,
+            ]),
         ];
 
         $data = [
@@ -59,7 +69,9 @@ class ProductControllerTest extends TestCase
             'semester' => $tags['semester']->id,
             'subject' => $tags['subject']->id,
             'category' => $tags['category']->id,
-            'encrypted_image_path' => [encrypt($tempPath)],
+            'encrypted_image_path' => [
+                encrypt($tempPath),
+            ],
         ];
 
         $this->post(route('user.products.store'), $data)
@@ -102,11 +114,21 @@ class ProductControllerTest extends TestCase
         $product = Product::factory()->create();
 
         $routes = [
-            'get' => ['user.products.index', 'user.products.create', 'user.products.edit'],
-            'post' => ['user.products.store'],
-            'put' => ['user.products.update'],
-            'patch' => ['user.products.inactive'],
-            'delete' => ['user.products.destroy'],
+            'get' => [
+                'user.products.index', 'user.products.create', 'user.products.edit',
+            ],
+            'post' => [
+                'user.products.store',
+            ],
+            'put' => [
+                'user.products.update',
+            ],
+            'patch' => [
+                'user.products.inactive',
+            ],
+            'delete' => [
+                'user.products.destroy',
+            ],
         ];
 
         foreach ($routes as $method => $routeNames) {

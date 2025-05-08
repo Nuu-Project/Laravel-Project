@@ -20,7 +20,9 @@ class ProductControllerTest extends TestCase
 
     public function test_admin_can_view_products_list()
     {
-        $product = $this->createProduct(['status' => ProductStatus::Active]);
+        $product = $this->createProduct([
+            'status' => ProductStatus::Active,
+        ]);
 
         $this->get(route('admin.products.index'))
             ->assertOk()
@@ -30,26 +32,40 @@ class ProductControllerTest extends TestCase
 
     public function test_admin_can_filter_products_by_name()
     {
-        $productA = $this->createProduct(['name' => 'Test Product A']);
-        $productB = $this->createProduct(['name' => 'Test Product B']);
+        $productA = $this->createProduct([
+            'name' => 'Test Product A',
+        ]);
 
-        $this->get(route('admin.products.index', ['filter[name]' => 'Product A']))
-            ->assertSee($productA->name)
+        $productB = $this->createProduct([
+            'name' => 'Test Product B',
+        ]);
+
+        $this->get(route('admin.products.index', [
+            'filter[name]' => 'Product A',
+        ]))->assertSee($productA->name)
             ->assertDontSee($productB->name);
     }
 
     public function test_admin_can_filter_products_by_user_name()
     {
-        $user = User::factory()->create(['name' => 'John Doe']);
-        $product = $this->createProduct(['user_id' => $user->id]);
+        $user = User::factory()->create([
+            'name' => 'John Doe',
+        ]);
 
-        $this->get(route('admin.products.index', ['filter[user]' => 'John']))
-            ->assertSee($product->name);
+        $product = $this->createProduct([
+            'user_id' => $user->id,
+        ]);
+
+        $this->get(route('admin.products.index', [
+            'filter[user]' => 'John',
+        ]))->assertSee($product->name);
     }
 
     public function test_admin_can_toggle_product_status()
     {
-        $product = $this->createProduct(['status' => ProductStatus::Active]);
+        $product = $this->createProduct([
+            'status' => ProductStatus::Active,
+        ]);
 
         $this->patch(route('admin.products.inactive', $product))
             ->assertRedirect(route('admin.products.index'))
@@ -68,8 +84,7 @@ class ProductControllerTest extends TestCase
 
     public function test_non_admin_user_cannot_access_products_page()
     {
-        /** @var User $user */
-        $user = User::factory()->create();
+        $user = $this->createUser();
         $this->actingAs($user)
             ->get(route('admin.products.index'))
             ->assertForbidden();
@@ -87,8 +102,9 @@ class ProductControllerTest extends TestCase
 
     public function test_invalid_filter_parameter_does_not_break_page()
     {
-        $this->get(route('admin.products.index', ['filter[invalid]' => 'test']))
-            ->assertStatus(400);
+        $this->get(route('admin.products.index', [
+            'filter[invalid]' => 'test',
+        ]))->assertStatus(400);
     }
 
     public function createProduct(array $state = []): Product
