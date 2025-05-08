@@ -8,8 +8,6 @@ use Tests\TestCase;
 
 class RoleControllerTest extends TestCase
 {
-    private $adminRole;
-
     private $adminUser;
 
     protected function setUp(): void
@@ -37,8 +35,14 @@ class RoleControllerTest extends TestCase
 
     public function test_create_view_filters_users_by_name_or_email()
     {
-        $matching = User::factory()->create(['name' => 'John Doe']);
-        $nonMatching = User::factory()->create(['name' => 'Jane Doe']);
+        $matching = $this->createUser([
+            'name' => 'John Doe',
+            'email' => 'buud@gamil.com',
+        ]);
+        $nonMatching = $this->createUser([
+            'name' => 'Jane Doe',
+            'email' => 'uu@gamil.com',
+        ]);
 
         $matching->roles()->detach();
         $nonMatching->roles()->detach();
@@ -77,7 +81,7 @@ class RoleControllerTest extends TestCase
 
     public function test_assign_validation_fails_with_invalid_user_ids()
     {
-        $valid = User::factory()->create();
+        $valid = $this->createUser();
         $invalidId = 999999;
 
         $this->post(route('admin.roles.store'), ['user_ids' => [$valid->id, $invalidId]])
@@ -87,7 +91,7 @@ class RoleControllerTest extends TestCase
 
     public function test_roles_can_be_removed_from_users()
     {
-        $target = User::factory()->create()->assignRole($this->adminRole);
+        $target = $this->createAdmin();
 
         $this->put(route('admin.roles.update', ['role' => 'admin']), ['selected_ids' => [$target->id]])
             ->assertRedirect(route('admin.roles.index'))
@@ -112,7 +116,7 @@ class RoleControllerTest extends TestCase
 
     public function test_remove_validation_fails_with_invalid_selected_ids()
     {
-        $valid = User::factory()->create();
+        $valid = $this->createUser();
         $invalidId = 999999;
 
         $this->put(route('admin.roles.update', ['role' => 'admin']), ['selected_ids' => [$valid->id, $invalidId]])
@@ -130,7 +134,7 @@ class RoleControllerTest extends TestCase
 
     public function test_removing_role_from_user_without_role_succeeds()
     {
-        $user = User::factory()->create();
+        $user = $this->createUser();
 
         $this->assertFalse($user->hasRole('admin'));
 
