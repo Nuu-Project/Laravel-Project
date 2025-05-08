@@ -79,3 +79,102 @@ body {
     cursor: pointer;
     line-height: 1; /* Adjust line height */
 }
+
+/* 留言突顯樣式 */
+.highlight-message {
+    transition: background-color 0.5s;
+    background-color: rgba(255, 255, 0, 0.3);
+}
+
+/* 修復點擊下拉選單後頁面自動滾動到頂部的問題 */
+.dropdown-item:focus,
+.dropdown-item:active,
+.dropdown-menu a[href="#"]:active,
+.dropdown-menu a[href="#"]:focus {
+    outline: none;
+}
+
+/* 防止下拉選單內的鏈接使頁面跳轉 */
+.dropdown-menu a[href="#"] {
+    pointer-events: initial;
+}
+
+/* 手機版RWD優化 */
+@media (max-width: 768px) {
+    /* 回覆留言區塊調整 */
+    #reply-container {
+        display: flex;
+        flex-direction: column;
+    }
+    
+    /* 減少回覆留言的左邊距，以便有更多空間顯示文字 */
+    .ml-8 {
+        margin-left: 0.5rem !important;
+    }
+    
+    /* 調整回覆留言區塊的內部間距 */
+    .reply-message {
+        margin-left: 0.5rem !important;
+        padding: 0.75rem !important;
+        background-color: #f9fafb;
+        border-radius: 0.5rem;
+        border-left: 3px solid #e5e7eb;
+    }
+    
+    /* 回覆留言中的用戶信息樣式 */
+    .reply-message .flex.items-start {
+        display: flex;
+        flex-wrap: wrap;
+    }
+    
+    /* 回覆留言內容樣式 */
+    .reply-message .reply-text {
+        white-space: normal;
+        overflow: visible;
+        padding-top: 0.25rem;
+    }
+    
+    /* 調整留言功能下拉選單位置 */
+    .dropdown-menu {
+        position: fixed !important;
+        will-change: transform !important;
+    }
+}
+
+/* 留言區塊樣式優化 */
+.divide-y > div {
+    border-bottom: 1px solid #f1f1f1;
+}
+
+.divide-y > div:last-child {
+    border-bottom: none;
+}
+
+/* 用戶名稱樣式 */
+.font-medium {
+    font-weight: 500;
+}
+
+/* 留言日期時間樣式 */
+.text-gray-600 {
+    color: #666;
+}
+
+/* 留言內容區塊樣式 */
+.mt-2 {
+    margin-top: 0.5rem;
+}
+
+.pl-2 {
+    padding-left: 0.5rem;
+}
+
+/* 回覆按鈕樣式 */
+.text-blue-500 {
+    color: #3b82f6;
+}
+
+.text-blue-500:hover {
+    color: #2563eb;
+    text-decoration: underline;
+}

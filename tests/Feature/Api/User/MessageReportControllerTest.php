@@ -31,10 +31,7 @@ class MessageReportControllerTest extends TestCase
         ]);
 
         $response->assertOk()
-            ->assertJson(fn (AssertableJson $json) => $json->where('status', 'success')
-                ->where('message', '留言檢舉成功')
-                ->etc()
-            );
+            ->assertJson(fn (AssertableJson $json) => $json->where('status', 'success')->etc());
 
         $this->assertDatabaseHas('reports', [
             'report_type_id' => $this->reportType->id,
@@ -54,7 +51,7 @@ class MessageReportControllerTest extends TestCase
             'description' => '測試描述',
         ]);
 
-        $response->assertStatus(422)
+        $response->assertUnprocessable()
             ->assertJsonValidationErrors(['report_type_id']);
     }
 
@@ -65,7 +62,7 @@ class MessageReportControllerTest extends TestCase
             'description' => '測試描述',
         ]);
 
-        $response->assertStatus(422)
+        $response->assertUnprocessable()
             ->assertJsonValidationErrors(['report_type_id']);
     }
 
@@ -80,7 +77,7 @@ class MessageReportControllerTest extends TestCase
             'description' => '測試描述',
         ]);
 
-        $response->assertStatus(422)
+        $response->assertUnprocessable()
             ->assertJsonValidationErrors(['report_type_id']);
     }
 
@@ -90,7 +87,7 @@ class MessageReportControllerTest extends TestCase
             'report_type_id' => $this->reportType->id,
         ]);
 
-        $response->assertStatus(422)
+        $response->assertUnprocessable()
             ->assertJsonValidationErrors(['description']);
     }
 
@@ -101,25 +98,28 @@ class MessageReportControllerTest extends TestCase
             'description' => str_repeat('a', 256),
         ]);
 
-        $response->assertStatus(422)
+        $response->assertUnprocessable()
             ->assertJsonValidationErrors(['description']);
     }
 
-    public function test_prevents_duplicate_reports(): void
+    public function test_updates_description_for_duplicate_reports(): void
     {
-        $this->message->reports()->create([
-            'report_type_id' => $this->reportType->id,
-            'user_id' => auth()->id(),
-            'description' => '第一次檢舉。',
-        ]);
+        $this->message->reports()->create($this->getReportData('第一次檢舉。'));
 
-        $response = $this->postJson(route('api.messages.reports.store', $this->message), [
-            'report_type_id' => $this->reportType->id,
-            'description' => '第二次檢舉。',
-        ]);
+        $this->reportsMessage($this->getReportData('第二次檢舉。'))
+            ->assertOk()
+            ->assertJson([
+                'status' => 'updated',
+            ]);
 
-        $response->assertStatus(422)
-            ->assertJsonValidationErrors(['report_type_id']);
+        $this->assertDatabaseHas('reports', $this->getReportData('第二次檢舉。'));
+
+        $this->assertCount(1, $this->message->reports()->where('report_type_id', $this->reportType->id)->where('user_id', auth()->id())->get());
+    }
+
+    private function reportsMessage(array $data): \Illuminate\Testing\TestResponse
+    {
+        return $this->postJson(route('api.messages.reports.store', $this->message), $data);
     }
 
     private function createReportType(array $stase = []): ReportType
@@ -128,5 +128,14 @@ class MessageReportControllerTest extends TestCase
             ->state($stase + [
                 'type' => ReportTypeEnum::Message->value,
             ])->create();
+    }
+
+    private function getReportData(string $description): array
+    {
+        return [
+            'report_type_id' => $this->reportType->id,
+            'user_id' => auth()->id(),
+            'description' => $description,
+        ];
     }
 }

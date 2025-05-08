@@ -50,7 +50,7 @@
                 <div class="flex-grow pr-4">
                     <h1 class="text-3xl font-bold break-words">商品名稱:{{ $product->name }}</h1>
                     <div class="mt-2">
-                        <h2 class="font-semibold text-xl">用戶名稱:{{ $product->user->name }}</h2>
+                        <x-h.h2>用戶名稱:{{ $product->user->name }}</x-h.h2>
 
                         <x-h.h6>年級 :
                             <x-span.font-semibold>
@@ -100,120 +100,40 @@
     <div class="max-w-2xl mx-auto p-4 sm:p-6 lg:p-8">
         <form method="POST" action="{{ route('user.products.messages.store', ['product' => $product->id]) }}">
             @csrf
-            <textarea name="message" placeholder="{{ __('想問什麼?') }}"
-                class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm">{{ old('message') }}</textarea>
+            <textarea name="message" placeholder="{{ __('想問什麼?') }}">{{ old('message') }}</textarea>
             <x-input-error :messages="$errors->store->get('message')" class="mt-2" />
-            <x-primary-button class="mt-4">{{ __('留言') }}</x-primary-button>
+            <x-primary-button>{{ __('留言') }}</x-primary-button>
         </form>
 
         <div class="mt-6 bg-white shadow-sm rounded-lg divide-y">
             @foreach ($messages as $message)
-                <div id="message-{{ $message->id }}" class="p-6 flex space-x-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-600 -scale-x-100" fill="none"
-                        viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-                    </svg>
-                    <div class="flex-1">
-                        <x-div.side-bar-admin>
-                            <span class="text-gray-800">{{ $message->user->name }}</span>
-                            <div class="flex items-center">
-                                @unless ($message->created_at->eq($message->updated_at))
-                                    <small class="text-sm text-gray-600"> &middot; {{ __('Edited') }}</small>
-                                @endunless
-                                <small
-                                    class="text-sm text-gray-600">{{ $message->created_at->format('　Y/m/d　H:i:s') }}</small>
-                                <span class="mx-1"> </span>
-
-                                @if ($message->user->is(auth()->user()))
-                                    <x-dropdown class="ml-2">
-                                        <x-slot name="trigger">
-                                            <button>
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-400"
-                                                    viewBox="0 0 20 20" fill="currentColor">
-                                                    <path
-                                                        d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z" />
-                                                </svg>
-                                            </button>
-                                        </x-slot>
-                                        <x-slot name="content">
-                                            <x-dropdown-link :href="route('user.products.messages.edit', [
-                                                'product' => $product->id,
-                                                'message' => $message->id,
-                                            ])">
-                                                {{ __('更改') }}
-                                            </x-dropdown-link>
-                                            <form method="POST"
-                                                action="{{ route('user.products.messages.destroy', ['product' => $product->id, 'message' => $message->id]) }}">
-                                                @csrf
-                                                @method('delete')
-                                                <x-dropdown-link :href="route('user.products.messages.destroy', [
-                                                    'product' => $product->id,
-                                                    'message' => $message->id,
-                                                ])"
-                                                    onclick="event.preventDefault(); this.closest('form').submit();">
-                                                    {{ __('刪除') }}
-                                                </x-dropdown-link>
-                                            </form>
-                                        </x-slot>
-                                    </x-dropdown>
+                <div id="message-{{ $message->id }}" class="p-4 mb-4 rounded-lg border border-gray-200">
+                    <div class="flex items-start mb-2">
+                        <div class="h-8 w-8 mr-2 flex items-center justify-center bg-gray-100 rounded-full">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-600" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                            </svg>
+                        </div>
+                        <div class="flex-1">
+                            <div class="flex items-center justify-between">
+                                <span>{{ $message->user->name }}</span>
+                                <x-p.text-gray>{{ $message->created_at->format('Y/m/d H:i:s') }}</x-p.text-gray>
+                            </div>
+                            <div class="text-xs text-gray-500 flex items-center">
+                                @if ($message->trashed())
+                                    <span>（此回覆已被刪除）</span>
                                 @else
-                                    <x-dropdown class="ml-2">
-                                        <x-slot name="trigger">
-                                            <button>
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-400"
-                                                    viewBox="0 0 20 20" fill="currentColor">
-                                                    <path
-                                                        d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z" />
-                                                </svg>
-                                            </button>
-                                        </x-slot>
-                                        <x-slot name="content">
-                                            <x-dropdown-link href="#"
-                                                onclick="event.preventDefault(); reportMessage(event, {{ $message->id }})"
-                                                data-report-type="message" data-message-id="{{ $message->id }}"
-                                                data-reports="{{ json_encode($messageReports) }}"
-                                                data-store-url="{{ route('api.messages.reports.store', ['message' => $message->id]) }}">
-                                                {{ __('檢舉') }}
-                                            </x-dropdown-link>
-                                        </x-slot>
-                                    </x-dropdown>
+                                    @unless ($message->created_at->eq($message->updated_at))
+                                        <span>已編輯</span>
+                                    @endunless
                                 @endif
                             </div>
-                        </x-div.side-bar-admin>
-                        @if ($message->trashed())
-                            <p class="mt-4 text-lg text-gray-400 italic">（此留言已被刪除）</p>
-                        @else
-                            <p class="mt-4 text-lg text-gray-900 whitespace-pre-line">{{ $message->message }}</p>
-                        @endif
-
-                        <button onclick="toggleReplyForm({{ $message->id }})" class="mt-2 text-sm text-blue-500">
-                            回覆
-                        </button>
-
-                        <form id="replyForm{{ $message->id }}" method="POST"
-                            action="{{ route('user.products.messages.reply', ['product' => $product->id, 'message' => $message->id]) }}"
-                            class="mt-2 hidden">
-                            @csrf
-                            <textarea name="message" placeholder="{{ __('回覆留言...') }}"
-                                class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"></textarea>
-                            <x-input-error :messages="$errors->get('message')" class="mt-2" />
-                            <x-primary-button class="mt-2">{{ __('提交回覆') }}</x-primary-button>
-                        </form>
-
-                        @foreach ($message->replies as $reply)
-                            <div class="ml-8 mt-4 p-4 bg-gray-50 rounded-lg">
-                                <x-div.side-bar-admin>
-                                    <span class="text-gray-800">{{ $reply->user->name }}</span>
-                                    <div class="flex items-center">
-                                        @unless ($reply->created_at->eq($reply->updated_at))
-                                            <small class="text-sm text-gray-600"> &middot; {{ __('Edited') }}</small>
-                                        @endunless
-                                        <small
-                                            class="text-sm text-gray-600">{{ $reply->created_at->format('　Y/m/d　H:i:s') }}</small>
-                                        <span class="mx-1">　</span>
-
-                                        @if ($reply->user->is(auth()->user()))
+                            @if (!$message->trashed())
+                                <div class="ml-2">
+                                    <div>
+                                        @if ($message->user->is(auth()->user()))
                                             <x-dropdown class="ml-2">
                                                 <x-slot name="trigger">
                                                     <button>
@@ -228,17 +148,17 @@
                                                 <x-slot name="content">
                                                     <x-dropdown-link :href="route('user.products.messages.edit', [
                                                         'product' => $product->id,
-                                                        'message' => $reply->id,
+                                                        'message' => $message->id,
                                                     ])">
                                                         {{ __('更改') }}
                                                     </x-dropdown-link>
                                                     <form method="POST"
-                                                        action="{{ route('user.products.messages.destroy', ['product' => $product->id, 'message' => $reply->id]) }}">
+                                                        action="{{ route('user.products.messages.destroy', ['product' => $product->id, 'message' => $message->id]) }}">
                                                         @csrf
                                                         @method('delete')
                                                         <x-dropdown-link :href="route('user.products.messages.destroy', [
                                                             'product' => $product->id,
-                                                            'message' => $reply->id,
+                                                            'message' => $message->id,
                                                         ])"
                                                             onclick="event.preventDefault(); this.closest('form').submit();">
                                                             {{ __('刪除') }}
@@ -260,26 +180,129 @@
                                                 </x-slot>
                                                 <x-slot name="content">
                                                     <x-dropdown-link href="#"
-                                                        onclick="event.preventDefault(); reportMessage(event, {{ $reply->id }})"
+                                                        onclick="event.preventDefault(); reportMessage(event, {{ $message->id }})"
                                                         data-report-type="message"
-                                                        data-message-id="{{ $reply->id }}"
+                                                        data-message-id="{{ $message->id }}"
                                                         data-reports="{{ json_encode($messageReports) }}"
-                                                        data-store-url="{{ route('api.messages.reports.store', ['message' => $reply->id]) }}">
+                                                        data-store-url="{{ route('api.messages.reports.store', ['message' => $message->id]) }}">
                                                         {{ __('檢舉') }}
                                                     </x-dropdown-link>
                                                 </x-slot>
                                             </x-dropdown>
                                         @endif
                                     </div>
-                                </x-div.side-bar-admin>
-                                @if ($reply->trashed())
-                                    <p class="mt-2 text-gray-400 italic">（此回覆已被刪除）</p>
-                                @else
-                                    <p class="mt-2 text-gray-900 whitespace-pre-line">{{ $reply->message }}</p>
-                                @endif
-                            </div>
-                        @endforeach
+                                </div>
+                            @endif
+                        </div>
                     </div>
+
+                    @if ($message->trashed())
+                        <x-p.text-gray>（此留言已被刪除）</x-p.text-gray>
+                    @else
+                        <div>{{ $message->message }}</div>
+                    @endif
+
+                    <div>
+                        <button onclick="toggleReplyForm({{ $message->id }})"
+                            class="text-sm text-blue-500 hover:text-blue-700">
+                            回覆
+                        </button>
+                    </div>
+
+                    <form id="replyForm{{ $message->id }}" method="POST"
+                        action="{{ route('user.products.messages.reply', ['product' => $product->id, 'message' => $message->id]) }}">
+                        @csrf
+                        <textarea name="message" placeholder="{{ __('回覆留言...') }}"></textarea>
+                        <x-input-error :messages="$errors->get('message')" class="mt-2" />
+                        <x-primary-button>{{ __('提交回覆') }}</x-primary-button>
+                    </form>
+
+                    @foreach ($message->replies as $reply)
+                        <div id="reply-{{ $reply->id }}"
+                            class="ml-8 mt-4 p-3 bg-gray-50 rounded-lg border border-gray-100">
+                            <div class="flex items-start">
+                                <div class="flex-1">
+                                    <div class="flex items-center justify-between">
+                                        <span>{{ $reply->user->name }}</span>
+                                        <x-p.text-gray>{{ $reply->created_at->format('Y/m/d H:i:s') }}</x-p.text-gray>
+                                    </div>
+                                    <x-p.text-gray>
+                                        @unless ($reply->created_at->eq($reply->updated_at))
+                                            @if (!$reply->trashed())
+                                                <span>已編輯</span>
+                                            @endif
+                                        @endunless
+                                    </x-p.text-gray>
+                                    @if (!$reply->trashed())
+                                        <div class="ml-2">
+                                            @if ($reply->user->is(auth()->user()))
+                                                <x-dropdown>
+                                                    <x-slot name="trigger">
+                                                        <button>
+                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                class="h-4 w-4 text-gray-400" viewBox="0 0 20 20"
+                                                                fill="currentColor">
+                                                                <path
+                                                                    d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z" />
+                                                            </svg>
+                                                        </button>
+                                                    </x-slot>
+                                                    <x-slot name="content">
+                                                        <x-dropdown-link :href="route('user.products.messages.edit', [
+                                                            'product' => $product->id,
+                                                            'message' => $reply->id,
+                                                        ])">
+                                                            {{ __('更改') }}
+                                                        </x-dropdown-link>
+                                                        <form method="POST"
+                                                            action="{{ route('user.products.messages.destroy', ['product' => $product->id, 'message' => $reply->id]) }}">
+                                                            @csrf
+                                                            @method('delete')
+                                                            <x-dropdown-link :href="route('user.products.messages.destroy', [
+                                                                'product' => $product->id,
+                                                                'message' => $reply->id,
+                                                            ])"
+                                                                onclick="event.preventDefault(); this.closest('form').submit();">
+                                                                {{ __('刪除') }}
+                                                            </x-dropdown-link>
+                                                        </form>
+                                                    </x-slot>
+                                                </x-dropdown>
+                                            @else
+                                                <x-dropdown class="ml-2">
+                                                    <x-slot name="trigger">
+                                                        <button>
+                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                class="h-4 w-4 text-gray-400" viewBox="0 0 20 20"
+                                                                fill="currentColor">
+                                                                <path
+                                                                    d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z" />
+                                                            </svg>
+                                                        </button>
+                                                    </x-slot>
+                                                    <x-slot name="content">
+                                                        <x-dropdown-link href="#"
+                                                            onclick="event.preventDefault(); reportMessage(event, {{ $reply->id }})"
+                                                            data-report-type="message"
+                                                            data-message-id="{{ $reply->id }}"
+                                                            data-reports="{{ json_encode($messageReports) }}"
+                                                            data-store-url="{{ route('api.messages.reports.store', ['message' => $reply->id]) }}">
+                                                            {{ __('檢舉') }}
+                                                        </x-dropdown-link>
+                                                    </x-slot>
+                                                </x-dropdown>
+                                            @endif
+                                        </div>
+                                    @endif
+                                </div>
+                            </div>
+                            @if ($reply->trashed())
+                                <x-p.text-gray>（此回覆已被刪除）</x-p.text-gray>
+                            @else
+                                <div>{{ $reply->message }}</div>
+                            @endif
+                        </div>
+                    @endforeach
                 </div>
             @endforeach
         </div>

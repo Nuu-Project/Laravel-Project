@@ -50,7 +50,7 @@ class ProductReportControllerTest extends TestCase
     {
         $this->reportsProduct([
             'description' => '測試描述',
-        ])->assertStatus(422)
+        ])->assertUnprocessable()
             ->assertJsonValidationErrors(['report_type_id']);
     }
 
@@ -59,7 +59,7 @@ class ProductReportControllerTest extends TestCase
         $this->reportsProduct([
             'report_type_id' => 999,
             'description' => '測試描述',
-        ])->assertStatus(422)
+        ])->assertUnprocessable()
             ->assertJsonValidationErrors(['report_type_id']);
     }
 
@@ -69,7 +69,7 @@ class ProductReportControllerTest extends TestCase
         $this->reportsProduct([
             'report_type_id' => $this->reportType->id,
             'description' => '測試描述',
-        ])->assertStatus(422)
+        ])->assertUnprocessable()
             ->assertJsonValidationErrors(['report_type_id']);
     }
 
@@ -77,7 +77,7 @@ class ProductReportControllerTest extends TestCase
     {
         $this->reportsProduct([
             'report_type_id' => $this->reportType->id,
-        ])->assertStatus(422)
+        ])->assertUnprocessable()
             ->assertJsonValidationErrors(['description']);
     }
 
@@ -88,29 +88,36 @@ class ProductReportControllerTest extends TestCase
         $this->reportsProduct([
             'report_type_id' => $this->reportType->id,
             'description' => $longDescription,
-        ])->assertStatus(422)
+        ])->assertUnprocessable()
             ->assertJsonValidationErrors(['description']);
     }
 
-    public function test_it_prevents_duplicate_reports(): void
+    public function test_it_updates_description_for_duplicate_reports(): void
     {
-        $this->product->reports()->create([
-            'report_type_id' => $this->reportType->id,
-            'user_id' => auth()->id(),
-            'description' => '第一次檢舉。',
-        ]);
+        $this->product->reports()->create($this->getReportData('第一次檢舉。'));
 
-        $this->reportsProduct([
-            'report_type_id' => $this->reportType->id,
-            'description' => '第二次檢舉。',
-        ])->assertStatus(422)
-            ->assertJsonValidationErrors(['report_type_id']);
+        $this->reportsProduct($this->getReportData('第二次檢舉。'))
+            ->assertOk()
+            ->assertJson([
+                'status' => 'updated',
+            ]);
 
-        $this->assertCount(1, Report::where('user_id', auth()->id())->where('report_type_id', $this->reportType->id)->get());
+        $this->assertDatabaseHas('reports', $this->getReportData('第二次檢舉。'));
+
+        $this->assertCount(1, $this->product->reports()->where('report_type_id', $this->reportType->id)->where('user_id', auth()->id())->get());
     }
 
     private function reportsProduct(array $data): \Illuminate\Testing\TestResponse
     {
         return $this->postJson(route('api.products.reports.store', $this->product), $data);
+    }
+
+    private function getReportData(string $description): array
+    {
+        return [
+            'report_type_id' => $this->reportType->id,
+            'user_id' => auth()->id(),
+            'description' => $description,
+        ];
     }
 }
