@@ -59,7 +59,7 @@ class UserSuspendControllerTest extends TestCase
     {
         $this->suspendUser([
             'reason' => '測試原因',
-        ])->assertStatus(422)
+        ])->assertUnprocessable()
             ->assertJsonValidationErrors('duration');
     }
 
@@ -68,7 +68,7 @@ class UserSuspendControllerTest extends TestCase
         $this->suspendUser([
             'duration' => 'not an integer',
             'reason' => '測試原因',
-        ])->assertStatus(422)
+        ])->assertUnprocessable()
             ->assertJsonValidationErrors('duration');
     }
 
@@ -77,7 +77,7 @@ class UserSuspendControllerTest extends TestCase
         $this->suspendUser([
             'duration' => -10,
             'reason' => '測試原因',
-        ])->assertStatus(422)
+        ])->assertUnprocessable()
             ->assertJsonValidationErrors('duration');
     }
 
@@ -88,7 +88,7 @@ class UserSuspendControllerTest extends TestCase
         $this->suspendUser([
             'duration' => 3600,
             'reason' => $longReason,
-        ])->assertStatus(422)
+        ])->assertUnprocessable()
             ->assertJsonValidationErrors('reason');
     }
 

@@ -50,7 +50,7 @@ class ProductReportControllerTest extends TestCase
     {
         $this->reportsProduct([
             'description' => '測試描述',
-        ])->assertStatus(422)
+        ])->assertUnprocessable()
             ->assertJsonValidationErrors(['report_type_id']);
     }
 
@@ -59,7 +59,7 @@ class ProductReportControllerTest extends TestCase
         $this->reportsProduct([
             'report_type_id' => 999,
             'description' => '測試描述',
-        ])->assertStatus(422)
+        ])->assertUnprocessable()
             ->assertJsonValidationErrors(['report_type_id']);
     }
 
@@ -69,7 +69,7 @@ class ProductReportControllerTest extends TestCase
         $this->reportsProduct([
             'report_type_id' => $this->reportType->id,
             'description' => '測試描述',
-        ])->assertStatus(422)
+        ])->assertUnprocessable()
             ->assertJsonValidationErrors(['report_type_id']);
     }
 
@@ -77,7 +77,7 @@ class ProductReportControllerTest extends TestCase
     {
         $this->reportsProduct([
             'report_type_id' => $this->reportType->id,
-        ])->assertStatus(422)
+        ])->assertUnprocessable()
             ->assertJsonValidationErrors(['description']);
     }
 
@@ -88,7 +88,7 @@ class ProductReportControllerTest extends TestCase
         $this->reportsProduct([
             'report_type_id' => $this->reportType->id,
             'description' => $longDescription,
-        ])->assertStatus(422)
+        ])->assertUnprocessable()
             ->assertJsonValidationErrors(['description']);
     }
 

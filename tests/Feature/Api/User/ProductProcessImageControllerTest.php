@@ -39,7 +39,7 @@ class ProductProcessImageControllerTest extends TestCase
     public function test_it_fails_when_image_is_missing()
     {
         $this->processImage([])
-            ->assertStatus(422)
+            ->assertUnprocessable()
             ->assertJsonValidationErrors(['image']);
     }
 
@@ -49,7 +49,7 @@ class ProductProcessImageControllerTest extends TestCase
 
         $this->processImage([
             'image' => $file,
-        ])->assertStatus(422)
+        ])->assertUnprocessable()
             ->assertJsonValidationErrors(['image']);
     }
 
@@ -59,7 +59,7 @@ class ProductProcessImageControllerTest extends TestCase
 
         $this->processImage([
             'image' => $file,
-        ])->assertStatus(422)
+        ])->assertUnprocessable()
             ->assertJsonValidationErrors(['image']);
     }
 
@@ -91,7 +91,7 @@ class ProductProcessImageControllerTest extends TestCase
 
         $this->processImage([
             'image' => $file,
-        ])->assertStatus(422)
+        ])->assertUnprocessable()
             ->assertJsonValidationErrors(['image']);
     }
 
@@ -103,7 +103,7 @@ class ProductProcessImageControllerTest extends TestCase
 
         $this->processImage([
             'image' => $file,
-        ])->assertStatus(422)
+        ])->assertUnprocessable()
             ->assertJsonValidationErrors(['image']);
 
         Storage::disk('temp')->assertMissing('compressed_');
