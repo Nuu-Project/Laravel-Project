@@ -7,7 +7,6 @@ use App\Enums\Tagtype;
 use App\Models\Product;
 use App\Models\Tag;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
@@ -16,7 +15,6 @@ use Tests\TestCase;
 class ProductControllerTest extends TestCase
 {
     use RefreshDatabase;
-    use WithFaker;
 
     protected function setUp(): void
     {
@@ -25,11 +23,11 @@ class ProductControllerTest extends TestCase
         $this->createBasicTags();
     }
 
-    public function test_user_can_view_their_products()
+    public function test_user_can_view_their_products(): void
     {
-        Product::factory()
-            ->count(3)
-            ->create(['user_id' => auth()->id()]);
+        $this->createProduct([
+            'user_id' => auth()->id(),
+        ], 3);
 
         $this->get(route('user.products.index'))
             ->assertOk()
@@ -49,21 +47,31 @@ class ProductControllerTest extends TestCase
 
         // 創建必要的標籤
         $tags = [
-            'grade' => Tag::factory()->create(['type' => TagType::Grade->value]),
-            'semester' => Tag::factory()->create(['type' => TagType::Semester->value]),
-            'subject' => Tag::factory()->create(['type' => TagType::Subject->value]),
-            'category' => Tag::factory()->create(['type' => TagType::Category->value]),
+            'grade' => Tag::factory()->create([
+                'type' => TagType::Grade->value,
+            ]),
+            'semester' => Tag::factory()->create([
+                'type' => TagType::Semester->value,
+            ]),
+            'subject' => Tag::factory()->create([
+                'type' => TagType::Subject->value,
+            ]),
+            'category' => Tag::factory()->create([
+                'type' => TagType::Category->value,
+            ]),
         ];
 
         $data = [
-            'name' => $this->faker->text(20),
-            'price' => $this->faker->numberBetween(1, 1000),
-            'description' => $this->faker->text(50),
+            'name' => fake()->text(20),
+            'price' => fake()->numberBetween(1, 1000),
+            'description' => fake()->text(50),
             'grade' => $tags['grade']->id,
             'semester' => $tags['semester']->id,
             'subject' => $tags['subject']->id,
             'category' => $tags['category']->id,
-            'encrypted_image_path' => [encrypt($tempPath)],
+            'encrypted_image_path' => [
+                encrypt($tempPath),
+            ],
         ];
 
         $this->post(route('user.products.store'), $data)
@@ -106,11 +114,21 @@ class ProductControllerTest extends TestCase
         $product = Product::factory()->create();
 
         $routes = [
-            'get' => ['user.products.index', 'user.products.create', 'user.products.edit'],
-            'post' => ['user.products.store'],
-            'put' => ['user.products.update'],
-            'patch' => ['user.products.inactive'],
-            'delete' => ['user.products.destroy'],
+            'get' => [
+                'user.products.index', 'user.products.create', 'user.products.edit',
+            ],
+            'post' => [
+                'user.products.store',
+            ],
+            'put' => [
+                'user.products.update',
+            ],
+            'patch' => [
+                'user.products.inactive',
+            ],
+            'delete' => [
+                'user.products.destroy',
+            ],
         ];
 
         foreach ($routes as $method => $routeNames) {
@@ -163,5 +181,19 @@ class ProductControllerTest extends TestCase
         ]);
 
         $this->assertFalse(Cache::has('top_tags_products'));
+    }
+
+    private function getProductData(): array
+    {
+        return [
+            'name' => fake()->text(20),
+            'price' => fake()->numberBetween(1, 1000),
+            'description' => fake()->text(50),
+        ];
+    }
+
+    public function createProduct(array $state = []): Product
+    {
+        return Product::factory()->state($state)->create();
     }
 }
