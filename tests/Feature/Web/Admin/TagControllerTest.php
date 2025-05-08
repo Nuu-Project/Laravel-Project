@@ -87,13 +87,13 @@ class TagControllerTest extends TestCase
         $this->assertNotSoftDeleted($tag);
     }
 
-    private function createTag(array $attributes = []): Tag
+    private function createTag(array $state = []): Tag
     {
-        return Tag::factory()->create(array_merge([
+        return Tag::factory()->state($state + [
             'name' => ['zh_TW' => '測試標籤'],
             'slug' => ['zh_TW' => 'test'],
             'type' => 'test',
             'order_column' => 1,
-        ], $attributes));
+        ])->create();
     }
 }

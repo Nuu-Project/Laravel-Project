@@ -7,7 +7,6 @@ use App\Enums\Tagtype;
 use App\Models\Product;
 use App\Models\Tag;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
@@ -16,7 +15,6 @@ use Tests\TestCase;
 class ProductControllerTest extends TestCase
 {
     use RefreshDatabase;
-    use WithFaker;
 
     protected function setUp(): void
     {
@@ -25,11 +23,9 @@ class ProductControllerTest extends TestCase
         $this->createBasicTags();
     }
 
-    public function test_user_can_view_their_products()
+    public function test_user_can_view_their_products(): void
     {
-        Product::factory()
-            ->count(3)
-            ->create(['user_id' => auth()->id()]);
+        $this->createProduct(['user_id' => auth()->id()], 3);
 
         $this->get(route('user.products.index'))
             ->assertOk()
@@ -56,9 +52,9 @@ class ProductControllerTest extends TestCase
         ];
 
         $data = [
-            'name' => $this->faker->text(20),
-            'price' => $this->faker->numberBetween(1, 1000),
-            'description' => $this->faker->text(50),
+            'name' => fake()->text(20),
+            'price' => fake()->numberBetween(1, 1000),
+            'description' => fake()->text(50),
             'grade' => $tags['grade']->id,
             'semester' => $tags['semester']->id,
             'subject' => $tags['subject']->id,
@@ -163,5 +159,19 @@ class ProductControllerTest extends TestCase
         ]);
 
         $this->assertFalse(Cache::has('top_tags_products'));
+    }
+
+    private function getProductData(): array
+    {
+        return [
+            'name' => fake()->text(20),
+            'price' => fake()->numberBetween(1, 1000),
+            'description' => fake()->text(50),
+        ];
+    }
+
+    public function createProduct(array $state = []): Product
+    {
+        return Product::factory()->state($state)->create();
     }
 }

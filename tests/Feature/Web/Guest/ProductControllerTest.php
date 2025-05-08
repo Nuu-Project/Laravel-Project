@@ -15,19 +15,7 @@ class ProductControllerTest extends TestCase
 {
     use RefreshDatabase;
 
-    private function createProductWithTag(array $tagData = []): Product
-    {
-        $product = $this->createProductWithStatus(ProductStatus::Active);
-        $tag = Tag::factory()->create(array_merge([
-            'type' => 'product',
-        ], $tagData));
-
-        $product->tags()->attach($tag);
-
-        return $product;
-    }
-
-    public function test_can_view_active_products()
+    public function test_can_view_active_products(): void
     {
         $active = $this->createProductWithStatus(ProductStatus::Active);
         $inactive = $this->createProductWithStatus(ProductStatus::Inactive);
@@ -35,8 +23,8 @@ class ProductControllerTest extends TestCase
         $response = $this->get(route('products.index'))
             ->assertOk()
             ->assertViewIs('guest.products.index')
-            ->assertSee($active->name)
-            ->assertDontSee($inactive->name);
+            ->assertSeeText($active->name)
+            ->assertDontSeeText($inactive->name, false);
 
         $products = $response->viewData('products');
 
@@ -46,8 +34,8 @@ class ProductControllerTest extends TestCase
 
     public function test_can_filter_products_by_tags()
     {
-        $tag1 = Tag::factory()->create(['name' => ['zh_TW' => '標籤1']]);
-        $tag2 = Tag::factory()->create(['name' => ['zh_TW' => '標籤2']]);
+        $tag1 = $this->createTag(['name' => ['zh_TW' => '標籤1']]);
+        $tag2 = $this->createTag(['name' => ['zh_TW' => '標籤2']]);
 
         $product1 = $this->createProductWithStatus(ProductStatus::Active);
         $product2 = $this->createProductWithStatus(ProductStatus::Active);
@@ -90,11 +78,27 @@ class ProductControllerTest extends TestCase
         $this->get(route('products.show', $product))->assertNotFound();
     }
 
+    private function createProductWithTag(array $tagData = []): Product
+    {
+        $product = $this->createProductWithStatus(ProductStatus::Active);
+        $tag = $this->createTag($tagData);
+        $product->tags()->attach($tag);
+
+        return $product;
+    }
+
     private function createProductWithStatus(ProductStatus $status): Product
     {
         return Product::factory()->create([
             'status' => $status,
             'user_id' => User::factory()->create()->id,
         ]);
+    }
+
+    private function createTag(array $state = []): Tag
+    {
+        return Tag::factory()->state($state + [
+            'type' => 'product',
+        ])->create();
     }
 }
