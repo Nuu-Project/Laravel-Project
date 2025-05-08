@@ -3,7 +3,6 @@
 namespace Tests\Feature\Web\Admin;
 
 use App\Models\Message;
-use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -69,8 +68,7 @@ class MessageControllerTest extends TestCase
 
     public function test_non_admin_user_cannot_access_messages_page()
     {
-        /** @var User $user */
-        $user = User::factory()->create([
+        $user = $this->createUser([
             'name' => 'John Doe',
         ]);
 
@@ -93,8 +91,7 @@ class MessageControllerTest extends TestCase
     {
         $this->get(route('admin.messages.index', [
             'filter[invalid]' => 'test',
-        ]))
-            ->assertStatus(400);
+        ]))->assertBadRequest();
     }
 
     public function createMessage(array $state = []): Message

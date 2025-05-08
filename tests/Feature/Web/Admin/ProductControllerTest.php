@@ -4,7 +4,6 @@ namespace Tests\Feature\Web\Admin;
 
 use App\Enums\ProductStatus;
 use App\Models\Product;
-use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -48,7 +47,7 @@ class ProductControllerTest extends TestCase
 
     public function test_admin_can_filter_products_by_user_name()
     {
-        $user = User::factory()->create([
+        $user = $this->createUser([
             'name' => 'John Doe',
         ]);
 
@@ -104,7 +103,7 @@ class ProductControllerTest extends TestCase
     {
         $this->get(route('admin.products.index', [
             'filter[invalid]' => 'test',
-        ]))->assertStatus(400);
+        ]))->assertBadRequest();
     }
 
     public function createProduct(array $state = []): Product
