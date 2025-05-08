@@ -20,9 +20,7 @@ class ProductReportControllerTest extends TestCase
 
         $this->actingAsUser();
         $this->product = Product::factory()->create();
-        $this->reportType = ReportType::factory()->create([
-            'type' => ReportTypeEnum::Product->value,
-        ]);
+        $this->reportType = $this->createReportType(ReportTypeEnum::Product);
     }
 
     public function test_it_can_store_a_product_report_successfully(): void
@@ -65,7 +63,7 @@ class ProductReportControllerTest extends TestCase
 
     public function test_it_validates_report_type_id_is_for_product(): void
     {
-        $this->reportType = ReportType::factory()->create(['type' => ReportTypeEnum::Message->value]);
+        $this->reportType = $this->createReportType(ReportTypeEnum::Message);
         $this->reportsProduct([
             'report_type_id' => $this->reportType->id,
             'description' => '測試描述',
@@ -119,5 +117,11 @@ class ProductReportControllerTest extends TestCase
             'user_id' => auth()->id(),
             'description' => $description,
         ];
+    }
+    private function createReportType(ReportTypeEnum $type): ReportType
+    {
+        return ReportType::factory()->create([
+            'type' => $type->value,
+        ]);
     }
 }

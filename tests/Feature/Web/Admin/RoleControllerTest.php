@@ -37,8 +37,8 @@ class RoleControllerTest extends TestCase
 
     public function test_create_view_filters_users_by_name_or_email()
     {
-        $matching = User::factory()->create(['name' => 'John Doe']);
-        $nonMatching = User::factory()->create(['name' => 'Jane Doe']);
+        $matching = $this->makeUser(['name' => 'John Doe']);
+        $nonMatching = $this->makeUser(['name' => 'Jane Doe']);
 
         $matching->roles()->detach();
         $nonMatching->roles()->detach();
@@ -50,7 +50,7 @@ class RoleControllerTest extends TestCase
 
     public function test_roles_can_be_assigned_to_users()
     {
-        $users = User::factory()->count(2)->create();
+        $users = $this->makeUsers(2);
 
         $this->post(route('admin.roles.store'), ['user_ids' => $users->pluck('id')->toArray()])
             ->assertRedirect(route('admin.roles.index'))
@@ -77,7 +77,7 @@ class RoleControllerTest extends TestCase
 
     public function test_assign_validation_fails_with_invalid_user_ids()
     {
-        $valid = User::factory()->create();
+        $valid = $this->makeUser();
         $invalidId = 999999;
 
         $this->post(route('admin.roles.store'), ['user_ids' => [$valid->id, $invalidId]])
@@ -87,7 +87,7 @@ class RoleControllerTest extends TestCase
 
     public function test_roles_can_be_removed_from_users()
     {
-        $target = User::factory()->create()->assignRole($this->adminRole);
+        $target = $this->makeUser()->assignRole($this->adminRole);
 
         $this->put(route('admin.roles.update', ['role' => 'admin']), ['selected_ids' => [$target->id]])
             ->assertRedirect(route('admin.roles.index'))
@@ -112,7 +112,7 @@ class RoleControllerTest extends TestCase
 
     public function test_remove_validation_fails_with_invalid_selected_ids()
     {
-        $valid = User::factory()->create();
+        $valid = $this->makeUser();
         $invalidId = 999999;
 
         $this->put(route('admin.roles.update', ['role' => 'admin']), ['selected_ids' => [$valid->id, $invalidId]])
@@ -130,7 +130,7 @@ class RoleControllerTest extends TestCase
 
     public function test_removing_role_from_user_without_role_succeeds()
     {
-        $user = User::factory()->create();
+        $user = $this->makeUser();
 
         $this->assertFalse($user->hasRole('admin'));
 
@@ -139,5 +139,15 @@ class RoleControllerTest extends TestCase
             ->assertSessionHas('success');
 
         $this->assertFalse($user->fresh()->hasRole('admin'));
+    }
+
+    private function makeUser(array $attributes = []): User
+    {
+        return User::factory()->create($attributes);
+    }
+
+    private function makeUsers(int $count): \Illuminate\Support\Collection
+    {
+        return User::factory()->count($count)->create();
     }
 }
