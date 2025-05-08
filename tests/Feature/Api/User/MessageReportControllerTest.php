@@ -122,10 +122,10 @@ class MessageReportControllerTest extends TestCase
         return $this->postJson(route('api.messages.reports.store', $this->message), $data);
     }
 
-    private function createReportType(array $stase = []): ReportType
+    private function createReportType(array $state = []): ReportType
     {
         return ReportType::factory()
-            ->state($stase + [
+            ->state($state + [
                 'type' => ReportTypeEnum::Message->value,
             ])->create();
     }

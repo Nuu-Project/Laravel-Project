@@ -83,10 +83,10 @@ class ReportControllerTest extends TestCase
         });
     }
 
-    private function createReportType(array $stase = []): ReportType
+    private function createReportType(array $state = []): ReportType
     {
         return ReportType::factory()
-            ->state($stase + [
+            ->state($state + [
                 'type' => ReportTypeEnum::Product->value,
             ])->create();
     }

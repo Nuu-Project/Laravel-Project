@@ -38,7 +38,7 @@ class UserControllerTest extends TestCase
     public function test_active_user(): void
     {
         $user = $this->createUser([
-            'time_limit' => now()->addDays(7)
+            'time_limit' => now()->addDays(7),
         ]);
 
         $this->patch(route('admin.users.active', $user))

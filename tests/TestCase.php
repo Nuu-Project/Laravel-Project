@@ -25,10 +25,10 @@ abstract class TestCase extends BaseTestCase
         }
     }
 
-    public function createUser(array $stase = []): User
+    public function createUser(array $state = []): User
     {
         return User::factory()
-            ->state($stase + [
+            ->state($state + [
                 'name' => 'Test User',
                 'email' => 'U9999999@o365.nuu.edu.tw',
                 'time_limit' => null,
