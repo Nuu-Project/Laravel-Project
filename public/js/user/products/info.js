@@ -64,6 +64,119 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
+    // 處理展開/收縮留言功能
+    const toggleButtons = document.querySelectorAll('.toggle-replies');
+    
+    toggleButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const messageId = this.getAttribute('data-message-id');
+            const isExpanded = this.getAttribute('data-is-expanded') === 'true';
+            const totalHidden = this.getAttribute('data-total-hidden');
+            
+            // 獲取該留言下所有回覆
+            const replies = document.querySelectorAll(`.reply-item[data-message-id="${messageId}"]`);
+            
+            if (isExpanded) {
+                // 收起留言，只顯示前4則
+                replies.forEach((reply, index) => {
+                    if (index >= 4) {
+                        reply.classList.add('hidden');
+                    }
+                });
+                
+                // 更新按鈕文字和狀態
+                this.textContent = `查看更多留言 (${totalHidden})`;
+                this.setAttribute('data-is-expanded', 'false');
+            } else {
+                // 展開所有留言
+                replies.forEach(reply => {
+                    reply.classList.remove('hidden');
+                });
+                
+                // 更新按鈕文字和狀態
+                this.textContent = '縮小留言區';
+                this.setAttribute('data-is-expanded', 'true');
+            }
+        });
+    });
+    
+    // 初始化隱藏回覆表單
+    const replyForms = document.querySelectorAll('[id^="replyForm"]');
+    replyForms.forEach(form => {
+        form.style.display = 'none';
+    });
+
+    if (window.location.hash) {
+        const messageId = window.location.hash;
+        const messageElement = document.querySelector(messageId);
+
+        if (messageElement) {
+            const urlParams = new URLSearchParams(window.location.search);
+            const scrollCenter = urlParams.get('scrollCenter');
+            const highlightReplyId = urlParams.get('highlight');
+
+            if (highlightReplyId) {
+                const replyElement = document.getElementById(`reply-${highlightReplyId}`);
+
+                if (replyElement) {
+                    setTimeout(() => {
+                        if (scrollCenter === 'true') {
+                            const rect = messageElement.getBoundingClientRect();
+                            const windowHeight = window.innerHeight;
+                            const elementHeight = rect.height;
+                            const offsetY = rect.top + window.pageYOffset - (windowHeight / 4);
+
+                            window.scrollTo({
+                                top: offsetY,
+                                behavior: 'smooth'
+                            });
+                        } else {
+                            messageElement.scrollIntoView({ behavior: 'smooth' });
+                        }
+
+                        replyElement.style.transition = 'background-color 0.5s';
+                        replyElement.style.backgroundColor = 'rgba(255, 255, 0, 0.3)';
+
+                        setTimeout(() => {
+                            const replyRect = replyElement.getBoundingClientRect();
+                            if (replyRect.top < 0 || replyRect.bottom > window.innerHeight) {
+                                replyElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                            }
+
+                            setTimeout(() => {
+                                replyElement.style.backgroundColor = '';
+                            }, 2000);
+                        }, 300);
+                    }, 300);
+                }
+            } else if (scrollCenter === 'true') {
+                setTimeout(() => {
+                    const rect = messageElement.getBoundingClientRect();
+                    const windowHeight = window.innerHeight;
+                    const elementHeight = rect.height;
+                    const offsetY = rect.top + window.pageYOffset - (windowHeight / 2) + (elementHeight / 2);
+
+                    window.scrollTo({
+                        top: offsetY,
+                        behavior: 'smooth'
+                    });
+
+                    messageElement.style.transition = 'background-color 0.5s';
+                    messageElement.style.backgroundColor = 'rgba(255, 255, 0, 0.3)';
+                    setTimeout(() => {
+                        messageElement.style.backgroundColor = '';
+                    }, 2000);
+                }, 300);
+            } else {
+                messageElement.scrollIntoView({ behavior: 'smooth' });
+
+                messageElement.classList.add('highlight-message');
+                setTimeout(() => {
+                    messageElement.classList.remove('highlight-message');
+                }, 2000);
+            }
+        }
+    }
 });
 
 window.addEventListener('load', function () {
@@ -161,86 +274,10 @@ document.body.addEventListener('click', function (e) {
         handleReport(e, '留言', messageId);
     }
 });
+
+// 更新 toggleReplyForm 函數，以便可以全局訪問
 function toggleReplyForm(messageId) {
     const form = document.getElementById(`replyForm${messageId}`);
-    form.classList.toggle('hidden');
-    const textarea = form.querySelector('textarea');
-    if (!form.classList.contains('hidden')) {
-        textarea.focus();
-    }
+    form.style.display = form.style.display === 'none' || form.style.display === '' ? 'block' : 'none';
 }
-
-document.addEventListener('DOMContentLoaded', function () {
-    if (window.location.hash) {
-        const messageId = window.location.hash;
-        const messageElement = document.querySelector(messageId);
-
-        if (messageElement) {
-            const urlParams = new URLSearchParams(window.location.search);
-            const scrollCenter = urlParams.get('scrollCenter');
-            const highlightReplyId = urlParams.get('highlight');
-
-            if (highlightReplyId) {
-                const replyElement = document.getElementById(`reply-${highlightReplyId}`);
-
-                if (replyElement) {
-                    setTimeout(() => {
-                        if (scrollCenter === 'true') {
-                            const rect = messageElement.getBoundingClientRect();
-                            const windowHeight = window.innerHeight;
-                            const elementHeight = rect.height;
-                            const offsetY = rect.top + window.pageYOffset - (windowHeight / 4);
-
-                            window.scrollTo({
-                                top: offsetY,
-                                behavior: 'smooth'
-                            });
-                        } else {
-                            messageElement.scrollIntoView({ behavior: 'smooth' });
-                        }
-
-                        replyElement.style.transition = 'background-color 0.5s';
-                        replyElement.style.backgroundColor = 'rgba(255, 255, 0, 0.3)';
-
-                        setTimeout(() => {
-                            const replyRect = replyElement.getBoundingClientRect();
-                            if (replyRect.top < 0 || replyRect.bottom > window.innerHeight) {
-                                replyElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                            }
-
-                            setTimeout(() => {
-                                replyElement.style.backgroundColor = '';
-                            }, 2000);
-                        }, 300);
-                    }, 300);
-                }
-            } else if (scrollCenter === 'true') {
-                setTimeout(() => {
-                    const rect = messageElement.getBoundingClientRect();
-                    const windowHeight = window.innerHeight;
-                    const elementHeight = rect.height;
-                    const offsetY = rect.top + window.pageYOffset - (windowHeight / 2) + (elementHeight / 2);
-
-                    window.scrollTo({
-                        top: offsetY,
-                        behavior: 'smooth'
-                    });
-
-                    messageElement.style.transition = 'background-color 0.5s';
-                    messageElement.style.backgroundColor = 'rgba(255, 255, 0, 0.3)';
-                    setTimeout(() => {
-                        messageElement.style.backgroundColor = '';
-                    }, 2000);
-                }, 300);
-            } else {
-                messageElement.scrollIntoView({ behavior: 'smooth' });
-
-                messageElement.classList.add('highlight-message');
-                setTimeout(() => {
-                    messageElement.classList.remove('highlight-message');
-                }, 2000);
-            }
-        }
-    }
-});
 
