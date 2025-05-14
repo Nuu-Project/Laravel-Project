@@ -18,10 +18,10 @@
                 </x-div.red>
             @endif
 
-            <div class="flex items-center justify-between mb-6">
+            <div class="flex flex-col md:flex-row md:justify-between md:items-center gap-4">
                 <x-h.h3>我的商品</x-h.h3>
                 <form action="{{ route('user.products.index') }}" method="GET">
-                    <div>
+                    <div class="flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-2 items-stretch md:items-center">
                         <x-input.search type="text" name="filter[name]" placeholder="搜尋商品名稱..."
                             value="{{ request('filter.name') }}">
                         </x-input.search>
@@ -42,7 +42,7 @@
                         @endforelse
                     </div>
 
-                    <div class="mt-6">
+                    <div>
                         {{ $userProducts->links() }}
                     </div>
                 </main>
