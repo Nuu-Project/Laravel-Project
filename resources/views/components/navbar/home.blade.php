@@ -37,7 +37,7 @@
                     </ul>
                 @endauth
 
-                <div class="lg:flex flex-col md:flex-row md:items-center text-center md:space-x-6"
+                <div class="lg:flex flex-col md:flex-row md:items-center"
                     :class="{ 'hidden': !navbarOpen, 'flex': navbarOpen }">
                     @auth
                         <x-dropdown align="right" width="48">
@@ -86,8 +86,10 @@
                             </x-slot>
                         </x-dropdown>
                     @else
-                        <x-a.register href="/register">註冊</x-a.register>
-                        <x-a.login href="/login">登入</x-a.login>
+                        <x-div.navbar>
+                            <x-a.register href="/register">註冊</x-a.register>
+                            <x-a.login href="/login">登入</x-a.login>
+                        </x-div.navbar>
                     @endauth
                 </div>
             </nav>
