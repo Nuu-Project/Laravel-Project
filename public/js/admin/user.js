@@ -64,7 +64,7 @@ function showSuspendDialog(userId, userName) {
         confirmButtonText: '停用',
         cancelButtonText: '取消',
         showCloseButton: true,
-        footer: '<a href="#">瞭解更多看要不要用規則之類的</a>',
+        footer: '<a href="https://reurl.cc/YYb0gO" target="_blank">規則</a>',
         customClass: {
             container: 'swal-compact',
             popup: 'swal-compact-popup',
