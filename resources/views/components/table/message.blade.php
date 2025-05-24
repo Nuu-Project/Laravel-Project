@@ -22,11 +22,11 @@
                     <div class="flex items-center">
                         <div class="flex-shrink-0 h-10 w-10">
                             <img class="h-10 w-10 rounded-full" src="{{ asset('images/account.png') }}"
-                                alt="{{ $message->user->name ?? '未知用戶' }}">
+                                alt="{{ $message->user->name }}">
                         </div>
                         <div class="ml-4">
                             <div class="text-sm font-medium text-gray-900">
-                                {{ $message->user->name ?? '未知用戶' }}
+                                {{ $message->user->name }}
                             </div>
                         </div>
                     </div>
@@ -35,8 +35,8 @@
                     {{ $message->product->name ?? 'No associated product' }}</td>
                 <td class="px-6 py-4 text-sm text-gray-500">
                     <div class="message-container">
-                        <span class="message-content">{{ $message->message ?? '無內容' }}</span>
-                        @if (isset($message->message) && mb_strlen($message->message) > 15)
+                        <span class="message-content">{{ $message->message }}</span>
+                        @if (mb_strlen($message->message) > 15)
                             <button class="expand-btn ml-2 text-blue-500 hover:text-blue-700">
                                 <svg class="w-4 h-4 inline-block transform transition-transform duration-200"
                                     fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -48,42 +48,38 @@
                     </div>
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {{ isset($message->created_at) ? $message->created_at->format('Y-m-d H:i:s') : '未知時間' }}</td>
+                    {{ $message->created_at->format('Y-m-d H:i:s') }}</td>
 
                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                     <div class="flex items-center space-x-2">
                         @php
                             $isReply = $message->reply_to_id !== null;
-                            $url = '#';
 
-                            if ($isReply && $message->product_id) {
+                            if ($isReply) {
                                 $parentMessage = \App\Models\Message::find($message->reply_to_id);
+                                $parentId = $parentMessage ? $parentMessage->id : null;
+                                $position = \Illuminate\Support\Facades\DB::table('messages')
+                                    ->whereNull('reply_to_id')
+                                    ->where('product_id', $message->product_id)
+                                    ->where(function ($query) use ($parentMessage) {
+                                        $query
+                                            ->where('created_at', '<', $parentMessage->created_at)
+                                            ->orWhere(function ($q) use ($parentMessage) {
+                                                $q->where('created_at', '=', $parentMessage->created_at)->where(
+                                                    'id',
+                                                    '<=',
+                                                    $parentMessage->id,
+                                                );
+                                            });
+                                    })
+                                    ->count();
+                                $page = ceil(($position + 1) / 10);
 
-                                if ($parentMessage) {
-                                    $parentId = $parentMessage->id;
-                                    $position = \Illuminate\Support\Facades\DB::table('messages')
-                                        ->whereNull('reply_to_id')
-                                        ->where('product_id', $message->product_id)
-                                        ->where(function ($query) use ($parentMessage) {
-                                            $query
-                                                ->where('created_at', '<', $parentMessage->created_at)
-                                                ->orWhere(function ($q) use ($parentMessage) {
-                                                    $q->where('created_at', '=', $parentMessage->created_at)->where(
-                                                        'id',
-                                                        '<=',
-                                                        $parentMessage->id,
-                                                    );
-                                                });
-                                        })
-                                        ->count();
-                                    $page = ceil(($position + 1) / 10);
-
-                                    //
-                                    $url =
-                                        route('products.show', ['product' => $message->product_id]) .
-                                        "?page={$page}&scrollCenter=true&highlight={$message->id}#message-{$parentId}";
-                                }
-                            } elseif ($message->product_id) {
+                                //
+                                $url =
+                                    route('products.show', ['product' => $message->product_id]) .
+                                    "?page={$page}&scrollCenter=true&highlight={$message->id}#message-{$parentId}";
+                            } else {
                                 $position = \Illuminate\Support\Facades\DB::table('messages')
                                     ->whereNull('reply_to_id')
                                     ->where('product_id', $message->product_id)
