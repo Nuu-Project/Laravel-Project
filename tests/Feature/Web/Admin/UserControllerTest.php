@@ -18,11 +18,11 @@ class UserControllerTest extends TestCase
 
     public function test_index_displays_users_with_filters(): void
     {
-        $user1 = User::factory()->create([
+        $user1 = $this->createUser([
             'name' => 'Alice',
             'email' => 'alice@example.com',
         ]);
-        $user2 = User::factory()->create([
+        $user2 = $this->createUser([
             'name' => 'Bob',
             'email' => 'bob@example.com',
         ]);
@@ -37,7 +37,9 @@ class UserControllerTest extends TestCase
 
     public function test_active_user(): void
     {
-        $user = User::factory()->create(['time_limit' => null]);
+        $user = $this->createUser([
+            'time_limit' => now()->addDays(7),
+        ]);
 
         $this->patch(route('admin.users.active', $user))
             ->assertRedirect(route('admin.users.index'))

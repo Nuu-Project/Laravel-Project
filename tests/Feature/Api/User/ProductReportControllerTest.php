@@ -20,9 +20,7 @@ class ProductReportControllerTest extends TestCase
 
         $this->actingAsUser();
         $this->product = Product::factory()->create();
-        $this->reportType = ReportType::factory()->create([
-            'type' => ReportTypeEnum::Product->value,
-        ]);
+        $this->reportType = $this->createReportType();
     }
 
     public function test_it_can_store_a_product_report_successfully(): void
@@ -50,7 +48,7 @@ class ProductReportControllerTest extends TestCase
     {
         $this->reportsProduct([
             'description' => '測試描述',
-        ])->assertStatus(422)
+        ])->assertUnprocessable()
             ->assertJsonValidationErrors(['report_type_id']);
     }
 
@@ -59,17 +57,19 @@ class ProductReportControllerTest extends TestCase
         $this->reportsProduct([
             'report_type_id' => 999,
             'description' => '測試描述',
-        ])->assertStatus(422)
+        ])->assertUnprocessable()
             ->assertJsonValidationErrors(['report_type_id']);
     }
 
     public function test_it_validates_report_type_id_is_for_product(): void
     {
-        $this->reportType = ReportType::factory()->create(['type' => ReportTypeEnum::Message->value]);
+        $this->reportType = $this->createReportType([
+            'type' => ReportTypeEnum::Message->value,
+        ]);
         $this->reportsProduct([
             'report_type_id' => $this->reportType->id,
             'description' => '測試描述',
-        ])->assertStatus(422)
+        ])->assertUnprocessable()
             ->assertJsonValidationErrors(['report_type_id']);
     }
 
@@ -77,7 +77,7 @@ class ProductReportControllerTest extends TestCase
     {
         $this->reportsProduct([
             'report_type_id' => $this->reportType->id,
-        ])->assertStatus(422)
+        ])->assertUnprocessable()
             ->assertJsonValidationErrors(['description']);
     }
 
@@ -88,7 +88,7 @@ class ProductReportControllerTest extends TestCase
         $this->reportsProduct([
             'report_type_id' => $this->reportType->id,
             'description' => $longDescription,
-        ])->assertStatus(422)
+        ])->assertUnprocessable()
             ->assertJsonValidationErrors(['description']);
     }
 
@@ -119,5 +119,13 @@ class ProductReportControllerTest extends TestCase
             'user_id' => auth()->id(),
             'description' => $description,
         ];
+    }
+
+    private function createReportType(array $state = []): ReportType
+    {
+        return ReportType::factory()
+            ->state($state + [
+                'type' => ReportTypeEnum::Product->value,
+            ])->create();
     }
 }

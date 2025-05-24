@@ -3,7 +3,6 @@
 namespace Tests\Feature\Web\Admin;
 
 use App\Models\Message;
-use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -14,42 +13,47 @@ class MessageControllerTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-
         $this->actingAsAdmin();
     }
 
     public function test_admin_can_view_messages_page()
     {
-        $admin = User::factory()->create()->assignRole('admin');
-
-        $this->actingAs($admin)
-            ->get(route('admin.messages.index'))
-            ->assertStatus(200);
+        $this->get(route('admin.messages.index'))
+            ->assertOk();
     }
 
     public function test_admin_can_see_messages_on_index_page()
     {
-        $admin = User::factory()->create()->assignRole('admin');
-        $message = Message::factory()->create();
+        $message = $this->createMessage();
 
-        $this->actingAs($admin)
-            ->get(route('admin.messages.index'))
+        $this->get(route('admin.messages.index'))
+            ->assertOk()
             ->assertViewIs('admin.messages.index')
             ->assertSee($message->content);
     }
 
     public function test_admin_can_filter_messages_by_user_name()
     {
-        $user1 = User::factory()->create(['name' => 'Alice']);
-        $user2 = User::factory()->create(['name' => 'Bob']);
-        $admin = User::factory()->create()->assignRole('admin');
+        $user1 = $this->createUser([
+            'name' => 'Alice',
+        ]);
 
-        $message1 = Message::factory()->create(['user_id' => $user1->id]);
-        $message2 = Message::factory()->create(['user_id' => $user2->id]);
+        $user2 = $this->createUser([
+            'name' => 'Bob',
+        ]);
 
-        $this->actingAs($admin)
-            ->get(route('admin.messages.index', ['filter[name]' => 'Alice']))
-            ->assertSuccessful()
+        $message1 = $this->createMessage([
+            'user_id' => $user1->id,
+        ]);
+
+        $message2 = $this->createMessage([
+            'user_id' => $user2->id,
+        ]);
+
+        $this->get(route('admin.messages.index', [
+            'filter[name]' => 'Alice',
+        ]))
+            ->assertOk()
             ->assertSee($message1->content)
             ->assertDontSee($message2->content);
     }
@@ -64,8 +68,10 @@ class MessageControllerTest extends TestCase
 
     public function test_non_admin_user_cannot_access_messages_page()
     {
-        /** @var User $user */
-        $user = User::factory()->create();
+        $user = $this->createUser([
+            'name' => 'John Doe',
+        ]);
+
         $this->actingAs($user)
             ->get(route('admin.messages.index'))
             ->assertForbidden();
@@ -73,22 +79,23 @@ class MessageControllerTest extends TestCase
 
     public function test_messages_are_paginated()
     {
-        $admin = User::factory()->create()->assignRole('admin');
         Message::factory()->count(25)->create();
 
-        $this->actingAs($admin)
-            ->get(route('admin.messages.index'))
+        $this->get(route('admin.messages.index'))
             ->assertViewHas('messages', function ($paginator) {
-                return $paginator->count() === 10; // 假設每頁 10 筆
+                return $paginator->count() === 10;
             });
     }
 
     public function test_invalid_filter_parameter_does_not_break_page()
     {
-        $admin = User::factory()->create()->assignRole('admin');
+        $this->get(route('admin.messages.index', [
+            'filter[invalid]' => 'test',
+        ]))->assertBadRequest();
+    }
 
-        $this->actingAs($admin)
-            ->get(route('admin.messages.index', ['filter[invalid]' => 'test']))
-            ->assertStatus(400); // 改為預期回傳 400 Bad Request
+    public function createMessage(array $state = []): Message
+    {
+        return Message::factory()->state($state)->create();
     }
 }

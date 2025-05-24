@@ -51,7 +51,7 @@ class MessageReportControllerTest extends TestCase
             'description' => '測試描述',
         ]);
 
-        $response->assertStatus(422)
+        $response->assertUnprocessable()
             ->assertJsonValidationErrors(['report_type_id']);
     }
 
@@ -62,7 +62,7 @@ class MessageReportControllerTest extends TestCase
             'description' => '測試描述',
         ]);
 
-        $response->assertStatus(422)
+        $response->assertUnprocessable()
             ->assertJsonValidationErrors(['report_type_id']);
     }
 
@@ -77,7 +77,7 @@ class MessageReportControllerTest extends TestCase
             'description' => '測試描述',
         ]);
 
-        $response->assertStatus(422)
+        $response->assertUnprocessable()
             ->assertJsonValidationErrors(['report_type_id']);
     }
 
@@ -87,7 +87,7 @@ class MessageReportControllerTest extends TestCase
             'report_type_id' => $this->reportType->id,
         ]);
 
-        $response->assertStatus(422)
+        $response->assertUnprocessable()
             ->assertJsonValidationErrors(['description']);
     }
 
@@ -98,7 +98,7 @@ class MessageReportControllerTest extends TestCase
             'description' => str_repeat('a', 256),
         ]);
 
-        $response->assertStatus(422)
+        $response->assertUnprocessable()
             ->assertJsonValidationErrors(['description']);
     }
 
@@ -122,10 +122,10 @@ class MessageReportControllerTest extends TestCase
         return $this->postJson(route('api.messages.reports.store', $this->message), $data);
     }
 
-    private function createReportType(array $stase = []): ReportType
+    private function createReportType(array $state = []): ReportType
     {
         return ReportType::factory()
-            ->state($stase + [
+            ->state($state + [
                 'type' => ReportTypeEnum::Message->value,
             ])->create();
     }

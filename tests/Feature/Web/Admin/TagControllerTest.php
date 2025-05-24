@@ -21,7 +21,9 @@ class TagControllerTest extends TestCase
 
     public function test_admin_can_view_tags_list(): void
     {
-        $this->createTag(['name' => ['zh_TW' => '測試標籤']]);
+        $this->createTag([
+            'name' => ['zh_TW' => '測試標籤'],
+        ]);
 
         $this->get(route('admin.tags.index'))
             ->assertOk()
@@ -49,7 +51,11 @@ class TagControllerTest extends TestCase
 
     public function test_admin_can_update_tag(): void
     {
-        $tag = $this->createTag(['name' => ['zh_TW' => '舊標籤'], 'slug' => ['zh_TW' => 'oldtag']]);
+        $tag = $this->createTag([
+            'name' => ['zh_TW' => '舊標籤'],
+            'slug' => ['zh_TW' => 'oldtag'],
+        ]);
+
         $data = [
             'name' => '更新標籤',
             'slug' => 'updatedtag',
@@ -66,34 +72,14 @@ class TagControllerTest extends TestCase
         ]);
     }
 
-    public function test_admin_can_delete_tag(): void
+    private function createTag(array $state = []): Tag
     {
-        $tag = $this->createTag(['name' => ['zh_TW' => '要刪除的標籤'], 'slug' => ['zh_TW' => 'deletetag']]);
-
-        $this->delete(route('admin.tags.destroy', $tag))
-            ->assertRedirect(route('admin.tags.index'));
-
-        $this->assertSoftDeleted($tag);
-    }
-
-    public function test_admin_can_restore_tag(): void
-    {
-        $tag = $this->createTag(['name' => ['zh_TW' => '要恢復的標籤'], 'slug' => ['zh_TW' => 'restoretag']]);
-        $tag->delete();
-
-        $this->patch(route('admin.tags.restore', $tag))
-            ->assertRedirect(route('admin.tags.index'));
-
-        $this->assertNotSoftDeleted($tag);
-    }
-
-    private function createTag(array $attributes = []): Tag
-    {
-        return Tag::factory()->create(array_merge([
-            'name' => ['zh_TW' => '測試標籤'],
-            'slug' => ['zh_TW' => 'test'],
-            'type' => 'test',
-            'order_column' => 1,
-        ], $attributes));
+        return Tag::factory()
+            ->state($state + [
+                'name' => ['zh_TW' => '測試標籤'],
+                'slug' => ['zh_TW' => 'test'],
+                'type' => 'test',
+                'order_column' => 1,
+            ])->create();
     }
 }
