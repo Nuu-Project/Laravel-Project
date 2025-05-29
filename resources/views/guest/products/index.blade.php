@@ -7,11 +7,16 @@
 
     <form action="{{ route('products.index') }}" method="GET" id="filterForm">
         <div class="flex items-center justify-center gap-2 mb-4">
-            <x-input.search type="text" name="filter[name]" placeholder="搜尋商品名稱..." value="{{ request('filter.name') }}">
-            </x-input.search>
-            <x-button.search>
-                搜尋
-            </x-button.search>
+            <x-form.search-layout>
+                <x-responsive.container>
+                    <x-input.search type="text" name="filter[name]" placeholder="搜尋商品名稱..."
+                        value="{{ request('filter.name') }}">
+                    </x-input.search>
+                </x-responsive.container>
+                <x-button.search>
+                    搜尋
+                </x-button.search>
+            </x-form.search-layout>
         </div>
 
         @foreach (collect(Tagtype::cases())->pluck('value') as $type)
@@ -329,5 +334,6 @@
                 }
             });
         });
+        feather.replace()
     </script>
 </x-template-layout>
