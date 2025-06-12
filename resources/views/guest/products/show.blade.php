@@ -316,8 +316,7 @@
                             <div class="ml-8 mt-2">
                                 <button type="button"
                                     class="toggle-replies text-blue-500 hover:text-blue-700 text-sm font-medium"
-                                    data-message-id="{{ $message->id }}"
-                                    data-is-expanded="false"
+                                    data-message-id="{{ $message->id }}" data-is-expanded="false"
                                     data-total-hidden="{{ $totalReplies - 4 }}">
                                     查看更多留言 ({{ $totalReplies - 4 }})
                                 </button>
