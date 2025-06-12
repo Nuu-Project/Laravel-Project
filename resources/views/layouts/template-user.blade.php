@@ -10,10 +10,6 @@
     <link rel="icon" type="image/png" href="{{ asset('images/icon.png') }}">
     <title>{{ $title ?? '聯大二手書交易平台' }}</title>
 
-    <link rel="stylesheet" href="{{ asset('css/tailwind.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/message.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/info.css') }}">
-
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap"
         rel="stylesheet">
 
@@ -23,6 +19,7 @@
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.3/dist/cdn.min.js"></script>
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
 <body x-data>
