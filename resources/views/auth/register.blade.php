@@ -29,7 +29,7 @@
                 </nav>
             </x-div.container-screen>
         </section>
-        
+
         <div class="flex-1 flex items-center justify-center">
             <x-guest-layout class="bg-white bg-opacity-90">
                 <section class="bg-white bg-opacity-90">
@@ -48,15 +48,15 @@
 
                                 <div>
                                     <x-input-label for="name">{{ __('Name') }}</x-input-label>
-                                    <x-input.auth id="name" type="text" name="name" :value="old('name')" required
-                                        autofocus autocomplete="name" />
+                                    <x-input.auth id="name" type="text" name="name" :value="old('name')"
+                                        required autofocus autocomplete="name" />
                                     <x-input-error :messages="$errors->get('name')" class="mt-2" />
                                 </div>
 
                                 <x-div.mt-4>
                                     <x-input-label for="email">{{ __('email') }}</x-input-label>
-                                    <x-input.auth id="email" type="email" name="email" :value="old('email')" required
-                                        placeholder="name@o365.nuu.edu.tw" />
+                                    <x-input.auth id="email" type="email" name="email" :value="old('email')"
+                                        required placeholder="u1000000@o365.nuu.edu.tw" />
                                     <x-input-error :messages="$errors->get('email')" class="mt-2" />
                                 </x-div.mt-4>
 
@@ -68,10 +68,24 @@
                                 </x-div.mt-4>
 
                                 <x-div.mt-4>
-                                    <x-input-label for="password_confirmation">{{ __('Confirm Password') }}</x-input-label>
-                                    <x-input.auth id="password_confirmation" type="password" name="password_confirmation"
-                                        required autocomplete="new-password" />
+                                    <x-input-label
+                                        for="password_confirmation">{{ __('Confirm Password') }}</x-input-label>
+                                    <x-input.auth id="password_confirmation" type="password"
+                                        name="password_confirmation" required autocomplete="new-password" />
                                     <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
+                                </x-div.mt-4>
+
+                                <x-div.mt-4>
+                                    <div class="flex items-center">
+                                        <input id="terms" name="terms" type="checkbox"
+                                            class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                                            required>
+                                        <label for="terms" class="ml-2 block text-sm text-gray-900">
+                                            我已閱讀並同意<a href="https://reurl.cc/YYb0gO"
+                                                class="text-blue-600 hover:text-blue-800" target="_blank">使用規範</a>
+                                        </label>
+                                    </div>
+                                    <x-input-error :messages="$errors->get('terms')" class="mt-2" />
                                 </x-div.mt-4>
 
                                 <x-primary-button>
