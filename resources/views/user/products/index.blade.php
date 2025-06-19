@@ -18,7 +18,7 @@
                 </x-div.red>
             @endif
 
-            <div class="flex flex-col md:flex-row md:justify-between md:items-center gap-4">
+            <div>
                 <x-h.h3>我的商品</x-h.h3>
                 <form action="{{ route('user.products.index') }}" method="GET">
                     <div class="flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-2 items-stretch md:items-center">
