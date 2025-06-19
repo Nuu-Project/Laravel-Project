@@ -75,10 +75,10 @@
                                     ->count();
                                 $page = ceil(($position + 1) / 10);
 
-                                //
+                                // 更新URL，包含必要的參數以確保折疊的留言能被展開
                                 $url =
                                     route('products.show', ['product' => $message->product_id]) .
-                                    "?page={$page}&scrollCenter=true&highlight={$message->id}#message-{$parentId}";
+                                    "?page={$page}&scrollCenter=true&highlight={$message->id}&forceExpand=1#message-{$parentId}";
                             } else {
                                 $position = \Illuminate\Support\Facades\DB::table('messages')
                                     ->whereNull('reply_to_id')

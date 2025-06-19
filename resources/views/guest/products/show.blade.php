@@ -100,7 +100,7 @@
     <div class="max-w-2xl mx-auto p-4 sm:p-6 lg:p-8">
         <form method="POST" action="{{ route('user.products.messages.store', ['product' => $product->id]) }}">
             @csrf
-            <textarea name="message" placeholder="{{ __('想問什麼?') }}">{{ old('message') }}</textarea>
+            <x-textarea name="message" placeholder="{{ __('想問什麼?') }}" required>{{ old('message') }}</x-textarea>
             <x-input-error :messages="$errors->store->get('message')" class="mt-2" />
             <x-primary-button>{{ __('留言') }}</x-primary-button>
         </form>
@@ -210,9 +210,10 @@
                     </div>
 
                     <form id="replyForm{{ $message->id }}" method="POST"
-                        action="{{ route('user.products.messages.reply', ['product' => $product->id, 'message' => $message->id]) }}">
+                        action="{{ route('user.products.messages.reply', ['product' => $product->id, 'message' => $message->id]) }}"
+                        class="mt-3 hidden">
                         @csrf
-                        <textarea name="message" placeholder="{{ __('回覆留言...') }}"></textarea>
+                        <x-textarea name="message" placeholder="{{ __('回覆留言...') }}" required></x-textarea>
                         <x-input-error :messages="$errors->get('message')" class="mt-2" />
                         <x-primary-button>{{ __('提交回覆') }}</x-primary-button>
                     </form>

@@ -64,7 +64,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // 處理展開/收縮留言功能
     const toggleButtons = document.querySelectorAll('.toggle-replies');
 
     toggleButtons.forEach(button => {
@@ -77,7 +76,6 @@ document.addEventListener('DOMContentLoaded', function () {
             const replies = document.querySelectorAll(`.reply-item[data-message-id="${messageId}"]`);
 
             if (isExpanded) {
-                // 收起留言，只顯示前4則
                 replies.forEach((reply, index) => {
                     if (index >= 4) {
                         reply.classList.add('hidden');
@@ -88,7 +86,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 this.textContent = `查看更多留言 (${totalHidden})`;
                 this.setAttribute('data-is-expanded', 'false');
             } else {
-                // 展開所有留言
                 replies.forEach(reply => {
                     reply.classList.remove('hidden');
                 });
@@ -106,6 +103,12 @@ document.addEventListener('DOMContentLoaded', function () {
         form.style.display = 'none';
     });
 
+    setTimeout(function() {
+        handleUrlHashAndHighlight();
+    }, 500);
+});
+
+function handleUrlHashAndHighlight() {
     if (window.location.hash) {
         const messageId = window.location.hash;
         const messageElement = document.querySelector(messageId);
@@ -114,43 +117,49 @@ document.addEventListener('DOMContentLoaded', function () {
             const urlParams = new URLSearchParams(window.location.search);
             const scrollCenter = urlParams.get('scrollCenter');
             const highlightReplyId = urlParams.get('highlight');
+            const forceExpand = urlParams.get('forceExpand');
 
-            if (highlightReplyId) {
-                const replyElement = document.getElementById(`reply-${highlightReplyId}`);
+            messageElement.scrollIntoView({ behavior: 'smooth' });
 
-                if (replyElement) {
-                    setTimeout(() => {
-                        if (scrollCenter === 'true') {
-                            const rect = messageElement.getBoundingClientRect();
-                            const windowHeight = window.innerHeight;
-                            const elementHeight = rect.height;
-                            const offsetY = rect.top + window.pageYOffset - (windowHeight / 4);
+            messageElement.style.transition = 'background-color 0.5s';
+            messageElement.style.backgroundColor = 'rgba(255, 255, 0, 0.2)';
 
-                            window.scrollTo({
-                                top: offsetY,
-                                behavior: 'smooth'
-                            });
-                        } else {
-                            messageElement.scrollIntoView({ behavior: 'smooth' });
+            setTimeout(() => {
+                if (highlightReplyId) {
+                    const replyElement = document.getElementById(`reply-${highlightReplyId}`);
+
+                    if (replyElement) {
+                        if (replyElement.classList.contains('hidden') || forceExpand === '1') {
+                            const parentMessageId = replyElement.getAttribute('data-message-id');
+                            const toggleButton = document.querySelector(`.toggle-replies[data-message-id="${parentMessageId}"]`);
+
+                            if (toggleButton && toggleButton.getAttribute('data-is-expanded') === 'false') {
+                                const replies = document.querySelectorAll(`.reply-item[data-message-id="${parentMessageId}"]`);
+                                replies.forEach(reply => {
+                                    reply.classList.remove('hidden');
+                                });
+
+                                const totalHidden = toggleButton.getAttribute('data-total-hidden');
+                                toggleButton.textContent = '縮小留言區';
+                                toggleButton.setAttribute('data-is-expanded', 'true');
+                            }
                         }
 
-                        replyElement.style.transition = 'background-color 0.5s';
-                        replyElement.style.backgroundColor = 'rgba(255, 255, 0, 0.3)';
-
                         setTimeout(() => {
-                            const replyRect = replyElement.getBoundingClientRect();
-                            if (replyRect.top < 0 || replyRect.bottom > window.innerHeight) {
-                                replyElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                            }
+                            replyElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+                            replyElement.style.transition = 'background-color 0.5s';
+                            replyElement.style.backgroundColor = 'rgba(255, 255, 0, 0.3)';
 
                             setTimeout(() => {
-                                replyElement.style.backgroundColor = '';
-                            }, 2000);
+                                messageElement.style.backgroundColor = '';
+                                setTimeout(() => {
+                                    replyElement.style.backgroundColor = '';
+                                }, 500);
+                            }, 1500);
                         }, 300);
-                    }, 300);
-                }
-            } else if (scrollCenter === 'true') {
-                setTimeout(() => {
+                    }
+                } else if (scrollCenter === 'true') {
                     const rect = messageElement.getBoundingClientRect();
                     const windowHeight = window.innerHeight;
                     const elementHeight = rect.height;
@@ -161,23 +170,18 @@ document.addEventListener('DOMContentLoaded', function () {
                         behavior: 'smooth'
                     });
 
-                    messageElement.style.transition = 'background-color 0.5s';
-                    messageElement.style.backgroundColor = 'rgba(255, 255, 0, 0.3)';
                     setTimeout(() => {
                         messageElement.style.backgroundColor = '';
                     }, 2000);
-                }, 300);
-            } else {
-                messageElement.scrollIntoView({ behavior: 'smooth' });
-
-                messageElement.classList.add('highlight-message');
-                setTimeout(() => {
-                    messageElement.classList.remove('highlight-message');
-                }, 2000);
-            }
+                } else {
+                    setTimeout(() => {
+                        messageElement.style.backgroundColor = '';
+                    }, 2000);
+                }
+            }, 300);
         }
     }
-});
+}
 
 window.addEventListener('load', function () {
     var reportButton = document.getElementById('reportButton');
@@ -238,7 +242,7 @@ function handleReport(event, entityType, entityId) {
                 if (res.status === 401) {
                     throw new Error('未登入');
                 }
-                return res.json();  
+                return res.json();
             })
             .then(data => {
                 localStorage.setItem(key, now.toString()); // 記錄時間戳
