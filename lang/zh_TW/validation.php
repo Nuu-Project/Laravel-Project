@@ -259,7 +259,7 @@ return [
         'tag' => '標籤',
         'tags' => '標籤',
         'teacher' => '老師',
-        'terms' => '條款',
+        'terms' => '使用規範',
         'test_description' => '測試說明',
         'test_locale' => '測試語言環境',
         'test_name' => '測試名稱',

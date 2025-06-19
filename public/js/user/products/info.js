@@ -67,11 +67,12 @@ document.addEventListener('DOMContentLoaded', function () {
     const toggleButtons = document.querySelectorAll('.toggle-replies');
 
     toggleButtons.forEach(button => {
-        button.addEventListener('click', function() {
+        button.addEventListener('click', function () {
             const messageId = this.getAttribute('data-message-id');
             const isExpanded = this.getAttribute('data-is-expanded') === 'true';
             const totalHidden = this.getAttribute('data-total-hidden');
 
+            // 獲取該留言下所有回覆
             const replies = document.querySelectorAll(`.reply-item[data-message-id="${messageId}"]`);
 
             if (isExpanded) {
@@ -81,6 +82,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     }
                 });
 
+                // 更新按鈕文字和狀態
                 this.textContent = `查看更多留言 (${totalHidden})`;
                 this.setAttribute('data-is-expanded', 'false');
             } else {
@@ -88,12 +90,14 @@ document.addEventListener('DOMContentLoaded', function () {
                     reply.classList.remove('hidden');
                 });
 
+                // 更新按鈕文字和狀態
                 this.textContent = '縮小留言區';
                 this.setAttribute('data-is-expanded', 'true');
             }
         });
     });
 
+    // 初始化隱藏回覆表單
     const replyForms = document.querySelectorAll('[id^="replyForm"]');
     replyForms.forEach(form => {
         form.style.display = 'none';
@@ -192,9 +196,7 @@ function handleReport(event, entityType, entityId) {
     event.preventDefault();
 
     const reportLink = event.target.closest('[data-reports]');
-    if (!reportLink) {
-        return;
-    }
+    if (!reportLink) return;
 
     const reports = JSON.parse(reportLink.dataset.reports || '{}');
     const storeUrl = reportLink.dataset.storeUrl;
@@ -221,46 +223,50 @@ function handleReport(event, entityType, entityId) {
             return { reportId, customReason };
         }
     }).then((result) => {
-        if (result.isConfirmed) {
-            const { reportId, customReason } = result.value;
+        if (!result.isConfirmed) return;
 
-            fetch(storeUrl, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${localStorage.getItem("token")}`,
-                    "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').content
-                },
-                body: JSON.stringify({
-                    report_type_id: reportId,
-                    description: customReason || '無補充說明'
-                })
+        const { reportId, customReason } = result.value;
+        fetch(storeUrl, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${localStorage.getItem("token")}`,
+                "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').content
+            },
+            body: JSON.stringify({
+                report_type_id: reportId,
+                description: customReason || '無補充說明'
             })
-                .then(res => {
-                    if (res.status === 401) {
-                        throw new Error('未登入');
-                    }
-                    return res.json();
-                })
-                .then(data => {
-                    Swal.fire({
-                        title: '檢舉已送出',
-                        text: '感謝您的回報，我們會盡快處理',
-                        icon: 'success',
-                        confirmButtonText: '確定'
-                    });
-                })
-                .catch(err => {
-                    Swal.fire({
-                        title: '檢舉已送出',
-                        text: '感謝您的回報，我們會盡快處理',
-                        icon: 'success',
-                        confirmButtonText: '確定'
-                    });
+        })
+            .then(res => {
+                if (res.status === 401) {
+                    throw new Error('未登入');
+                }
+                return res.json();
+            })
+            .then(data => {
+                localStorage.setItem(key, now.toString()); // 記錄時間戳
+
+                Swal.fire({
+                    title: '檢舉已送出',
+                    text: hasReportedRecently
+                        ? '您先前的回報已經記錄'
+                        : '我們會盡快處理',
+                    icon: 'success',
+                    confirmButtonText: '確定'
                 });
-        }
+            })
+            .catch(err => {
+                Swal.fire({
+                    title: '錯誤',
+                    text: '發生錯誤，請稍後再試',
+                    icon: 'error',
+                    confirmButtonText: '確定'
+                });
+            });
     });
 }
+
 
 document.getElementById('reportButton')?.addEventListener('click', function (e) {
     handleReport(e, '商品', this.dataset.productId);

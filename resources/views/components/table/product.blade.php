@@ -1,5 +1,6 @@
 @php
     use App\Enums\ReportType;
+    use App\Enums\ProductStatus;
 @endphp
 
 @props(['products'])
@@ -17,11 +18,13 @@
                 <x-td>{{ $product->reports_count }}</x-td>
                 <x-td>
                     <div class="flex space-x-2">
-                        <a href="{{ route('products.show', ['product' => $product->id]) }}">
-                            <x-button.blue-short>
-                                前往
-                            </x-button.blue-short>
-                        </a>
+                        @if ($product->status === ProductStatus::Active)
+                            <a href="{{ route('products.show', ['product' => $product->id]) }}">
+                                <x-button.blue-short>
+                                    前往
+                                </x-button.blue-short>
+                            </a>
+                        @endif
 
                         <form action="{{ route('admin.products.inactive', ['product' => $product->id]) }}" method="POST"
                             class="inline">
