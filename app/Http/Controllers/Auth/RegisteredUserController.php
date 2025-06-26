@@ -25,6 +25,7 @@ class RegisteredUserController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class, 'ends_with:@o365.nuu.edu.tw'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'terms' => ['required', 'accepted'],
         ]);
 
         $user = User::create([
