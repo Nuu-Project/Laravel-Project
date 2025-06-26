@@ -5,6 +5,15 @@
 <x-template-user-layout>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <script src="{{ asset('js/product-editor.js') }}"></script>
+    <script src="{{ asset('js/tag-selector.js') }}"></script>
+    <script>
+        window.initialSelectedTags = {
+            grade: "{{ $gradeTag ? $gradeTag->id : old('grade') }}",
+            semester: "{{ $semesterTag ? $semesterTag->id : old('semester') }}",
+            subject: "{{ $subjectTag ? $subjectTag->id : old('subject') }}",
+            category: "{{ $categoryTag ? $categoryTag->id : old('category') }}"
+        };
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <link rel="stylesheet" href="{{ asset('css/milestone-selector.css') }}">
 
@@ -159,21 +168,36 @@
                                 </div>
                             </div>
 
-                            <div>
-                                <x-button.close>
+                            <div class="flex justify-end mt-4 pt-3 border-t border-gray-200">
+                                <button type="button" id="clear-tag-selection"
+                                    class="px-4 py-2 bg-gray-100 text-gray-700 rounded-md mr-2 hover:bg-gray-200 border border-gray-300">
+                                    清除所有
+                                </button>
+                                <button type="button" id="close-tag-selector"
+                                    class="px-4 py-2 bg-gray-100 text-gray-700 rounded-md mr-2 hover:bg-gray-200 border border-gray-300">
                                     關閉
-                                </x-button.close>
-                                <x-button.select>
+                                </button>
+                                <button type="button" id="apply-tag-filters"
+                                    class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600">
                                     確認選擇
-                                </x-button.select>
+                                </button>
                             </div>
                         </div>
 
-                        <div class="selected-tags-summary mt-2 flex flex-wrap gap-2">
-                            <div id="selected-grade-pill" class="tag-pill hidden"></div>
-                            <div id="selected-semester-pill" class="tag-pill hidden"></div>
-                            <div id="selected-subject-pill" class="tag-pill hidden"></div>
-                            <div id="selected-category-pill" class="tag-pill hidden"></div>
+                        <div id="selected-tags-display" class="mt-2 flex flex-wrap gap-2">
+                            <!-- 標籤將由 JavaScript 動態添加 -->
+                        </div>
+
+                        <div id="tag-progress" class="hidden mt-4">
+                            <div class="flex justify-between items-center mb-1">
+                                <span class="text-sm font-medium text-gray-700">已選擇標籤</span>
+                                <span id="tag-progress-percentage" class="text-sm font-medium text-gray-700">0%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                <div id="tag-progress-bar"
+                                    class="bg-blue-600 h-2.5 rounded-full transition-all duration-300"
+                                    style="width: 0%"></div>
+                            </div>
                         </div>
                     </div>
 
@@ -212,318 +236,6 @@
             </x-div.grid>
         </x-div.container>
     </x-flex-container>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // 處理彈出式標籤選擇器
-            const tagSelectorButton = document.getElementById('tag-selector-button');
-            const tagSelectionPopup = document.getElementById('tag-selection-popup');
-            const closeTagSelector = document.getElementById('close-tag-selector');
-            const confirmTagSelection = document.getElementById('confirm-tag-selection');
-            const selectedTagsSummary = document.getElementById('selected-tags-summary');
-            const productForm = document.getElementById('productForm');
-
-            // 獲取隱藏輸入欄位
-            const gradeInput = document.getElementById('grade-input');
-            const semesterInput = document.getElementById('semester-input');
-            const subjectInput = document.getElementById('subject-input');
-            const categoryInput = document.getElementById('category-input');
-
-            // 存儲選擇的標籤
-            let selectedTags = {
-                grade: {
-                    id: gradeInput.value || null,
-                    name: '',
-                    selected: !!gradeInput.value
-                },
-                semester: {
-                    id: semesterInput.value || null,
-                    name: '',
-                    selected: !!semesterInput.value
-                },
-                subject: {
-                    id: subjectInput.value || null,
-                    name: '',
-                    selected: !!subjectInput.value
-                },
-                category: {
-                    id: categoryInput.value || null,
-                    name: '',
-                    selected: !!categoryInput.value
-                }
-            };
-
-            // 初始化已選中的標籤
-            initializeSelectedTags();
-            updateTagsSummary();
-
-            // 顯示標籤選擇器
-            tagSelectorButton.addEventListener('click', function() {
-                tagSelectionPopup.classList.remove('hidden');
-                // 定位彈出窗口
-                positionPopup();
-            });
-
-            // 關閉標籤選擇器
-            closeTagSelector.addEventListener('click', function() {
-                tagSelectionPopup.classList.add('hidden');
-            });
-
-            // 確認標籤選擇
-            confirmTagSelection.addEventListener('click', function() {
-                // 檢查是否有選擇所有必需標籤
-                const allSelected = Object.values(selectedTags).every(tag => tag.selected);
-                if (!allSelected) {
-                    alert('請選擇所有標籤類別');
-                    return;
-                }
-
-                tagSelectionPopup.classList.add('hidden');
-                updateTagsSummary();
-            });
-
-            // 點擊其他區域關閉彈出層
-            document.addEventListener('click', function(event) {
-                if (!tagSelectionPopup.contains(event.target) &&
-                    !tagSelectorButton.contains(event.target) &&
-                    !tagSelectionPopup.classList.contains('hidden')) {
-                    tagSelectionPopup.classList.add('hidden');
-                }
-            });
-
-            // 表單提交前檢查標籤是否已選擇
-            productForm.addEventListener('submit', function(event) {
-                // 檢查是否所有必填標籤都已選擇
-                const missingTags = [];
-
-                Object.keys(selectedTags).forEach(type => {
-                    if (!selectedTags[type].selected) {
-                        missingTags.push(getTagTypeName(type));
-                    }
-                });
-
-                if (missingTags.length > 0) {
-                    event.preventDefault(); // 阻止表單提交
-                    alert(`請選擇以下標籤：${missingTags.join('、')}`);
-                    tagSelectionPopup.classList.remove('hidden');
-                    positionPopup();
-                }
-            });
-
-            // 標籤選擇功能
-            const tagOptions = document.querySelectorAll('.milestone-option');
-            tagOptions.forEach(option => {
-                option.addEventListener('click', function() {
-                    const tagType = this.dataset.tagType;
-                    const tagId = this.dataset.tagId;
-                    const tagName = this.dataset.tagName;
-
-                    // 移除同類標籤的選中狀態
-                    document.querySelectorAll(`.milestone-option[data-tag-type="${tagType}"]`)
-                        .forEach(el => {
-                            el.classList.remove('selected');
-                        });
-
-                    // 添加選中狀態
-                    this.classList.add('selected');
-
-                    // 更新隱藏輸入欄位
-                    updateHiddenInput(tagType, tagId);
-
-                    // 更新已選擇的標籤
-                    selectedTags[tagType] = {
-                        id: tagId,
-                        name: tagName,
-                        selected: true
-                    };
-
-                    // 更新已選擇標籤的顯示
-                    updateSelectedTagPills();
-                });
-            });
-
-            // 更新隱藏輸入欄位
-            function updateHiddenInput(type, value) {
-                switch (type) {
-                    case 'grade':
-                        gradeInput.value = value;
-                        break;
-                    case 'semester':
-                        semesterInput.value = value;
-                        break;
-                    case 'subject':
-                        subjectInput.value = value;
-                        break;
-                    case 'category':
-                        categoryInput.value = value;
-                        break;
-                }
-            }
-
-            // 搜尋過濾功能
-            const searchInput = document.getElementById('tagSearchInput');
-            searchInput.addEventListener('input', function() {
-                const searchTerm = this.value.toLowerCase();
-                tagOptions.forEach(option => {
-                    const tagName = option.dataset.tagName.toLowerCase();
-                    if (tagName.includes(searchTerm)) {
-                        option.style.display = '';
-                    } else {
-                        option.style.display = 'none';
-                    }
-                });
-            });
-
-            // 初始化已選擇的標籤
-            function initializeSelectedTags() {
-                // 檢查grade輸入欄位
-                if (gradeInput.value) {
-                    const option = document.querySelector(
-                        `.milestone-option[data-tag-type="grade"][data-tag-id="${gradeInput.value}"]`);
-                    if (option) {
-                        option.classList.add('selected');
-                        selectedTags.grade = {
-                            id: option.dataset.tagId,
-                            name: option.dataset.tagName,
-                            selected: true
-                        };
-                    }
-                }
-
-                // 檢查semester輸入欄位
-                if (semesterInput.value) {
-                    const option = document.querySelector(
-                        `.milestone-option[data-tag-type="semester"][data-tag-id="${semesterInput.value}"]`);
-                    if (option) {
-                        option.classList.add('selected');
-                        selectedTags.semester = {
-                            id: option.dataset.tagId,
-                            name: option.dataset.tagName,
-                            selected: true
-                        };
-                    }
-                }
-
-                // 檢查subject輸入欄位
-                if (subjectInput.value) {
-                    const option = document.querySelector(
-                        `.milestone-option[data-tag-type="subject"][data-tag-id="${subjectInput.value}"]`);
-                    if (option) {
-                        option.classList.add('selected');
-                        selectedTags.subject = {
-                            id: option.dataset.tagId,
-                            name: option.dataset.tagName,
-                            selected: true
-                        };
-                    }
-                }
-
-                // 檢查category輸入欄位
-                if (categoryInput.value) {
-                    const option = document.querySelector(
-                        `.milestone-option[data-tag-type="category"][data-tag-id="${categoryInput.value}"]`);
-                    if (option) {
-                        option.classList.add('selected');
-                        selectedTags.category = {
-                            id: option.dataset.tagId,
-                            name: option.dataset.tagName,
-                            selected: true
-                        };
-                    }
-                }
-
-                updateSelectedTagPills();
-            }
-
-            // 更新已選標籤顯示區
-            function updateSelectedTagPills() {
-                Object.keys(selectedTags).forEach(type => {
-                    const tag = selectedTags[type];
-                    const pill = document.getElementById(`selected-${type}-pill`);
-
-                    if (tag.selected) {
-                        pill.innerHTML = `
-                            <span class="tag-icon">${getTagIcon(type)}</span>
-                            <span>${tag.name}</span>
-                        `;
-                        pill.classList.remove('hidden');
-                    } else {
-                        pill.classList.add('hidden');
-                    }
-                });
-            }
-
-            // 更新總摘要顯示
-            function updateTagsSummary() {
-                const selectedCount = Object.values(selectedTags).filter(tag => tag.selected).length;
-
-                if (selectedCount === 0) {
-                    selectedTagsSummary.textContent = '選擇標籤...';
-                } else if (selectedCount === 4) {
-                    selectedTagsSummary.textContent = '所有標籤已選擇';
-                } else {
-                    selectedTagsSummary.textContent = `已選擇 ${selectedCount}/4 個標籤`;
-                }
-            }
-
-            // 定位彈出窗口
-            function positionPopup() {
-                const buttonRect = tagSelectorButton.getBoundingClientRect();
-                const popupHeight = tagSelectionPopup.offsetHeight;
-                const windowHeight = window.innerHeight;
-
-                // 檢查下方空間是否足夠
-                if (buttonRect.bottom + popupHeight > windowHeight) {
-                    // 如果下方空間不足，顯示在按鈕上方
-                    tagSelectionPopup.style.top = (buttonRect.top - popupHeight) + 'px';
-                } else {
-                    // 否則顯示在按鈕下方
-                    tagSelectionPopup.style.top = buttonRect.bottom + 'px';
-                }
-
-                tagSelectionPopup.style.left = buttonRect.left + 'px';
-            }
-
-            // 標籤圖標輔助函數
-            function getTagIcon(tagType) {
-                switch (tagType) {
-                    case 'grade':
-                        return '📚';
-                    case 'semester':
-                        return '🗓️';
-                    case 'subject':
-                        return '📝';
-                    case 'category':
-                        return '📋';
-                    default:
-                        return '🏷️';
-                }
-            }
-
-            // 獲取標籤類型的中文名稱
-            function getTagTypeName(tagType) {
-                switch (tagType) {
-                    case 'grade':
-                        return '年級';
-                    case 'semester':
-                        return '學期';
-                    case 'subject':
-                        return '科目';
-                    case 'category':
-                        return '課程類別';
-                    default:
-                        return '標籤';
-                }
-            }
-
-            // 窗口大小變化時重新定位彈出窗口
-            window.addEventListener('resize', function() {
-                if (!tagSelectionPopup.classList.contains('hidden')) {
-                    positionPopup();
-                }
-            });
-        });
-    </script>
 
     @if (session('success'))
         <script>
