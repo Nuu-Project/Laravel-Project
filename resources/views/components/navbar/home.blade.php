@@ -1,4 +1,4 @@
-    <section class="bg-white py-10 md:mb-10">
+    <section>
 
         <x-div.container-screen>
 

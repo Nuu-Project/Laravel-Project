@@ -3,7 +3,7 @@
 @endphp
 
 <div>
-    <section class="bg-white py-16">
+    <section>
 
         <x-h.h1>推薦書籍</x-h.h1>
 
