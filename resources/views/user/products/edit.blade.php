@@ -172,9 +172,12 @@
                                 <x-button.close>
                                     關閉
                                 </x-button.close>
-                                <x-button.select>
+                                <x-button.clear>
+                                    清除
+                                </x-button.clear>
+                                <x-button.apply>
                                     確認選擇
-                                </x-button.select>
+                                </x-button.apply>
                             </x-div.flex-row>
                         </div>
 

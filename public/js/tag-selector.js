@@ -5,7 +5,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const applyTagFilters = document.getElementById('apply-tag-filters');
     const clearTagSelection = document.getElementById('clear-tag-selection');
     const selectedTagsSummary = document.getElementById('selected-tags-summary');
-    const filterForm = document.getElementById('filterForm');
     const tagSearchInput = document.getElementById('tagSearchInput');
     const tagOptions = document.querySelectorAll('.milestone-option');
 
@@ -45,7 +44,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     applyTagFilters.addEventListener('click', () => {
         tagSelectionPopup.classList.add('hidden');
-        filterForm.submit();
+        updateSelectedTagPills();
     });
 
     document.addEventListener('click', event => {
