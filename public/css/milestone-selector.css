@@ -156,3 +156,25 @@
         gap: 0.5rem;
     }
 }
+
+按鈕容器樣式
+.tag-selection-container > div:last-child {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+    justify-content: flex-end;
+    margin-top: 0.75rem;
+    padding: 0.5rem;
+    background-color: #f9fafb;
+    border-radius: 0 0 8px 8px;
+}
+
+@media (max-width: 640px) {
+    .tag-selection-container > div:last-child {
+        flex-direction: row;
+    }
+
+    .tag-selection-container > div:last-child button {
+        width: auto;
+    }
+}

@@ -159,14 +159,14 @@
                                 </div>
                             </div>
 
-                            <div>
+                            <x-div.flex-row>
                                 <x-button.close>
                                     關閉
                                 </x-button.close>
                                 <x-button.select>
                                     確認選擇
                                 </x-button.select>
-                            </div>
+                            </x-div.flex-row>
                         </div>
 
                         <div class="selected-tags-summary mt-2 flex flex-wrap gap-2">

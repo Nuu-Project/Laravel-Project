@@ -74,7 +74,7 @@
                     </div>
                 </div>
 
-                <div>
+                <x-div.flex-row>
                     <x-button.clear>
                         清除所有
                     </x-button.clear>
@@ -84,7 +84,7 @@
                     <x-button.apply>
                         查詢
                     </x-button.apply>
-                </div>
+                </x-div.flex-row>
             </div>
 
             <div class="selected-tags-summary mt-2 flex flex-wrap gap-2">
