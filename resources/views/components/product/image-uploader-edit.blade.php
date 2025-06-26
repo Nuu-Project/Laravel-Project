@@ -7,7 +7,7 @@
     'maxDimensions' => '3200x3200px'
 ])
 
-<div class="relative h-[192px]" x-data="imageUploader{{ $index }}">
+<div class="relative h-40" x-data="imageUploader{{ $index }}">
     <input type="file" name="images[]" id="image{{ $index }}" class="hidden" accept="image/*"
         @change="startUpload($event)">
     <input type="hidden" name="image_ids[]" value="{{ $imageId ?? '' }}">
@@ -49,7 +49,7 @@
         </div>
     </label>
 
-    <div class="absolute bottom-0 left-0 right-0 pb-2">
+    <div class="absolute -bottom-8 left-0 right-0">
         <div class="mt-2 relative h-2 rounded-full overflow-hidden transition-opacity duration-300"
             x-show="uploading && !error"
             x-transition:enter="transition ease-out duration-300"
