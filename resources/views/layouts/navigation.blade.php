@@ -1,6 +1,6 @@
 <body class="font-body">
 
-    <section class="bg-white py-10 md:mb-11">
+    <section>
 
         <x-div.container-screen>
 

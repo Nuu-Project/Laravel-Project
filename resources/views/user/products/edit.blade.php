@@ -168,20 +168,14 @@
                                 </div>
                             </div>
 
-                            <div class="flex justify-end mt-4 pt-3 border-t border-gray-200">
-                                <button type="button" id="clear-tag-selection"
-                                    class="px-4 py-2 bg-gray-100 text-gray-700 rounded-md mr-2 hover:bg-gray-200 border border-gray-300">
-                                    清除所有
-                                </button>
-                                <button type="button" id="close-tag-selector"
-                                    class="px-4 py-2 bg-gray-100 text-gray-700 rounded-md mr-2 hover:bg-gray-200 border border-gray-300">
+                            <x-div.flex-row>
+                                <x-button.close>
                                     關閉
-                                </button>
-                                <button type="button" id="apply-tag-filters"
-                                    class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600">
+                                </x-button.close>
+                                <x-button.select>
                                     確認選擇
-                                </button>
-                            </div>
+                                </x-button.select>
+                            </x-div.flex-row>
                         </div>
 
                         <div id="selected-tags-display" class="mt-2 flex flex-wrap gap-2">
