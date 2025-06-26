@@ -1,6 +1,6 @@
 <x-template-login-register-layout>
     <div class="min-h-screen flex flex-col">
-        <section class="bg-white bg-opacity-90 py-1">
+        <section>
             <x-div.container-screen>
                 <nav class="flex-wrap lg:flex items-center" x-data="{ navbarOpen: false }">
                     <div class="flex items-center mb-10 lg:mb-0">
@@ -25,7 +25,7 @@
         </section>
 
         <div class="flex-1 flex items-center justify-center">
-                <section class="bg-white bg-opacity-90">
+                <section>
                     <x-div.container-screen>
                         <div class="flex justify-center items-center mb-1">
                             <x-img.icon src="images/sign-up.png" alt="logo" class="h-12 w-auto">
