@@ -54,9 +54,12 @@
 
                     <!-- 隱藏的標籤輸入欄位 -->
                     <input type="hidden" name="grade" id="grade-input" value="{{ $gradeTag ? $gradeTag->id : '' }}">
-                    <input type="hidden" name="semester" id="semester-input" value="{{ $semesterTag ? $semesterTag->id : '' }}">
-                    <input type="hidden" name="subject" id="subject-input" value="{{ $subjectTag ? $subjectTag->id : '' }}">
-                    <input type="hidden" name="category" id="category-input" value="{{ $categoryTag ? $categoryTag->id : '' }}">
+                    <input type="hidden" name="semester" id="semester-input"
+                        value="{{ $semesterTag ? $semesterTag->id : '' }}">
+                    <input type="hidden" name="subject" id="subject-input"
+                        value="{{ $subjectTag ? $subjectTag->id : '' }}">
+                    <input type="hidden" name="category" id="category-input"
+                        value="{{ $categoryTag ? $categoryTag->id : '' }}">
 
                     <!-- 標籤選擇按鈕和彈出框 -->
                     <div class="tag-selector-container">
@@ -64,33 +67,39 @@
                             <x-label.form for="tag-selector-button">
                                 標籤選擇
                             </x-label.form>
-                            <button type="button" id="tag-selector-button" class="tag-selector-button w-full text-left p-3 bg-white rounded-md flex justify-between items-center border border-gray-300 hover:border-gray-400">
+                            <button type="button" id="tag-selector-button"
+                                class="tag-selector-button w-full text-left p-3 bg-white rounded-md flex justify-between items-center border border-gray-300 hover:border-gray-400">
                                 <span id="selected-tags-summary">選擇標籤...</span>
-                                <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M19 9l-7 7-7-7"></path>
                                 </svg>
                             </button>
                         </div>
 
                         <!-- 標籤選擇彈出層 -->
-                        <div id="tag-selection-popup" class="tag-selection-container hidden" style="position: absolute; z-index: 50; width: 100%; max-width: 500px; box-shadow: 0 4px 12px rgba(0,0,0,0.4);">
+                        <div id="tag-selection-popup" class="tag-selection-container hidden"
+                            style="position: absolute; z-index: 50; width: 100%; max-width: 500px; box-shadow: 0 4px 12px rgba(0,0,0,0.4);">
                             <div class="milestone-selector-wrapper">
                                 <!-- 標籤搜尋欄 -->
                                 <div class="search-container mb-4">
-                                    <input type="text" id="tagSearchInput" placeholder="搜尋標籤..." class="w-full p-2 rounded border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                                    <input type="text" id="tagSearchInput" placeholder="搜尋標籤..."
+                                        class="w-full p-2 rounded border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
                                 </div>
 
                                 <!-- 標籤選擇區域 -->
                                 <div class="milestone-content">
                                     <!-- 年級標籤選擇 -->
                                     <div class="milestone-section" id="grade-section">
-                                        <h3 class="milestone-header">年級</h3>
+                                        <h3>年級</h3>
                                         <div class="milestone-options">
                                             @foreach ($tags as $tag)
                                                 @if ($tag->type === Tagtype::Grade->value)
-                                                    <div class="milestone-option" data-tag-id="{{ $tag->id }}" data-tag-type="grade" data-tag-name="{{ $tag->name }}">
-                                                        <span class="tag-icon">📚</span>
-                                                        <span class="tag-name">{{ $tag->name }}</span>
+                                                    <div class="milestone-option" data-tag-id="{{ $tag->id }}"
+                                                        data-tag-type="grade" data-tag-name="{{ $tag->name }}">
+                                                        <span>📚</span>
+                                                        <span>{{ $tag->name }}</span>
                                                     </div>
                                                 @endif
                                             @endforeach
@@ -100,13 +109,14 @@
 
                                     <!-- 學期標籤選擇 -->
                                     <div class="milestone-section" id="semester-section">
-                                        <h3 class="milestone-header">學期</h3>
+                                        <h3>學期</h3>
                                         <div class="milestone-options">
                                             @foreach ($tags as $tag)
                                                 @if ($tag->type === Tagtype::Semester->value)
-                                                    <div class="milestone-option" data-tag-id="{{ $tag->id }}" data-tag-type="semester" data-tag-name="{{ $tag->name }}">
-                                                        <span class="tag-icon">🗓️</span>
-                                                        <span class="tag-name">{{ $tag->name }}</span>
+                                                    <div class="milestone-option" data-tag-id="{{ $tag->id }}"
+                                                        data-tag-type="semester" data-tag-name="{{ $tag->name }}">
+                                                        <span>🗓️</span>
+                                                        <span>{{ $tag->name }}</span>
                                                     </div>
                                                 @endif
                                             @endforeach
@@ -116,13 +126,14 @@
 
                                     <!-- 科目標籤選擇 -->
                                     <div class="milestone-section" id="subject-section">
-                                        <h3 class="milestone-header">科目</h3>
+                                        <h3>科目</h3>
                                         <div class="milestone-options">
                                             @foreach ($tags as $tag)
                                                 @if ($tag->type === Tagtype::Subject->value)
-                                                    <div class="milestone-option" data-tag-id="{{ $tag->id }}" data-tag-type="subject" data-tag-name="{{ $tag->name }}">
-                                                        <span class="tag-icon">📝</span>
-                                                        <span class="tag-name">{{ $tag->name }}</span>
+                                                    <div class="milestone-option" data-tag-id="{{ $tag->id }}"
+                                                        data-tag-type="subject" data-tag-name="{{ $tag->name }}">
+                                                        <span>📝</span>
+                                                        <span>{{ $tag->name }}</span>
                                                     </div>
                                                 @endif
                                             @endforeach
@@ -131,13 +142,14 @@
                                     </div>
 
                                     <div class="milestone-section" id="category-section">
-                                        <h3 class="milestone-header">課程類別</h3>
+                                        <h3>課程類別</h3>
                                         <div class="milestone-options">
                                             @foreach ($tags as $tag)
                                                 @if ($tag->type === Tagtype::Category->value)
-                                                    <div class="milestone-option" data-tag-id="{{ $tag->id }}" data-tag-type="category" data-tag-name="{{ $tag->name }}">
-                                                        <span class="tag-icon">📋</span>
-                                                        <span class="tag-name">{{ $tag->name }}</span>
+                                                    <div class="milestone-option" data-tag-id="{{ $tag->id }}"
+                                                        data-tag-type="category" data-tag-name="{{ $tag->name }}">
+                                                        <span>📋</span>
+                                                        <span>{{ $tag->name }}</span>
                                                     </div>
                                                 @endif
                                             @endforeach
@@ -147,13 +159,13 @@
                                 </div>
                             </div>
 
-                            <div class="flex justify-end mt-4 pt-3 border-t border-gray-200">
-                                <button type="button" id="close-tag-selector" class="px-4 py-2 bg-gray-100 text-gray-700 rounded-md mr-2 hover:bg-gray-200 border border-gray-300">
+                            <div>
+                                <x-button.close>
                                     關閉
-                                </button>
-                                <button type="button" id="confirm-tag-selection" class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600">
+                                </x-button.close>
+                                <x-button.select>
                                     確認選擇
-                                </button>
+                                </x-button.select>
                             </div>
                         </div>
 
@@ -168,8 +180,8 @@
                     <x-div.grid>
                         <div class="space-y-2">
                             <x-input-label for="description" :value="__('商品描述')" />
-                            <x-input.textarea id="description" name="description" placeholder="請輸入商品描述" rows="4"
-                                maxlength="1000" :value="old('description', $product->description)" />
+                            <x-input.textarea id="description" name="description" placeholder="請輸入商品描述"
+                                rows="4" maxlength="1000" :value="old('description', $product->description)" />
                             <x-input-error :messages="$errors->get('description')" class="mt-2" />
                         </div>
                     </x-div.grid>
@@ -181,12 +193,13 @@
                         <div id="imageContainer"
                             class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
                             @for ($i = 0; $i < 5; $i++)
-                                <x-product.image-uploader-edit
-                                    :index="$i"
-                                    :product-id="$product->id"
-                                    :image-id="$product->getMedia('images')->sortBy('order_column')->values()->get($i)?->id"
-                                    :image-url="$product->getMedia('images')->sortBy('order_column')->values()->get($i)?->getUrl()"
-                                />
+                                <x-product.image-uploader-edit :index="$i" :product-id="$product->id" :image-id="$product->getMedia('images')->sortBy('order_column')->values()->get($i)?->id"
+                                    :image-url="$product
+                                        ->getMedia('images')
+                                        ->sortBy('order_column')
+                                        ->values()
+                                        ->get($i)
+                                        ?->getUrl()" />
                             @endfor
                         </div>
                         <x-input-error :messages="$errors->get('images')" class="mt-2" />
@@ -218,10 +231,26 @@
 
             // 存儲選擇的標籤
             let selectedTags = {
-                grade: { id: gradeInput.value || null, name: '', selected: !!gradeInput.value },
-                semester: { id: semesterInput.value || null, name: '', selected: !!semesterInput.value },
-                subject: { id: subjectInput.value || null, name: '', selected: !!subjectInput.value },
-                category: { id: categoryInput.value || null, name: '', selected: !!categoryInput.value }
+                grade: {
+                    id: gradeInput.value || null,
+                    name: '',
+                    selected: !!gradeInput.value
+                },
+                semester: {
+                    id: semesterInput.value || null,
+                    name: '',
+                    selected: !!semesterInput.value
+                },
+                subject: {
+                    id: subjectInput.value || null,
+                    name: '',
+                    selected: !!subjectInput.value
+                },
+                category: {
+                    id: categoryInput.value || null,
+                    name: '',
+                    selected: !!categoryInput.value
+                }
             };
 
             // 初始化已選中的標籤
@@ -290,9 +319,10 @@
                     const tagName = this.dataset.tagName;
 
                     // 移除同類標籤的選中狀態
-                    document.querySelectorAll(`.milestone-option[data-tag-type="${tagType}"]`).forEach(el => {
-                        el.classList.remove('selected');
-                    });
+                    document.querySelectorAll(`.milestone-option[data-tag-type="${tagType}"]`)
+                        .forEach(el => {
+                            el.classList.remove('selected');
+                        });
 
                     // 添加選中狀態
                     this.classList.add('selected');
@@ -314,7 +344,7 @@
 
             // 更新隱藏輸入欄位
             function updateHiddenInput(type, value) {
-                switch(type) {
+                switch (type) {
                     case 'grade':
                         gradeInput.value = value;
                         break;
@@ -348,7 +378,8 @@
             function initializeSelectedTags() {
                 // 檢查grade輸入欄位
                 if (gradeInput.value) {
-                    const option = document.querySelector(`.milestone-option[data-tag-type="grade"][data-tag-id="${gradeInput.value}"]`);
+                    const option = document.querySelector(
+                        `.milestone-option[data-tag-type="grade"][data-tag-id="${gradeInput.value}"]`);
                     if (option) {
                         option.classList.add('selected');
                         selectedTags.grade = {
@@ -361,7 +392,8 @@
 
                 // 檢查semester輸入欄位
                 if (semesterInput.value) {
-                    const option = document.querySelector(`.milestone-option[data-tag-type="semester"][data-tag-id="${semesterInput.value}"]`);
+                    const option = document.querySelector(
+                        `.milestone-option[data-tag-type="semester"][data-tag-id="${semesterInput.value}"]`);
                     if (option) {
                         option.classList.add('selected');
                         selectedTags.semester = {
@@ -374,7 +406,8 @@
 
                 // 檢查subject輸入欄位
                 if (subjectInput.value) {
-                    const option = document.querySelector(`.milestone-option[data-tag-type="subject"][data-tag-id="${subjectInput.value}"]`);
+                    const option = document.querySelector(
+                        `.milestone-option[data-tag-type="subject"][data-tag-id="${subjectInput.value}"]`);
                     if (option) {
                         option.classList.add('selected');
                         selectedTags.subject = {
@@ -387,7 +420,8 @@
 
                 // 檢查category輸入欄位
                 if (categoryInput.value) {
-                    const option = document.querySelector(`.milestone-option[data-tag-type="category"][data-tag-id="${categoryInput.value}"]`);
+                    const option = document.querySelector(
+                        `.milestone-option[data-tag-type="category"][data-tag-id="${categoryInput.value}"]`);
                     if (option) {
                         option.classList.add('selected');
                         selectedTags.category = {
@@ -452,23 +486,33 @@
 
             // 標籤圖標輔助函數
             function getTagIcon(tagType) {
-                switch(tagType) {
-                    case 'grade': return '📚';
-                    case 'semester': return '🗓️';
-                    case 'subject': return '📝';
-                    case 'category': return '📋';
-                    default: return '🏷️';
+                switch (tagType) {
+                    case 'grade':
+                        return '📚';
+                    case 'semester':
+                        return '🗓️';
+                    case 'subject':
+                        return '📝';
+                    case 'category':
+                        return '📋';
+                    default:
+                        return '🏷️';
                 }
             }
 
             // 獲取標籤類型的中文名稱
             function getTagTypeName(tagType) {
-                switch(tagType) {
-                    case 'grade': return '年級';
-                    case 'semester': return '學期';
-                    case 'subject': return '科目';
-                    case 'category': return '課程類別';
-                    default: return '標籤';
+                switch (tagType) {
+                    case 'grade':
+                        return '年級';
+                    case 'semester':
+                        return '學期';
+                    case 'subject':
+                        return '科目';
+                    case 'category':
+                        return '課程類別';
+                    default:
+                        return '標籤';
                 }
             }
 
