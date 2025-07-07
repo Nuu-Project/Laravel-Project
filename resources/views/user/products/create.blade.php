@@ -174,20 +174,11 @@
                             </x-div.flex-row>
                         </div>
 
-                        <div id="selected-tags-display" class="mt-2 flex flex-wrap gap-2">
-                            <!-- 標籤將由 JavaScript 動態添加 -->
-                        </div>
-
-                        <div id="tag-progress" class="hidden mt-4">
-                            <div class="flex justify-between items-center mb-1">
-                                <span class="text-sm font-medium text-gray-700">已選擇標籤</span>
-                                <span id="tag-progress-percentage" class="text-sm font-medium text-gray-700">0%</span>
-                            </div>
-                            <div class="w-full bg-gray-200 rounded-full h-2.5">
-                                <div id="tag-progress-bar"
-                                    class="bg-blue-600 h-2.5 rounded-full transition-all duration-300"
-                                    style="width: 0%"></div>
-                            </div>
+                        <div class="selected-tags-summary mt-2 flex flex-wrap gap-2">
+                            <x-div.tag-pill id="selected-grade-pill"></x-div.tag-pill>
+                            <x-div.tag-pill id="selected-semester-pill"></x-div.tag-pill>
+                            <x-div.tag-pill id="selected-subject-pill"></x-div.tag-pill>
+                            <x-div.tag-pill id="selected-category-pill"></x-div.tag-pill>
                         </div>
                     </div>
 
