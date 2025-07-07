@@ -163,10 +163,10 @@
                         </div>
 
                         <div class="selected-tags-summary mt-2 flex flex-wrap gap-2">
-                            <div id="selected-grade-pill" class="tag-pill hidden"></div>
-                            <div id="selected-semester-pill" class="tag-pill hidden"></div>
-                            <div id="selected-subject-pill" class="tag-pill hidden"></div>
-                            <div id="selected-category-pill" class="tag-pill hidden"></div>
+                            <x-div.tag-pill id="selected-grade-pill"></x-div.tag-pill>
+                            <x-div.tag-pill id="selected-semester-pill"></x-div.tag-pill>
+                            <x-div.tag-pill id="selected-subject-pill"></x-div.tag-pill>
+                            <x-div.tag-pill id="selected-category-pill"></x-div.tag-pill>
                         </div>
                     </div>
 
