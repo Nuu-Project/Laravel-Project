@@ -4,6 +4,15 @@
 
 <x-template-layout>
     <link rel="stylesheet" href="{{ asset('css/milestone-selector.css') }}">
+    <script src="{{ asset('js/tag-selector.js') }}"></script>
+    <script>
+        window.initialSelectedTags = {
+            grade: "{{ in_array(request('filter.tags', []), []) ? '' : request('filter.tags', [])[array_search('grade', collect(Tagtype::cases())->pluck('value')->toArray())] ?? '' }}",
+            semester: "{{ in_array(request('filter.tags', []), []) ? '' : request('filter.tags', [])[array_search('semester', collect(Tagtype::cases())->pluck('value')->toArray())] ?? '' }}",
+            subject: "{{ in_array(request('filter.tags', []), []) ? '' : request('filter.tags', [])[array_search('subject', collect(Tagtype::cases())->pluck('value')->toArray())] ?? '' }}",
+            category: "{{ in_array(request('filter.tags', []), []) ? '' : request('filter.tags', [])[array_search('category', collect(Tagtype::cases())->pluck('value')->toArray())] ?? '' }}"
+        };
+    </script>
 
     <form action="{{ route('products.index') }}" method="GET" id="filterForm">
         <div class="flex items-center justify-center gap-2 mb-4">
@@ -50,7 +59,8 @@
                                     @foreach ($allTags as $tag)
                                         @if ($tag->type === $type)
                                             <div class="milestone-option" data-tag-id="{{ $tag->id }}"
-                                                data-tag-type="{{ $type }}" data-tag-name="{{ $tag->name }}">
+                                                data-tag-type="{{ $type }}"
+                                                data-tag-name="{{ $tag->name }}">
                                                 <span class="tag-icon">
                                                     @if ($type === 'grade')
                                                         📚
@@ -87,10 +97,19 @@
                 </x-div.flex-row>
             </div>
 
-            <div class="selected-tags-summary mt-2 flex flex-wrap gap-2">
-                @foreach (collect(Tagtype::cases())->pluck('value') as $type)
-                    <div id="selected-{{ $type }}-pill" class="tag-pill hidden"></div>
-                @endforeach
+            <div id="selected-tags-display" class="mt-2 flex flex-wrap gap-2">
+                <!-- 標籤將由 JavaScript 動態添加 -->
+            </div>
+
+            <div id="tag-progress" class="hidden mt-4">
+                <div class="flex justify-between items-center mb-1">
+                    <span class="text-sm font-medium text-gray-700">已選擇標籤</span>
+                    <span id="tag-progress-percentage" class="text-sm font-medium text-gray-700">0%</span>
+                </div>
+                <div class="w-full bg-gray-200 rounded-full h-2.5">
+                    <div id="tag-progress-bar" class="bg-blue-600 h-2.5 rounded-full transition-all duration-300"
+                        style="width: 0%"></div>
+                </div>
             </div>
         </div>
     </form>
@@ -107,189 +126,6 @@
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const tagSelectorButton = document.getElementById('tag-selector-button');
-            const tagSelectionPopup = document.getElementById('tag-selection-popup');
-            const closeTagSelector = document.getElementById('close-tag-selector');
-            const applyTagFilters = document.getElementById('apply-tag-filters');
-            const clearTagSelection = document.getElementById('clear-tag-selection');
-            const selectedTagsSummary = document.getElementById('selected-tags-summary');
-            const filterForm = document.getElementById('filterForm');
-
-            let selectedTags = {};
-
-            @foreach (collect(Tagtype::cases())->pluck('value') as $type)
-                selectedTags["{{ $type }}"] = {
-                    id: document.getElementById("{{ $type }}-input").value || null,
-                    name: '',
-                    selected: !!document.getElementById("{{ $type }}-input").value
-                };
-            @endforeach
-
-            initializeSelectedTags();
-            updateTagsSummary();
-
-            tagSelectorButton.addEventListener('click', function() {
-                tagSelectionPopup.classList.remove('hidden');
-                positionPopup();
-            });
-
-            closeTagSelector.addEventListener('click', function() {
-                tagSelectionPopup.classList.add('hidden');
-            });
-
-            clearTagSelection.addEventListener('click', function() {
-                document.querySelectorAll('.milestone-option.selected').forEach(el => {
-                    el.classList.remove('selected');
-                });
-
-                Object.keys(selectedTags).forEach(type => {
-                    selectedTags[type] = {
-                        id: null,
-                        name: '',
-                        selected: false
-                    };
-                    document.getElementById(`${type}-input`).value = '';
-                    document.getElementById(`selected-${type}-pill`).classList.add('hidden');
-                });
-
-                updateTagsSummary();
-            });
-
-            applyTagFilters.addEventListener('click', function() {
-                tagSelectionPopup.classList.add('hidden');
-                filterForm.submit();
-            });
-
-            document.addEventListener('click', function(event) {
-                if (!tagSelectionPopup.contains(event.target) &&
-                    !tagSelectorButton.contains(event.target) &&
-                    !tagSelectionPopup.classList.contains('hidden')) {
-                    tagSelectionPopup.classList.add('hidden');
-                }
-            });
-
-            const tagOptions = document.querySelectorAll('.milestone-option');
-            tagOptions.forEach(option => {
-                option.addEventListener('click', function() {
-                    const tagType = this.dataset.tagType;
-                    const tagId = this.dataset.tagId;
-                    const tagName = this.dataset.tagName;
-
-                    document.querySelectorAll(`.milestone-option[data-tag-type="${tagType}"]`)
-                        .forEach(el => {
-                            el.classList.remove('selected');
-                        });
-
-                    this.classList.add('selected');
-
-                    document.getElementById(`${tagType}-input`).value = tagId;
-
-                    selectedTags[tagType] = {
-                        id: tagId,
-                        name: tagName,
-                        selected: true
-                    };
-
-                    updateSelectedTagPills();
-                });
-            });
-
-            const searchInput = document.getElementById('tagSearchInput');
-            searchInput.addEventListener('input', function() {
-                const searchTerm = this.value.toLowerCase();
-                tagOptions.forEach(option => {
-                    const tagName = option.dataset.tagName.toLowerCase();
-                    if (tagName.includes(searchTerm)) {
-                        option.style.display = '';
-                    } else {
-                        option.style.display = 'none';
-                    }
-                });
-            });
-
-            function initializeSelectedTags() {
-                @foreach (collect(Tagtype::cases())->pluck('value') as $type)
-                    if (document.getElementById("{{ $type }}-input").value) {
-                        const option = document.querySelector(
-                            `.milestone-option[data-tag-type="{{ $type }}"][data-tag-id="${document.getElementById("{{ $type }}-input").value}"]`
-                        );
-                        if (option) {
-                            option.classList.add('selected');
-                            selectedTags["{{ $type }}"] = {
-                                id: option.dataset.tagId,
-                                name: option.dataset.tagName,
-                                selected: true
-                            };
-                        }
-                    }
-                @endforeach
-
-                updateSelectedTagPills();
-            }
-
-            function updateSelectedTagPills() {
-                Object.keys(selectedTags).forEach(type => {
-                    const tag = selectedTags[type];
-                    const pill = document.getElementById(`selected-${type}-pill`);
-
-                    if (tag.selected) {
-                        pill.innerHTML = `
-                            <span class="tag-icon">${getTagIcon(type)}</span>
-                            <span>${tag.name}</span>
-                        `;
-                        pill.classList.remove('hidden');
-                    } else {
-                        pill.classList.add('hidden');
-                    }
-                });
-            }
-
-            function updateTagsSummary() {
-                const selectedCount = Object.values(selectedTags).filter(tag => tag.selected).length;
-
-                if (selectedCount === 0) {
-                    selectedTagsSummary.textContent = '選擇標籤...';
-                } else {
-                    selectedTagsSummary.textContent = `已選擇 ${selectedCount} 個標籤`;
-                }
-            }
-
-            function positionPopup() {
-                const buttonRect = tagSelectorButton.getBoundingClientRect();
-                const popupHeight = tagSelectionPopup.offsetHeight;
-                const windowHeight = window.innerHeight;
-
-                if (buttonRect.bottom + popupHeight > windowHeight) {
-                    tagSelectionPopup.style.top = (buttonRect.top - popupHeight) + 'px';
-                } else {
-                    tagSelectionPopup.style.top = buttonRect.bottom + 'px';
-                }
-
-                tagSelectionPopup.style.left = buttonRect.left + 'px';
-            }
-
-            function getTagIcon(tagType) {
-                switch (tagType) {
-                    case 'grade':
-                        return '📚';
-                    case 'semester':
-                        return '🗓️';
-                    case 'subject':
-                        return '📝';
-                    case 'category':
-                        return '📋';
-                    default:
-                        return '🏷️';
-                }
-            }
-
-            window.addEventListener('resize', function() {
-                if (!tagSelectionPopup.classList.contains('hidden')) {
-                    positionPopup();
-                }
-            });
-        });
         feather.replace()
     </script>
 </x-template-layout>
