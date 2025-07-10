@@ -8,11 +8,9 @@
                         <img src="{{ asset('images/book-4-fix.png') }}" alt="Logo" class="w-24 md:w-32 lg:w-40">
                     </a>
 
-                    <button
-                        class="lg:hidden w-10 h-10 ml-auto flex items-center justify-center border border-blue-500 text-blue-500 rounded-md"
-                        @click="navbarOpen = !navbarOpen">
+                    <x-button.svg @click="navbarOpen = !navbarOpen">
                         <i data-feather="menu"></i>
-                    </button>
+                    </x-button.svg>
                 </div>
 
 
