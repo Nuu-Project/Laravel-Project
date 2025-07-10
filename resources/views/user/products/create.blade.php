@@ -86,8 +86,8 @@
                                         class="w-full p-2 rounded border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
                                 </div>
 
-                                <div class="milestone-content">
-                                    <div class="milestone-section" id="grade-section">
+                                <div>
+                                    <div id="grade-section">
                                         <h3>年級</h3>
                                         <div class="milestone-options">
                                             @foreach ($tags as $tag)
@@ -103,7 +103,8 @@
                                         <x-input-error :messages="$errors->get('grade')" class="mt-2" />
                                     </div>
 
-                                    <div class="milestone-section" id="semester-section">
+                                    <!-- 學期標籤選擇 -->
+                                    <div id="semester-section">
                                         <h3>學期</h3>
                                         <div class="milestone-options">
                                             @foreach ($tags as $tag)
@@ -119,7 +120,8 @@
                                         <x-input-error :messages="$errors->get('semester')" class="mt-2" />
                                     </div>
 
-                                    <div class="milestone-section" id="subject-section">
+                                    <!-- 科目標籤選擇 -->
+                                    <div id="subject-section">
                                         <h3>科目</h3>
                                         <div class="milestone-options">
                                             @foreach ($tags as $tag)
@@ -135,7 +137,7 @@
                                         <x-input-error :messages="$errors->get('subject')" class="mt-2" />
                                     </div>
 
-                                    <div class="milestone-section" id="category-section">
+                                    <div id="category-section">
                                         <h3>課程類別</h3>
                                         <div class="milestone-options">
                                             @foreach ($tags as $tag)
@@ -166,19 +168,11 @@
                             </x-div.flex-row>
                         </div>
 
-                        <div id="selected-tags-display" class="mt-2 flex flex-wrap gap-2">
-                        </div>
-
-                        <div id="tag-progress" class="hidden mt-4">
-                            <div class="flex justify-between items-center mb-1">
-                                <span class="text-sm font-medium text-gray-700">已選擇標籤</span>
-                                <span id="tag-progress-percentage" class="text-sm font-medium text-gray-700">0%</span>
-                            </div>
-                            <div class="w-full bg-gray-200 rounded-full h-2.5">
-                                <div id="tag-progress-bar"
-                                    class="bg-blue-600 h-2.5 rounded-full transition-all duration-300"
-                                    style="width: 0%"></div>
-                            </div>
+                        <div class="selected-tags-summary mt-2 flex flex-wrap gap-2">
+                            <x-div.tag-pill id="selected-grade-pill"></x-div.tag-pill>
+                            <x-div.tag-pill id="selected-semester-pill"></x-div.tag-pill>
+                            <x-div.tag-pill id="selected-subject-pill"></x-div.tag-pill>
+                            <x-div.tag-pill id="selected-category-pill"></x-div.tag-pill>
                         </div>
                     </div>
 
@@ -194,12 +188,11 @@
                         <x-label.form for="image">
                             上傳圖片
                         </x-label.form>
-                        <div id="imageContainer"
-                            class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+                        <x-div.picture id="imageContainer">
                             @for ($i = 0; $i < 5; $i++)
                                 <x-product.image-uploader :index="$i" />
                             @endfor
-                        </div>
+                        </x-div.picture>
                         <x-input-error :messages="$errors->get('images')" class="mt-2" />
                     </x-div.grid>
                     <x-button.submit>
