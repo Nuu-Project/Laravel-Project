@@ -91,9 +91,9 @@
                                 </div>
 
                                 <!-- 標籤選擇區域 -->
-                                <div class="milestone-content">
+                                <div>
                                     <!-- 年級標籤選擇 -->
-                                    <div class="milestone-section" id="grade-section">
+                                    <div id="grade-section">
                                         <h3>年級</h3>
                                         <div class="milestone-options">
                                             @foreach ($tags as $tag)
@@ -110,7 +110,7 @@
                                     </div>
 
                                     <!-- 學期標籤選擇 -->
-                                    <div class="milestone-section" id="semester-section">
+                                    <div id="semester-section">
                                         <h3>學期</h3>
                                         <div class="milestone-options">
                                             @foreach ($tags as $tag)
@@ -127,7 +127,7 @@
                                     </div>
 
                                     <!-- 科目標籤選擇 -->
-                                    <div class="milestone-section" id="subject-section">
+                                    <div id="subject-section">
                                         <h3>科目</h3>
                                         <div class="milestone-options">
                                             @foreach ($tags as $tag)
@@ -143,7 +143,7 @@
                                         <x-input-error :messages="$errors->get('subject')" class="mt-2" />
                                     </div>
 
-                                    <div class="milestone-section" id="category-section">
+                                    <div id="category-section">
                                         <h3>課程類別</h3>
                                         <div class="milestone-options">
                                             @foreach ($tags as $tag)
@@ -194,12 +194,11 @@
                         <x-label.form for="image">
                             上傳圖片
                         </x-label.form>
-                        <div id="imageContainer"
-                            class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+                        <x-div.picture id="imageContainer">
                             @for ($i = 0; $i < 5; $i++)
                                 <x-product.image-uploader :index="$i" />
                             @endfor
-                        </div>
+                        </x-div.picture>
                         <x-input-error :messages="$errors->get('images')" class="mt-2" />
                     </x-div.grid>
                     <x-button.submit>
