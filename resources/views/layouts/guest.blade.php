@@ -14,17 +14,18 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<div class="flex flex-col sm:justify-center items-center">
-    <div>
-        <a href="{{ route('dashboard') }}">
+<body>
+    <div class="flex flex-col sm:justify-center items-center">
+        <div>
+            <a href="{{ route('dashboard') }}">
 
-        </a>
-    </div>
+            </a>
+        </div>
 
-    <div class="w-full sm:max-w-md px-6 py-4 bg-white bg-opacity-90 shadow-md overflow-hidden sm:rounded-lg">
-        {{ $slot }}
+        <div class="w-full sm:max-w-md px-6 py-4 bg-white bg-opacity-90 shadow-md overflow-hidden sm:rounded-lg">
+            {{ $slot }}
+        </div>
     </div>
-</div>
 </body>
 
 </html>

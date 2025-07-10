@@ -27,7 +27,8 @@
         <div class="flex-1 flex items-center justify-center">
             <x-auth-session-status class="mb-2" :status="session('status')" />
             <section>
-                <x-div.container-screen>
+                <x-div.container-screen
+                    class="border border-gray-300 rounded-xl shadow-lg p-8 max-w-md mx-auto bg-white/90">
                     <div class="flex justify-center items-center mb-1">
                         <x-img.icon src="images/book-4-fix.png" alt="logo" class="h-12 w-auto">
                             登入
@@ -96,6 +97,7 @@
                 </x-div.container-screen>
             </section>
         </div>
+
     </div>
     <script>
         feather.replace()
