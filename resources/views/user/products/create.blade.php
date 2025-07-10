@@ -103,7 +103,6 @@
                                         <x-input-error :messages="$errors->get('grade')" class="mt-2" />
                                     </div>
 
-                                    <!-- 學期標籤選擇 -->
                                     <div id="semester-section">
                                         <h3>學期</h3>
                                         <div class="milestone-options">
@@ -120,7 +119,6 @@
                                         <x-input-error :messages="$errors->get('semester')" class="mt-2" />
                                     </div>
 
-                                    <!-- 科目標籤選擇 -->
                                     <div id="subject-section">
                                         <h3>科目</h3>
                                         <div class="milestone-options">
