@@ -48,20 +48,19 @@
                 style="position: absolute; z-index: 50; width: 100%; max-width: 500px; box-shadow: 0 4px 12px rgba(0,0,0,0.4);">
                 <div class="milestone-selector-wrapper">
                     <div class="search-container mb-4">
-                        <input type="text" id="tagSearchInput" placeholder="搜尋標籤..."
-                            class="w-full p-2 rounded border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                        <input type="text" id="tagSearchInput" placeholder="搜尋標籤..." class="">
                     </div>
-                    <div class="milestone-content">
+                    <div>
                         @foreach (collect(Tagtype::cases())->pluck('value') as $type)
-                            <div class="milestone-section" id="{{ $type }}-section">
-                                <h3 class="milestone-header">{{ $type }}</h3>
-                                <div class="milestone-options">
+                            <div id="{{ $type }}-section">
+                                <h3>{{ $type }}</h3>
+                                <div>
                                     @foreach ($allTags as $tag)
                                         @if ($tag->type === $type)
                                             <div class="milestone-option" data-tag-id="{{ $tag->id }}"
                                                 data-tag-type="{{ $type }}"
                                                 data-tag-name="{{ $tag->name }}">
-                                                <span class="tag-icon">
+                                                <span>
                                                     @if ($type === 'grade')
                                                         📚
                                                     @elseif ($type === 'semester')
@@ -74,7 +73,7 @@
                                                         🏷️
                                                     @endif
                                                 </span>
-                                                <span class="tag-name">{{ $tag->name }}</span>
+                                                <span>{{ $tag->name }}</span>
                                             </div>
                                         @endif
                                     @endforeach
@@ -91,9 +90,9 @@
                     <x-button.close>
                         關閉
                     </x-button.close>
-                    <x-button.apply>
+                    <x-button.apply-guest>
                         查詢
-                    </x-button.apply>
+                    </x-button.apply-guest>
                 </x-div.flex-row>
             </div>
 
@@ -103,10 +102,10 @@
 
             <div id="tag-progress" class="hidden mt-4">
                 <div class="flex justify-between items-center mb-1">
-                    <span class="text-sm font-medium text-gray-700">已選擇標籤</span>
-                    <span id="tag-progress-percentage" class="text-sm font-medium text-gray-700">0%</span>
+                    <x-span.text-sm>已選擇標籤</x-span.text-sm>
+                    <x-span.text-sm id="tag-progress-percentage">0%</x-span.text-sm>
                 </div>
-                <div class="w-full bg-gray-200 rounded-full h-2.5">
+                <div class="w-full bg-blue-500 rounded-full h-2.5">
                     <div id="tag-progress-bar" class="bg-blue-600 h-2.5 rounded-full transition-all duration-300"
                         style="width: 0%"></div>
                 </div>
