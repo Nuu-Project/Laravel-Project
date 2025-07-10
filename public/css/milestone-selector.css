@@ -15,7 +15,6 @@
     padding-right: 0.5rem;
 }
 
-/* 搜尋欄*/
 .search-container input {
     background-color: #f9fafb;
     border: 1px solid #e5e7eb;
@@ -35,7 +34,6 @@
     color: #9ca3af;
 }
 
-/* 標籤類別*/
 .milestone-header {
     font-size: 1rem;
     font-weight: 600;
@@ -45,15 +43,6 @@
     padding-bottom: 0.5rem;
 }
 
-/* 標籤選項*/
-.milestone-options {
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
-    margin-bottom: 1rem;
-}
-
-/* 標籤選項*/
 .milestone-option {
     display: flex;
     align-items: center;
@@ -62,6 +51,7 @@
     cursor: pointer;
     transition: background-color 0.2s;
     position: relative;
+    gap: 0.5rem;
 }
 
 .milestone-option:hover {
@@ -80,15 +70,22 @@
     color: #1d4ed8;
 }
 
+.milestone-option span {
+    display: inline-block;
+}
+
 .tag-icon {
     margin-right: 0.5rem;
+    flex-shrink: 0;
 }
 
 .tag-name {
     flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-/* 選擇的標籤區域 */
 .selected-tags-container {
     background-color: #f9fafb;
     color: #333333;
@@ -109,7 +106,6 @@
     border: 1px solid #c7d2fe;
 }
 
-/* 滾動條 */
 .milestone-selector-wrapper::-webkit-scrollbar {
     width: 8px;
 }
@@ -128,7 +124,6 @@
     background-color: #9ca3af;
 }
 
-/* 標籤選擇按鈕 */
 .tag-selector-button {
     color: #333333;
     background-color: #f9fafb;
@@ -141,12 +136,10 @@
     border-color: #d1d5db;
 }
 
-/* 已選標籤摘要 */
 .selected-tags-summary {
     padding: 0.5rem 0;
 }
 
-/* 響應式調整 */
 @media (min-width: 768px) {
     .tag-selection-container {
         padding: 1.5rem;
@@ -157,7 +150,7 @@
     }
 }
 
-按鈕容器樣式
+
 .tag-selection-container > div:last-child {
     display: flex;
     flex-direction: row;

@@ -419,7 +419,6 @@ function swapImages(sourcePos, targetPos) {
             try {
                 sourceUploaderElement.__x.getUnobservedData().hasExistingImage = targetHasValidImage;
             } catch (e) {
-                // 錯誤處理
             }
         }
 
@@ -427,7 +426,6 @@ function swapImages(sourcePos, targetPos) {
             try {
                 targetUploaderElement.__x.getUnobservedData().hasExistingImage = sourceHasValidImage;
             } catch (e) {
-                // 錯誤處理
             }
         }
     }
@@ -443,9 +441,7 @@ function updateVisibility(position, hasImage) {
             placeholder.classList.add('hidden');
 
             const img = preview.querySelector('img');
-            if (img && img.src === location.href + '#') {
-                // 處理無效圖片源
-            }
+            if (img && img.src === location.href + '#') { }
         } else {
             preview.classList.add('hidden');
             placeholder.classList.remove('hidden');
@@ -471,7 +467,7 @@ document.addEventListener('alpine:init', () => {
                 try {
                     el.__x.getUnobservedData().hasExistingImage = hasImage;
                 } catch (e) {
-                    // 處理錯誤
+
                 }
             }
         },
@@ -498,7 +494,6 @@ function safeUpdateAlpineState(index, hasImage) {
             return true;
         }
     } catch (e) {
-        // 處理錯誤
     }
     return false;
 }
