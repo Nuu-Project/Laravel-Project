@@ -84,6 +84,8 @@
     "File": "檔案",
     "Files": "檔案",
     "Forbidden": "拒絕存取",
+    "user controler":"使用者後台",
+    "admin controler":"管理者後台",
     "Forgot your password?": "忘記密碼？",
     "Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.": "忘記密碼？沒關係。請輸入您的電子郵件地址，我們將透過電子郵件傳送重設密碼連結給您，讓您重新設定一個新的密碼。",
     "email": "電子郵件",
