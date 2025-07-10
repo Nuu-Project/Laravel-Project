@@ -6,7 +6,7 @@
 
             <nav class="flex-wrap lg:flex items-center" x-data="{ navbarOpen: false }">
                 <div class="flex items-center mb-10 lg:mb-0">
-                    <img src="images/book-4-fix.png" alt="Logo">
+                    <img src="{{ asset('images/book-4-fix.png') }}" alt="聯大二手書交易平台 Logo">
 
                     <x-button.svg @click="navbarOpen = !navbarOpen">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
@@ -34,7 +34,6 @@
                                     class="inline-flex items-center px-3 py-2 border border-transparent text-3xl leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
                                     <img width="65" height="65" src="images/account.png" alt="">
                                     <div>{{ Auth::user()->name }}</div>
-
                                     <div class="ms-1">
                                         <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg"
                                             viewBox="0 0 20 20">
@@ -52,12 +51,12 @@
                                 </x-dropdown-link>
 
                                 <x-dropdown-link :href="route('user.products.index')">
-                                    {{ __('使用者後台') }}
+                                    {{ __('user contorler') }}
                                 </x-dropdown-link>
 
                                 @role('admin')
                                     <x-dropdown-link :href="route('admin.messages.index')">
-                                        {{ __('管理者後台') }}
+                                        {{ __('admin controler') }}
                                     </x-dropdown-link>
                                 @endrole
 
@@ -72,10 +71,11 @@
                             </x-slot>
                         </x-dropdown>
                     @else
-                        <x-a.register href="/register">註冊</x-a.register>
-                        <x-a.login href="/login">登入</x-a.login>
+                        <x-a.register href="{{ route('register') }}">註冊</x-a.register>
+                        <x-a.login href="{{ route('login') }}">登入</x-a.login>
                     @endauth
                 </div>
             </nav>
         </x-div.container-screen>
     </section>
+</body>

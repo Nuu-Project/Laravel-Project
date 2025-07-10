@@ -97,7 +97,6 @@
             </div>
 
             <div id="selected-tags-display" class="mt-2 flex flex-wrap gap-2">
-                <!-- 標籤將由 JavaScript 動態添加 -->
             </div>
 
             <div id="tag-progress" class="hidden mt-4">

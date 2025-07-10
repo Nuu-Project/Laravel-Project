@@ -32,7 +32,6 @@
                 </x-table.overflow-container>
             </x-div.bg-white>
 
-            {{-- All users 部分 --}}
             <x-div.bg-white>
                 <x-table.overflow-container>
                     <x-table.users :users="$users" />
