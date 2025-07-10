@@ -4,11 +4,9 @@
             <x-div.container-screen>
                 <nav class="flex-wrap lg:flex items-center" x-data="{ navbarOpen: false }">
                     <div class="flex items-center mb-10 lg:mb-0">
-                        <button
-                            class="lg:hidden w-10 h-10 ml-auto flex items-center justify-center border border-blue-500 text-blue-500 rounded-md"
-                            @click="navbarOpen = !navbarOpen">
+                        <x-button.svg @click="navbarOpen = !navbarOpen">
                             <i data-feather="menu"></i>
-                        </button>
+                        </x-button.svg>
                     </div>
 
                     <ul class="lg:flex flex-col lg:flex-row lg:items-center lg:mx-auto lg:space-x-8 xl:space-x-14"
