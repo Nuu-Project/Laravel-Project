@@ -24,8 +24,7 @@
 
         <div class="flex-1 flex items-center justify-center">
             <section>
-                <x-div.container-screen
-                    class="border border-gray-300 rounded-xl shadow-lg p-8 max-w-md mx-auto bg-white/90">
+                <x-div.container-screen mode="card">
                     <div class="flex justify-center items-center mb-1">
                         <x-img.icon src="images/sign-up.png" alt="logo" class="h-12 w-auto">
                             註冊
