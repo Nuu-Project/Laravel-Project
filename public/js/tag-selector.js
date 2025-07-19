@@ -31,24 +31,19 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     clearTagSelection.addEventListener('click', () => {
-        // 移除所有選項的選中狀態
         tagOptions.forEach(el => el.classList.remove('selected'));
 
-        // 清除所有標籤選擇
         Object.keys(selectedTags).forEach(type => {
             selectedTags[type] = { id: null, name: '', selected: false };
             const input = document.getElementById(`${type}-input`);
             if (input) input.value = '';
         });
 
-        // 更新 UI
         updateSelectedTagPills();
         updateTagsSummary();
 
-        // 清空搜尋輸入框
         tagSearchInput.value = '';
 
-        // 重置所有標籤的可見性
         tagOptions.forEach(option => {
             option.style.display = 'flex';
             option.style.visibility = 'visible';
@@ -113,15 +108,13 @@ document.addEventListener('DOMContentLoaded', function () {
     function updateSelectedTagPills() {
         const tagsDisplay = document.getElementById('selected-tags-display');
         if (tagsDisplay) {
-            // 清空現有的標籤顯示
             tagsDisplay.innerHTML = '';
 
-            // 重置標籤計數
             let selectedCount = 0;
 
             Object.keys(selectedTags).forEach(type => {
                 const tag = selectedTags[type];
-                if (tag.selected && tag.name) {  // 確保只有當標籤被選中且有名稱時才顯示
+                if (tag.selected && tag.name) {
                     selectedCount++;
                     const pill = document.createElement('div');
                     pill.className = 'tag-pill flex items-center bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm mr-2';
@@ -140,27 +133,22 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             });
 
-            // 更新進度條
             updateTagsSummary();
 
-            // 添加刪除按鈕的事件監聽器
             tagsDisplay.querySelectorAll('.delete-tag-btn').forEach(btn => {
                 btn.addEventListener('click', (e) => {
                     e.stopPropagation();
                     const tagType = btn.dataset.tagType;
 
-                    // 移除選中的選項
                     const selectedOption = document.querySelector(`.milestone-option[data-tag-type="${tagType}"].selected`);
                     if (selectedOption) {
                         selectedOption.classList.remove('selected');
                     }
 
-                    // 清除標籤選擇
                     selectedTags[tagType] = { id: null, name: '', selected: false };
                     const input = document.getElementById(`${tagType}-input`);
                     if (input) input.value = '';
 
-                    // 更新 UI
                     updateSelectedTagPills();
                 });
             });
@@ -183,25 +171,21 @@ document.addEventListener('DOMContentLoaded', function () {
                         `;
                         pill.classList.remove('hidden');
 
-                        // Add event listener for delete button
                         const deleteBtn = pill.querySelector('.delete-tag-btn');
                         if (deleteBtn) {
                             deleteBtn.addEventListener('click', (e) => {
                                 e.stopPropagation();
                                 const tagType = deleteBtn.dataset.tagType;
 
-                                // Remove selection from the option
                                 const selectedOption = document.querySelector(`.milestone-option[data-tag-type="${tagType}"].selected`);
                                 if (selectedOption) {
                                     selectedOption.classList.remove('selected');
                                 }
 
-                                // Clear the tag selection
                                 selectedTags[tagType] = { id: null, name: '', selected: false };
                                 const input = document.getElementById(`${tagType}-input`);
                                 if (input) input.value = '';
 
-                                // Update UI
                                 updateSelectedTagPills();
                                 updateTagsSummary();
                             });
@@ -215,14 +199,12 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function updateTagsSummary() {
-        // 計算實際選中的標籤數量
         const count = Object.values(selectedTags)
-            .filter(t => t.selected && t.name)  // 確保只計算有效的選中標籤
+            .filter(t => t.selected && t.name)
             .length;
 
         selectedTagsSummary.textContent = count === 0 ? '選擇標籤...' : `已選擇 ${count} 個標籤`;
 
-        // 計算可見區段數量
         const visibleSections = Array.from(document.querySelectorAll('.milestone-section'))
             .filter(section => {
                 const hasVisibleOptions = Array.from(section.querySelectorAll('.milestone-option'))
@@ -239,7 +221,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 progressBar.classList.add('hidden');
             } else {
                 progressBar.classList.remove('hidden');
-                const percentage = Math.round((count / 4) * 100);  // 固定使用 4 作為分母，因為總共有 4 種類型的標籤
+                const percentage = Math.round((count / 4) * 100);
                 progressBarFill.style.width = `${Math.min(percentage, 100)}%`;
                 if (progressPercentage) {
                     progressPercentage.textContent = `${Math.min(percentage, 100)}%`;
@@ -271,11 +253,9 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    // 修改搜尋功能
     tagSearchInput.addEventListener('input', () => {
         const searchTerm = tagSearchInput.value.toLowerCase().trim();
 
-        // 遍歷所有標籤選項
         tagOptions.forEach(option => {
             const tagName = option.dataset.tagName.toLowerCase();
             const tagType = option.dataset.tagType;
@@ -284,7 +264,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 option.style.display = 'flex';
                 option.style.visibility = 'visible';
 
-                // 確保所有子元素都是可見的
+
                 option.querySelectorAll('span').forEach(span => {
                     span.style.display = 'inline-block';
                     span.style.visibility = 'visible';
@@ -295,7 +275,6 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
 
-        // 更新各區段的可見性
         document.querySelectorAll('.milestone-section').forEach(section => {
             const visibleOptions = Array.from(section.querySelectorAll('.milestone-option'))
                 .filter(option => option.style.display !== 'none');

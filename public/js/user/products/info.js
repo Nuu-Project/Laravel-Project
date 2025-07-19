@@ -72,7 +72,6 @@ document.addEventListener('DOMContentLoaded', function () {
             const isExpanded = this.getAttribute('data-is-expanded') === 'true';
             const totalHidden = this.getAttribute('data-total-hidden');
 
-            // 獲取該留言下所有回覆
             const replies = document.querySelectorAll(`.reply-item[data-message-id="${messageId}"]`);
 
             if (isExpanded) {
@@ -82,7 +81,6 @@ document.addEventListener('DOMContentLoaded', function () {
                     }
                 });
 
-                // 更新按鈕文字和狀態
                 this.textContent = `查看更多留言 (${totalHidden})`;
                 this.setAttribute('data-is-expanded', 'false');
             } else {
@@ -90,14 +88,12 @@ document.addEventListener('DOMContentLoaded', function () {
                     reply.classList.remove('hidden');
                 });
 
-                // 更新按鈕文字和狀態
                 this.textContent = '縮小留言區';
                 this.setAttribute('data-is-expanded', 'true');
             }
         });
     });
 
-    // 初始化隱藏回覆表單
     const replyForms = document.querySelectorAll('[id^="replyForm"]');
     replyForms.forEach(form => {
         form.style.display = 'none';
@@ -245,7 +241,7 @@ function handleReport(event, entityType, entityId) {
                 return res.json();
             })
             .then(data => {
-                localStorage.setItem(key, now.toString()); // 記錄時間戳
+                localStorage.setItem(key, now.toString());
 
                 Swal.fire({
                     title: '檢舉已送出',
@@ -281,7 +277,6 @@ document.body.addEventListener('click', function (e) {
     }
 });
 
-// 更新 toggleReplyForm 函數，以便可以全局訪問
 function toggleReplyForm(messageId) {
     const form = document.getElementById(`replyForm${messageId}`);
     form.style.display = form.style.display === 'none' || form.style.display === '' ? 'block' : 'none';
