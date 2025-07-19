@@ -9,15 +9,10 @@
                         </x-button.svg>
                     </div>
 
-                    <ul class="lg:flex flex-col lg:flex-row lg:items-center lg:mx-auto lg:space-x-8 xl:space-x-14"
-                        :class="{ 'hidden': !navbarOpen, 'flex': navbarOpen }">
+                    <x-ul.navbar>
                         <x-li.font-semibold><a href="{{ route('dashboard') }}">首頁</a></x-li.font-semibold>
                         <x-li.font-semibold><a href="{{ route('products.index') }}">商品</a></x-li.font-semibold>
-                    </ul>
-
-                    <div class="lg:flex flex-col md:flex-row md:items-center text-center md:space-x-6"
-                        :class="{ 'hidden': !navbarOpen, 'flex': navbarOpen }">
-                    </div>
+                    </x-ul.navbar>
                 </nav>
             </x-div.container-screen>
         </section>
@@ -27,11 +22,11 @@
             <section>
                 <x-div.container-screen
                     class="border border-gray-300 rounded-xl shadow-lg p-8 max-w-md mx-auto bg-white/90">
-                    <div class="flex justify-center items-center mb-1">
+                    <x-div.justify-center>
                         <x-img.icon src="images/book-4-fix.png" alt="logo" class="h-12 w-auto">
                             登入
                         </x-img.icon>
-                    </div>
+                    </x-div.justify-center>
                     @if ($errors->has('message'))
                         <div class="text-sm text-red-600 space-y-1">
                             {!! $errors->first('message') !!}
