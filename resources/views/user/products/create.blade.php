@@ -67,15 +67,14 @@
                             <x-label.form for="tag-selector-button">
                                 標籤選擇
                             </x-label.form>
-                            <button type="button" id="tag-selector-button"
-                                class="tag-selector-button w-full text-left p-3 bg-white rounded-md flex justify-between items-center border border-gray-300 hover:border-gray-400">
+                            <x-button.tag id="tag-selector-button">
                                 <span id="selected-tags-summary">選擇標籤...</span>
                                 <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor"
                                     viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M19 9l-7 7-7-7"></path>
                                 </svg>
-                            </button>
+                            </x-button.tag>
                         </div>
 
                         <div id="tag-selection-popup" class="tag-selection-container hidden"
@@ -103,7 +102,6 @@
                                         <x-input-error :messages="$errors->get('grade')" class="mt-2" />
                                     </div>
 
-                                    <!-- 學期標籤選擇 -->
                                     <div id="semester-section">
                                         <h3>學期</h3>
                                         <div class="milestone-options">
@@ -120,7 +118,6 @@
                                         <x-input-error :messages="$errors->get('semester')" class="mt-2" />
                                     </div>
 
-                                    <!-- 科目標籤選擇 -->
                                     <div id="subject-section">
                                         <h3>科目</h3>
                                         <div class="milestone-options">
@@ -162,7 +159,7 @@
                                 <x-button.clear>
                                     清除
                                 </x-button.clear>
-                                <x-button.apply>
+                                <x-button.apply type="submit">
                                     確認選擇
                                 </x-button.apply>
                             </x-div.flex-row>

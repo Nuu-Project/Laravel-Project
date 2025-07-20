@@ -35,13 +35,12 @@
 
         <div class="tag-selector-container mx-auto max-w-3xl mb-6">
             <div class="mb-3">
-                <button type="button" id="tag-selector-button"
-                    class="tag-selector-button w-full text-left p-3 bg-white rounded-md flex justify-between items-center border border-gray-300 hover:border-gray-400">
+                <x-button.tag id="tag-selector-button">
                     <span id="selected-tags-summary">選擇標籤...</span>
                     <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                     </svg>
-                </button>
+                </x-button.tag>
             </div>
 
             <div id="tag-selection-popup" class="tag-selection-container hidden"
@@ -90,9 +89,9 @@
                     <x-button.close>
                         關閉
                     </x-button.close>
-                    <x-button.apply-guest>
+                    <x-button.apply type="submit">
                         查詢
-                    </x-button.apply-guest>
+                    </x-button.apply>
                 </x-div.flex-row>
             </div>
 

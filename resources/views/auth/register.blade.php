@@ -15,21 +15,19 @@
                         <x-li.font-semibold><a href="{{ route('products.index') }}">商品</a></x-li.font-semibold>
                     </ul>
 
-                    <div class="lg:flex flex-col md:flex-row md:items-center text-center md:space-x-6"
-                        :class="{ 'hidden': !navbarOpen, 'flex': navbarOpen }">
-                    </div>
                 </nav>
             </x-div.container-screen>
         </section>
 
         <div class="flex-1 flex items-center justify-center">
             <section>
-                <x-div.container-screen mode="card">
-                    <div class="flex justify-center items-center mb-1">
+                <x-div.container-screen
+                    class="border border-gray-300 rounded-xl shadow-lg p-8 max-w-md mx-auto bg-white/90">
+                    <x-div.justify-center>
                         <x-img.icon src="images/sign-up.png" alt="logo" class="h-12 w-auto">
                             註冊
                         </x-img.icon>
-                    </div>
+                    </x-div.justify-center>
                     <div>
                         <x-h.h1>
                             Create an account

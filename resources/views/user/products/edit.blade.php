@@ -61,7 +61,6 @@
                         <x-input-error :messages="$errors->get('price')" class="mt-2" />
                     </x-div.grid>
 
-                    <!-- 隱藏的標籤輸入欄位 -->
                     <input type="hidden" name="grade" id="grade-input" value="{{ $gradeTag ? $gradeTag->id : '' }}">
                     <input type="hidden" name="semester" id="semester-input"
                         value="{{ $semesterTag ? $semesterTag->id : '' }}">
@@ -70,36 +69,30 @@
                     <input type="hidden" name="category" id="category-input"
                         value="{{ $categoryTag ? $categoryTag->id : '' }}">
 
-                    <!-- 標籤選擇按鈕和彈出框 -->
                     <div class="tag-selector-container">
                         <div class="mb-3">
                             <x-label.form for="tag-selector-button">
                                 標籤選擇
                             </x-label.form>
-                            <button type="button" id="tag-selector-button"
-                                class="tag-selector-button w-full text-left p-3 bg-white rounded-md flex justify-between items-center border border-gray-300 hover:border-gray-400">
+                            <x-button.tag id="tag-selector-button">
                                 <span id="selected-tags-summary">選擇標籤...</span>
                                 <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor"
                                     viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M19 9l-7 7-7-7"></path>
                                 </svg>
-                            </button>
+                            </x-button.tag>
                         </div>
 
-                        <!-- 標籤選擇彈出層 -->
                         <div id="tag-selection-popup" class="tag-selection-container hidden"
                             style="position: absolute; z-index: 50; width: 100%; max-width: 500px; box-shadow: 0 4px 12px rgba(0,0,0,0.4);">
                             <div class="milestone-selector-wrapper">
-                                <!-- 標籤搜尋欄 -->
                                 <div class="search-container mb-4">
                                     <input type="text" id="tagSearchInput" placeholder="搜尋標籤..."
                                         class="w-full p-2 rounded border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
                                 </div>
 
-                                <!-- 標籤選擇區域 -->
                                 <div>
-                                    <!-- 年級標籤選擇 -->
                                     <div class="milestone-section" id="grade-section">
                                         <h3>年級</h3>
                                         <div class="milestone-options">
@@ -116,7 +109,6 @@
                                         <x-input-error :messages="$errors->get('grade')" class="mt-2" />
                                     </div>
 
-                                    <!-- 學期標籤選擇 -->
                                     <div id="semester-section">
                                         <h3>學期</h3>
                                         <div class="milestone-options">
@@ -133,7 +125,6 @@
                                         <x-input-error :messages="$errors->get('semester')" class="mt-2" />
                                     </div>
 
-                                    <!-- 科目標籤選擇 -->
                                     <div id="subject-section">
                                         <h3>科目</h3>
                                         <div class="milestone-options">
@@ -175,14 +166,13 @@
                                 <x-button.clear>
                                     清除
                                 </x-button.clear>
-                                <x-button.apply>
+                                <x-button.apply type="submit">
                                     確認選擇
                                 </x-button.apply>
                             </x-div.flex-row>
                         </div>
 
                         <div id="selected-tags-display" class="mt-2 flex flex-wrap gap-2">
-                            <!-- 標籤將由 JavaScript 動態添加 -->
                         </div>
 
                         <div id="tag-progress" class="hidden mt-4">
