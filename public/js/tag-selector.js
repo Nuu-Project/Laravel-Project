@@ -11,11 +11,19 @@ document.addEventListener('DOMContentLoaded', function () {
     let selectedTags = {};
     ['grade', 'semester', 'subject', 'category'].forEach(type => {
         const id = window.initialSelectedTags?.[type] || null;
+
+        const option = id ? document.querySelector(`.milestone-option[data-tag-type="${type}"][data-tag-id="${id}"]`) : null;
+
         selectedTags[type] = {
             id: id,
-            name: '',
+            name: option ? option.dataset.tagName : '',
             selected: !!id
         };
+
+        const input = document.getElementById(`${type}-input`);
+        if (input && id) {
+            input.value = id;
+        }
     });
 
     initializeSelectedTags();
@@ -99,10 +107,16 @@ document.addEventListener('DOMContentLoaded', function () {
                     option.classList.add('selected');
                     selectedTags[type].name = option.dataset.tagName;
                     selectedTags[type].selected = true;
+
+                    const input = document.getElementById(`${type}-input`);
+                    if (input) {
+                        input.value = selectedTags[type].id;
+                    }
                 }
             }
         });
         updateSelectedTagPills();
+        updateTagsSummary();
     }
 
     function updateSelectedTagPills() {
@@ -114,6 +128,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
             Object.keys(selectedTags).forEach(type => {
                 const tag = selectedTags[type];
+                if (tag.id) {
+                    const option = document.querySelector(`.milestone-option[data-tag-type="${type}"][data-tag-id="${tag.id}"]`);
+                    if (option) {
+                        tag.name = option.dataset.tagName;
+                        tag.selected = true;
+                    }
+                }
+
                 if (tag.selected && tag.name) {
                     selectedCount++;
                     const pill = document.createElement('div');
