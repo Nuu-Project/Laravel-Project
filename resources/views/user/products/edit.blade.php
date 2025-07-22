@@ -166,7 +166,7 @@
                                 <x-button.clear>
                                     清除
                                 </x-button.clear>
-                                <x-button.apply type="submit">
+                                <x-button.apply>
                                     確認選擇
                                 </x-button.apply>
                             </x-div.flex-row>
