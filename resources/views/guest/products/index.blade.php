@@ -10,7 +10,7 @@
             '年級' => 'grade',
             '學期' => 'semester',
             '課程' => 'subject',
-            '科目' => 'category'
+            '科目' => 'category',
         ];
 
         $selectedTags = request('filter.tags', []);
@@ -19,10 +19,10 @@
         $reverseTypeMapping = array_flip($typeMapping);
 
         foreach ($allTags as $tag) {
-            if (in_array((string)$tag->id, $selectedTags)) {
+            if (in_array((string) $tag->id, $selectedTags)) {
                 $mappedType = $typeMapping[$tag->type] ?? null;
                 if ($mappedType) {
-                    $initialTags[$mappedType] = (string)$tag->id;
+                    $initialTags[$mappedType] = (string) $tag->id;
                 }
             }
         }
