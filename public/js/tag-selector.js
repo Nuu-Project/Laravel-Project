@@ -67,7 +67,10 @@ document.addEventListener('DOMContentLoaded', function () {
         tagSelectionPopup.classList.add('hidden');
         updateSelectedTagPills();
         updateTagsSummary();
-        document.getElementById('filterForm').submit();
+        const filterForm = document.getElementById('filterForm');
+        if (filterForm) {
+            filterForm.submit();
+        }
     });
 
     document.addEventListener('click', event => {
@@ -207,6 +210,8 @@ document.addEventListener('DOMContentLoaded', function () {
                                 selectedTags[tagType] = { id: null, name: '', selected: false };
                                 const input = document.getElementById(`${tagType}-input`);
                                 if (input) input.value = '';
+                                pill.classList.add('hidden');
+                                pill.innerHTML = '';
 
                                 updateSelectedTagPills();
                                 updateTagsSummary();
@@ -214,6 +219,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         }
                     } else {
                         pill.classList.add('hidden');
+                        pill.innerHTML = '';
                     }
                 }
             });
@@ -222,6 +228,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function updateTagsSummary() {
         const count = Object.values(selectedTags)
+            .filter(t => t.selected && t.name)
             .filter(t => t.selected && t.name)
             .length;
 
