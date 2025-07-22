@@ -125,22 +125,6 @@
                                         <x-input-error :messages="$errors->get('semester')" class="mt-2" />
                                     </div>
 
-                                    <div id="subject-section">
-                                        <h3>科目</h3>
-                                        <div class="milestone-options">
-                                            @foreach ($tags as $tag)
-                                                @if ($tag->type === Tagtype::Subject->value)
-                                                    <div class="milestone-option" data-tag-id="{{ $tag->id }}"
-                                                        data-tag-type="subject" data-tag-name="{{ $tag->name }}">
-                                                        <span>📝</span>
-                                                        <span>{{ $tag->name }}</span>
-                                                    </div>
-                                                @endif
-                                            @endforeach
-                                        </div>
-                                        <x-input-error :messages="$errors->get('subject')" class="mt-2" />
-                                    </div>
-
                                     <div id="category-section">
                                         <h3>課程類別</h3>
                                         <div class="milestone-options">
@@ -156,6 +140,22 @@
                                         </div>
                                         <x-input-error :messages="$errors->get('category')" class="mt-2" />
                                     </div>
+
+                                    <div id="subject-section">
+                                        <h3>科目</h3>
+                                        <div class="milestone-options">
+                                            @foreach ($tags as $tag)
+                                                @if ($tag->type === Tagtype::Subject->value)
+                                                    <div class="milestone-option" data-tag-id="{{ $tag->id }}"
+                                                        data-tag-type="subject" data-tag-name="{{ $tag->name }}">
+                                                        <span>📝</span>
+                                                        <span>{{ $tag->name }}</span>
+                                                    </div>
+                                                @endif
+                                            @endforeach
+                                        </div>
+                                        <x-input-error :messages="$errors->get('subject')" class="mt-2" />
+                                    </div>
                                 </div>
                             </div>
 
@@ -166,7 +166,7 @@
                                 <x-button.clear>
                                     清除
                                 </x-button.clear>
-                                <x-button.apply type="submit">
+                                <x-button.apply>
                                     確認選擇
                                 </x-button.apply>
                             </x-div.flex-row>

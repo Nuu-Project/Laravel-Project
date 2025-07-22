@@ -5,13 +5,32 @@
 <x-template-layout>
     <link rel="stylesheet" href="{{ asset('css/milestone-selector.css') }}">
     <script src="{{ asset('js/tag-selector.js') }}"></script>
+    @php
+        $typeMapping = [
+            '年級' => 'grade',
+            '學期' => 'semester',
+            '課程' => 'subject',
+            '科目' => 'category',
+        ];
+
+        $selectedTags = request('filter.tags', []);
+        $initialTags = [];
+
+        $reverseTypeMapping = array_flip($typeMapping);
+
+        foreach ($allTags as $tag) {
+            if (in_array((string) $tag->id, $selectedTags)) {
+                $mappedType = $typeMapping[$tag->type] ?? null;
+                if ($mappedType) {
+                    $initialTags[$mappedType] = (string) $tag->id;
+                }
+            }
+        }
+    @endphp
+
     <script>
-        window.initialSelectedTags = {
-            grade: "{{ in_array(request('filter.tags', []), []) ? '' : request('filter.tags', [])[array_search('grade', collect(Tagtype::cases())->pluck('value')->toArray())] ?? '' }}",
-            semester: "{{ in_array(request('filter.tags', []), []) ? '' : request('filter.tags', [])[array_search('semester', collect(Tagtype::cases())->pluck('value')->toArray())] ?? '' }}",
-            subject: "{{ in_array(request('filter.tags', []), []) ? '' : request('filter.tags', [])[array_search('subject', collect(Tagtype::cases())->pluck('value')->toArray())] ?? '' }}",
-            category: "{{ in_array(request('filter.tags', []), []) ? '' : request('filter.tags', [])[array_search('category', collect(Tagtype::cases())->pluck('value')->toArray())] ?? '' }}"
-        };
+        window.initialSelectedTags = @json($initialTags);
+        console.log('Initial Selected Tags:', window.initialSelectedTags);
     </script>
 
     <form action="{{ route('products.index') }}" method="GET" id="filterForm">
@@ -28,9 +47,9 @@
             </x-form.search-layout>
         </div>
 
-        @foreach (collect(Tagtype::cases())->pluck('value') as $type)
-            <input type="hidden" id="{{ $type }}-input" name="filter[tags][]"
-                value="{{ in_array(request('filter.tags', []), []) ? '' : request('filter.tags', [])[array_search($type, collect(Tagtype::cases())->pluck('value')->toArray())] ?? '' }}">
+        @foreach ($typeMapping as $chineseType => $englishType)
+            <input type="hidden" id="{{ $englishType }}-input" name="filter[tags][]"
+                value="{{ isset($initialTags[$englishType]) ? $initialTags[$englishType] : '' }}">
         @endforeach
 
         <div class="tag-selector-container mx-auto max-w-3xl mb-6">
@@ -50,29 +69,29 @@
                         <input type="text" id="tagSearchInput" placeholder="搜尋標籤..." class="">
                     </div>
                     <div>
-                        @foreach (collect(Tagtype::cases())->pluck('value') as $type)
-                            <div id="{{ $type }}-section">
-                                <h3>{{ $type }}</h3>
+                        @foreach ($typeMapping as $chineseType => $englishType)
+                            <div id="{{ $englishType }}-section">
+                                <h3>{{ $chineseType }}</h3>
                                 <div>
                                     @foreach ($allTags as $tag)
-                                        @if ($tag->type === $type)
+                                        @if ($tag->type === $chineseType)
                                             <div class="milestone-option" data-tag-id="{{ $tag->id }}"
-                                                data-tag-type="{{ $type }}"
-                                                data-tag-name="{{ $tag->name }}">
+                                                data-tag-type="{{ $englishType }}"
+                                                data-tag-name="{{ is_array($tag->name) ? $tag->name['zh_TW'] : $tag->name }}">
                                                 <span>
-                                                    @if ($type === 'grade')
+                                                    @if ($englishType === 'grade')
                                                         📚
-                                                    @elseif ($type === 'semester')
+                                                    @elseif ($englishType === 'semester')
                                                         🗓️
-                                                    @elseif ($type === 'subject')
+                                                    @elseif ($englishType === 'subject')
                                                         📝
-                                                    @elseif ($type === 'category')
+                                                    @elseif ($englishType === 'category')
                                                         📋
                                                     @else
                                                         🏷️
                                                     @endif
                                                 </span>
-                                                <span>{{ $tag->name }}</span>
+                                                <span>{{ is_array($tag->name) ? $tag->name['zh_TW'] : $tag->name }}</span>
                                             </div>
                                         @endif
                                     @endforeach
