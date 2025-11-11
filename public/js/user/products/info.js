@@ -241,13 +241,9 @@ function handleReport(event, entityType, entityId) {
                 return res.json();
             })
             .then(data => {
-                localStorage.setItem(key, now.toString());
-
                 Swal.fire({
                     title: '檢舉已送出',
-                    text: hasReportedRecently
-                        ? '您先前的回報已經記錄'
-                        : '我們會盡快處理',
+                    text: '我們會盡快處理',
                     icon: 'success',
                     confirmButtonText: '確定'
                 });
