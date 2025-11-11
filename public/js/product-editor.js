@@ -287,8 +287,12 @@ for (let i = 0; i < 5; i++) {
             removeImage(productId, imageId) {
                 const currentPosition = this.imageIndex;
 
-                if (imageId && imageId !== 'null') {
-                    const numId = parseInt(imageId);
+                // 從 input 框讀取最新的 imageId（處理交換後的情況）
+                const imageIdInput = document.querySelectorAll('input[name="image_ids[]"]')[currentPosition];
+                const actualImageId = imageIdInput ? imageIdInput.value : imageId;
+
+                if (actualImageId && actualImageId !== 'null' && actualImageId !== '') {
+                    const numId = parseInt(actualImageId);
                     if (!isNaN(numId)) {
                         const deletedIds = JSON.parse(document.getElementById('deletedImageIds').value || '[]');
                         if (!deletedIds.includes(numId)) {
@@ -298,7 +302,6 @@ for (let i = 0; i < 5; i++) {
                     }
                 }
 
-                const imageIdInput = document.querySelectorAll('input[name="image_ids[]"]')[currentPosition];
                 if (imageIdInput) {
                     imageIdInput.value = '';
                 }

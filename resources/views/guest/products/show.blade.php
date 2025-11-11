@@ -199,7 +199,7 @@
                     @if ($message->trashed())
                         <x-p.text-gray>（此留言已被刪除）</x-p.text-gray>
                     @else
-                        <div>{{ $message->message }}</div>
+                        <div class="break-words whitespace-pre-wrap">{{ $message->message }}</div>
                     @endif
 
                     <div>
@@ -307,7 +307,7 @@
                                 @if ($reply->trashed())
                                     <x-p.text-gray>（此回覆已被刪除）</x-p.text-gray>
                                 @else
-                                    <div>{{ $reply->message }}</div>
+                                    <div class="break-words whitespace-pre-wrap">{{ $reply->message }}</div>
                                 @endif
                             </div>
                         @endforeach
