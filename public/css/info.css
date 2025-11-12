@@ -178,20 +178,3 @@ body {
     color: #2563eb;
     text-decoration: underline;
 }
-
-/* 留言內容換行樣式 */
-#message-,
-.reply-item {
-    word-break: break-word;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
-    white-space: pre-wrap;
-}
-
-#message- > div:last-child,
-.reply-item > div:last-child {
-    word-break: break-word;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
-    white-space: pre-wrap;
-}

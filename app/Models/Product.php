@@ -51,4 +51,18 @@ class Product extends Model implements HasMedia
     protected $casts = [
         'status' => ProductStatus::class,
     ];
+
+    // 在軟刪除前清除標籤關聯
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function ($product) {
+            // 只在軟刪除時執行
+            if ($product->trashed() === false) {
+                // 先清除 taggables 的關聯
+                $product->tags()->detach();
+            }
+        });
+    }
 }
