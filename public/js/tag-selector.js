@@ -11,19 +11,11 @@ document.addEventListener('DOMContentLoaded', function () {
     let selectedTags = {};
     ['grade', 'semester', 'subject', 'category'].forEach(type => {
         const id = window.initialSelectedTags?.[type] || null;
-
-        const option = id ? document.querySelector(`.milestone-option[data-tag-type="${type}"][data-tag-id="${id}"]`) : null;
-
         selectedTags[type] = {
             id: id,
-            name: option ? option.dataset.tagName : '',
+            name: '',
             selected: !!id
         };
-
-        const input = document.getElementById(`${type}-input`);
-        if (input && id) {
-            input.value = id;
-        }
     });
 
     initializeSelectedTags();
@@ -67,10 +59,7 @@ document.addEventListener('DOMContentLoaded', function () {
         tagSelectionPopup.classList.add('hidden');
         updateSelectedTagPills();
         updateTagsSummary();
-        const filterForm = document.getElementById('filterForm');
-        if (filterForm) {
-            filterForm.submit();
-        }
+        document.getElementById('filterForm').submit();
     });
 
     document.addEventListener('click', event => {
@@ -110,16 +99,10 @@ document.addEventListener('DOMContentLoaded', function () {
                     option.classList.add('selected');
                     selectedTags[type].name = option.dataset.tagName;
                     selectedTags[type].selected = true;
-
-                    const input = document.getElementById(`${type}-input`);
-                    if (input) {
-                        input.value = selectedTags[type].id;
-                    }
                 }
             }
         });
         updateSelectedTagPills();
-        updateTagsSummary();
     }
 
     function updateSelectedTagPills() {
@@ -131,14 +114,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
             Object.keys(selectedTags).forEach(type => {
                 const tag = selectedTags[type];
-                if (tag.id) {
-                    const option = document.querySelector(`.milestone-option[data-tag-type="${type}"][data-tag-id="${tag.id}"]`);
-                    if (option) {
-                        tag.name = option.dataset.tagName;
-                        tag.selected = true;
-                    }
-                }
-
                 if (tag.selected && tag.name) {
                     selectedCount++;
                     const pill = document.createElement('div');
@@ -196,30 +171,31 @@ document.addEventListener('DOMContentLoaded', function () {
                         `;
                         pill.classList.remove('hidden');
 
+                        // Add event listener for delete button
                         const deleteBtn = pill.querySelector('.delete-tag-btn');
                         if (deleteBtn) {
                             deleteBtn.addEventListener('click', (e) => {
                                 e.stopPropagation();
                                 const tagType = deleteBtn.dataset.tagType;
 
+                                // Remove selection from the option
                                 const selectedOption = document.querySelector(`.milestone-option[data-tag-type="${tagType}"].selected`);
                                 if (selectedOption) {
                                     selectedOption.classList.remove('selected');
                                 }
 
+                                // Clear the tag selection
                                 selectedTags[tagType] = { id: null, name: '', selected: false };
                                 const input = document.getElementById(`${tagType}-input`);
                                 if (input) input.value = '';
-                                pill.classList.add('hidden');
-                                pill.innerHTML = '';
 
+                                // Update UI
                                 updateSelectedTagPills();
                                 updateTagsSummary();
                             });
                         }
                     } else {
                         pill.classList.add('hidden');
-                        pill.innerHTML = '';
                     }
                 }
             });
@@ -228,7 +204,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function updateTagsSummary() {
         const count = Object.values(selectedTags)
-            .filter(t => t.selected && t.name)
             .filter(t => t.selected && t.name)
             .length;
 
@@ -292,7 +267,6 @@ document.addEventListener('DOMContentLoaded', function () {
             if (tagName.includes(searchTerm)) {
                 option.style.display = 'flex';
                 option.style.visibility = 'visible';
-
 
                 option.querySelectorAll('span').forEach(span => {
                     span.style.display = 'inline-block';
